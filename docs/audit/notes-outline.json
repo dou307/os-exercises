@@ -1,0 +1,2042 @@
+{
+  "note_count": 16,
+  "chapters": [
+    {
+      "chapter_key": "1",
+      "file": "1-Introduction.md",
+      "sha256": "4f9e42ffe851ef9f8d44dde69c104868c494a435c9118f38a0aee4ee563bffd2",
+      "headings": [
+        {
+          "level": 1,
+          "text": "Introduction",
+          "line": 1
+        },
+        {
+          "level": 2,
+          "text": "What Operating System Do",
+          "line": 20
+        },
+        {
+          "level": 2,
+          "text": "Computer-System Organization",
+          "line": 65
+        },
+        {
+          "level": 3,
+          "text": "Interrupts",
+          "line": 74
+        },
+        {
+          "level": 3,
+          "text": "Storage Structure",
+          "line": 121
+        },
+        {
+          "level": 3,
+          "text": "I/O Structure",
+          "line": 130
+        },
+        {
+          "level": 2,
+          "text": "Computer-System Architecture",
+          "line": 153
+        },
+        {
+          "level": 3,
+          "text": "Single-Processor Systems",
+          "line": 167
+        },
+        {
+          "level": 3,
+          "text": "Multiprocessor Systems",
+          "line": 172
+        },
+        {
+          "level": 2,
+          "text": "Operating-System Operations",
+          "line": 193
+        },
+        {
+          "level": 3,
+          "text": "Multiprogramming and Multitasking",
+          "line": 198
+        },
+        {
+          "level": 3,
+          "text": "Dual-Mode and Multimode Operation",
+          "line": 213
+        },
+        {
+          "level": 3,
+          "text": "Timer",
+          "line": 243
+        },
+        {
+          "level": 2,
+          "text": "Resource Management",
+          "line": 250
+        },
+        {
+          "level": 2,
+          "text": "Three Conceptual Pieces",
+          "line": 325
+        },
+        {
+          "level": 2,
+          "text": "Design Goals",
+          "line": 342
+        }
+      ]
+    },
+    {
+      "chapter_key": "2",
+      "file": "2-Operating-System Structures.md",
+      "sha256": "9e096e1c263b3677edaeeadc827ee52e01254a1b52cde84cf53513c16a1302e9",
+      "headings": [
+        {
+          "level": 1,
+          "text": "Operating-System Structures",
+          "line": 1
+        },
+        {
+          "level": 2,
+          "text": "Operating-System Services",
+          "line": 18
+        },
+        {
+          "level": 2,
+          "text": "User and Operating-System Interface",
+          "line": 52
+        },
+        {
+          "level": 3,
+          "text": "Command Interpreters",
+          "line": 57
+        },
+        {
+          "level": 3,
+          "text": "Graphic User Interface",
+          "line": 67
+        },
+        {
+          "level": 3,
+          "text": "Touch-Screen Interface",
+          "line": 74
+        },
+        {
+          "level": 3,
+          "text": "Choice of Interface",
+          "line": 79
+        },
+        {
+          "level": 2,
+          "text": "System Calls",
+          "line": 90
+        },
+        {
+          "level": 3,
+          "text": "Application Programming Interface",
+          "line": 95
+        },
+        {
+          "level": 3,
+          "text": "Types of System Calls",
+          "line": 135
+        },
+        {
+          "level": 2,
+          "text": "System Services",
+          "line": 181
+        },
+        {
+          "level": 2,
+          "text": "Linkers and Loaders",
+          "line": 203
+        },
+        {
+          "level": 2,
+          "text": "Why Applications Are Operating-System Specific",
+          "line": 231
+        },
+        {
+          "level": 2,
+          "text": "Operating-System Design and Implementation",
+          "line": 255
+        },
+        {
+          "level": 3,
+          "text": "Design Goals",
+          "line": 257
+        },
+        {
+          "level": 3,
+          "text": "Mechanisms and Policies",
+          "line": 261
+        },
+        {
+          "level": 3,
+          "text": "Implementation",
+          "line": 271
+        },
+        {
+          "level": 2,
+          "text": "Operating-System Structure",
+          "line": 285
+        },
+        {
+          "level": 3,
+          "text": "Monolithic Structure",
+          "line": 290
+        },
+        {
+          "level": 3,
+          "text": "Layered Approach",
+          "line": 307
+        },
+        {
+          "level": 3,
+          "text": "Microkernels",
+          "line": 325
+        },
+        {
+          "level": 3,
+          "text": "Modules",
+          "line": 341
+        },
+        {
+          "level": 3,
+          "text": "Hybrid Systems",
+          "line": 353
+        },
+        {
+          "level": 2,
+          "text": "Building and Booting an Operating System",
+          "line": 361
+        },
+        {
+          "level": 3,
+          "text": "Operating-System Generation",
+          "line": 363
+        },
+        {
+          "level": 3,
+          "text": "System Boot",
+          "line": 374
+        },
+        {
+          "level": 2,
+          "text": "Operating-System Debugging",
+          "line": 403
+        },
+        {
+          "level": 3,
+          "text": "Failure Analysis",
+          "line": 408
+        },
+        {
+          "level": 3,
+          "text": "Performance Monitoring and Tuning",
+          "line": 417
+        }
+      ]
+    },
+    {
+      "chapter_key": "2.1",
+      "file": "2.1-Rebuilding the Linux Kernel.md",
+      "sha256": "b61db34029acd1fd0c0e2e32715d00f9a6fcdbefdd4ef8382aae10c4c9f2a924",
+      "headings": [
+        {
+          "level": 1,
+          "text": "Rebuilding the Linux Kernel",
+          "line": 1
+        },
+        {
+          "level": 2,
+          "text": "Linux Kernel Overview",
+          "line": 31
+        },
+        {
+          "level": 3,
+          "text": "Why Study the Linux Kernel",
+          "line": 33
+        },
+        {
+          "level": 3,
+          "text": "GNU/Linux Layered Structure",
+          "line": 43
+        },
+        {
+          "level": 3,
+          "text": "Kernel Subsystems",
+          "line": 62
+        },
+        {
+          "level": 3,
+          "text": "Monolithic but Modular",
+          "line": 79
+        },
+        {
+          "level": 2,
+          "text": "Linux Kernel Source Tree",
+          "line": 93
+        },
+        {
+          "level": 3,
+          "text": "Directory Structure",
+          "line": 95
+        },
+        {
+          "level": 3,
+          "text": "Characteristics of Kernel Development",
+          "line": 127
+        },
+        {
+          "level": 3,
+          "text": "Kernel Image",
+          "line": 141
+        },
+        {
+          "level": 2,
+          "text": "Compiling the Linux Kernel",
+          "line": 159
+        },
+        {
+          "level": 3,
+          "text": "What Rebuilding Actually Does",
+          "line": 161
+        },
+        {
+          "level": 3,
+          "text": "Preparing the Source Tree",
+          "line": 178
+        },
+        {
+          "level": 3,
+          "text": "Configuring the Kernel",
+          "line": 199
+        },
+        {
+          "level": 3,
+          "text": "Building and Installing",
+          "line": 223
+        },
+        {
+          "level": 3,
+          "text": "Build Flow Summary",
+          "line": 260
+        },
+        {
+          "level": 2,
+          "text": "Linux Boot Process",
+          "line": 283
+        },
+        {
+          "level": 3,
+          "text": "Overall Process",
+          "line": 285
+        },
+        {
+          "level": 3,
+          "text": "BIOS, POST and Boot Sequence",
+          "line": 306
+        },
+        {
+          "level": 3,
+          "text": "MBR, Partitions and Boot Loader",
+          "line": 319
+        },
+        {
+          "level": 3,
+          "text": "Kernel Boot Stage",
+          "line": 344
+        },
+        {
+          "level": 3,
+          "text": "PID 1 and the Init Stage",
+          "line": 387
+        },
+        {
+          "level": 3,
+          "text": "`/etc/inittab`",
+          "line": 401
+        },
+        {
+          "level": 3,
+          "text": "Run Levels",
+          "line": 436
+        },
+        {
+          "level": 2,
+          "text": "Review: Follow the Transfer of Control",
+          "line": 455
+        }
+      ]
+    },
+    {
+      "chapter_key": "3",
+      "file": "3-Processes.md",
+      "sha256": "59a7fbec749b2d27b45004f95b229847503b75afa3e43162aa2bc472a7c808be",
+      "headings": [
+        {
+          "level": 1,
+          "text": "Processes",
+          "line": 1
+        },
+        {
+          "level": 2,
+          "text": "Concept",
+          "line": 15
+        },
+        {
+          "level": 3,
+          "text": "Process State",
+          "line": 67
+        },
+        {
+          "level": 3,
+          "text": "Process Control Block",
+          "line": 82
+        },
+        {
+          "level": 3,
+          "text": "Threads",
+          "line": 132
+        },
+        {
+          "level": 2,
+          "text": "Process Scheduling",
+          "line": 139
+        },
+        {
+          "level": 3,
+          "text": "Scheduling Queues",
+          "line": 149
+        },
+        {
+          "level": 3,
+          "text": "CPU Scheduling",
+          "line": 170
+        },
+        {
+          "level": 3,
+          "text": "Context Switch",
+          "line": 186
+        },
+        {
+          "level": 2,
+          "text": "Operations on Processes",
+          "line": 199
+        },
+        {
+          "level": 3,
+          "text": "Process Creation",
+          "line": 204
+        },
+        {
+          "level": 3,
+          "text": "Process Termination",
+          "line": 358
+        },
+        {
+          "level": 2,
+          "text": "Mechanism: Limited Direct Execution",
+          "line": 376
+        },
+        {
+          "level": 3,
+          "text": "Restricted Operations",
+          "line": 394
+        },
+        {
+          "level": 3,
+          "text": "Switching Between Processes",
+          "line": 418
+        },
+        {
+          "level": 3,
+          "text": "Worried About Concurrency",
+          "line": 449
+        },
+        {
+          "level": 2,
+          "text": "Interprocess Communication",
+          "line": 457
+        },
+        {
+          "level": 3,
+          "text": "Shared Memory",
+          "line": 486
+        },
+        {
+          "level": 3,
+          "text": "Message Passing",
+          "line": 552
+        },
+        {
+          "level": 2,
+          "text": "Communication in Client-Server Systems",
+          "line": 692
+        },
+        {
+          "level": 3,
+          "text": "Sockets",
+          "line": 697
+        },
+        {
+          "level": 3,
+          "text": "Remote Procedure Calls",
+          "line": 784
+        }
+      ]
+    },
+    {
+      "chapter_key": "4",
+      "file": "4-Threads and Concurrency.md",
+      "sha256": "4591185ead4217340b103c8123a1f86926e09cb5e910a9030dfc037766af9420",
+      "headings": [
+        {
+          "level": 1,
+          "text": "Threads and Concurrency",
+          "line": 1
+        },
+        {
+          "level": 2,
+          "text": "Overview",
+          "line": 14
+        },
+        {
+          "level": 3,
+          "text": "Motivation",
+          "line": 38
+        },
+        {
+          "level": 3,
+          "text": "Benefits",
+          "line": 64
+        },
+        {
+          "level": 2,
+          "text": "Multicore Programming",
+          "line": 80
+        },
+        {
+          "level": 3,
+          "text": "Programming Challenges",
+          "line": 100
+        },
+        {
+          "level": 3,
+          "text": "Types of Parallelism",
+          "line": 117
+        },
+        {
+          "level": 2,
+          "text": "Multithreading Model",
+          "line": 142
+        },
+        {
+          "level": 3,
+          "text": "Many-to-One Model",
+          "line": 154
+        },
+        {
+          "level": 3,
+          "text": "One-to-One Model",
+          "line": 165
+        },
+        {
+          "level": 3,
+          "text": "Many-to-Many Model",
+          "line": 177
+        },
+        {
+          "level": 2,
+          "text": "Thread Libraries",
+          "line": 192
+        },
+        {
+          "level": 3,
+          "text": "Pthreads",
+          "line": 222
+        },
+        {
+          "level": 2,
+          "text": "Implicit Threading",
+          "line": 300
+        },
+        {
+          "level": 3,
+          "text": "Thread Pools",
+          "line": 309
+        },
+        {
+          "level": 3,
+          "text": "Fork Join",
+          "line": 333
+        },
+        {
+          "level": 2,
+          "text": "Threading Issues",
+          "line": 345
+        },
+        {
+          "level": 3,
+          "text": "The fork() and exec() System Calls",
+          "line": 351
+        },
+        {
+          "level": 3,
+          "text": "Signal Handling",
+          "line": 362
+        },
+        {
+          "level": 3,
+          "text": "Thread Cancellation",
+          "line": 404
+        },
+        {
+          "level": 3,
+          "text": "Thread-Local Storage",
+          "line": 474
+        },
+        {
+          "level": 3,
+          "text": "Scheduler Activation",
+          "line": 491
+        }
+      ]
+    },
+    {
+      "chapter_key": "5",
+      "file": "5-CPU Scheduling.md",
+      "sha256": "6e45fcde5f9bd96e9cad0e515889b7f5bdd007c29a834e2b9d23c1bc15eafa39",
+      "headings": [
+        {
+          "level": 1,
+          "text": "CPU Scheduling",
+          "line": 1
+        },
+        {
+          "level": 2,
+          "text": "Basic Concepts",
+          "line": 24
+        },
+        {
+          "level": 3,
+          "text": "CPU-I/O Burst Cycle",
+          "line": 29
+        },
+        {
+          "level": 3,
+          "text": "CPU Scheduler",
+          "line": 50
+        },
+        {
+          "level": 3,
+          "text": "Preemptive and Nonpreemptive Scheduling",
+          "line": 56
+        },
+        {
+          "level": 3,
+          "text": "Dispatcher",
+          "line": 92
+        },
+        {
+          "level": 2,
+          "text": "Scheduling Criteria",
+          "line": 140
+        },
+        {
+          "level": 2,
+          "text": "Scheduling Algorithms",
+          "line": 195
+        },
+        {
+          "level": 3,
+          "text": "First-Come, First-Served Scheduling",
+          "line": 203
+        },
+        {
+          "level": 3,
+          "text": "Shortest-Job-First Scheduling",
+          "line": 241
+        },
+        {
+          "level": 3,
+          "text": "Round-Robin Scheduling",
+          "line": 306
+        },
+        {
+          "level": 3,
+          "text": "Priority Scheduling",
+          "line": 357
+        },
+        {
+          "level": 3,
+          "text": "Multilevel Queue Scheduling",
+          "line": 406
+        },
+        {
+          "level": 3,
+          "text": "Multilevel Feedback Queue Scheduling",
+          "line": 429
+        },
+        {
+          "level": 2,
+          "text": "Thread Scheduling",
+          "line": 464
+        },
+        {
+          "level": 3,
+          "text": "Contention Scope",
+          "line": 469
+        },
+        {
+          "level": 3,
+          "text": "Pthread Scheduling",
+          "line": 479
+        },
+        {
+          "level": 2,
+          "text": "Multi-Processor Scheduling",
+          "line": 550
+        },
+        {
+          "level": 3,
+          "text": "Approaches to Multiple-Processor Scheduling",
+          "line": 564
+        },
+        {
+          "level": 3,
+          "text": "Multicore Processors",
+          "line": 581
+        },
+        {
+          "level": 3,
+          "text": "Load Balancing",
+          "line": 620
+        },
+        {
+          "level": 3,
+          "text": "Single-Queue Scheduling",
+          "line": 644
+        },
+        {
+          "level": 3,
+          "text": "Multi-Queue Scheduling",
+          "line": 669
+        },
+        {
+          "level": 3,
+          "text": "Processor Affinity",
+          "line": 727
+        },
+        {
+          "level": 3,
+          "text": "Heterogeneous Multiprocessing",
+          "line": 758
+        },
+        {
+          "level": 2,
+          "text": "Real-time CPU Scheduling",
+          "line": 773
+        },
+        {
+          "level": 3,
+          "text": "Minimizing Latency",
+          "line": 783
+        },
+        {
+          "level": 3,
+          "text": "Priority-Based Scheduling",
+          "line": 812
+        },
+        {
+          "level": 3,
+          "text": "Rate-Monotonic Scheduling",
+          "line": 832
+        },
+        {
+          "level": 3,
+          "text": "Earliest-Deadline-First Scheduling",
+          "line": 872
+        },
+        {
+          "level": 3,
+          "text": "Proportional Share Scheduling",
+          "line": 891
+        },
+        {
+          "level": 3,
+          "text": "POSIX Real-Time Scheduling",
+          "line": 1003
+        },
+        {
+          "level": 2,
+          "text": "OS Examples: Linux Scheduling",
+          "line": 1067
+        },
+        {
+          "level": 2,
+          "text": "Algorithm Evaluation",
+          "line": 1158
+        },
+        {
+          "level": 3,
+          "text": "Deterministic Modeling",
+          "line": 1163
+        },
+        {
+          "level": 3,
+          "text": "Queueing Models",
+          "line": 1192
+        },
+        {
+          "level": 3,
+          "text": "Simulations",
+          "line": 1218
+        },
+        {
+          "level": 3,
+          "text": "Implementation",
+          "line": 1241
+        }
+      ]
+    },
+    {
+      "chapter_key": "6",
+      "file": "6-Synchronization Tools.md",
+      "sha256": "d8e146440fb1d666385b493d0744f02a17001bf700639d562b5fa1bba5d325ac",
+      "headings": [
+        {
+          "level": 1,
+          "text": "Synchronization Tools",
+          "line": 1
+        },
+        {
+          "level": 2,
+          "text": "Critical-Section Problem",
+          "line": 74
+        },
+        {
+          "level": 2,
+          "text": "Peterson's Solution",
+          "line": 119
+        },
+        {
+          "level": 2,
+          "text": "Hardware Support for Synchronization",
+          "line": 218
+        },
+        {
+          "level": 3,
+          "text": "Memory Barriers",
+          "line": 223
+        },
+        {
+          "level": 3,
+          "text": "Hardware Instructions",
+          "line": 260
+        },
+        {
+          "level": 3,
+          "text": "Atomic Variables",
+          "line": 376
+        },
+        {
+          "level": 2,
+          "text": "Mutex Locks",
+          "line": 400
+        },
+        {
+          "level": 2,
+          "text": "Semaphores",
+          "line": 442
+        },
+        {
+          "level": 3,
+          "text": "Usage",
+          "line": 461
+        },
+        {
+          "level": 3,
+          "text": "Implementation",
+          "line": 542
+        },
+        {
+          "level": 2,
+          "text": "Monitors",
+          "line": 591
+        },
+        {
+          "level": 3,
+          "text": "Usage",
+          "line": 626
+        },
+        {
+          "level": 3,
+          "text": "Implementating a Monitor Using Semaphores",
+          "line": 665
+        },
+        {
+          "level": 3,
+          "text": "Resuming Processes with a Monitor",
+          "line": 702
+        },
+        {
+          "level": 2,
+          "text": "Liveness",
+          "line": 727
+        },
+        {
+          "level": 3,
+          "text": "Deadlock",
+          "line": 732
+        },
+        {
+          "level": 3,
+          "text": "Priority Inversion",
+          "line": 747
+        },
+        {
+          "level": 2,
+          "text": "Evaluation",
+          "line": 768
+        }
+      ]
+    },
+    {
+      "chapter_key": "7",
+      "file": "7-Synchronization Examples.md",
+      "sha256": "410f7bfa6fbb4c0b030a3ce0d03db59e211ae3d16a52c56171d251f5fd649fa0",
+      "headings": [
+        {
+          "level": 1,
+          "text": "Synchronization Examples",
+          "line": 1
+        },
+        {
+          "level": 2,
+          "text": "Classic Problems on Synchronization",
+          "line": 11
+        },
+        {
+          "level": 3,
+          "text": "The Bounded-Buffer Problem",
+          "line": 16
+        },
+        {
+          "level": 3,
+          "text": "The Readers-Writers Problem",
+          "line": 70
+        },
+        {
+          "level": 3,
+          "text": "The Dining-Philosophers Problem",
+          "line": 136
+        },
+        {
+          "level": 2,
+          "text": "Sychronization within the Kernel",
+          "line": 236
+        },
+        {
+          "level": 2,
+          "text": "POSIX Synchronization",
+          "line": 265
+        },
+        {
+          "level": 3,
+          "text": "Mutex Locks",
+          "line": 270
+        },
+        {
+          "level": 3,
+          "text": "Semaphores",
+          "line": 291
+        },
+        {
+          "level": 3,
+          "text": "Condition Variables",
+          "line": 338
+        },
+        {
+          "level": 2,
+          "text": "Alternative Approaches",
+          "line": 362
+        },
+        {
+          "level": 3,
+          "text": "Transactional Memory",
+          "line": 364
+        },
+        {
+          "level": 3,
+          "text": "OpenMP",
+          "line": 394
+        },
+        {
+          "level": 3,
+          "text": "Functional Programming Languages",
+          "line": 415
+        }
+      ]
+    },
+    {
+      "chapter_key": "8",
+      "file": "8-Deadlocks.md",
+      "sha256": "8bebdee89c0a56178912c859d0ad0f6b78e562f2ea45d5874be76c1972c56ca6",
+      "headings": [
+        {
+          "level": 1,
+          "text": "Deadlocks",
+          "line": 1
+        },
+        {
+          "level": 2,
+          "text": "System Model",
+          "line": 15
+        },
+        {
+          "level": 2,
+          "text": "Deadlock in Multithreaded Applications",
+          "line": 29
+        },
+        {
+          "level": 2,
+          "text": "Deadlock Characterization",
+          "line": 121
+        },
+        {
+          "level": 3,
+          "text": "Necessary Conditions",
+          "line": 123
+        },
+        {
+          "level": 3,
+          "text": "Resource-Allocation Graph",
+          "line": 135
+        },
+        {
+          "level": 2,
+          "text": "Methods for Handling Deadlocks",
+          "line": 164
+        },
+        {
+          "level": 2,
+          "text": "Deadlock Prevention",
+          "line": 176
+        },
+        {
+          "level": 3,
+          "text": "Mutual Exclusion",
+          "line": 181
+        },
+        {
+          "level": 3,
+          "text": "Hold and Wait",
+          "line": 187
+        },
+        {
+          "level": 3,
+          "text": "No Preemption",
+          "line": 197
+        },
+        {
+          "level": 3,
+          "text": "Circular Wait",
+          "line": 204
+        },
+        {
+          "level": 2,
+          "text": "Deadlock Avoidance",
+          "line": 222
+        },
+        {
+          "level": 3,
+          "text": "Safe State",
+          "line": 227
+        },
+        {
+          "level": 3,
+          "text": "Resource-Allocation-Graph Algorithm",
+          "line": 241
+        },
+        {
+          "level": 3,
+          "text": "Banker's Algorithm",
+          "line": 262
+        },
+        {
+          "level": 2,
+          "text": "Deadlock Detection",
+          "line": 356
+        },
+        {
+          "level": 3,
+          "text": "Single Instance of Each Resource Type",
+          "line": 361
+        },
+        {
+          "level": 3,
+          "text": "Several Instances of a Resource Type",
+          "line": 372
+        },
+        {
+          "level": 3,
+          "text": "Detection-Algorithm Usage",
+          "line": 430
+        },
+        {
+          "level": 2,
+          "text": "Recovery from Deadlock",
+          "line": 440
+        },
+        {
+          "level": 3,
+          "text": "Process and Thread Termination",
+          "line": 445
+        },
+        {
+          "level": 3,
+          "text": "Resource Preemption",
+          "line": 461
+        }
+      ]
+    },
+    {
+      "chapter_key": "9",
+      "file": "9-Main Memory.md",
+      "sha256": "11777d19305bf9bc791e7c1c38b82c5150790e01604894d7f1a8738cd7882810",
+      "headings": [
+        {
+          "level": 1,
+          "text": "Main Memory",
+          "line": 1
+        },
+        {
+          "level": 2,
+          "text": "Background",
+          "line": 29
+        },
+        {
+          "level": 3,
+          "text": "Basic Hardware",
+          "line": 36
+        },
+        {
+          "level": 3,
+          "text": "Address Binding",
+          "line": 51
+        },
+        {
+          "level": 3,
+          "text": "Logical v.s. Physical Address Space",
+          "line": 65
+        },
+        {
+          "level": 3,
+          "text": "Dynamic Loading",
+          "line": 82
+        },
+        {
+          "level": 3,
+          "text": "Dynamic Linking and Shared Libraries",
+          "line": 89
+        },
+        {
+          "level": 2,
+          "text": "Contiguous Memory Allocation",
+          "line": 111
+        },
+        {
+          "level": 3,
+          "text": "Memory Protection",
+          "line": 118
+        },
+        {
+          "level": 3,
+          "text": "Memory Allocation",
+          "line": 129
+        },
+        {
+          "level": 3,
+          "text": "Fragmentation",
+          "line": 184
+        },
+        {
+          "level": 2,
+          "text": "Paging",
+          "line": 218
+        },
+        {
+          "level": 3,
+          "text": "Basic Method",
+          "line": 220
+        },
+        {
+          "level": 3,
+          "text": "Hardware Support",
+          "line": 270
+        },
+        {
+          "level": 3,
+          "text": "Protection",
+          "line": 305
+        },
+        {
+          "level": 3,
+          "text": "Shared Pages",
+          "line": 323
+        },
+        {
+          "level": 2,
+          "text": "Structure of Page Table",
+          "line": 338
+        },
+        {
+          "level": 3,
+          "text": "Hierarchical Paging",
+          "line": 343
+        },
+        {
+          "level": 3,
+          "text": "Hashed Page Tables",
+          "line": 389
+        },
+        {
+          "level": 3,
+          "text": "Inverted Page Tables",
+          "line": 409
+        },
+        {
+          "level": 2,
+          "text": "Swapping",
+          "line": 425
+        },
+        {
+          "level": 3,
+          "text": "Standard Swapping",
+          "line": 434
+        },
+        {
+          "level": 3,
+          "text": "Swapping with Paging",
+          "line": 445
+        }
+      ]
+    },
+    {
+      "chapter_key": "10",
+      "file": "10-Virtual Memory.md",
+      "sha256": "28c5b903ef3020e2e2470a36018cee4dd77ad76edb3687ab36b6d77b6c9eebb4",
+      "headings": [
+        {
+          "level": 1,
+          "text": "Virtual Memory",
+          "line": 1
+        },
+        {
+          "level": 2,
+          "text": "Background",
+          "line": 32
+        },
+        {
+          "level": 2,
+          "text": "Demand Paging",
+          "line": 68
+        },
+        {
+          "level": 3,
+          "text": "Basic Concepts",
+          "line": 73
+        },
+        {
+          "level": 3,
+          "text": "Free-Frame List",
+          "line": 120
+        },
+        {
+          "level": 3,
+          "text": "Performance",
+          "line": 127
+        },
+        {
+          "level": 2,
+          "text": "Copy-on-Write",
+          "line": 155
+        },
+        {
+          "level": 2,
+          "text": "Page Replacement",
+          "line": 177
+        },
+        {
+          "level": 3,
+          "text": "Basic",
+          "line": 182
+        },
+        {
+          "level": 3,
+          "text": "FIFO",
+          "line": 240
+        },
+        {
+          "level": 3,
+          "text": "Optimal",
+          "line": 279
+        },
+        {
+          "level": 3,
+          "text": "LRU",
+          "line": 298
+        },
+        {
+          "level": 3,
+          "text": "LRU-Approximation",
+          "line": 367
+        },
+        {
+          "level": 3,
+          "text": "Counting-Based",
+          "line": 422
+        },
+        {
+          "level": 3,
+          "text": "Page-Buffering",
+          "line": 436
+        },
+        {
+          "level": 3,
+          "text": "Applications",
+          "line": 452
+        },
+        {
+          "level": 2,
+          "text": "Allocations of Frames",
+          "line": 468
+        },
+        {
+          "level": 3,
+          "text": "Minimum Number of Frames",
+          "line": 473
+        },
+        {
+          "level": 3,
+          "text": "Allocation Algorithms",
+          "line": 482
+        },
+        {
+          "level": 3,
+          "text": "Global v.s. Local Allocation",
+          "line": 496
+        },
+        {
+          "level": 3,
+          "text": "Non-Uniform Memory Access",
+          "line": 519
+        },
+        {
+          "level": 2,
+          "text": "Thrashing",
+          "line": 536
+        },
+        {
+          "level": 3,
+          "text": "Cause of Thrashing",
+          "line": 541
+        },
+        {
+          "level": 3,
+          "text": "Working-Set Model",
+          "line": 567
+        },
+        {
+          "level": 3,
+          "text": "Page-Fault Frequency",
+          "line": 600
+        },
+        {
+          "level": 2,
+          "text": "Memory Compression",
+          "line": 617
+        },
+        {
+          "level": 2,
+          "text": "Allocating Kernel Memory",
+          "line": 651
+        },
+        {
+          "level": 3,
+          "text": "Buddy System",
+          "line": 661
+        },
+        {
+          "level": 3,
+          "text": "Slab Allocation",
+          "line": 679
+        },
+        {
+          "level": 2,
+          "text": "Other Considerations",
+          "line": 717
+        },
+        {
+          "level": 3,
+          "text": "Prepaging",
+          "line": 722
+        },
+        {
+          "level": 3,
+          "text": "Page Size",
+          "line": 730
+        },
+        {
+          "level": 3,
+          "text": "TLB Reach",
+          "line": 740
+        },
+        {
+          "level": 3,
+          "text": "Inverted Page Tables",
+          "line": 750
+        },
+        {
+          "level": 3,
+          "text": "Program Structure",
+          "line": 753
+        },
+        {
+          "level": 3,
+          "text": "I/O Interlock and Page Locking",
+          "line": 779
+        }
+      ]
+    },
+    {
+      "chapter_key": "11",
+      "file": "11-Mass-Storage Structure.md",
+      "sha256": "3bd8d9cdecefa576a7620f289d11b4c2994aa33caa56dfb98bb61482ede559e7",
+      "headings": [
+        {
+          "level": 1,
+          "text": "Mass-Storage Structure",
+          "line": 1
+        },
+        {
+          "level": 2,
+          "text": "Overview",
+          "line": 18
+        },
+        {
+          "level": 3,
+          "text": "Hard Disk Drives",
+          "line": 23
+        },
+        {
+          "level": 3,
+          "text": "Nonvolatile Memory Devices",
+          "line": 48
+        },
+        {
+          "level": 3,
+          "text": "Volatile Memory",
+          "line": 80
+        },
+        {
+          "level": 3,
+          "text": "Secondary Storage Connection Methods",
+          "line": 88
+        },
+        {
+          "level": 3,
+          "text": "Address Mapping",
+          "line": 104
+        },
+        {
+          "level": 2,
+          "text": "HDD Scheduling",
+          "line": 122
+        },
+        {
+          "level": 3,
+          "text": "FCFS",
+          "line": 143
+        },
+        {
+          "level": 3,
+          "text": "SSTF",
+          "line": 159
+        },
+        {
+          "level": 3,
+          "text": "SCAN",
+          "line": 167
+        },
+        {
+          "level": 3,
+          "text": "C-SCAN",
+          "line": 190
+        },
+        {
+          "level": 3,
+          "text": "Selection of a Disk-Scheduling Algorithm",
+          "line": 215
+        },
+        {
+          "level": 2,
+          "text": "NVM Scheduling",
+          "line": 264
+        },
+        {
+          "level": 2,
+          "text": "Error Detection and Correction",
+          "line": 279
+        },
+        {
+          "level": 2,
+          "text": "Storage Device Management",
+          "line": 295
+        },
+        {
+          "level": 3,
+          "text": "Drive Formatting, Partitions and Volumes",
+          "line": 297
+        },
+        {
+          "level": 3,
+          "text": "Boot Block",
+          "line": 336
+        },
+        {
+          "level": 3,
+          "text": "Bad Blocks",
+          "line": 347
+        },
+        {
+          "level": 2,
+          "text": "Swap-Space Management",
+          "line": 378
+        },
+        {
+          "level": 3,
+          "text": "Swap-Space Use",
+          "line": 389
+        },
+        {
+          "level": 3,
+          "text": "Swap-Space Location",
+          "line": 406
+        },
+        {
+          "level": 2,
+          "text": "Storage Attachment",
+          "line": 418
+        },
+        {
+          "level": 3,
+          "text": "Host-Attached Storage",
+          "line": 427
+        },
+        {
+          "level": 3,
+          "text": "Network-Attached Storage",
+          "line": 436
+        },
+        {
+          "level": 3,
+          "text": "Cloud Storage",
+          "line": 452
+        },
+        {
+          "level": 3,
+          "text": "Storage-Area Networks and Storage Arrays",
+          "line": 463
+        },
+        {
+          "level": 2,
+          "text": "RAID Structure",
+          "line": 476
+        },
+        {
+          "level": 3,
+          "text": "Improvement of Reliability via Redundancy",
+          "line": 481
+        },
+        {
+          "level": 3,
+          "text": "Improvement in Performance via Parallelism",
+          "line": 496
+        },
+        {
+          "level": 3,
+          "text": "RAID Levels",
+          "line": 515
+        },
+        {
+          "level": 3,
+          "text": "Selecting a RAID Level",
+          "line": 577
+        },
+        {
+          "level": 3,
+          "text": "Problems with RAID",
+          "line": 586
+        }
+      ]
+    },
+    {
+      "chapter_key": "12",
+      "file": "12-I／O Systems.md",
+      "sha256": "8f6ec34ab66e8af85860d09bcf1acdd5843f1e3e0c1528b2a29fad624925cb07",
+      "headings": [
+        {
+          "level": 1,
+          "text": "I/O Systems",
+          "line": 1
+        },
+        {
+          "level": 2,
+          "text": "I/O Hardware",
+          "line": 28
+        },
+        {
+          "level": 3,
+          "text": "Memory-Mapped I/O",
+          "line": 51
+        },
+        {
+          "level": 3,
+          "text": "Polling",
+          "line": 76
+        },
+        {
+          "level": 3,
+          "text": "Interrupts",
+          "line": 109
+        },
+        {
+          "level": 3,
+          "text": "Direct Memory Access",
+          "line": 157
+        },
+        {
+          "level": 2,
+          "text": "Application I/O Interface",
+          "line": 179
+        },
+        {
+          "level": 3,
+          "text": "Block and Character Devices",
+          "line": 220
+        },
+        {
+          "level": 3,
+          "text": "Network Devices",
+          "line": 244
+        },
+        {
+          "level": 3,
+          "text": "Clocks and Timers",
+          "line": 249
+        },
+        {
+          "level": 3,
+          "text": "Nonblocking and Asynchronous I/O",
+          "line": 280
+        },
+        {
+          "level": 3,
+          "text": "Vectored I/O",
+          "line": 306
+        },
+        {
+          "level": 3,
+          "text": "I/O Scheduling",
+          "line": 322
+        },
+        {
+          "level": 3,
+          "text": "Buffering",
+          "line": 324
+        },
+        {
+          "level": 3,
+          "text": "Caching",
+          "line": 326
+        },
+        {
+          "level": 3,
+          "text": "Spooling and Device Reservation",
+          "line": 328
+        },
+        {
+          "level": 3,
+          "text": "Error Handling",
+          "line": 330
+        },
+        {
+          "level": 3,
+          "text": "I/O Protection",
+          "line": 332
+        },
+        {
+          "level": 3,
+          "text": "Kernel Data Sturctures",
+          "line": 334
+        },
+        {
+          "level": 3,
+          "text": "Power Management",
+          "line": 336
+        },
+        {
+          "level": 2,
+          "text": "Transforming I/O Requests to Hardware Operations",
+          "line": 339
+        },
+        {
+          "level": 2,
+          "text": "STREAMS",
+          "line": 341
+        },
+        {
+          "level": 2,
+          "text": "Performance -->",
+          "line": 343
+        }
+      ]
+    },
+    {
+      "chapter_key": "13",
+      "file": "13-File-System Interface.md",
+      "sha256": "a87b84b45baeb4ffbf6a002c3eb016079a7b4161b28f4034b5b3ce55ccc76f87",
+      "headings": [
+        {
+          "level": 1,
+          "text": "File-System Interface",
+          "line": 1
+        },
+        {
+          "level": 2,
+          "text": "File Concepts",
+          "line": 27
+        },
+        {
+          "level": 3,
+          "text": "File Attributes",
+          "line": 39
+        },
+        {
+          "level": 3,
+          "text": "File Operations",
+          "line": 60
+        },
+        {
+          "level": 3,
+          "text": "File Types",
+          "line": 125
+        },
+        {
+          "level": 3,
+          "text": "File Structure",
+          "line": 149
+        },
+        {
+          "level": 3,
+          "text": "Internal File Structure",
+          "line": 161
+        },
+        {
+          "level": 2,
+          "text": "Access Methods",
+          "line": 176
+        },
+        {
+          "level": 3,
+          "text": "Sequential Access",
+          "line": 178
+        },
+        {
+          "level": 3,
+          "text": "Direct Access",
+          "line": 192
+        },
+        {
+          "level": 3,
+          "text": "Other Access Methods",
+          "line": 211
+        },
+        {
+          "level": 2,
+          "text": "Directory Structure",
+          "line": 222
+        },
+        {
+          "level": 3,
+          "text": "Single-Level Directory",
+          "line": 241
+        },
+        {
+          "level": 3,
+          "text": "Two-Level Directory",
+          "line": 250
+        },
+        {
+          "level": 3,
+          "text": "Tree-Structured Directories",
+          "line": 298
+        },
+        {
+          "level": 3,
+          "text": "Acyclic-Graph Directories",
+          "line": 337
+        },
+        {
+          "level": 3,
+          "text": "General Graph Directory",
+          "line": 387
+        },
+        {
+          "level": 2,
+          "text": "Protection",
+          "line": 406
+        },
+        {
+          "level": 3,
+          "text": "Type of Access",
+          "line": 421
+        },
+        {
+          "level": 3,
+          "text": "Access Control",
+          "line": 436
+        },
+        {
+          "level": 3,
+          "text": "Other Protection Approaches",
+          "line": 464
+        },
+        {
+          "level": 2,
+          "text": "Memory-Mapped Files",
+          "line": 479
+        }
+      ]
+    },
+    {
+      "chapter_key": "14",
+      "file": "14-File-System Implementation.md",
+      "sha256": "f80cef83284e189aaf85d63334a537df6ba64caab1d7583fffde0ceb48ccd737",
+      "headings": [
+        {
+          "level": 1,
+          "text": "File-System Implementation",
+          "line": 1
+        },
+        {
+          "level": 2,
+          "text": "File-System Structure",
+          "line": 35
+        },
+        {
+          "level": 2,
+          "text": "File-System Operations",
+          "line": 70
+        },
+        {
+          "level": 2,
+          "text": "Directory Implementation",
+          "line": 125
+        },
+        {
+          "level": 3,
+          "text": "Linear List",
+          "line": 130
+        },
+        {
+          "level": 3,
+          "text": "Hash Table",
+          "line": 155
+        },
+        {
+          "level": 2,
+          "text": "Allocation Methods",
+          "line": 173
+        },
+        {
+          "level": 3,
+          "text": "Contiguous Allocation",
+          "line": 181
+        },
+        {
+          "level": 3,
+          "text": "Linked Allocation",
+          "line": 231
+        },
+        {
+          "level": 3,
+          "text": "Indexed Allocation",
+          "line": 290
+        },
+        {
+          "level": 2,
+          "text": "Free-Space Management",
+          "line": 334
+        },
+        {
+          "level": 3,
+          "text": "Bit Vector",
+          "line": 344
+        },
+        {
+          "level": 3,
+          "text": "Linked List",
+          "line": 358
+        },
+        {
+          "level": 3,
+          "text": "Grouping",
+          "line": 367
+        },
+        {
+          "level": 3,
+          "text": "Counting",
+          "line": 375
+        },
+        {
+          "level": 2,
+          "text": "Efficiency and Performance",
+          "line": 385
+        },
+        {
+          "level": 3,
+          "text": "Efficiency",
+          "line": 390
+        },
+        {
+          "level": 3,
+          "text": "Performance",
+          "line": 408
+        },
+        {
+          "level": 2,
+          "text": "Recovery",
+          "line": 456
+        },
+        {
+          "level": 3,
+          "text": "Consistency Checking",
+          "line": 461
+        },
+        {
+          "level": 3,
+          "text": "Log-Structured File Systems",
+          "line": 490
+        },
+        {
+          "level": 3,
+          "text": "Backup and Restore",
+          "line": 514
+        }
+      ]
+    },
+    {
+      "chapter_key": "15",
+      "file": "15-File-System Internals.md",
+      "sha256": "92bdb71b45fe5a6d9275fe51f8dba81a40e360aeadec491de412c20051951fef",
+      "headings": [
+        {
+          "level": 1,
+          "text": "File-System Internals",
+          "line": 1
+        },
+        {
+          "level": 2,
+          "text": "File-System Mounting",
+          "line": 14
+        },
+        {
+          "level": 2,
+          "text": "Partitions and Mounting",
+          "line": 30
+        },
+        {
+          "level": 2,
+          "text": "File Sharing",
+          "line": 43
+        },
+        {
+          "level": 2,
+          "text": "Virtual File Systems",
+          "line": 57
+        },
+        {
+          "level": 2,
+          "text": "Remote File Systems",
+          "line": 98
+        },
+        {
+          "level": 3,
+          "text": "The Client-Server Model",
+          "line": 100
+        },
+        {
+          "level": 3,
+          "text": "Distributed Information Systems",
+          "line": 102
+        },
+        {
+          "level": 3,
+          "text": "Failure Modes",
+          "line": 104
+        },
+        {
+          "level": 2,
+          "text": "Consistency Semantics",
+          "line": 106
+        },
+        {
+          "level": 3,
+          "text": "UNIX Semantics",
+          "line": 108
+        },
+        {
+          "level": 3,
+          "text": "Sessions Semantics",
+          "line": 110
+        },
+        {
+          "level": 3,
+          "text": "Immutable-Shared-Files Semantics",
+          "line": 112
+        },
+        {
+          "level": 2,
+          "text": "NFS",
+          "line": 114
+        },
+        {
+          "level": 3,
+          "text": "The Mount Protocol",
+          "line": 116
+        },
+        {
+          "level": 3,
+          "text": "The NFS Protocol",
+          "line": 118
+        },
+        {
+          "level": 3,
+          "text": "Path-Name Translation",
+          "line": 120
+        },
+        {
+          "level": 3,
+          "text": "Remote Operations",
+          "line": 122
+        }
+      ]
+    }
+  ]
+}
