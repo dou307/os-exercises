@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧭 备考指南与资源 · 考研408操作系统</title>
+<link rel="stylesheet" href="../assets/style.css">
+
+</head>
+<body>
+<header class="topbar">
+<button class="menu-btn" aria-label="打开目录">☰</button>
+<a class="brand" href="../index.html"><span class="logo">OS</span>408 操作系统带学</a>
+<div class="search-wrap">
+<input id="searchBox" class="search-box" type="search" placeholder="搜索全站…（如：银行家 / LRU）" autocomplete="off">
+<div id="searchDrop" class="search-drop"></div>
+</div>
+<button id="searchBtn" class="menu-btn search-open-btn" aria-label="搜索">🔍</button>
+<nav class="crumbs">首页 <span class="sep">/</span> 复习工具 <span class="sep">/</span> 🧭 备考指南与资源</nav>
+<div class="read-progress" id="readProgress"></div>
+</header>
+<div id="searchOverlay" class="search-overlay">
+<div class="search-panel">
+<div class="sp-head"><input id="searchInput" type="search" placeholder="搜索全站：银行家 / LRU / 快表 / 甘特图…"><button id="searchClose" class="menu-btn" aria-label="关闭">✕</button></div>
+<div id="searchResults" class="search-results"></div>
+</div>
+</div>
+<div class="sidebar-mask"></div>
+<div class="layout">
+<aside class="sidebar" id="sidebar">
+<div class="side-label">目 录</div><a class="nav-home" href="../index.html"><span>🏠</span> 首页 · 考纲对照</a>
+<details class="nav-group"><summary><span class="ch-no">第1章</span> 计算机系统概述</summary><div class="nav-links"><a href="../ch1/index.html" data-rel="ch1/index.html">📋 本章导学</a><a href="../ch1/s1-1.html" data-rel="ch1/s1-1.html">1.1 操作系统的基本概念</a><a href="../ch1/s1-2.html" data-rel="ch1/s1-2.html">1.2 操作系统发展历程</a><a href="../ch1/s1-3.html" data-rel="ch1/s1-3.html">1.3 操作系统的运行环境</a><a href="../ch1/s1-4.html" data-rel="ch1/s1-4.html">1.4 操作系统结构</a><a href="../ch1/s1-5.html" data-rel="ch1/s1-5.html">1.5 操作系统引导</a><a href="../ch1/s1-6.html" data-rel="ch1/s1-6.html">1.6 虚拟机</a><a href="../ch1/s1-7.html" data-rel="ch1/s1-7.html">1.7 本章疑难点</a><a href="../ch1/quiz.html" quiz-link data-rel="ch1/quiz.html">✏️ 本章习题（选择+综合）</a></div></details>
+<details class="nav-group"><summary><span class="ch-no">第2章</span> 进程与线程</summary><div class="nav-links"><a href="../ch2/index.html" data-rel="ch2/index.html">📋 本章导学</a><a href="../ch2/s2-1.html" data-rel="ch2/s2-1.html">2.1 进程与线程简介</a><a href="../ch2/s2-2.html" data-rel="ch2/s2-2.html">2.2 CPU调度</a><a href="../ch2/s2-3.html" data-rel="ch2/s2-3.html">2.3 同步与互斥</a><a href="../ch2/s2-4.html" data-rel="ch2/s2-4.html">2.4 死锁</a><a href="../ch2/s2-5.html" data-rel="ch2/s2-5.html">2.5 本章疑难点</a><a href="../ch2/quiz.html" quiz-link data-rel="ch2/quiz.html">✏️ 本章习题（选择+综合）</a></div></details>
+<details class="nav-group"><summary><span class="ch-no">第3章</span> 内存管理</summary><div class="nav-links"><a href="../ch3/index.html" data-rel="ch3/index.html">📋 本章导学</a><a href="../ch3/s3-1.html" data-rel="ch3/s3-1.html">3.1 内存管理概念</a><a href="../ch3/s3-2.html" data-rel="ch3/s3-2.html">3.2 虚拟内存管理</a><a href="../ch3/s3-3.html" data-rel="ch3/s3-3.html">3.3 本章疑难点</a><a href="../ch3/quiz.html" quiz-link data-rel="ch3/quiz.html">✏️ 本章习题（选择+综合）</a></div></details>
+<details class="nav-group"><summary><span class="ch-no">第4章</span> 文件管理</summary><div class="nav-links"><a href="../ch4/index.html" data-rel="ch4/index.html">📋 本章导学</a><a href="../ch4/s4-1.html" data-rel="ch4/s4-1.html">4.1 文件系统基础</a><a href="../ch4/s4-2.html" data-rel="ch4/s4-2.html">4.2 目录与文件</a><a href="../ch4/s4-3.html" data-rel="ch4/s4-3.html">4.3 文件系统</a><a href="../ch4/s4-4.html" data-rel="ch4/s4-4.html">4.4 本章疑难点</a><a href="../ch4/quiz.html" quiz-link data-rel="ch4/quiz.html">✏️ 本章习题（选择+综合）</a></div></details>
+<details class="nav-group"><summary><span class="ch-no">第5章</span> 输入/输出管理</summary><div class="nav-links"><a href="../ch5/index.html" data-rel="ch5/index.html">📋 本章导学</a><a href="../ch5/s5-1.html" data-rel="ch5/s5-1.html">5.1 I/O管理概述</a><a href="../ch5/s5-2.html" data-rel="ch5/s5-2.html">5.2 设备独立性软件</a><a href="../ch5/s5-3.html" data-rel="ch5/s5-3.html">5.3 磁盘和固态硬盘</a><a href="../ch5/s5-4.html" data-rel="ch5/s5-4.html">5.4 本章疑难点</a><a href="../ch5/quiz.html" quiz-link data-rel="ch5/quiz.html">✏️ 本章习题（选择+综合）</a></div></details>
+<details class="nav-group" open><summary><span class="ch-no">工具</span> 复习工具箱</summary><div class="nav-links"><a href="../ref/exam-stats.html" data-rel="ref/exam-stats.html">📊 真题考点统计</a><a href="../ref/mixups.html" data-rel="ref/mixups.html">🤔 易混淆概念速查</a><a href="../ref/formulas.html" data-rel="ref/formulas.html">📐 公式与结论速查卡</a><a href="../ref/guide.html" active data-rel="ref/guide.html">🧭 备考指南与资源</a></div></details>
+<div class="side-foot">基于王道《操作系统考研复习指导》整理<br>章节目录与教材书签一一对应</div>
+</aside>
+<div class="content-wrap">
+<main>
+<article>
+<h1>🧭 备考指南与资源</h1>
+<p>本页回答三个问题：408 里操作系统<strong>考多少分、考什么</strong>；本站 5 章 23 节正文、760 道习题精析、135 幅教材插图<strong>怎么用</strong>；考前<strong>怎么冲刺</strong>。第一次来建议通读本页，之后每轮复习开始时回来对照一次进度。</p>
+
+<h2 id="toc-1">考试定位</h2>
+<p>408 计算机学科专业基础综合满分 <strong>150 分</strong>：单项选择题 <strong>40 题 × 2 分 = 80 分</strong>，综合应用题 <strong>70 分</strong>，四科合卷。</p>
+<table>
+<tr><th>科目</th><th>大致分值</th><th>题型构成</th></tr>
+<tr><td>数据结构</td><td>—</td><td>选择 + 综合</td></tr>
+<tr><td>计算机组成原理</td><td>—</td><td>选择 + 综合（与操作系统有交叉考点）</td></tr>
+<tr><td><strong>操作系统</strong>（本站范围）</td><td><strong>约 35 分</strong></td><td>通常 <strong>10 道选择题 + 2 道综合题</strong></td></tr>
+<tr><td>计算机网络</td><td>—</td><td>选择 + 综合</td></tr>
+</table>
+<p>「—」表示该科分值历年略有浮动，此处不给出具体数，以当年考试大纲为准（其余三科合计约 115 分）。操作系统这 35 分的构成：选择题 10 × 2 = <strong>20 分</strong>，两道综合题约 <strong>15 分</strong>——综合题数量少、单题分高，是必须专项突破的部分。</p>
+
+<h3 id="toc-2">命题重心</h3>
+<ul>
+<li><strong>进程管理</strong>（PV 同步、调度、死锁银行家算法）、<strong>内存管理</strong>（地址变换、页面置换）、<strong>文件管理</strong>（物理结构、索引）三块合计占操作系统分值 <strong>80% 以上</strong>，复习时间应向这里倾斜。</li>
+<li><strong>进程状态转换类综合题高频</strong>：这类题往往把调度、PV、状态转换揉在一起出大题，对应本站 <a href="../ch2/s2-1.html">2.1 进程与线程简介</a>、<a href="../ch2/s2-2.html">2.2 CPU 调度</a>、<a href="../ch2/s2-3.html">2.3 同步与互斥</a>。</li>
+<li><strong>与组成原理的交叉考点</strong>：存储层次、DMA 与中断、Cache 与页表协同（<a href="../ch3/s3-2.html">3.2.9 地址翻译的示例</a> 一类题），常两科联合命题，第三轮要专门串一遍。</li>
+</ul>
+<div class="callout kao"><span class="callout-title">考点</span>综合题几乎每年都落在进程管理与内存管理两块，文件管理与 I/O 以选择题为主。把第 2、3 章练到能独立画图列式，35 分的大头就拿稳了。</div>
+
+<h2 id="toc-3">三轮复习路径</h2>
+<p>三轮合计约 9–12 周，节奏可按自己的总复习计划伸缩，但<strong>顺序不要乱</strong>：先懂、再练、最后收口。</p>
+
+<h3 id="toc-4">第一轮 · 打基础（约 4–6 周）</h3>
+<ul>
+<li>按<strong>第1章 → 第5章</strong>的顺序过本站正文：每章先打开「📋 本章导学」看考纲要求与章节地图，再逐节学正文页，学完一章不急着做题，先把框架立住。</li>
+<li>每节看完文字后对照<strong>教材插图</strong>（全站 135 幅，图注标有图号与教材页码）：请求分页、中断处理、磁盘结构这类机制，看图理解比反复读字快得多。</li>
+<li>标题带 <span class="badge extra">课外拓展</span> 的内容（如 3.2.5 抖动和工作集）<strong>第一轮直接跳过</strong>——不在 408 考纲内，等考前有余力再看。</li>
+<li>目标定在「看懂」而非「记住」：能合上页面复述每节讲了什么机制即可，记忆巩固交给第二轮刷题。</li>
+<li>每学完一节在站点<strong>打卡</strong>记录进度，第二天从上次的位置继续；长页面可看页顶阅读进度条确认断点。</li>
+</ul>
+
+<h3 id="toc-5">第二轮 · 刷题（约 3–4 周）</h3>
+<ul>
+<li>每章打开「✏️ 本章习题」，选择题<strong>先做后展开</strong>：答案默认折叠，天然就是自测模式——限时做完一节，再逐题点开解析对答案。</li>
+<li><strong>错题回正文</strong>：解析没读懂就从左侧目录点回对应小节重读，并把错题记进自己的错题本，第三轮直接重做；这一步比刷新题更重要。</li>
+<li>综合题重点练<strong>第2章</strong>（调度甘特图、PV 伪代码、银行家算法逐轮推演）与<strong>第3章</strong>（地址变换、页面置换表），每道题对照解析<strong>亲手重画重算一遍</strong>，本站综合题解析把每张表、每步换算都写全了，照着演算一遍才算练到。</li>
+<li>打开「<a href="exam-stats.html">📊 真题考点统计</a>」定位高频小节：真题收录最密的是同步与互斥综合题（26 题）、4.2 目录与文件（22 题）、2.2 CPU 调度（21 题）、3.2 虚拟内存管理（19 题）——时间不够就优先刷这些。</li>
+<li>想不起的概念用站点<strong>搜索</strong>直接定位到小节，不要凭印象乱翻。</li>
+</ul>
+
+<h3 id="toc-6">第三轮 · 冲刺（约 2 周）</h3>
+<ul>
+<li><strong>不再通读正文</strong>，材料只留三样：「🤔 易混淆概念速查」＋「📐 公式速查卡」＋ 自己的错题本。</li>
+<li>各章「本章疑难点」页（<a href="../ch1/s1-7.html">1.7</a> / <a href="../ch2/s2-5.html">2.5</a> / <a href="../ch3/s3-3.html">3.3</a> / <a href="../ch4/s4-4.html">4.4</a> / <a href="../ch5/s5-4.html">5.4</a>）快速过一遍，专治选择题里的概念陷阱。</li>
+<li><strong>交叉考点串一遍</strong>（OS ＋ 组成原理）：存储层次、DMA 与中断、Cache 与页表协同（3.2.9 类题），对照两科的讲义把术语和流程对齐。</li>
+<li>保持手感：每天限时做一组选择题＋至少 1 道综合题，按「先易后难、算不出的先跳」的考场节奏练。</li>
+</ul>
+
+<h2 id="toc-7">各章复习侧重</h2>
+<p>「分值感受」列以王道做题本历年统考真题在各章的收录题数为客观参照（详见<a href="exam-stats.html">📊 真题考点统计</a>）。</p>
+<div class="table-scroll"><table>
+<tr><th>章</th><th>分值感受</th><th>选择题主攻</th><th>综合题主攻</th><th>本站工具页</th></tr>
+<tr><td>第1章 计算机系统概述</td><td>真题收录 27 题，全书最少</td><td>四大特征、运行环境、中断/异常/系统调用辨析</td><td>基本不出综合题，以选择为主</td><td><a href="../ch1/s1-7.html">1.7 本章疑难点</a></td></tr>
+<tr><td>第2章 进程与线程</td><td><strong>真题收录 87 题，全书最高</strong></td><td>进程状态转换、调度算法计算、信号量性质</td><td><strong>调度甘特图 / PV 伪代码 / 银行家算法</strong></td><td><a href="../ch2/s2-5.html">2.5 本章疑难点</a>＋<a href="exam-stats.html">真题考点统计</a></td></tr>
+<tr><td>第3章 内存管理</td><td>真题收录 42 题，第二高</td><td>地址变换计算、置换算法对比、虚存概念</td><td><strong>地址变换 / 页面置换表 / EAT</strong></td><td><a href="../ch3/s3-3.html">3.3 本章疑难点</a></td></tr>
+<tr><td>第4章 文件管理</td><td>真题收录 34 题</td><td>文件物理结构、索引与混合索引计算、目录与 FCB</td><td>以选择为主</td><td><a href="../ch4/s4-4.html">4.4 本章疑难点</a></td></tr>
+<tr><td>第5章 输入/输出管理</td><td>真题收录 28 题</td><td>I/O 控制方式、磁盘调度与访问时间计算</td><td>以选择为主</td><td><a href="../ch5/s5-4.html">5.4 本章疑难点</a></td></tr>
+</table></div>
+
+<h2 id="toc-8">常见误区</h2>
+<ul>
+<li><strong>只背概念不动手画。</strong>甘特图、页面置换表、银行家安全性检查表，考场上都是「画出来才能算分」的题；本站综合题解析里的每张表都应亲手重演一遍，看懂 ≠ 会画。</li>
+<li><strong>PV 操作只看不写。</strong>信号量初值、每个 P/V 的摆放位置、各自的物理含义，必须能从一张空白纸写出完整伪代码；本站 PV 综合题解析附完整伪代码与信号量含义表，专门供你写完对照。</li>
+<li><strong>忽视单位与位数换算。</strong>地址变换题里 4KB 即 2 的 12 次方、页内偏移占 12 位——一步换算错，后面全错。养成习惯：每步写出数值、单位与位数（本站 3.2.9 及综合题解析均按此格式逐步演算）。</li>
+<li><strong>把「不安全状态」当「死锁」。</strong>进入不安全状态只是<strong>可能</strong>死锁，并非已经死锁——这是选择题最爱设的坑；<a href="../ch2/s2-4.html">2.4 死锁</a>正文与本章习题解析对此有专门辨析，错过的同学务必回看。</li>
+<li><strong>只刷题不复盘。</strong>760 道题刷完不整理等于白刷：错题要回到对应小节正文，分清是概念错还是计算错，第三轮重做验证才算闭环。</li>
+<li><strong>交叉考点当新知识学。</strong>Cache 与页表协同、DMA 与中断在组成原理里已学过，复习操作系统时只需把两科表述对齐，不必另起炉灶重学一遍。</li>
+</ul>
+
+<h2 id="toc-9">外部资源</h2>
+<ul>
+<li><strong>B 站「王道计算机考研 操作系统」官方视频课</strong>——与本站章节一一对应。</li>
+<li><strong>王道《操作系统考研复习指导》纸质书</strong>——本站母本。</li>
+<li><strong>中国大学 MOOC 各校操作系统国家级精品课</strong>——课后加深理解用。</li>
+</ul>
+
+</article>
+<footer class="site-footer">本站为个人学习笔记，基于王道《操作系统考研复习指导》整理，仅供学习交流；插图版权归原书作者所有。</footer>
+</main>
+</div>
+<nav class="toc" aria-label="本页目录"><div class="toc-title">本页目录</div><ul><li class="lv2"><a href="#toc-1">考试定位</a></li><li class="lv3"><a href="#toc-2">命题重心</a></li><li class="lv2"><a href="#toc-3">三轮复习路径</a></li><li class="lv3"><a href="#toc-4">第一轮 · 打基础（约 4–6 周）</a></li><li class="lv3"><a href="#toc-5">第二轮 · 刷题（约 3–4 周）</a></li><li class="lv3"><a href="#toc-6">第三轮 · 冲刺（约 2 周）</a></li><li class="lv2"><a href="#toc-7">各章复习侧重</a></li><li class="lv2"><a href="#toc-8">常见误区</a></li><li class="lv2"><a href="#toc-9">外部资源</a></li></ul></nav>
+</div>
+<button class="to-top" id="toTop" aria-label="返回顶部">↑</button>
+<script>
+(function(){
+"use strict";
+function rel(url){var m=location.pathname.match(/kaoyan-408-os\/(.*)$/);var r=m?m[1]:url.split('/').slice(-2).join('/');return decodeURIComponent(r||'index.html');}
+function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');localStorage.setItem(k,JSON.stringify(v));}catch(e){return null;}}
+/* ---- 目录抽屉 ---- */
+var btn=document.querySelector('.menu-btn');
+if(btn)btn.addEventListener('click',function(){document.body.classList.toggle('nav-open')});
+var mask=document.querySelector('.sidebar-mask');
+if(mask)mask.addEventListener('click',function(){document.body.classList.remove('nav-open')});
+document.querySelectorAll('.sidebar a').forEach(function(a){a.addEventListener('click',function(){document.body.classList.remove('nav-open')})});
+/* ---- 阅读进度条 + 返回顶部 ---- */
+var bar=document.getElementById('readProgress');
+var toTop=document.getElementById('toTop');
+function onScroll(){var h=document.documentElement;var max=h.scrollHeight-h.clientHeight;
+if(bar&&max>0)bar.style.width=(h.scrollTop/max*100)+'%';
+if(toTop)toTop.classList.toggle('show',h.scrollTop>600);}
+window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+if(toTop)toTop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+/* ---- 键盘翻页 ---- */
+document.addEventListener('keydown',function(e){
+if((e.target&&e.target.matches&&e.target.matches('input,textarea,select'))||e.metaKey||e.ctrlKey||e.altKey)return;
+var pager=document.querySelector('.pager');if(!pager)return;
+var as=pager.querySelectorAll('a');if(as.length<1)return;
+if(e.key==='ArrowRight'&&as[as.length-1])location.href=as[as.length-1].href;
+if(e.key==='ArrowLeft'&&as[0])location.href=as[0].href;
+});
+/* ---- 学习打卡 ---- */
+try{
+var KEY='os408-done';var cur=rel(location.href);
+var done=store(KEY)||{};var list=document.querySelectorAll('.sidebar a[data-rel]');
+function paint(){var done=store(KEY)||{};list.forEach(function(a){var r=a.getAttribute('data-rel');
+var mark=a.querySelector('.done-mark');
+if(done[r]&&!mark){var s=document.createElement('span');s.className='done-mark';s.textContent=' ✓';a.appendChild(s);}
+if(!done[r]&&mark)mark.remove();});}
+var host=document.querySelector('main article')||document.querySelector('main');
+if(host&&!/index\.html$/.test(location.href)||location.pathname.endsWith('quiz.html')){
+var b=document.createElement('button');b.className='done-btn';b.type='button';
+b.textContent=done[cur]?'✓ 本页已学完（点击取消）':'○ 标记本页已学完';
+b.addEventListener('click',function(){var d=store(KEY)||{};if(d[cur]){delete d[cur];b.textContent='○ 标记本页已学完';b.classList.remove('is-done');}
+else{d[cur]=1;b.textContent='✓ 本页已学完（点击取消）';b.classList.add('is-done');}
+store(KEY,d);paint();});
+if(done[cur])b.classList.add('is-done');
+host.appendChild(b);
+}
+paint();
+}catch(e){}
+/* ---- 选择题自测模式 ---- */
+try{
+if(document.querySelector('details.qa')){
+var qs=[];document.querySelectorAll('details.qa').forEach(function(d){
+var tag=d.querySelector('.answer-tag');if(!tag)return;
+var ans=(tag.textContent||'').replace(/\s+/g,'').match(/^答案：([A-D])$/);
+if(!ans)return;
+var p=d.previousElementSibling;
+while(p&&!(p.tagName==='P'&&/^[\s\S]*?A[.．、]/.test(p.textContent)))p=p.previousElementSibling;
+if(!p)return;
+var m=p.textContent.match(/A[.．、]([\s\S]*?)B[.．、]([\s\S]*?)C[.．、]([\s\S]*?)D[.．、]([\s\S]*)$/);
+if(!m)return;
+qs.push({d:d,p:p,ans:ans[1],opts:m});
+});
+if(qs.length){
+var host2=document.querySelector('main');
+var panel=document.createElement('div');panel.className='quiz-panel';
+panel.innerHTML='<div class="qp-row"><b>自测模式</b><span class="qp-stat" id="qpStat">点击选项即判分，进度自动保存</span><button type="button" class="qp-reset" id="qpReset">重置本页记录</button></div>';
+host2.insertBefore(panel,host2.firstChild);
+var KEY2='os408-quiz-'+cur;
+function stat(){var rec=store(KEY2)||{};var n=0,c=0;for(var k in rec){n++;c+=rec[k];}
+var el=document.getElementById('qpStat');
+if(el)el.textContent=n?('已作答 '+n+'/'+qs.length+' 题 · 正确 '+c+' 题 · 正确率 '+(n?Math.round(c/n*100):0)+'%'):'点击选项即判分，进度自动保存';}
+function bind(){
+var rec=store(KEY2)||{};
+qs.forEach(function(q,i){
+if(q._bound)return;q._bound=1;
+var box=document.createElement('div');box.className='opt-row';
+q.opts.slice(1).forEach(function(txt,j){
+var k='ABCD'[j];var bt=document.createElement('button');
+bt.type='button';bt.className='opt';bt.dataset.k=k;bt.textContent=k+'. '+txt.replace(/^\s+/,'');
+bt.addEventListener('click',function(){
+if(box.classList.contains('answered'))return;
+box.classList.add('answered');
+var ok=k===q.ans;
+bt.classList.add(ok?'right':'wrong');
+if(!ok)box.querySelectorAll('.opt').forEach(function(o){if(o.dataset.k===q.ans)o.classList.add('right');});
+q.d.setAttribute('open','');
+var rec2=store(KEY2)||{};rec2[i]=ok?1:0;store(KEY2,rec2);stat();
+});
+box.appendChild(bt);
+});
+q.p.style.display='none';q.p.parentNode.insertBefore(box,q.p.nextSibling);
+if(rec[i]!==undefined){box.classList.add('answered');
+box.querySelectorAll('.opt').forEach(function(o){if(o.dataset.k===q.ans)o.classList.add('right');else if(o.textContent[0]&&!o.classList.contains('right'))o.classList.add('dim');});}
+});
+}
+var rs=document.getElementById('qpReset');
+if(rs)rs.addEventListener('click',function(){store(KEY2,{});location.reload();});
+stat();bind();
+}
+}
+}catch(e){}
+/* ---- 全站搜索 ---- */
+try{
+var sbox=document.getElementById('searchBox');
+var sbtn=document.getElementById('searchBtn');
+var ovl=document.getElementById('searchOverlay');
+var oin=document.getElementById('searchInput');
+var ores=document.getElementById('searchResults');
+var IDX=null;
+function root(){var m=location.pathname.match(/^(.*kaoyan-408-os\/)/);return m?m[1]:'/';}
+function load(cb){if(IDX)return cb();fetch(root()+'search-index.json').then(function(r){return r.json()}).then(function(d){IDX=d;cb();}).catch(function(){});}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function run(q){
+if(!IDX||!q||q.replace(/\s/g,'').length<1){ores.innerHTML='<div class="sr-hint">输入关键词，如：银行家 / LRU / 快表 / 甘特图</div>';return;}
+var hits=[];
+IDX.forEach(function(it){
+var t=it.t.indexOf(q)>=0, x=it.x.indexOf(q)>=0;
+if(t||x){var pos=Math.max(0,it.x.indexOf(q)-30);
+hits.push({u:it.u,t:it.t,ctx:it.x.slice(pos,pos+70),score:(t?100:0)+(x?10:0)+ (it.t.indexOf('第')===0?0:5)});}
+});
+hits.sort(function(a,b){return b.score-a.score;});
+ores.innerHTML=hits.length?hits.slice(0,14).map(function(h){
+return '<a class="sr-item" href="'+root()+h.u+'"><b>'+esc(h.t)+'</b><span>'+esc(h.ctx)+'</span></a>';}).join('')
+:'<div class="sr-hint">没有匹配「'+esc(q)+'」的页面</div>';
+}
+function openOvl(){ovl.classList.add('show');setTimeout(function(){oin.focus();},50);}
+function closeOvl(){ovl.classList.remove('show');}
+if(sbtn)sbtn.addEventListener('click',function(){load(function(){openOvl();run(oin.value);});});
+if(sbox)sbox.addEventListener('focus',function(){load();});
+if(sbox)sbox.addEventListener('input',function(){var v=sbox.value;load(function(){dropShow(v);});});
+var drop=document.getElementById('searchDrop');
+function dropShow(q){
+if(!IDX||!q||q.replace(/\s/g,'').length<1){drop.classList.remove('show');return;}
+var hits=[];IDX.forEach(function(it){var t=it.t.indexOf(q)>=0,x=it.x.indexOf(q)>=0;if(t||x)hits.push({u:it.u,t:it.t,score:(t?100:0)+10});});
+hits.sort(function(a,b){return b.score-a.score;});
+if(!hits.length){drop.classList.remove('show');return;}
+drop.innerHTML=hits.slice(0,10).map(function(h){return '<a href="'+root()+h.u+'">'+esc(h.t)+'</a>';}).join('');
+drop.classList.add('show');
+}
+document.addEventListener('click',function(e){if(drop&&!drop.contains(e.target)&&e.target!==sbox)drop.classList.remove('show');});
+[oin].forEach(function(i){if(!i)return;
+i.addEventListener('input',function(){run(i.value);});
+i.addEventListener('keydown',function(e){if(e.key==='Escape')closeOvl();});});
+if(ovl){ovl.addEventListener('click',function(e){if(e.target===ovl)closeOvl();});
+var oc=document.getElementById('searchClose');if(oc)oc.addEventListener('click',closeOvl);}
+}catch(e){}
+})();
+</script>
+</body>
+</html>

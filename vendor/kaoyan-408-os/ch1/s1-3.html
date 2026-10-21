@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.3 操作系统的运行环境 · 考研408操作系统</title>
+<link rel="stylesheet" href="../assets/style.css">
+
+</head>
+<body>
+<header class="topbar">
+<button class="menu-btn" aria-label="打开目录">☰</button>
+<a class="brand" href="../index.html"><span class="logo">OS</span>408 操作系统带学</a>
+<div class="search-wrap">
+<input id="searchBox" class="search-box" type="search" placeholder="搜索全站…（如：银行家 / LRU）" autocomplete="off">
+<div id="searchDrop" class="search-drop"></div>
+</div>
+<button id="searchBtn" class="menu-btn search-open-btn" aria-label="搜索">🔍</button>
+<nav class="crumbs"><a href="../index.html">首页</a> <span class="sep">/</span> <a href="../ch1/index.html">第1章 计算机系统概述</a> <span class="sep">/</span> 1.3 操作系统的运行环境</nav>
+<div class="read-progress" id="readProgress"></div>
+</header>
+<div id="searchOverlay" class="search-overlay">
+<div class="search-panel">
+<div class="sp-head"><input id="searchInput" type="search" placeholder="搜索全站：银行家 / LRU / 快表 / 甘特图…"><button id="searchClose" class="menu-btn" aria-label="关闭">✕</button></div>
+<div id="searchResults" class="search-results"></div>
+</div>
+</div>
+<div class="sidebar-mask"></div>
+<div class="layout">
+<aside class="sidebar" id="sidebar">
+<div class="side-label">目 录</div><a class="nav-home" href="../index.html"><span>🏠</span> 首页 · 考纲对照</a>
+<details class="nav-group" open><summary><span class="ch-no">第1章</span> 计算机系统概述</summary><div class="nav-links"><a href="../ch1/index.html" data-rel="ch1/index.html">📋 本章导学</a><a href="../ch1/s1-1.html" data-rel="ch1/s1-1.html">1.1 操作系统的基本概念</a><a href="../ch1/s1-2.html" data-rel="ch1/s1-2.html">1.2 操作系统发展历程</a><a href="../ch1/s1-3.html" active data-rel="ch1/s1-3.html">1.3 操作系统的运行环境</a><a href="../ch1/s1-4.html" data-rel="ch1/s1-4.html">1.4 操作系统结构</a><a href="../ch1/s1-5.html" data-rel="ch1/s1-5.html">1.5 操作系统引导</a><a href="../ch1/s1-6.html" data-rel="ch1/s1-6.html">1.6 虚拟机</a><a href="../ch1/s1-7.html" data-rel="ch1/s1-7.html">1.7 本章疑难点</a><a href="../ch1/quiz.html" quiz-link data-rel="ch1/quiz.html">✏️ 本章习题（选择+综合）</a></div></details>
+<details class="nav-group"><summary><span class="ch-no">第2章</span> 进程与线程</summary><div class="nav-links"><a href="../ch2/index.html" data-rel="ch2/index.html">📋 本章导学</a><a href="../ch2/s2-1.html" data-rel="ch2/s2-1.html">2.1 进程与线程简介</a><a href="../ch2/s2-2.html" data-rel="ch2/s2-2.html">2.2 CPU调度</a><a href="../ch2/s2-3.html" data-rel="ch2/s2-3.html">2.3 同步与互斥</a><a href="../ch2/s2-4.html" data-rel="ch2/s2-4.html">2.4 死锁</a><a href="../ch2/s2-5.html" data-rel="ch2/s2-5.html">2.5 本章疑难点</a><a href="../ch2/quiz.html" quiz-link data-rel="ch2/quiz.html">✏️ 本章习题（选择+综合）</a></div></details>
+<details class="nav-group"><summary><span class="ch-no">第3章</span> 内存管理</summary><div class="nav-links"><a href="../ch3/index.html" data-rel="ch3/index.html">📋 本章导学</a><a href="../ch3/s3-1.html" data-rel="ch3/s3-1.html">3.1 内存管理概念</a><a href="../ch3/s3-2.html" data-rel="ch3/s3-2.html">3.2 虚拟内存管理</a><a href="../ch3/s3-3.html" data-rel="ch3/s3-3.html">3.3 本章疑难点</a><a href="../ch3/quiz.html" quiz-link data-rel="ch3/quiz.html">✏️ 本章习题（选择+综合）</a></div></details>
+<details class="nav-group"><summary><span class="ch-no">第4章</span> 文件管理</summary><div class="nav-links"><a href="../ch4/index.html" data-rel="ch4/index.html">📋 本章导学</a><a href="../ch4/s4-1.html" data-rel="ch4/s4-1.html">4.1 文件系统基础</a><a href="../ch4/s4-2.html" data-rel="ch4/s4-2.html">4.2 目录与文件</a><a href="../ch4/s4-3.html" data-rel="ch4/s4-3.html">4.3 文件系统</a><a href="../ch4/s4-4.html" data-rel="ch4/s4-4.html">4.4 本章疑难点</a><a href="../ch4/quiz.html" quiz-link data-rel="ch4/quiz.html">✏️ 本章习题（选择+综合）</a></div></details>
+<details class="nav-group"><summary><span class="ch-no">第5章</span> 输入/输出管理</summary><div class="nav-links"><a href="../ch5/index.html" data-rel="ch5/index.html">📋 本章导学</a><a href="../ch5/s5-1.html" data-rel="ch5/s5-1.html">5.1 I/O管理概述</a><a href="../ch5/s5-2.html" data-rel="ch5/s5-2.html">5.2 设备独立性软件</a><a href="../ch5/s5-3.html" data-rel="ch5/s5-3.html">5.3 磁盘和固态硬盘</a><a href="../ch5/s5-4.html" data-rel="ch5/s5-4.html">5.4 本章疑难点</a><a href="../ch5/quiz.html" quiz-link data-rel="ch5/quiz.html">✏️ 本章习题（选择+综合）</a></div></details>
+<details class="nav-group"><summary><span class="ch-no">工具</span> 复习工具箱</summary><div class="nav-links"><a href="../ref/exam-stats.html" data-rel="ref/exam-stats.html">📊 真题考点统计</a><a href="../ref/mixups.html" data-rel="ref/mixups.html">🤔 易混淆概念速查</a><a href="../ref/formulas.html" data-rel="ref/formulas.html">📐 公式与结论速查卡</a><a href="../ref/guide.html" data-rel="ref/guide.html">🧭 备考指南与资源</a></div></details>
+<div class="side-foot">基于王道《操作系统考研复习指导》整理<br>章节目录与教材书签一一对应</div>
+</aside>
+<div class="content-wrap">
+<main>
+<article>
+<h1>1.3 操作系统的运行环境</h1>
+
+<h2 id="toc-1">1.3.1 操作系统内核</h2>
+<p>现代操作系统普遍采用分层架构：把与硬件紧密相关的模块（中断处理程序、设备驱动程序）、运行频率高的模块（时钟管理、进程调度）以及各模块共用的基础操作，集中放在紧靠硬件的层次并<strong>常驻内存</strong>——这组核心组件就是<strong>操作系统内核</strong>。这样设计有两大目的：一是<strong>保护</strong>核心模块免遭应用程序破坏，二是<strong>提升运行效率</strong>。不同系统内核功能有差异，但大多包含以下两类功能。</p>
+<h3 id="toc-2">1. 支撑功能</h3>
+<p>为操作系统的其他模块提供基础支持，保障系统稳定高效地运行：</p>
+<ol>
+  <li><strong>时钟管理</strong>：时钟是计算机系统的关键部件，功能包括计时和产生定时中断。操作系统借助时钟管理向用户提供标准系统时间，并利用时钟中断实现任务调度——分时系统靠它做时间片轮转的进程切换，实时系统按截止时间控制任务执行，批处理系统用它衡量作业运行进度。系统的大量活动都依赖时钟机制。</li>
+  <li><strong>中断机制</strong>：中断是现代操作系统运行的基础，它让 CPU 在 I/O 期间可以去执行其他指令，从而提高资源利用率。中断来源广泛：键盘输入、鼠标事件、系统调用、设备驱动、文件访问等。中断发生时，内核负责<strong>保存当前进程的现场</strong>，把控制权转交相应的处理程序，处理完再恢复现场，有效提升系统的并发处理能力。</li>
+  <li><strong>原语</strong>：由若干条指令组成、用于完成特定功能的操作，具有<strong>原子性</strong>——执行过程不可被中断、必须一气呵成。原语通常运行在内核态，执行时间短、调用频繁，是保证系统安全性和一致性的重要机制，常见的有进程切换、进程同步、资源分配等。为实现原子性，原语常借助<strong>关闭中断</strong>等手段确保执行不被干扰。</li>
+</ol>
+<h3 id="toc-3">2. 系统资源管理功能</h3>
+<p>操作系统通过进程控制块、设备控制块、内存分配表、缓冲区等核心数据结构统一管理系统资源，内核需提供三类基本管理功能：</p>
+<ol>
+  <li><strong>进程管理</strong>：进程的创建与撤销、状态转换、调度与分派，并维护进程控制块（PCB）等核心数据结构；</li>
+  <li><strong>存储器管理</strong>：内存的分配与回收、地址映射、内存保护及页面置换等，保证多道程序安全高效地共享主存；</li>
+  <li><strong>设备管理</strong>：设备的分配与回收、缓冲区管理、I/O 调度及设备驱动调用，屏蔽硬件差异，为用户提供统一的设备访问接口。</li>
+</ol>
+<div class="callout kao"><span class="callout-title">考点</span>时钟中断服务的内容（2018 真题）与「中断机制在多道程序设计中的作用」（2016 真题）都出过题；「原语=原子性+关中断实现+内核态运行」这三个属性要打包记忆。</div>
+
+<h2 id="toc-4">1.3.2 处理机的双重工作模式</h2>
+<p>为保证操作系统正确运行，必须严格区分操作系统代码与用户程序的执行环境。绝大多数计算机靠硬件支持实现这一点：为处理机设置至少两种独立的运行模式——<strong>用户态</strong>（目态）和<strong>内核态</strong>（管态、系统态），并用一个<strong>模式位</strong>标识当前状态（如 0 表示内核态、1 表示用户态）。</p>
+<p>系统<strong>引导时硬件从内核态开始工作</strong>，完成操作系统加载后切换到用户态执行用户程序；一旦发生中断或陷阱，硬件就<strong>自动</strong>从用户态切换到内核态（模式位置 0）。也就是说：操作系统一获得控制权就处于内核态，而在把控制权交还用户程序之前，会切回用户态（模式位置 1）。</p>
+<p>双重模式通过对指令分类来提供保护：可能危及系统安全的指令被定义为<strong>特权指令</strong>，仅允许在内核态执行；其余为<strong>非特权指令</strong>，可在任意模式下执行。</p>
+<table>
+  <thead><tr><th></th><th>特权指令</th><th>非特权指令</th></tr></thead>
+  <tbody>
+    <tr><td><strong>执行模式</strong></td><td>仅内核态</td><td>用户态、内核态均可</td></tr>
+    <tr><td><strong>地址空间</strong></td><td>可访问全部地址空间（用户空间和系统空间）</td><td>内存访问被限制在用户地址空间</td></tr>
+    <tr><td><strong>典型操作</strong></td><td>启动外设、设置系统时钟、关闭中断、修改模式位或返回用户态等关键操作</td><td>一般计算和数据处理，不能直接操作硬件或系统核心资源</td></tr>
+  </tbody>
+</table>
+<p>上述限制由<strong>硬件强制实施</strong>：用户程序试图执行特权指令时，硬件将产生<strong>非法指令异常</strong>，操作系统捕获后终止该程序并重新调度。</p>
+<div class="callout kao"><span class="callout-title">考点</span>「哪些事件/指令发生在内核态、哪些在用户态」是 2011、2012、2014、2021、2022 多次考查的固定题型。记住三句口诀：内核态能执行完整指令集；用户态只能执行非特权指令；用户态执行特权指令会触发异常而非「悄悄执行」。</div>
+
+<h2 id="toc-5">1.3.3 中断和异常的概念</h2>
+<p>引入双模式后，还要解决两者之间的<strong>安全切换</strong>问题。系统在内核中设立了若干称为「门」的受控入口，用户程序进入内核态的<strong>唯一合法途径就是中断或异常</strong>：CPU 运行用户程序时一旦发生中断（如 I/O 完成）或异常（如系统调用、除零错误），硬件自动切换到内核态并跳转到内核中对应的处理程序，这一机制由硬件强制保障、具有安全性与原子性。</p>
+<p>中断机制之所以关键，源于操作系统不断提升资源利用率的演进逻辑：某程序因等待 I/O 等事件暂时无法继续时，系统须及时将其挂起、调度其他就绪程序运行；在抢占式多任务系统中，这种调度主要靠中断（尤其是<strong>时钟中断</strong>）触发。因此，中断机制是现代操作系统实现高效并发与资源共享的基础。</p>
+<h3 id="toc-6">1. 中断和异常的定义</h3>
+<table>
+  <thead><tr><th></th><th>中断（外中断）</th><th>异常（内中断）</th></tr></thead>
+  <tbody>
+    <tr><td><strong>来源</strong></td><td>CPU 执行指令<strong>外部</strong>的事件</td><td>CPU 执行指令<strong>内部</strong>的事件</td></tr>
+    <tr><td><strong>典型例子</strong></td><td>设备发出的 I/O 结束中断（表示设备 I/O 已完成）、时钟中断（固定时间片已到，用于系统计时、进程调度或启动定时任务）</td><td>非法操作码、地址越界、运算溢出、虚存系统的缺页、专门的陷入指令等</td></tr>
+    <tr><td><strong>可否屏蔽</strong></td><td>分可屏蔽中断与不可屏蔽中断</td><td>一旦发生就必须立即处理，<strong>不可屏蔽</strong></td></tr>
+  </tbody>
+</table>
+<h3 id="toc-7">2. 中断和异常的分类</h3>
+<p><strong>外中断</strong>可分为两类：</p>
+<ul>
+  <li><strong>可屏蔽中断</strong>：通过 INTR 线发出的中断请求，通过改变屏蔽字可以实现多重中断，使中断处理更加灵活；</li>
+  <li><strong>不可屏蔽中断</strong>：通过 NMI 线发出的中断请求，通常是紧急的硬件故障，如电源掉电等。</li>
+</ul>
+<p><strong>异常</strong>可分为三类：</p>
+<ul>
+  <li><strong>故障（Fault）</strong>：由指令执行引起的异常，如非法操作码、缺页故障、除数为 0、运算溢出等；</li>
+  <li><strong>自陷（Trap，也称陷入）</strong>：一种<strong>事先安排</strong>的「异常」事件，用于在用户态下调用操作系统内核程序，如条件陷阱指令、系统调用指令等；</li>
+  <li><strong>终止（Abort）</strong>：出现了使 CPU 无法继续执行的硬件故障，如控制器出错、存储器校验错等。</li>
+</ul>
+<p>按来源归类：故障和自陷属于<strong>软件中断</strong>（程序性异常），终止和外中断属于<strong>硬件中断</strong>。</p>
+<div class="callout kao"><span class="callout-title">考点</span>中断/异常的分类（2016）与「哪类事件属于中断还是异常」（2013、2015）是必考题型：缺页、除零、访管指令 → 异常；I/O 结束、时钟信号 → 中断。注意「缺页」属于异常中的故障，千万别归到中断里。</div>
+<h3 id="toc-8">3. 中断和异常的处理过程</h3>
+<p>大致流程：CPU 在执行用户程序的第 i 条指令时，若该指令引发异常（如缺页、除零），或在指令执行结束后检测到中断请求信号，CPU 就打断当前程序，转入相应的中断/异常处理程序执行。若问题可被处理程序解决：</p>
+<ul>
+  <li>对于<strong>异常</strong>，处理完成后通常<strong>返回第 i 条指令重新执行</strong>（例如缺页处理完成后要重新访问原来的内存地址）；</li>
+  <li>对于<strong>中断</strong>，处理完成后<strong>返回第 i+1 条指令</strong>继续执行。</li>
+</ul>
+<p>若处理程序判定是不可恢复的致命错误，则终止该用户程序。通常情况下，中断和异常的具体处理由操作系统（及设备驱动程序）完成。</p>
+<p><strong>中断处理与子程序调用的比较</strong>（2012 真题），两者形似而神不同：</p>
+<table>
+  <thead><tr><th>比较项</th><th>中断处理</th><th>子程序调用</th></tr></thead>
+  <tbody>
+    <tr><td>程序关系</td><td>中断处理程序与被中断的程序没有固定的主从关系</td><td>子程序与主程序属于同一程序的主从关系</td></tr>
+    <tr><td>发生时机</td><td>通常是<strong>随机</strong>的</td><td>由 CALL 指令显式触发，程序员<strong>事先安排</strong></td></tr>
+    <tr><td>实现手段</td><td>需要硬件电路支持才能完成</td><td>完全由软件实现</td></tr>
+    <tr><td>入口地址</td><td>由<strong>中断向量表</strong>直接提供</td><td>由 CALL 指令中的地址码指定</td></tr>
+    <tr><td>PC 保护</td><td>PC 由<strong>硬件</strong>在中断响应过程中自动保存</td><td>PC 由 CALL 指令在执行时压入栈中</td></tr>
+    <tr><td>优先级裁决</td><td>需对同时到达的多个中断请求进行优先级裁决</td><td>不存在此类操作</td></tr>
+  </tbody>
+</table>
+<div class="callout kao"><span class="callout-title">考点</span>处理过程（2015、2020、2024）最常考「返回到哪条指令」：异常重执行第 i 条、中断执行第 i+1 条；「中断处理和子程序调用的比较」（2012）重点记 PC 的保存者不同——中断靠硬件自动保存，子程序靠 CALL 压栈。</div>
+
+<h2 id="toc-9">1.3.4 系统调用</h2>
+<p><strong>系统调用</strong>是操作系统提供给应用程序（程序员）使用的接口，可视为一种特殊的公共子程序调用。系统中的各种共享资源均由操作系统统一管理，因此凡涉及共享资源的操作——存储分配、I/O 传输、文件管理等——都必须通过系统调用向操作系统提出服务请求，由操作系统代为完成并返回结果，以此保证系统的稳定性和安全性，防止用户非法操作。一个操作系统提供的系统调用通常有几十条乃至上百条，<strong>每个系统调用都有唯一的系统调用号</strong>。</p>
+<h3 id="toc-10">1. 系统调用的分类</h3>
+<p>按功能大致分为五类：</p>
+<ul>
+  <li><strong>设备管理</strong>：完成设备的请求或释放、设备启动等；</li>
+  <li><strong>文件管理</strong>：完成文件的读、写、创建及删除等；</li>
+  <li><strong>进程控制</strong>：完成进程的创建、撤销、阻塞及唤醒等；</li>
+  <li><strong>进程通信</strong>：完成进程之间的消息传递或信号传递等；</li>
+  <li><strong>内存管理</strong>：完成内存的分配、回收，以及获取作业占用内存区的大小和起始地址等。</li>
+</ul>
+<h3 id="toc-11">2. 系统调用与普通过程调用的区别</h3>
+<p>系统调用涉及资源管理、进程管理等关键操作，对系统影响极大，因此<strong>必须由操作系统内核程序在内核态下完成</strong>。它本质上是一种特殊的过程调用，但与普通过程调用有四点显著差异：</p>
+<table>
+  <thead><tr><th>比较项</th><th>系统调用</th><th>普通过程调用</th></tr></thead>
+  <tbody>
+    <tr><td><strong>运行状态</strong></td><td>调用者运行在用户态，被调用者运行在内核态</td><td>调用者与被调用者运行在同一特权级</td></tr>
+    <tr><td><strong>状态转换</strong></td><td>需通过<strong>陷入指令（Trap）</strong>触发，先从用户态切换到内核态，再由内核分派至相应处理程序</td><td>无须特权级切换，可直接跳转</td></tr>
+    <tr><td><strong>返回机制</strong></td><td>执行完毕后，内核可能根据调度策略决定是否切换进程</td><td>总是直接返回原调用点</td></tr>
+    <tr><td><strong>嵌套限制</strong></td><td>嵌套深度受<strong>内核栈空间</strong>限制</td><td>嵌套深度通常仅受用户栈大小约束</td></tr>
+  </tbody>
+</table>
+<h3 id="toc-12">3. 系统调用的处理过程</h3>
+<p>系统调用的执行分四个阶段：</p>
+<ol>
+  <li><strong>传递系统调用参数</strong>：用户程序把系统调用号及所需参数压入堆栈（或通过寄存器），为内核服务做准备；</li>
+  <li><strong>执行陷入指令并切换至内核态</strong>：用户程序执行陷入指令，触发 CPU 从用户态切到内核态，硬件与内核协同保存现场，把 PC、PSW 及通用寄存器内容压入内核堆栈；</li>
+  <li><strong>定位并执行相应服务程序</strong>：内核根据系统调用号查询<strong>系统调用表</strong>，找到对应处理程序的入口地址并执行具体服务逻辑；</li>
+  <li><strong>恢复现场并返回用户态</strong>：服务完成后，内核恢复被中断进程的 CPU 现场，把运行模式切回用户态，将控制权交还用户程序，从断点继续执行。</li>
+</ol>
+<figure>
+  <img src="../assets/ch1/ch1-p031-01.png" loading="lazy" alt="系统调用的执行过程示意图：用户程序在用户态执行、调用系统调用后经陷入进入内核态执行系统调用，完成后返回用户态，模式位在0与1之间切换">
+  <figcaption>图1.4 系统调用的执行过程（王道教材PDF P31）</figcaption>
+</figure>
+<p>整个过程中，用户程序通过执行陷入指令<strong>主动</strong>把 CPU 控制权移交内核，内核完成请求后再把控制权交还——用户程序无法直接执行高危操作，必须经受控接口请求操作系统代为执行，这正是系统安全与稳定的保障。由此可以概括操作系统的运行环境：用户程序运行在受限的用户态，通过系统调用（主动）或异常/中断（被动）两种受控途径进入内核态；内核处理完毕后安全返回用户态。用户态与内核态的隔离构成了现代操作系统安全、高效运行的基础环境。</p>
+<h3 id="toc-13">4. 用户态转向内核态的典型情形</h3>
+<ol>
+  <li>用户程序请求操作系统服务（<strong>系统调用</strong>）；</li>
+  <li>发生<strong>外中断</strong>（如 I/O 完成、时钟信号）；</li>
+  <li>用户程序执行过程中产生<strong>异常</strong>（如除零、缺页）；</li>
+  <li>用户程序<strong>试图执行特权指令</strong>，从而触发异常。</li>
+</ol>
+<p>从内核态返回用户态则由内核通过特定的返回指令（如 IRET）完成，该操作在<strong>内核态执行</strong>。</p>
+<div class="callout kao"><span class="callout-title">考点</span>系统调用的定义与性质（2019、2021、2024）和处理过程（2012、2017、2022、2023）轮番考查：2017 真题考过四阶段的排序（传参数 → 陷入指令 → 执行服务程序 → 返回用户态）；「陷入指令在用户态执行、系统调用服务程序在内核态执行」是反复设坑的细节。</div>
+
+</article>
+<nav class="pager"><a href="../ch1/s1-2.html">← 1.2 操作系统发展历程</a><a href="../ch1/s1-4.html">下一页：1.4 操作系统结构 →</a></nav>
+<footer class="site-footer">本站为个人学习笔记，基于王道《操作系统考研复习指导》整理，仅供学习交流；插图版权归原书作者所有。</footer>
+</main>
+</div>
+<nav class="toc" aria-label="本页目录"><div class="toc-title">本页目录</div><ul><li class="lv2"><a href="#toc-1">1.3.1 操作系统内核</a></li><li class="lv3"><a href="#toc-2">1. 支撑功能</a></li><li class="lv3"><a href="#toc-3">2. 系统资源管理功能</a></li><li class="lv2"><a href="#toc-4">1.3.2 处理机的双重工作模式</a></li><li class="lv2"><a href="#toc-5">1.3.3 中断和异常的概念</a></li><li class="lv3"><a href="#toc-6">1. 中断和异常的定义</a></li><li class="lv3"><a href="#toc-7">2. 中断和异常的分类</a></li><li class="lv3"><a href="#toc-8">3. 中断和异常的处理过程</a></li><li class="lv2"><a href="#toc-9">1.3.4 系统调用</a></li><li class="lv3"><a href="#toc-10">1. 系统调用的分类</a></li><li class="lv3"><a href="#toc-11">2. 系统调用与普通过程调用的区别</a></li><li class="lv3"><a href="#toc-12">3. 系统调用的处理过程</a></li><li class="lv3"><a href="#toc-13">4. 用户态转向内核态的典型情形</a></li></ul></nav>
+</div>
+<button class="to-top" id="toTop" aria-label="返回顶部">↑</button>
+<script>
+(function(){
+"use strict";
+function rel(url){var m=location.pathname.match(/kaoyan-408-os\/(.*)$/);var r=m?m[1]:url.split('/').slice(-2).join('/');return decodeURIComponent(r||'index.html');}
+function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');localStorage.setItem(k,JSON.stringify(v));}catch(e){return null;}}
+/* ---- 目录抽屉 ---- */
+var btn=document.querySelector('.menu-btn');
+if(btn)btn.addEventListener('click',function(){document.body.classList.toggle('nav-open')});
+var mask=document.querySelector('.sidebar-mask');
+if(mask)mask.addEventListener('click',function(){document.body.classList.remove('nav-open')});
+document.querySelectorAll('.sidebar a').forEach(function(a){a.addEventListener('click',function(){document.body.classList.remove('nav-open')})});
+/* ---- 阅读进度条 + 返回顶部 ---- */
+var bar=document.getElementById('readProgress');
+var toTop=document.getElementById('toTop');
+function onScroll(){var h=document.documentElement;var max=h.scrollHeight-h.clientHeight;
+if(bar&&max>0)bar.style.width=(h.scrollTop/max*100)+'%';
+if(toTop)toTop.classList.toggle('show',h.scrollTop>600);}
+window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+if(toTop)toTop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+/* ---- 键盘翻页 ---- */
+document.addEventListener('keydown',function(e){
+if((e.target&&e.target.matches&&e.target.matches('input,textarea,select'))||e.metaKey||e.ctrlKey||e.altKey)return;
+var pager=document.querySelector('.pager');if(!pager)return;
+var as=pager.querySelectorAll('a');if(as.length<1)return;
+if(e.key==='ArrowRight'&&as[as.length-1])location.href=as[as.length-1].href;
+if(e.key==='ArrowLeft'&&as[0])location.href=as[0].href;
+});
+/* ---- 学习打卡 ---- */
+try{
+var KEY='os408-done';var cur=rel(location.href);
+var done=store(KEY)||{};var list=document.querySelectorAll('.sidebar a[data-rel]');
+function paint(){var done=store(KEY)||{};list.forEach(function(a){var r=a.getAttribute('data-rel');
+var mark=a.querySelector('.done-mark');
+if(done[r]&&!mark){var s=document.createElement('span');s.className='done-mark';s.textContent=' ✓';a.appendChild(s);}
+if(!done[r]&&mark)mark.remove();});}
+var host=document.querySelector('main article')||document.querySelector('main');
+if(host&&!/index\.html$/.test(location.href)||location.pathname.endsWith('quiz.html')){
+var b=document.createElement('button');b.className='done-btn';b.type='button';
+b.textContent=done[cur]?'✓ 本页已学完（点击取消）':'○ 标记本页已学完';
+b.addEventListener('click',function(){var d=store(KEY)||{};if(d[cur]){delete d[cur];b.textContent='○ 标记本页已学完';b.classList.remove('is-done');}
+else{d[cur]=1;b.textContent='✓ 本页已学完（点击取消）';b.classList.add('is-done');}
+store(KEY,d);paint();});
+if(done[cur])b.classList.add('is-done');
+host.appendChild(b);
+}
+paint();
+}catch(e){}
+/* ---- 选择题自测模式 ---- */
+try{
+if(document.querySelector('details.qa')){
+var qs=[];document.querySelectorAll('details.qa').forEach(function(d){
+var tag=d.querySelector('.answer-tag');if(!tag)return;
+var ans=(tag.textContent||'').replace(/\s+/g,'').match(/^答案：([A-D])$/);
+if(!ans)return;
+var p=d.previousElementSibling;
+while(p&&!(p.tagName==='P'&&/^[\s\S]*?A[.．、]/.test(p.textContent)))p=p.previousElementSibling;
+if(!p)return;
+var m=p.textContent.match(/A[.．、]([\s\S]*?)B[.．、]([\s\S]*?)C[.．、]([\s\S]*?)D[.．、]([\s\S]*)$/);
+if(!m)return;
+qs.push({d:d,p:p,ans:ans[1],opts:m});
+});
+if(qs.length){
+var host2=document.querySelector('main');
+var panel=document.createElement('div');panel.className='quiz-panel';
+panel.innerHTML='<div class="qp-row"><b>自测模式</b><span class="qp-stat" id="qpStat">点击选项即判分，进度自动保存</span><button type="button" class="qp-reset" id="qpReset">重置本页记录</button></div>';
+host2.insertBefore(panel,host2.firstChild);
+var KEY2='os408-quiz-'+cur;
+function stat(){var rec=store(KEY2)||{};var n=0,c=0;for(var k in rec){n++;c+=rec[k];}
+var el=document.getElementById('qpStat');
+if(el)el.textContent=n?('已作答 '+n+'/'+qs.length+' 题 · 正确 '+c+' 题 · 正确率 '+(n?Math.round(c/n*100):0)+'%'):'点击选项即判分，进度自动保存';}
+function bind(){
+var rec=store(KEY2)||{};
+qs.forEach(function(q,i){
+if(q._bound)return;q._bound=1;
+var box=document.createElement('div');box.className='opt-row';
+q.opts.slice(1).forEach(function(txt,j){
+var k='ABCD'[j];var bt=document.createElement('button');
+bt.type='button';bt.className='opt';bt.dataset.k=k;bt.textContent=k+'. '+txt.replace(/^\s+/,'');
+bt.addEventListener('click',function(){
+if(box.classList.contains('answered'))return;
+box.classList.add('answered');
+var ok=k===q.ans;
+bt.classList.add(ok?'right':'wrong');
+if(!ok)box.querySelectorAll('.opt').forEach(function(o){if(o.dataset.k===q.ans)o.classList.add('right');});
+q.d.setAttribute('open','');
+var rec2=store(KEY2)||{};rec2[i]=ok?1:0;store(KEY2,rec2);stat();
+});
+box.appendChild(bt);
+});
+q.p.style.display='none';q.p.parentNode.insertBefore(box,q.p.nextSibling);
+if(rec[i]!==undefined){box.classList.add('answered');
+box.querySelectorAll('.opt').forEach(function(o){if(o.dataset.k===q.ans)o.classList.add('right');else if(o.textContent[0]&&!o.classList.contains('right'))o.classList.add('dim');});}
+});
+}
+var rs=document.getElementById('qpReset');
+if(rs)rs.addEventListener('click',function(){store(KEY2,{});location.reload();});
+stat();bind();
+}
+}
+}catch(e){}
+/* ---- 全站搜索 ---- */
+try{
+var sbox=document.getElementById('searchBox');
+var sbtn=document.getElementById('searchBtn');
+var ovl=document.getElementById('searchOverlay');
+var oin=document.getElementById('searchInput');
+var ores=document.getElementById('searchResults');
+var IDX=null;
+function root(){var m=location.pathname.match(/^(.*kaoyan-408-os\/)/);return m?m[1]:'/';}
+function load(cb){if(IDX)return cb();fetch(root()+'search-index.json').then(function(r){return r.json()}).then(function(d){IDX=d;cb();}).catch(function(){});}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function run(q){
+if(!IDX||!q||q.replace(/\s/g,'').length<1){ores.innerHTML='<div class="sr-hint">输入关键词，如：银行家 / LRU / 快表 / 甘特图</div>';return;}
+var hits=[];
+IDX.forEach(function(it){
+var t=it.t.indexOf(q)>=0, x=it.x.indexOf(q)>=0;
+if(t||x){var pos=Math.max(0,it.x.indexOf(q)-30);
+hits.push({u:it.u,t:it.t,ctx:it.x.slice(pos,pos+70),score:(t?100:0)+(x?10:0)+ (it.t.indexOf('第')===0?0:5)});}
+});
+hits.sort(function(a,b){return b.score-a.score;});
+ores.innerHTML=hits.length?hits.slice(0,14).map(function(h){
+return '<a class="sr-item" href="'+root()+h.u+'"><b>'+esc(h.t)+'</b><span>'+esc(h.ctx)+'</span></a>';}).join('')
+:'<div class="sr-hint">没有匹配「'+esc(q)+'」的页面</div>';
+}
+function openOvl(){ovl.classList.add('show');setTimeout(function(){oin.focus();},50);}
+function closeOvl(){ovl.classList.remove('show');}
+if(sbtn)sbtn.addEventListener('click',function(){load(function(){openOvl();run(oin.value);});});
+if(sbox)sbox.addEventListener('focus',function(){load();});
+if(sbox)sbox.addEventListener('input',function(){var v=sbox.value;load(function(){dropShow(v);});});
+var drop=document.getElementById('searchDrop');
+function dropShow(q){
+if(!IDX||!q||q.replace(/\s/g,'').length<1){drop.classList.remove('show');return;}
+var hits=[];IDX.forEach(function(it){var t=it.t.indexOf(q)>=0,x=it.x.indexOf(q)>=0;if(t||x)hits.push({u:it.u,t:it.t,score:(t?100:0)+10});});
+hits.sort(function(a,b){return b.score-a.score;});
+if(!hits.length){drop.classList.remove('show');return;}
+drop.innerHTML=hits.slice(0,10).map(function(h){return '<a href="'+root()+h.u+'">'+esc(h.t)+'</a>';}).join('');
+drop.classList.add('show');
+}
+document.addEventListener('click',function(e){if(drop&&!drop.contains(e.target)&&e.target!==sbox)drop.classList.remove('show');});
+[oin].forEach(function(i){if(!i)return;
+i.addEventListener('input',function(){run(i.value);});
+i.addEventListener('keydown',function(e){if(e.key==='Escape')closeOvl();});});
+if(ovl){ovl.addEventListener('click',function(e){if(e.target===ovl)closeOvl();});
+var oc=document.getElementById('searchClose');if(oc)oc.addEventListener('click',closeOvl);}
+}catch(e){}
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+# 本机调查材料、上游 Git 历史镜像、临时文件
+/_work/
+
+# 后续构建和运行产物
+/node_modules/
+/dist/
+/coverage/
+/test-results/
+/playwright-report/
+__pycache__/
+*.pyc
+
+# 本机笔记位置和浏览器学习数据
+/config.local.json
+/personal/progress/
+/personal/exports/
+.env
+.env.*
+!.env.example
+Thumbs.db
+.DS_Store

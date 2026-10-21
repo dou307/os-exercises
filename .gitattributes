@@ -1,0 +1,6 @@
+*.md text eol=lf
+*.py text eol=lf
+*.json text eol=lf
+*.ps1 text eol=lf
+# 放在最后，覆盖上述扩展名规则，保持上游 176 个文件的原始字节。
+/vendor/kaoyan-408-os/** -text
