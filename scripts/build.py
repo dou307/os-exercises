@@ -110,11 +110,13 @@ def main() -> int:
         merged["scoring"] = (
             "excluded"
             if any(e.get("scoring") == "excluded" for e in merged["errata"])
-            else ("self_assess" if q["type"] == "constructed_response" else "auto")
+            else ("auto" if q["type"] == "single_choice" else "self_assess")
         )
         questions.append(merged)
 
     if DIST.exists():
+        if DIST.resolve() != ROOT.resolve() / "dist" or DIST.is_symlink():
+            raise RuntimeError("dist 指向项目外或为链接，停止清理；请检查构建目录")
         shutil.rmtree(DIST)
     (DIST / "data" / "questions").mkdir(parents=True)
 
@@ -201,6 +203,7 @@ def main() -> int:
             {
                 "id": q["id"],
                 "ch": q["primaryChapterId"],
+                "chapterText": next((f"{c['titleZh']} {c['title']}" for c in chapter_meta if c["id"] == q["primaryChapterId"]), ""),
                 "sec": q["source"]["sectionTitle"],
                 "sub": q["source"]["subsectionTitle"],
                 "label": q["source"]["originalLabel"],
@@ -209,7 +212,9 @@ def main() -> int:
                 "status": q["mappingStatus"],
                 "review": q["reviewStatus"],
                 "scoring": q["scoring"],
-                "stem": q["stemText"][:180],
+                # 题干保留全文：索引同时承担搜索语料，截断会让长题干的题搜不到关键词。
+                # 题单里只显示前 90 字，靠 CSS 省略，不需要在数据层裁剪。
+                "stem": q["stemText"],
                 "topics": q["topicIds"],
                 "errata": len(q["errata"]),
                 "answer": q["originalAnswer"],

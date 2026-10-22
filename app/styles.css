@@ -43,6 +43,8 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
+.storage-warning { margin: 12px 16px; }
 
 html, body { margin: 0; padding: 0; }
 
@@ -190,6 +192,7 @@ h3 { font-size: 16px; margin: 0 0 8px; }
 }
 .badge.core { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
 .badge.bridge { background: var(--warn-soft); color: var(--warn); border-color: transparent; }
+.badge.later { background: var(--surface-2); color: var(--text-dim); }
 .badge.supplement { background: var(--surface-2); color: var(--text-dim); }
 .badge.disputed { background: var(--bad-soft); color: var(--bad); border-color: transparent; }
 .badge.ok { background: var(--ok-soft); color: var(--ok); border-color: transparent; }
@@ -306,6 +309,43 @@ h3 { font-size: 16px; margin: 0 0 8px; }
 }
 .pager-bar .pos { color: var(--text-dim); font-size: 14px; font-variant-numeric: tabular-nums; }
 
+/* 练习进度条：位置靠“第 x / y 题”的文字仍然保留，进度条只做视觉提示 */
+.progress {
+  height: 8px; margin-top: 12px; border-radius: 999px;
+  background: var(--surface-2); overflow: hidden;
+}
+.progress .bar {
+  display: block; height: 100%; background: var(--accent);
+  border-radius: 999px; transition: width .18s ease;
+}
+
+/* 题号直达 */
+.jump { display: inline-flex; align-items: center; gap: 6px; }
+.jump-input {
+  width: 78px; padding: 6px 8px; text-align: center;
+  font-family: inherit; font-size: 14px; font-variant-numeric: tabular-nums;
+  border: 1px solid var(--border); border-radius: 8px;
+  background: var(--surface); color: var(--text);
+}
+.kbd-hint { color: var(--text-dim); font-size: 12.5px; margin: 10px 0 0; }
+
+/* 章节题单的本地筛选 */
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  padding: 5px 12px; border-radius: 999px; cursor: pointer;
+  font-family: inherit; font-size: 13px;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text-dim);
+}
+.chip:hover { border-color: var(--accent); color: var(--accent); }
+.chip[aria-pressed="true"] {
+  background: var(--accent-soft); color: var(--accent); border-color: var(--accent); font-weight: 600;
+}
+.chapter-lists { margin-top: 16px; display: grid; gap: 16px; }
+.chapter-lists > .card { margin-top: 0; }
+
+/* 搜索命中高亮 */
+mark { background: var(--warn-soft); color: var(--warn); border-radius: 3px; padding: 0 1px; }
+
 .notice {
   padding: 12px 14px; border-radius: 9px; background: var(--surface-2);
   color: var(--text-dim); font-size: 14px; line-height: 1.7;
@@ -322,6 +362,26 @@ h3 { font-size: 16px; margin: 0 0 8px; }
 }
 .seg button + button { border-left: 1px solid var(--border); }
 .seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+
+/* ---------- 搜索筛选 ---------- */
+.filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 6px 0 14px; }
+.select {
+  padding: 7px 10px; border-radius: 8px; font-family: inherit; font-size: 14px;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text);
+}
+.btn.is-active, .btn.small.is-active {
+  background: var(--accent-soft); color: var(--accent); border-color: var(--accent); font-weight: 600;
+}
+.foot-note { margin: 14px 0 0; font-size: 13px; }
+.answer-hint { color: var(--text-dim); font-size: 14px; margin: 0 0 10px; }
+
+/* 错题回顾：第二列是指向题目的链接，保持与题单一致的行高 */
+.qitem .txt[href]:hover { text-decoration: underline; }
+.qitem .meta .badge[href] { color: var(--text-dim); }
+.qitem .meta .badge[href]:hover { color: var(--accent); text-decoration: none; }
+
+/* 题单行：窄屏下 meta 换到第二行之后，按钮不能把行撑得过高 */
+.qitem .meta .btn.small { padding: 4px 9px; font-size: 12px; }
 
 .toast {
   position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px);
@@ -340,10 +400,10 @@ h3 { font-size: 16px; margin: 0 0 8px; }
   .sidebar {
     position: fixed; inset: 56px auto 0 0; width: min(84vw, 300px);
     max-height: none; border-radius: 0; border-left: 0; border-top: 0;
-    transform: translateX(-102%); transition: transform .2s ease;
+    transform: translateX(-102%); visibility: hidden; transition: transform .2s ease, visibility .2s;
     z-index: 30; box-shadow: var(--shadow);
   }
-  body.nav-open .sidebar { transform: translateX(0); }
+  body.nav-open .sidebar { transform: translateX(0); visibility: visible; }
   body.nav-open::after {
     content: ""; position: fixed; inset: 56px 0 0 0; background: rgba(0, 0, 0, .38); z-index: 25;
   }

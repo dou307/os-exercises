@@ -574,61 +574,60 @@ def load_registry() -> dict:
 
 
 def apply_registry(questions: list[dict], registry: dict) -> dict:
-    """冻结 ID：登记表优先；定位变化但内容哈希一致时沿用旧 ID。"""
+    """先用内容认领旧 ID，再分配新 ID；定位冲突不得覆盖另一道题的身份。"""
     by_locator = {e["locator"]: e for e in registry.get("entries", [])}
     by_hash: dict[str, list[dict]] = {}
     for entry in registry.get("entries", []):
         by_hash.setdefault(entry["contentHash"], []).append(entry)
 
     used_ids = {e["id"] for e in registry.get("entries", [])}
-    seen_locators: set[str] = set()
+    assigned_ids: set[str] = set()
     relocations: list[dict] = []
     suffix_counter: Counter[str] = Counter()
+    claims = {}
+    if len({locator_for(q) for q in questions}) != len(questions):
+        raise ValueError("新题目来源定位重复，停止登记，需人工核对")
+    # 两遍认领：某题移到另一个仍存在的定位时，不能被“定位优先”错配给旧题 ID。
+    for q in questions:
+        locator = locator_for(q)
+        candidates = [e for e in by_hash.get(q["source"]["contentHash"], []) if e["id"] not in assigned_ids]
+        same = next((e for e in candidates if e["locator"] == locator), None)
+        if same is None and len(candidates) > 1:
+            raise ValueError(f"{locator}: 多个旧题内容相同，无法自动确定 ID，需人工核对")
+        entry = same or (candidates[0] if candidates else None)
+        if entry:
+            claims[locator] = entry
+            assigned_ids.add(entry["id"])
+
+    # 定位没变但内容变了，可能是改题，也可能是另一题占据了旧位置；禁止静默认作同题。
+    for q in questions:
+        locator = locator_for(q)
+        previous = by_locator.get(locator)
+        if locator not in claims and previous and previous["id"] not in assigned_ids:
+            raise ValueError(f"{locator}: 来源内容已变化，停止自动覆盖稳定 ID；需审核版本差异后迁移")
 
     for q in questions:
         locator = locator_for(q)
-        entry = by_locator.get(locator)
-        if entry is not None:
-            q["id"] = entry["id"]
-            entry["contentHash"] = q["source"]["contentHash"]
-            entry["lastSeen"] = DATASET_VERSION
-            seen_locators.add(locator)
-            continue
-
-        # 定位不存在：尝试用内容哈希认领一条本次未被占用的旧记录（上游重排/移动）
-        candidates = [e for e in by_hash.get(q["source"]["contentHash"], []) if e["locator"] not in seen_locators]
-        if candidates:
-            entry = candidates[0]
+        entry = claims.get(locator)
+        if entry is None:
+            base_id = q["id"]
+            qid = base_id
+            while qid in used_ids:
+                suffix_counter[base_id] += 1
+                qid = f"{base_id}-{suffix_counter[base_id] + 1}"
+            used_ids.add(qid)
+            assigned_ids.add(qid)
+            entry = {"id": qid, "firstSeen": DATASET_VERSION}
+            registry["entries"].append(entry)
+        elif entry["locator"] != locator:
             relocations.append({"id": entry["id"], "from": entry["locator"], "to": locator})
-            entry["locator"] = locator
-            entry["lastSeen"] = DATASET_VERSION
-            q["id"] = entry["id"]
-            seen_locators.add(locator)
-            continue
+        q["id"] = entry["id"]
+        entry.update({"locator": locator, "path": q["source"]["path"],
+                      "sectionId": q["source"]["sectionId"], "subsectionId": q["source"]["subsectionId"],
+                      "originalLabel": q["source"]["originalLabel"], "contentHash": q["source"]["contentHash"],
+                      "lastSeen": DATASET_VERSION, "status": "active"})
 
-        qid = q["id"]
-        if qid in used_ids:
-            suffix_counter[qid] += 1
-            qid = f"{qid}-{suffix_counter[qid] + 1}"
-        used_ids.add(qid)
-        q["id"] = qid
-        registry["entries"].append(
-            {
-                "id": qid,
-                "locator": locator,
-                "path": q["source"]["path"],
-                "sectionId": q["source"]["sectionId"],
-                "subsectionId": q["source"]["subsectionId"],
-                "originalLabel": q["source"]["originalLabel"],
-                "contentHash": q["source"]["contentHash"],
-                "firstSeen": DATASET_VERSION,
-                "lastSeen": DATASET_VERSION,
-                "status": "active",
-            }
-        )
-        seen_locators.add(locator)
-
-    retired = [e for e in registry["entries"] if e["locator"] not in seen_locators]
+    retired = [e for e in registry["entries"] if e["id"] not in assigned_ids]
     for entry in retired:
         entry["status"] = "retired"
 

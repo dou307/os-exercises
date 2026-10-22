@@ -20,8 +20,18 @@ export function parseHash(hash) {
     };
   }
   if (head === "q" && rest[0]) return { name: "question", params: { id: decodeURIComponent(rest[0]) } };
-  if (head === "review") return { name: "review", params: {} };
-  if (head === "search") return { name: "search", params: { q: query.get("q") || "" } };
+  if (head === "review") return { name: "review", params: { ch: query.get("ch") || "" } };
+  if (head === "search") {
+    return {
+      name: "search",
+      params: {
+        q: query.get("q") || "",
+        ch: query.get("ch") || "",
+        type: query.get("type") || "",
+        tier: query.get("tier") || "",
+      },
+    };
+  }
   if (head === "source") return { name: "source", params: {} };
   return { name: "notfound", params: {} };
 }
@@ -32,4 +42,14 @@ export function navigate(hash) {
   } else {
     window.location.hash = hash;
   }
+}
+
+/** 拼查询串，空值自动省略，避免地址栏里出现 `&ch=&type=` 这种噪声。 */
+export function buildHash(path, params) {
+  const query = new URLSearchParams();
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== "") query.set(key, String(value));
+  });
+  const suffix = query.toString();
+  return suffix ? `${path}?${suffix}` : path;
 }

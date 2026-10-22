@@ -21,6 +21,7 @@ from collections import Counter
 from pathlib import Path
 
 from bs4 import BeautifulSoup
+from verify_source_content import verify as verify_full_content
 
 ROOT = Path(__file__).resolve().parents[1]
 VENDOR = ROOT / "vendor" / "kaoyan-408-os"
@@ -207,10 +208,17 @@ def check_source_fidelity(data: dict) -> None:
         if qa_count != count:
             fail(f"{path} 题块数 {count} ≠ 来源 details.qa 数 {qa_count}")
     notes.append("每题题干与答案均可在来源中定位；每文件题数与 details.qa 数一致")
+    report = verify_full_content(data["questions"])
+    for error in report["errors"]:
+        fail(error)
+    if report["ok"]:
+        notes.append(f"独立全文核对：{report['checked']} 道题干/选项字符守恒，完整答案/解析与表格/代码/公式顺序一致")
 
 
 def check_vendor_integrity(registry: dict) -> None:
-    for entry in registry["files"]:
+    inventory = load_json(ROOT / "docs/audit/source-inventory.json")
+    entries = inventory["file_manifest"]
+    for entry in entries:
         path = VENDOR / entry["path"]
         if not path.exists():
             fail(f"vendor 文件缺失：{entry['path']}")
@@ -220,7 +228,11 @@ def check_vendor_integrity(registry: dict) -> None:
             fail(f"{entry['path']} 字节数变化：{len(raw)} ≠ {entry['bytes']}")
         if sha256_bytes(raw) != entry["sha256"]:
             fail(f"{entry['path']} sha256 与登记表不一致")
-    notes.append(f"vendor {len(registry['files'])} 个习题文件字节与登记表一致")
+    actual = {p.relative_to(VENDOR).as_posix() for p in VENDOR.rglob("*") if p.is_file()}
+    expected = {entry["path"] for entry in entries}
+    if actual != expected:
+        fail(f"vendor 文件集合变化：新增 {sorted(actual-expected)}，缺失 {sorted(expected-actual)}")
+    notes.append(f"vendor {len(entries)} 个来源文件字节与审计清单一致")
 
 
 def check_fixtures(data: dict) -> None:
@@ -296,6 +308,9 @@ def check_mapping_coverage() -> None:
     mappings = load_json(DATA / "mappings.json")["byQuestion"]
     topics = {t["id"] for t in load_json(DATA / "topics.json")["topics"]}
     chapters = {c["id"] for c in load_json(DATA / "chapters.json")["chapters"]}
+    questions = {q["id"] for q in load_json(DATA / "questions.json")["questions"]}
+    if set(mappings) != questions:
+        fail("映射 ID 集合与题目 ID 集合不一致")
     missing_primary = []
     missing_topics = []
     bad_topics = []
@@ -308,6 +323,9 @@ def check_mapping_coverage() -> None:
         if not entry.get("topicIds"):
             missing_topics.append(qid)
         for topic in entry.get("topicIds", []):
+            if topic not in topics:
+                bad_topics.append((qid, topic))
+        for topic in entry.get("prerequisiteTopicIds", []):
             if topic not in topics:
                 bad_topics.append((qid, topic))
     if missing_primary:

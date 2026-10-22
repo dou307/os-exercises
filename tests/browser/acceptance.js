@@ -53,7 +53,7 @@ function check(name, ok, detail) {
   await page.waitForSelector("h1");
   check("首页加载", (await page.locator("h1").first().textContent()) === "OS 练习室");
   const homeText = await page.locator("main").innerText();
-  check("首页显示第一章可判分数量", /第一章可判分/.test(homeText));
+  check("首页显示第一章核心可判分数量", /第一章核心可判分/.test(homeText));
   await page.screenshot({ path: path.join(SHOTS, "01-home.png"), fullPage: true });
 
   // ---- 进入第一章核心练习 ----
@@ -76,7 +76,7 @@ function check(name, ok, detail) {
 
   // ---- 键盘选择（按字母键）----
   await page.keyboard.press(wrongKey);
-  const pressed = await page.locator(`.options .opt:nth-child(${"ABCD".indexOf(wrongKey) + 1})`).getAttribute("aria-pressed");
+  const pressed = await page.locator(`main .options .opt:nth-child(${"ABCD".indexOf(wrongKey) + 1})`).getAttribute("aria-pressed");
   check("键盘字母键选中选项", pressed === "true");
 
   await page.screenshot({ path: path.join(SHOTS, "02-practice-before-submit.png"), fullPage: true });
@@ -94,7 +94,7 @@ function check(name, ok, detail) {
   await page.reload({ waitUntil: "networkidle" });
   await page.waitForSelector(".qcard");
   const restoredQid = await page.locator(".qcard").getAttribute("data-qid");
-  const restoredPressed = await page.locator(`.options .opt:nth-child(${"ABCD".indexOf(wrongKey) + 1})`).getAttribute("aria-pressed");
+  const restoredPressed = await page.locator(`main .options .opt:nth-child(${"ABCD".indexOf(wrongKey) + 1})`).getAttribute("aria-pressed");
   const restoredResult = await page.locator(".result").innerText();
   check("刷新后回到同一题", restoredQid === firstQid, restoredQid);
   check("刷新后恢复实际选项", restoredPressed === "true", `选中 ${wrongKey}`);
@@ -142,6 +142,17 @@ function check(name, ok, detail) {
     return { blocks: q.querySelectorAll(".opt-blocks .mono").length, opts: q.querySelectorAll(".options").length };
   });
   check("多空题保留原始选项块且无单选交互", blankResult.blocks === 1 && blankResult.opts === 0, JSON.stringify(blankResult));
+
+  // ---- 多选题：不选也能提交，但不能被算成“答错” ----
+  await page.locator(".qcard .actions .btn.primary").click();
+  await page.waitForSelector(".qcard .self-assess");
+  const blankRecord = await page.evaluate(() => {
+    const raw = JSON.parse(localStorage.getItem("os-exercises:v1") || "{}");
+    return (raw.answers || {})["c1-s2-0-q013"] || null;
+  });
+  check("多空题只展开答案、不写入答错记录",
+    blankRecord === null || (blankRecord.correct === null && blankRecord.scoring === "excluded"),
+    JSON.stringify(blankRecord && { correct: blankRecord.correct, scoring: blankRecord.scoring }));
 
   // ---- 待核对题不计分 ----
   await page.goto(BASE + "#/q/c1-s3-0-q009", { waitUntil: "networkidle" });
@@ -202,6 +213,135 @@ function check(name, ok, detail) {
   await page.waitForTimeout(300);
   const afterMark = await page.locator("main").innerText();
   check("标记后本章题目进入核心练习", /核心练习/.test(afterMark) && /开始核心练习/.test(afterMark));
+
+  // ---- 2026-10-22 回归：提升为“核心”之后仍必须保留“系统映射”徽标（不能冒充已审核） ----
+  // 用浏览器里的真实计数，不依赖 Playwright 选择器对“哪个子集”的语义。
+  // 判定“标记已学生效”只认存储 + DOM：localStorage 里的 completedChapters 必须包含本章，
+  // 且本机标记状态在当前页面上真的把题目提到核心练习。
+  const markState = await page.evaluate(() => {
+    const raw = JSON.parse(localStorage.getItem("os-exercises:v1") || "{}");
+    const badges = Array.from(document.querySelectorAll("main .qlist .badge"));
+    return {
+      stored: (raw.ui && raw.ui.completedChapters) || [],
+      core: badges.filter((n) => n.classList.contains("core")).length,
+      bridge: badges.filter((n) => n.classList.contains("bridge")).length,
+    };
+  });
+  await page.goto(BASE + "#/practice/3?scope=core&i=1", { waitUntil: "networkidle" });
+  await page.waitForSelector(".qcard");
+  const practiceBadges = await page.evaluate(() => {
+    const badges = Array.from(document.querySelectorAll(".qcard .badge"));
+    const text = (label) => badges.filter((n) => n.textContent.trim() === label).length;
+    return { systematic: text("系统映射"), core: text("核心"), bridge: text("桥接"), originalTier: text("原分层：稍后") };
+  });
+  // 标记状态必须落盘：本地存储里要有本章，且页面上题目真的进了核心练习
+  const markConverged = markState.stored.map(String).includes("3") && markState.bridge > 0;
+  check("“标记已学”写进本机存储并即时生效", markConverged,
+    `stored=${JSON.stringify(markState.stored)} 核心 ${markState.core} / 桥接 ${markState.bridge}`);
+  check("提升后的题目仍标“系统映射”",
+    practiceBadges.systematic === 1 && practiceBadges.bridge === 1 && practiceBadges.originalTier === 1,
+    `练习卡徽标：系统映射 ${practiceBadges.systematic}、桥接 ${practiceBadges.bridge}、原分层 ${practiceBadges.originalTier}`);
+
+  // ---- 2026-10-22 回归：跨章挂靠的“稍后”题不随“标记已学”一起冒进核心，避免重复出现 ----
+  // 第 3 章 56 道里 1 道是从第 1 章挂靠过来的 later；标记已学后它应算桥接，核心只含原 55 道 systematic。
+  // systematic 用数据侧统计（meta 里的 later 统计的是原始分层，标记已学后仍是 56）。
+  const chMeta = await page.evaluate(async () => {
+    const doc = await (await fetch("data/questions/3.json")).json();
+    return { systematic: doc.questions.filter((q) => q.reviewStatus === "systematic").length };
+  });
+  check("跨章挂靠题标记已学后归入桥接而非核心",
+    markState.core === 0 && markState.bridge === chMeta.systematic + 1,
+    `核心 ${markState.core}、桥接 ${markState.bridge}、systematic ${chMeta.systematic}`);
+
+  // ---- 2026-10-22 回归：“稍后”范围可直接练习，范围标题不再出现 undefined ----
+  await page.goto(BASE + "#/practice/2?scope=later&i=1", { waitUntil: "networkidle" });
+  await page.waitForSelector(".qcard");
+  const laterH1 = await page.locator("main h1").innerText();
+  const laterPos = await page.locator(".pager-bar .pos").innerText();
+  check("“稍后”范围可直接练习且标题无 undefined",
+    /稍后再学/.test(laterH1) && !/undefined/.test(laterH1) && /第 2 \//.test(laterPos),
+    `${laterH1.trim()} · ${laterPos.trim()}`);
+
+  // ---- 2026-10-22 回归：连续跳题后按键只作用在当前题卡上（旧实现监听会叠加） ----
+  await page.goto(BASE + "#/practice/1?scope=core&i=0", { waitUntil: "networkidle" });
+  await page.waitForSelector(".qcard");
+  for (let k = 1; k <= 3; k += 1) {
+    await page.goto(`${BASE}#/practice/1?scope=core&i=${k}`);
+    await page.waitForFunction((n) => {
+      const pos = document.querySelector(".pager-bar .pos");
+      return Boolean(pos && pos.textContent.trim() === `第 ${n + 1} / 41 题`);
+    }, k);
+  }
+  const qidBeforeKey = await page.locator(".qcard").getAttribute("data-qid");
+  const readAttempts = (id) => page.evaluate((qid) => {
+    const raw = JSON.parse(localStorage.getItem("os-exercises:v1") || "{}");
+    return (raw.answers || {})[qid] ? (raw.answers[qid].attempts || 0) : 0;
+  }, id);
+  await page.keyboard.press("B");
+  const attempts = await readAttempts(qidBeforeKey);
+  check("连续跳题后键盘只作用于当前题", attempts === 0, `${qidBeforeKey} attempts=${attempts}`);
+  await page.keyboard.press("Enter");
+  await page.waitForSelector(".result:not([hidden])");
+  const attemptsAfter = await readAttempts(qidBeforeKey);
+  check("提交只记录一次作答", attemptsAfter === 1, `${qidBeforeKey} attempts=${attemptsAfter}`);
+
+  // ---- 2026-10-22 回归：单题页的原题库入口必须能真正跳到小节 ----
+  await page.goto(BASE + "#/q/c1-s1-0-q001", { waitUntil: "networkidle" });
+  await page.waitForSelector(".qcard");
+  const sourceHrefCount = await page.locator('main a[href*="kaoyan-408-os"]').count();
+  const sourceHref = await page.locator('main a[href*="kaoyan-408-os"]').first().getAttribute("href");
+  check("单题页的原题库入口指向真实小节", sourceHrefCount === 1 && /#toc-\d+/.test(sourceHref), sourceHref);
+
+  // ---- 2026-10-22 新增：搜索支持章节 / 题型筛选 ----
+  await page.goto(BASE + "#/search?q=%E4%B8%AD%E6%96%AD&ch=12", { waitUntil: "networkidle" });
+  await page.waitForSelector(".filters");
+  const chHitRows = await page.locator(".qlist li").count();
+  const chExpected = await page.evaluate(async () => {
+    const index = await (await fetch("data/index.json")).json();
+    return index.questions.filter((q) => String(q.ch) === "12" && q.stem.includes("中断")).length;
+  });
+  check("搜索按章节筛选", chHitRows > 0 && chHitRows === Math.min(100, chExpected), `命中 ${chHitRows} 行，数据侧 ${chExpected} 道`);
+  // 题型筛选用一定含综合题的章节（ch1 有 14 道综合题），并断言命中数等于数据侧
+  await page.goto(BASE + "#/search?ch=1&type=constructed_response", { waitUntil: "networkidle" });
+  await page.waitForSelector(".qlist");
+  const typeRows = await page.locator(".qlist li").count();
+  const typeExpected = await page.evaluate(async () => {
+    const index = await (await fetch("data/index.json")).json();
+    return index.questions.filter((q) => String(q.ch) === "1" && q.type === "constructed_response").length;
+  });
+  const typeFilteredSub = await page.locator("main .sub").first().innerText();
+  check("搜索按题型筛选", typeRows > 0 && typeRows === typeExpected && /综合/.test(typeFilteredSub),
+    `命中 ${typeRows} 行，数据侧 ${typeExpected} 道`);
+
+  // ---- 2026-10-22 新增：知识点缺口在章节页明确列出 ----
+  const gapChapters = await page.evaluate(async () => {
+    const meta = await (await fetch("data/meta.json")).json();
+    const index = await (await fetch("data/index.json")).json();
+    const out = [];
+    meta.chapters.forEach((c) => {
+      if (!c.counts.total) return;
+      const covered = new Set();
+      index.questions.forEach((q) => { if (String(q.ch) === String(c.id)) q.topics.forEach((t) => covered.add(t)); });
+      const missing = (c.topicIds || []).filter((t) => !covered.has(t));
+      if (missing.length) out.push(`${c.id}:${missing.length}`);
+    });
+    return out;
+  });
+  if (gapChapters.length) {
+    const [gapCh, gapCount] = gapChapters[0].split(":");
+    await page.goto(`${BASE}#/ch/${gapCh}`, { waitUntil: "networkidle" });
+    await page.waitForSelector("h1");
+    const gapText = await page.locator("main").innerText();
+    check("章节页列出没有题目的知识点", gapText.includes(`没有对应题的知识点（${gapCount}）`), `第 ${gapCh} 章 ${gapCount} 个`);
+  } else {
+    check("章节页列出没有题目的知识点", true, "当前数据没有知识点缺口，跳过");
+  }
+
+  // ---- 2026-10-22 新增：错题回顾标出题目所在章节 ----
+  await page.goto(BASE + "#/review", { waitUntil: "networkidle" });
+  await page.waitForSelector("h1");
+  const reviewChapterLinks = await page.locator('.qlist a[href^="#/ch/"]').count();
+  check("错题回顾标出题目所属章节", reviewChapterLinks > 0, `${reviewChapterLinks} 个章节入口`);
 
   // ---- P4：记录导出 / 导入 ----
   await page.goto(BASE, { waitUntil: "networkidle" });

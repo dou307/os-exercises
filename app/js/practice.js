@@ -6,14 +6,18 @@
  * - `multi_blank`：只展示原始选项块与答案，不生成自动判分。
  * - `constructed_response`：先自答，再看参考答案并自评。
  * - `reviewStatus === "disputed"`：显示原答案与勘误，明确标注不计分。
+ *
+ * 事件一律挂在这一张卡自己的 DOM 上，不往 document 上加监听：
+ * 练习页用 hash 直接跳题时不会重新加载文档，留在 document 上的监听会叠加，
+ * 导致键盘选中的选项同时落到看不见的旧题卡上。
  */
 
 import * as storage from "./storage.js";
 import { getMeta, getTopics, getChapterQuestions, topicTitle } from "./questions.js";
-import { completedChapters, filterByScope } from "./tiers.js";
+import { completedChapters, filterByScope, SCOPE_TEXT } from "./tiers.js";
 import { renderMath } from "./math.js";
 
-const TIER_TEXT = { core: "核心", bridge: "桥接", supplement: "补充", later: "稍后" };
+const TIER_TEXT = { core: "核心", bridge: "桥接", supplement: "补充", later: "稍后", disputed: "待核对" };
 const REVIEW_TEXT = {
   verified: "已核对",
   reviewed: "已核对归属",
@@ -55,7 +59,15 @@ function autoScored(q) {
 function explainDetails(q) {
   const wrap = el("div", { class: "explain" });
   wrap.appendChild(el("div", { class: "answer-line", text: `原站答案：${q.originalAnswer || "—"}` }));
-  const body = el("div", { html: q.originalExplanationHtml || "<p>（原站没有解析）</p>" });
+  // 多空题：题干用（ ）占位，答案用 ①②③ 或“依次对应”编号；这里把两者对应关系写清楚，
+  // 否则读者要在长题干里自己数第几个空。
+  if (q.type === "multi_blank" && q.optionBlocks && q.optionBlocks.length) {
+    wrap.appendChild(el("p", {
+      class: "answer-hint",
+      text: "多空题按题干中括号的顺序对应：独立空位会标 ①、②……；“依次对应Ⅰ～Ⅵ”表示答案按 Ⅰ、Ⅱ、Ⅲ… 的顺序排列。",
+    }));
+  }
+  const body = el("div", { class: "explain-body", html: q.originalExplanationHtml || "<p>（原站没有解析）</p>" });
   wrap.appendChild(body);
   return wrap;
 }
@@ -79,14 +91,20 @@ function errataBlock(q) {
 /**
  * 构建题目卡。
  * @param {object} q 题目
- * @param {{onChange?: Function, topics?: Map}} ctx
+ * @param {{onChange?: Function, topics?: Map, meta?: object, chapterLabel?: Function}} ctx
  */
 export function buildCard(q, ctx) {
   const topics = ctx.topics || new Map();
   const card = el("article", { class: "card qcard", "data-qid": q.id });
 
   const head = el("div", { class: "qhead" });
-  head.appendChild(badge(TIER_TEXT[q.readinessTier] || q.readinessTier, q.readinessTier));
+  // readinessTier 是“当前进度下实际生效的分层”，与题单徽标一致；原始审核分层另做一个浅色徽标，
+  // 这样“标记已学后被提到核心”的题不会看起来像已通过人工审核的核心题。
+  const tier = q.effectiveTier || q.readinessTier;
+  head.appendChild(badge(TIER_TEXT[tier] || tier, tier));
+  if (q.originalReadinessTier && q.originalReadinessTier !== tier) {
+    head.appendChild(badge(`原分层：${TIER_TEXT[q.originalReadinessTier] || q.originalReadinessTier}`, "later"));
+  }
   head.appendChild(badge(q.source.originalLabel));
   head.appendChild(badge(TYPE_TEXT[q.type] || q.type));
   const reviewCls = q.reviewStatus === "disputed" ? "disputed" : (q.reviewStatus === "verified" ? "ok" : "");
@@ -98,21 +116,29 @@ export function buildCard(q, ctx) {
     class: "qmeta",
     text: `${q.source.sectionTitle}${q.source.subsectionTitle ? ` / ${q.source.subsectionTitle}` : ""}`,
   }));
+  if (q.source.title) card.appendChild(el("p", { class: "qmeta", text: `原题标题：${q.source.title}（年份为原站标注）` }));
+  if (q.mappingReason) card.appendChild(el("p", { class: "qmeta", text: `章节归属依据：${q.mappingReason}` }));
+  const needed = (q.prerequisiteTopicIds || []).filter((id) => {
+    const topic = topics.get(id);
+    return topic && !(ctx.meta ? completedChapters(ctx.meta) : new Set()).has(String(topic.chapterId));
+  });
+  if (needed.length) card.appendChild(el("div", { class: "notice", text: `涉及尚未标记学完的知识点：${needed.map((id) => topicTitle(topics, id)).join("、")}。可先阅读相关笔记，再练习本题。` }));
+  if (q.reviewStatus === "systematic") card.appendChild(el("p", { class: "notice", text: "本题为系统映射，答案未逐题人工复核；判分依据为原站答案。" }));
 
   const stem = el("div", { class: "stem", html: q.stemHtml });
   card.appendChild(stem);
 
-  const recorded = storage.getAnswer(q.id);
+  const recorded = storage.isRetrying(q.id) ? null : storage.getAnswer(q.id);
   const pending = storage.getPending(q.id);
   let selected = recorded && recorded.selected ? recorded.selected : (pending || "");
-  const submitted = Boolean(
+  let submitted = Boolean(
     recorded
     && (recorded.attempts || 0) > 0
     && (recorded.correct !== null || recorded.selfAssessment || recorded.scoring === "excluded")
   );
 
   // ---- 选项 ----
-  let optionNodes = new Map();
+  const optionNodes = new Map();
   if (q.type === "single_choice") {
     const list = el("ul", { class: "options" });
     q.options.forEach((option) => {
@@ -133,6 +159,10 @@ export function buildCard(q, ctx) {
     const wrap = el("div", { class: "opt-blocks" });
     q.optionBlocks.forEach((block) => wrap.appendChild(el("div", { html: block.rawHtml })));
     card.appendChild(wrap);
+    card.appendChild(el("div", {
+      class: "notice",
+      text: "本题是多个空位的复合题，不能自动判分：做完后展开解析，对照参考答案逐空核对自己写下的选项。",
+    }));
   } else {
     const box = el("div", { class: "self-answer" });
     const id = `draft-${q.id}`;
@@ -153,7 +183,8 @@ export function buildCard(q, ctx) {
   actions.appendChild(revealBtn);
   card.appendChild(actions);
 
-  const resultBox = el("div", { class: "result", hidden: "hidden" });
+  // 判分结果要能被读屏软件播报：只改 textContent 不会触发朗读，必须有 aria-live 容器
+  const resultBox = el("div", { class: "result", hidden: "hidden", role: "status", "aria-live": "polite" });
   card.appendChild(resultBox);
   const explainBox = explainDetails(q);
   explainBox.hidden = true;
@@ -181,10 +212,11 @@ export function buildCard(q, ctx) {
   }
 
   function paintSubmitted(record) {
+    submitted = true;
     optionNodes.forEach((node, key) => {
       node.disabled = true;
       node.setAttribute("aria-pressed", String(record.selected === key));
-      if (q.type === "single_choice") {
+      if (autoScored(q)) {
         if (key === q.originalAnswer) node.classList.add("is-right");
         else if (record.selected === key) node.classList.add("is-wrong");
       }
@@ -197,6 +229,12 @@ export function buildCard(q, ctx) {
     resultBox.hidden = false;
     resultBox.className = `result ${kind}`;
     resultBox.textContent = text;
+    // 手机上一道题常常超过一屏，判分结果在折叠线以下；只有真的看不见时才滚动，
+    // 桌面上结果本来就可见，强行滚动会打断阅读解析。
+    const rect = resultBox.getBoundingClientRect();
+    if (rect.top > window.innerHeight - 80) {
+      resultBox.scrollIntoView({ block: "center", behavior: "smooth" });
+    }
   }
 
   function reveal() {
@@ -204,6 +242,8 @@ export function buildCard(q, ctx) {
     revealBtn.disabled = true;
     revealBtn.textContent = "解析已展开";
   }
+
+  const selfAssess = buildSelfAssess(q, card, showResult, ctx);
 
   if (submitted) {
     paintSubmitted(recorded);
@@ -216,20 +256,23 @@ export function buildCard(q, ctx) {
     } else {
       showResult("neutral", "本题不自动计分，答案与解析见下");
     }
-    if (recorded.correct === false || recorded.selfAssessment) reveal();
+    reveal();
+    if (!autoScored(q)) selfAssess.show();
   }
 
   function submit() {
+    if (submitted) return;
     if (q.reviewStatus === "disputed") {
       showResult("neutral", `本题为待核对题，不计分。原站答案：${q.originalAnswer}`);
       storage.recordAnswer(q.id, selected, null, "excluded");
       storage.clearPending(q.id);
-      if (optionNodes.size) paintSubmitted({ selected });
+      paintSubmitted({ selected });
       reveal();
-      if (ctx.onChange) ctx.onChange(q.id);
+      selfAssess.show();
+      onChange();
       return;
     }
-    if (q.type === "single_choice") {
+    if (autoScored(q)) {
       if (!selected) {
         showResult("neutral", "请先选择一个选项。");
         return;
@@ -240,60 +283,75 @@ export function buildCard(q, ctx) {
       paintSubmitted({ selected });
       showResult(correct ? "ok" : "bad", correct
         ? `回答正确，选 ${selected}`
-        : `回答错误，你选了 ${selected}，正确答案是 ${q.originalAnswer}`);
+        : `回答错误（按原站答案），你选了 ${selected}，原站答案是 ${q.originalAnswer}`);
       reveal();
-      if (ctx.onChange) ctx.onChange(q.id);
+      onChange();
       return;
     }
     // 多空题与综合题：不自动判分，展开参考答案后自评
     reveal();
     storage.recordAnswer(q.id, "", null, "excluded");
-    submitBtn.disabled = true;
+    paintSubmitted({ selected: "" });
     submitBtn.textContent = "已查看答案";
     showResult("neutral", "本题不自动判分，请对照参考答案自评。");
-    appendSelfAssess(card, q, showResult, ctx);
+    selfAssess.show();
+    onChange();
+  }
+
+  function onChange() {
     if (ctx.onChange) ctx.onChange(q.id);
   }
 
   submitBtn.addEventListener("click", submit);
   revealBtn.addEventListener("click", () => {
     reveal();
-    if (q.type !== "single_choice" && !card.querySelector(".self-assess")) {
-      appendSelfAssess(card, q, showResult, ctx);
-    }
+    if (q.type !== "single_choice") selfAssess.show();
   });
 
   renderMath(card);
   return card;
 }
 
-function appendSelfAssess(card, q, showResult, ctx) {
-  if (card.querySelector(".self-assess")) return;
-  const box = el("div", { class: "actions self-assess" });
-  const ok = el("button", { type: "button", class: "btn", text: "自评：会做" });
-  const no = el("button", { type: "button", class: "btn", text: "自评：还需复习" });
-  ok.addEventListener("click", () => {
-    storage.recordSelfAssessment(q.id, "got");
-    showResult("ok", "已记为“会做”。");
-    if (ctx.onChange) ctx.onChange(q.id);
-  });
-  no.addEventListener("click", () => {
-    storage.recordSelfAssessment(q.id, "review");
-    showResult("neutral", "已记为“还需复习”，会出现在错题回顾里。");
-    if (ctx.onChange) ctx.onChange(q.id);
-  });
-  box.appendChild(ok);
-  box.appendChild(no);
-  card.appendChild(box);
+/**
+ * 自评区：判断题与综合题用。做成“懒创建”，重复点击不会往卡里追加多份按钮。
+ */
+function buildSelfAssess(q, card, showResult, ctx) {
+  let box = null;
+  const show = () => {
+    if (box) return;
+    box = el("div", { class: "actions self-assess" });
+    const ok = el("button", { type: "button", class: "btn", text: "自评：会做" });
+    const no = el("button", { type: "button", class: "btn", text: "自评：还需复习" });
+    const mark = (value, text, kind) => {
+      storage.recordSelfAssessment(q.id, value);
+      const submit = card.querySelector(".actions .btn.primary");
+      submit.disabled = true;
+      submit.textContent = "已自评";
+      showResult(kind, text);
+      if (ctx.onChange) ctx.onChange(q.id);
+    };
+    ok.addEventListener("click", () => mark("got", "已记为“会做”。", "ok"));
+    no.addEventListener("click", () => mark("review", "已记为“还需复习”，会出现在错题回顾里。", "neutral"));
+    box.appendChild(ok);
+    box.appendChild(no);
+    card.appendChild(box);
+    renderMath(card);
+  };
+  return { show };
 }
 
-/** 练习页：按章节与范围逐题推进，位置写在 hash 里，刷新可恢复。 */
-export async function renderPlayer(main, params) {
+/**
+ * 练习页：按章节与范围逐题推进，位置写在 hash 里，刷新可恢复。
+ *
+ * 返回一个 `dispose()`，路由在离开练习页时调用它撤掉键盘监听。
+ */
+export async function renderPlayer(main, params, isCurrent = () => true) {
   const chapterId = params.chapterId;
   const scope = params.scope || "core";
   const [topics, meta] = await Promise.all([getTopics(), getMeta()]);
   const completed = completedChapters(meta);
   const list = filterByScope(await getChapterQuestions(chapterId), scope, completed);
+  if (!isCurrent()) return () => {};
   if (!list.length) {
     main.innerHTML = "";
     main.appendChild(el("div", { class: "card" }, [
@@ -301,49 +359,112 @@ export async function renderPlayer(main, params) {
       el("p", { class: "sub", text: "换一个范围，或回到章节页查看全部题目。" }),
       el("a", { class: "btn", href: `#/ch/${chapterId}`, text: "返回章节" }),
     ]));
-    return;
+    return () => {};
   }
   let index = Number.parseInt(params.i, 10);
   if (!Number.isFinite(index) || index < 0) index = 0;
   if (index >= list.length) index = list.length - 1;
+
+  const chapter = meta.chapters.find((c) => String(c.id) === String(chapterId));
+  const chapterTitle = chapter ? (chapter.kind === "supplement" ? `补充 · ${chapter.titleZh}` : `第 ${chapterId} 章`) : `第 ${chapterId} 章`;
+  const scopeText = SCOPE_TEXT[scope] || scope;
 
   const render = () => {
     const q = list[index];
     storage.setUI({ lastChapter: chapterId, lastQuestionId: q.id });
     main.innerHTML = "";
 
+    // 当前范围内的整体进度：只统计本范围，避免“第 3 章 276 道题”这种与练习无关的数字
+    const answeredCount = list.filter((item) => {
+      const record = storage.getAnswer(item.id);
+      return Boolean(record && (record.attempts || 0) > 0);
+    }).length;
+    const correctCount = list.filter((item) => {
+      const record = storage.getAnswer(item.id);
+      return Boolean(record && record.correct === true);
+    }).length;
+
     const head = el("div", { class: "card" });
-    const scopeText = scope === "core" ? "核心 + 桥接"
-      : scope === "supplement" ? "补充内容"
-      : scope === "disputed" ? "待核对"
-      : "全部题目";
-    head.appendChild(el("div", { class: "crumbs", html: `<a href="#/">首页</a> / <a href="#/ch/${chapterId}">第 ${chapterId} 章</a> / 练习` }));
-    head.appendChild(el("h1", { text: `第 ${chapterId} 章练习 · ${scopeText}` }));
-    head.appendChild(el("p", { class: "sub", text: `范围：${scopeText}。进度按稳定题目 ID 记录，换端口不会自动继承。` }));
+    head.appendChild(el("div", { class: "crumbs", html: `<a href="#/">首页</a> / <a href="#/ch/${encodeURIComponent(chapterId)}">${chapterTitle}</a> / 练习` }));
+    head.appendChild(el("h1", { text: `${chapterTitle}练习 · ${scopeText}` }));
+    const summary = el("p", {
+      class: "sub",
+      text: `本范围 ${list.length} 道，已作答 ${answeredCount} 道、答对 ${correctCount} 道 · 进度按稳定题目 ID 记录，换端口不会自动继承`,
+    });
+    head.appendChild(summary);
+
+    const percent = Math.round(((index + 1) / list.length) * 100);
+    const progress = el("div", {
+      class: "progress",
+      role: "progressbar",
+      "aria-valuemin": "1",
+      "aria-valuemax": String(list.length),
+      "aria-valuenow": String(index + 1),
+      "aria-label": `练习进度：第 ${index + 1} 题，共 ${list.length} 题`,
+    });
+    progress.appendChild(el("span", { class: "bar", style: `width:${percent}%` }));
+    head.appendChild(progress);
+
     const bar = el("div", { class: "pager-bar" });
-    bar.appendChild(el("span", { class: "pos", text: `第 ${index + 1} / ${list.length} 题` }));
-    const nav = el("div", { class: "actions", style: "margin:0" });
     const prev = el("button", { type: "button", class: "btn small", text: "← 上一题" });
     prev.disabled = index === 0;
     prev.addEventListener("click", () => go(index - 1));
     const next = el("button", { type: "button", class: "btn small primary", text: "下一题 →" });
     next.disabled = index === list.length - 1;
     next.addEventListener("click", () => go(index + 1));
+    const nav = el("div", { class: "actions", style: "margin:0" });
     nav.appendChild(prev);
     nav.appendChild(next);
+    const pos = el("span", { class: "pos", text: `第 ${index + 1} / ${list.length} 题` });
+
+    // 题号直达：276 道题的章节靠“下一题”翻页不现实，输入题号即可跳
+    const jump = el("label", { class: "jump" });
+    jump.appendChild(el("span", { class: "sr-only", text: "跳到第几题" }));
+    const jumpInput = el("input", {
+      type: "number",
+      class: "jump-input",
+      min: "1",
+      max: String(list.length),
+      value: String(index + 1),
+      inputmode: "numeric",
+      "aria-label": `跳到第几题（1 到 ${list.length}）`,
+    });
+    const jumpBtn = el("button", { type: "button", class: "btn small", text: "跳转" });
+    const doJump = () => {
+      const parsed = Number.parseInt(jumpInput.value, 10);
+      if (!Number.isFinite(parsed)) { jumpInput.value = String(index + 1); return; }
+      const target = Math.min(Math.max(parsed, 1), list.length) - 1;
+      if (target === index) { jumpInput.value = String(index + 1); return; }
+      go(target);
+    };
+    jumpBtn.addEventListener("click", doJump);
+    jumpInput.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter") return;
+      // 回车在这里是“跳题”，不能让全局监听把它当成“提交答案”
+      event.preventDefault();
+      event.stopPropagation();
+      doJump();
+    });
+    jump.appendChild(jumpInput);
+    jump.appendChild(jumpBtn);
+
+    bar.appendChild(pos);
+    bar.appendChild(jump);
     bar.appendChild(nav);
     head.appendChild(bar);
+    head.appendChild(el("p", { class: "kbd-hint", text: "键盘：A–E 选选项 · Enter 提交 · ← → 切题" }));
     main.appendChild(head);
 
-    const card = buildCard(q, {
+    main.appendChild(buildCard(q, {
       topics,
       meta,
       onChange: () => {
-        // 章节页的统计不常驻，这里只提示已保存状态
+        const answered = list.filter((item) => storage.getAnswer(item.id)).length;
+        const correct = list.filter((item) => storage.getAnswer(item.id)?.correct === true).length;
+        summary.textContent = `本范围 ${list.length} 道，已作答 ${answered} 道、答对 ${correct} 道 · 进度按稳定题目 ID 记录，换端口不会自动继承`;
         if (!storage.isPersistent()) showToast("本地存储不可用，本次作答未持久保存");
       },
-    });
-    main.appendChild(card);
+    }));
 
     const foot = el("div", { class: "actions" });
     const reset = el("button", { type: "button", class: "btn ghost small", text: "重做本题" });
@@ -352,38 +473,42 @@ export async function renderPlayer(main, params) {
       render();
     });
     foot.appendChild(reset);
-    foot.appendChild(el("a", { class: "btn ghost small", href: `#/ch/${chapterId}`, text: "回到章节题单" }));
+    foot.appendChild(el("a", { class: "btn ghost small", href: `#/ch/${encodeURIComponent(chapterId)}`, text: "回到章节题单" }));
     main.appendChild(foot);
     main.focus({ preventScroll: true });
   };
 
   const go = (nextIndex) => {
     if (nextIndex < 0 || nextIndex >= list.length) return;
-    location.hash = `#/practice/${chapterId}?scope=${scope}&i=${nextIndex}`;
+    location.hash = `#/practice/${encodeURIComponent(chapterId)}?scope=${encodeURIComponent(scope)}&i=${nextIndex}`;
   };
 
   render();
 
   const keyHandler = (event) => {
-    if (event.target && /^(INPUT|TEXTAREA|SELECT)$/.test(event.target.tagName)) return;
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
+    const target = event.target;
+    if (target && (/^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName) || target.isContentEditable)) return;
+    // 只认当前可见的这张卡，防止把按键作用到已移除的旧卡上
     const card = main.querySelector(".qcard");
-    if (!card) return;
+    if (!card || !card.isConnected) return;
     const key = event.key.toUpperCase();
-    if (key === "ARROWRIGHT") { event.preventDefault(); go(index + 1); return; }
-    if (key === "ARROWLEFT") { event.preventDefault(); go(index - 1); return; }
+    if (event.key === "ArrowRight") { event.preventDefault(); go(index + 1); return; }
+    if (event.key === "ArrowLeft") { event.preventDefault(); go(index - 1); return; }
     const keys = ["A", "B", "C", "D", "E"];
-    const target = keys.includes(key) ? key : (["1", "2", "3", "4", "5"].includes(event.key) ? keys[Number(event.key) - 1] : null);
-    if (target) {
-      const btn = card.querySelector(`.options .opt:nth-child(${keys.indexOf(target) + 1})`);
+    const picked = keys.includes(key) ? key : (["1", "2", "3", "4", "5"].includes(event.key) ? keys[Number(event.key) - 1] : null);
+    if (picked) {
+      const btn = card.querySelector(`.options .opt:nth-child(${keys.indexOf(picked) + 1})`);
       if (btn && !btn.disabled) { event.preventDefault(); btn.click(); }
     }
-    if (event.key === "Enter" && !event.shiftKey) {
+    if (event.key === "Enter" && !event.shiftKey && !target?.closest("button,a")) {
       const submitBtn = card.querySelector(".actions .btn.primary");
       if (submitBtn && !submitBtn.disabled) { event.preventDefault(); submitBtn.click(); }
     }
   };
   document.addEventListener("keydown", keyHandler);
-  window.addEventListener("hashchange", () => document.removeEventListener("keydown", keyHandler), { once: true });
+
+  return () => document.removeEventListener("keydown", keyHandler);
 }
 
 let toastTimer = null;

@@ -15,13 +15,36 @@ let memoryOnly = false;
 let failureReason = "";
 let onFailure = null;
 
+const isObject = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
+const validId = (id) => /^c\d+-s\d+-\d+-q\d+(?:-\d+)?$/.test(id);
+const validDate = (value) => typeof value === "string" && Number.isFinite(Date.parse(value));
+
+function normalizeRecord(record, entry) {
+  if (!isObject(record) || typeof record.selected !== "string" || !/^[A-H]?$/.test(record.selected)) return null;
+  if (![true, false, null].includes(record.correct) || !["auto", "self_assess", "excluded"].includes(record.scoring)) return null;
+  if (!Number.isSafeInteger(record.attempts) || record.attempts < 1) return null;
+  if (!validDate(record.firstAt) || !validDate(record.lastAt) || Date.parse(record.firstAt) > Date.parse(record.lastAt)) return null;
+  if (record.firstCorrect !== undefined && ![true, false, null].includes(record.firstCorrect)) return null;
+  if (record.selfAssessment !== undefined && !["got", "review"].includes(record.selfAssessment)) return null;
+  if (record.scoring === "auto" && (!record.selected || typeof record.correct !== "boolean")) return null;
+  if (record.scoring !== "auto" && record.correct !== null) return null;
+  if (entry && record.scoring === "auto"
+    && (entry.type !== "single_choice" || entry.scoring !== "auto" || entry.review === "disputed")) return null;
+  return {
+    selected: record.selected, correct: record.correct, scoring: record.scoring,
+    firstCorrect: record.firstCorrect === undefined ? record.correct : record.firstCorrect, attempts: record.attempts,
+    firstAt: record.firstAt, lastAt: record.lastAt,
+    ...(record.selfAssessment ? { selfAssessment: record.selfAssessment } : {}),
+  };
+}
+
 function blank() {
   return {
     schemaVersion: SCHEMA_VERSION,
     datasetVersion,
     answers: {},
     drafts: {},
-    ui: {},
+    ui: { completedChapters: [], pending: {}, retrying: {} },
   };
 }
 
@@ -42,6 +65,8 @@ function detectStorage() {
 export function init(version, failureCallback) {
   datasetVersion = version || "unknown";
   onFailure = failureCallback || null;
+  memoryOnly = false;
+  failureReason = "";
   if (!detectStorage()) {
     memoryOnly = true;
     state = blank();
@@ -50,21 +75,22 @@ export function init(version, failureCallback) {
   }
   try {
     const raw = window.localStorage.getItem(KEY);
-    state = raw ? JSON.parse(raw) : blank();
-    if (!state || typeof state !== "object") state = blank();
-    state.answers = state.answers || {};
-    state.drafts = state.drafts || {};
-    state.ui = state.ui || {};
-    if (state.schemaVersion !== SCHEMA_VERSION) {
-      // 旧结构不静默丢弃：保留原数据副本后再重建
-      window.localStorage.setItem(`${KEY}:backup:${state.schemaVersion}`, raw);
-      state = Object.assign(blank(), { answers: state.answers, ui: state.ui });
+    const parsed = raw ? JSON.parse(raw) : blank();
+    if (!isObject(parsed) || parsed.schemaVersion !== SCHEMA_VERSION || !isObject(parsed.answers)
+      || !isObject(parsed.drafts || {})) throw new Error("记录结构或版本不受支持");
+    const answers = {};
+    for (const [id, record] of Object.entries(parsed.answers)) {
+      const normalized = validId(id) && normalizeRecord(record);
+      if (!normalized) throw new Error("作答字段无效");
+      answers[id] = normalized;
     }
+    state = { ...blank(), answers, drafts: Object.fromEntries(Object.entries(parsed.drafts || {})
+      .filter(([id, text]) => validId(id) && typeof text === "string")), ui: normalizeUI(parsed.ui || {}) };
     state.datasetVersion = datasetVersion;
   } catch (error) {
     memoryOnly = true;
     state = blank();
-    failureReason = "读取本地记录失败，已临时使用内存记录。";
+    failureReason = "读取本地记录失败或版本不受支持；原记录未覆盖，当前临时使用内存记录。";
     if (onFailure) onFailure(failureReason);
   }
 }
@@ -112,31 +138,39 @@ export function recordAnswer(id, selected, correct, scoring) {
     firstAt: prev ? prev.firstAt : now,
     lastAt: now,
   };
+  delete state.ui.retrying[id];
+  if (state.ui.pending) delete state.ui.pending[id];
   persist();
   return state.answers[id];
 }
 
 export function recordSelfAssessment(id, value) {
-  const prev = state.answers[id] || {};
+  const prev = state.answers[id];
+  if (!prev || isRetrying(id)) recordAnswer(id, "", null, "self_assess");
   const now = new Date().toISOString();
-  state.answers[id] = Object.assign(
-    { selected: "", correct: null, scoring: "self_assess", firstAt: now },
-    prev,
-    { selfAssessment: value, lastAt: now, attempts: (prev.attempts || 0) + 1 }
-  );
+  Object.assign(state.answers[id], { selfAssessment: value, lastAt: now });
+  persist();
+}
+
+/**
+ * 只清掉某一题的“自评”结果，不删整条记录里的作答事实。
+ * 判断题/综合题再次点“提交答案”时用它重置旧的自评，避免旧结论被静默保留。
+ */
+export function clearSelfAssessment(id) {
+  const prev = state.answers[id];
+  if (!prev || !prev.selfAssessment) return;
+  delete prev.selfAssessment;
   persist();
 }
 
 export function resetQuestion(id) {
-  if (state.answers[id]) {
-    delete state.answers[id];
-    persist();
-  }
-  if (state.drafts[id]) {
-    delete state.drafts[id];
-    persist();
-  }
+  // 重做只开启新一轮；首次结果、次数、自答草稿保留，提交后更新最近结果。
+  if (state.answers[id]) state.ui.retrying[id] = true;
+  if (state.ui.pending) delete state.ui.pending[id];
+  persist();
 }
+
+export function isRetrying(id) { return state.ui.retrying[id] === true; }
 
 export function getDraft(id) {
   return state.drafts[id] || "";
@@ -169,8 +203,25 @@ export function getUI() {
   return Object.assign({}, state.ui);
 }
 
+/**
+ * `ui` 里既有标量也有数组（completedChapters）。历史版本用 Object.assign 合并，
+ * 数组会被展开成 {"0":"3"} 这样的对象，导致“标记已学”实际上从未生效；
+ * 读取时把这种形状还原成数组，旧记录不用手动清理也能正确识别。
+ */
+function normalizeUI(ui) {
+  const merged = isObject(ui) ? Object.assign({}, ui) : {};
+  if (merged.completedChapters && typeof merged.completedChapters === "object" && !Array.isArray(merged.completedChapters)) {
+    merged.completedChapters = Object.values(merged.completedChapters);
+  }
+  if (!Array.isArray(merged.completedChapters)) merged.completedChapters = [];
+  merged.completedChapters = merged.completedChapters.map(String);
+  merged.pending = isObject(merged.pending) ? merged.pending : {};
+  merged.retrying = isObject(merged.retrying) ? merged.retrying : {};
+  return merged;
+}
+
 export function setUI(patch) {
-  state.ui = Object.assign({}, state.ui, patch);
+  state.ui = normalizeUI(Object.assign({}, state.ui, patch));
   persist();
 }
 
@@ -188,6 +239,27 @@ export function wrongIds() {
   return Object.keys(state.answers).filter((id) => state.answers[id].correct === false);
 }
 
+/** 错题回顾用的记录：答错，或综合题自评“还需复习”。按最近一次时间倒序。 */
+export function reviewEntries() {
+  return Object.entries(state.answers)
+    .filter(([, record]) => record.correct === false || record.selfAssessment === "review")
+    .map(([id, record]) => ({ id, record: Object.assign({}, record) }))
+    .sort((a, b) => String(b.record.lastAt || "").localeCompare(String(a.record.lastAt || "")));
+}
+
+/** 某一章的作答统计，题单顶部用它显示“本章进度”。 */
+export function chapterStats(ids) {
+  let answered = 0;
+  let correct = 0;
+  ids.forEach((id) => {
+    const record = state.answers[id];
+    if (!record) return;
+    answered += 1;
+    if (record.correct === true) correct += 1;
+  });
+  return { answered, correct, total: ids.length };
+}
+
 export function answeredIds() {
   return Object.keys(state.answers);
 }
@@ -200,6 +272,7 @@ export function exportData() {
     exportedAt: new Date().toISOString(),
     answers: state.answers,
     drafts: state.drafts,
+    completedChapters: state.ui.completedChapters,
   };
 }
 
@@ -214,12 +287,28 @@ export function importData(text, knownIds) {
   } catch (error) {
     return { ok: false, message: "不是合法的 JSON 文件。" };
   }
-  if (!data || typeof data !== "object") return { ok: false, message: "文件内容不是对象。" };
+  if (!isObject(data)) return { ok: false, message: "文件内容不是对象。" };
   if (data.schemaVersion !== SCHEMA_VERSION) {
     return { ok: false, message: `记录格式版本 ${data.schemaVersion ?? "缺失"} 与当前版本 ${SCHEMA_VERSION} 不一致。` };
   }
-  if (!data.answers || typeof data.answers !== "object") {
+  if (!isObject(data.answers) || (data.drafts !== undefined && !isObject(data.drafts))) {
     return { ok: false, message: "文件里没有 answers 记录。" };
+  }
+  if (data.completedChapters !== undefined && (!Array.isArray(data.completedChapters)
+    || data.completedChapters.some((id) => typeof id !== "string" || !/^(?:[1-9]|1[0-5]|2\.1)$/.test(id)))) {
+    return { ok: false, message: "已学章节标记格式无效；未导入任何记录。" };
+  }
+
+  // 先完整验证，再变更内存或 localStorage，不能导入半份后才报错。
+  const normalized = {};
+  for (const [id, record] of Object.entries(data.answers)) {
+    if (!knownIds.has(id)) continue;
+    const clean = normalizeRecord(record, knownIds instanceof Map ? knownIds.get(id) : null);
+    if (!clean) return { ok: false, message: `题目 ${id} 的作答字段、时间或计分方式无效；未导入任何记录。` };
+    normalized[id] = clean;
+  }
+  for (const [id, draft] of Object.entries(data.drafts || {})) {
+    if (knownIds.has(id) && typeof draft !== "string") return { ok: false, message: `题目 ${id} 的自答草稿不是文本；未导入任何记录。` };
   }
 
   let added = 0;
@@ -228,20 +317,28 @@ export function importData(text, knownIds) {
   let skippedOlder = 0;
 
   Object.entries(data.answers).forEach(([id, record]) => {
-    if (!knownIds.has(id) || !record || typeof record !== "object") {
+    if (!knownIds.has(id)) {
       skippedUnknown += 1;
       return;
     }
     const prev = state.answers[id];
     if (!prev) {
-      state.answers[id] = record;
+      state.answers[id] = normalized[id];
       added += 1;
       return;
     }
     const prevTime = prev.lastAt ? Date.parse(prev.lastAt) : 0;
     const nextTime = record.lastAt ? Date.parse(record.lastAt) : 0;
     if (nextTime > prevTime) {
-      state.answers[id] = record;
+      const next = normalized[id];
+      if (Date.parse(prev.firstAt) < Date.parse(next.firstAt)) {
+        next.firstAt = prev.firstAt;
+        next.firstCorrect = prev.firstCorrect;
+      }
+      next.attempts = Math.max(next.attempts, prev.attempts);
+      state.answers[id] = next;
+      delete state.ui.retrying[id];
+      delete state.ui.pending[id];
       replaced += 1;
     } else {
       skippedOlder += 1;
@@ -256,6 +353,7 @@ export function importData(text, knownIds) {
       draftsAdded += 1;
     }
   });
+  state.ui.completedChapters = [...new Set([...state.ui.completedChapters, ...(data.completedChapters || [])])];
 
   persist();
   return {
