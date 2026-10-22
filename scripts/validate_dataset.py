@@ -166,7 +166,7 @@ def check_question_shape(data: dict) -> None:
         elif q["type"] == "constructed_response":
             if q["options"] or q["optionBlocks"]:
                 fail(f"{qid} 综合题不应含选项")
-        if q["reviewStatus"] not in ("unreviewed", "verified", "disputed", "corrected", "unresolved"):
+        if q["reviewStatus"] not in ("unreviewed", "systematic", "verified", "disputed", "corrected", "unresolved", "reviewed"):
             fail(f"{qid} 审核状态非法：{q['reviewStatus']}")
     notes.append("每题字段完整、答案与解析非空、单选选项键连续且包含答案")
 
@@ -257,6 +257,71 @@ def check_duplicates(data: dict) -> None:
         notes.append(f"提示：{len(dupes)} 组内容完全相同的题块（按来源保留，未去重）")
 
 
+NEGATION = re.compile(r"错误|不正确|不属于|不是|不可能|不宜|不适合")
+
+
+def check_answer_consistency() -> None:
+    """答案字段与解析自述是否一致。
+
+    不是判断答案对不对，而是查"解析自己说的结论"和"答案字段"有没有打架：
+    1. 解析里写了“故选 X”，答案必须落在这些 X 里；
+    2. 题干不是否定式（选错误项）时，答案不应被解析描述为“X 错误”。
+    """
+    questions = load_json(DATA / "questions.json")["questions"]
+    with_verdict = 0
+    conflicts = []
+    for q in questions:
+        if q["type"] != "single_choice":
+            continue
+        answer = q["originalAnswer"]
+        text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", q["originalExplanationHtml"]))
+        verdicts = re.findall(r"(?:故)?(?<!不)选\s*([A-H])", text) + re.findall(
+            r"答案(?:应|为|是)?\s*[:：]?\s*([A-H])", text
+        )
+        if verdicts:
+            with_verdict += 1
+            if answer not in verdicts:
+                conflicts.append((q["id"], f'故选 {verdicts[:2]} 但答案 {answer}'))
+        wrong_marks = set(re.findall(r"([A-H])\s*(?:项)?(?:的说法)?(?:是)?错误", text))
+        if answer in wrong_marks and not NEGATION.search(q["stemText"]):
+            conflicts.append((q["id"], f"答案 {answer} 被解析判为错误，题干却非否定式"))
+    if conflicts:
+        fail(f"答案与解析矛盾 {len(conflicts)} 处：{conflicts[:5]}")
+    else:
+        notes.append(f"答案一致性：{with_verdict} 道题解析自述“故选 X”与答案字段全部一致，0 处矛盾")
+
+
+def check_mapping_coverage() -> None:
+    """每道题必须有唯一主归属和至少一个真实存在的知识点。"""
+    mappings = load_json(DATA / "mappings.json")["byQuestion"]
+    topics = {t["id"] for t in load_json(DATA / "topics.json")["topics"]}
+    chapters = {c["id"] for c in load_json(DATA / "chapters.json")["chapters"]}
+    missing_primary = []
+    missing_topics = []
+    bad_topics = []
+    bad_chapters = []
+    for qid, entry in mappings.items():
+        if not entry.get("primaryChapterId"):
+            missing_primary.append(qid)
+        elif entry["primaryChapterId"] not in chapters:
+            bad_chapters.append((qid, entry["primaryChapterId"]))
+        if not entry.get("topicIds"):
+            missing_topics.append(qid)
+        for topic in entry.get("topicIds", []):
+            if topic not in topics:
+                bad_topics.append((qid, topic))
+    if missing_primary:
+        fail(f"缺少主归属章节：{len(missing_primary)} 道，例如 {missing_primary[:3]}")
+    if bad_chapters:
+        fail(f"主归属章节不存在：{bad_chapters[:3]}")
+    if missing_topics:
+        fail(f"缺少知识点：{len(missing_topics)} 道，例如 {missing_topics[:3]}")
+    if bad_topics:
+        fail(f"知识点 ID 不存在：{bad_topics[:3]}")
+    if not (missing_primary or bad_chapters or missing_topics or bad_topics):
+        notes.append(f"映射覆盖：{len(mappings)} 道均有唯一主归属与有效知识点")
+
+
 def main() -> int:
     REPORTS.mkdir(parents=True, exist_ok=True)
     data = load_json(DATA / "questions.json")
@@ -270,6 +335,8 @@ def main() -> int:
     check_source_fidelity(data)
     check_vendor_integrity(registry)
     check_fixtures(data)
+    check_mapping_coverage()
+    check_answer_consistency()
     check_duplicates(data)
 
     report = {"ok": not errors, "errors": errors, "notes": notes}

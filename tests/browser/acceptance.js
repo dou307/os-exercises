@@ -175,11 +175,20 @@ function check(name, ok, detail) {
   const sourceLinks = await page.locator('a[href*="kaoyan-408-os"]').count();
   check("原题库阅读入口存在", sourceLinks >= 5, `${sourceLinks} 个入口`);
 
-  // ---- P4：未审核章节导航与“标记已学” ----
+  // ---- P4：系统映射章节导航与“标记已学” ----
   await page.goto(BASE + "#/ch/3", { waitUntil: "networkidle" });
   await page.waitForSelector("h1");
   const ch3Text = await page.locator("main").innerText();
-  check("第 3 章可进入并标注未审核", /尚未逐题核对/.test(ch3Text) && /未审核/.test(ch3Text));
+  check("第 3 章可进入并标注系统映射", /系统映射/.test(ch3Text) && /未逐题人工复核/.test(ch3Text));
+
+  await page.goto(BASE + "#/ch/4", { waitUntil: "networkidle" });
+  await page.waitForSelector("h1");
+  const ch4Text = await page.locator("main").innerText();
+  check("线程章节有题（关键词拆分生效）", /第 4 章/.test(ch4Text) && !/暂无对应题/.test(ch4Text),
+    ch4Text.split("\n").slice(0, 4).join(" | "));
+
+  await page.goto(BASE + "#/ch/3", { waitUntil: "networkidle" });
+  await page.waitForSelector("h1");
   const markBtn = page.getByRole("button", { name: "标记本章已学完" });
   check("提供本机“标记已学”按钮", await markBtn.count() === 1);
   await markBtn.click();

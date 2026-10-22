@@ -170,7 +170,7 @@ async function renderHome() {
       class: `badge${chapter.id === "1" ? " core" : ""}`,
       text: total ? `${total} 道` : "暂无对应题",
     }));
-    if (chapter.counts.unreviewed) metaBox.appendChild(el("span", { class: "badge", text: "未审核" }));
+    if (chapter.counts.unreviewed) metaBox.appendChild(el("span", { class: "badge", text: "系统映射" }));
     metaBox.appendChild(el("span", { class: "badge", text: statusText(chapter) }));
     a.appendChild(metaBox);
     li.appendChild(a);
@@ -319,10 +319,10 @@ async function renderChapter(chapterId) {
   }
   head.appendChild(actions);
 
-  if (chapter.counts.unreviewed) {
+  if (chapter.counts.systematic) {
     head.appendChild(el("div", {
       class: "notice warn",
-      text: `本章 ${chapter.counts.unreviewed} 道题只按上游分区系统初筛到本章，尚未逐题核对知识点与答案。可以练习，但答案与前置知识不能当作已审核结论。`,
+      text: `本章 ${chapter.counts.systematic} 道题按小节系统映射到知识点，答案与前置知识未逐题人工复核。可以练习，但不要把判分结果当作已审核结论。`,
     }));
   }
   container.appendChild(head);
@@ -354,6 +354,7 @@ async function renderChapter(chapterId) {
       const metaBox = el("span", { class: "meta" });
       metaBox.appendChild(el("span", { class: `badge ${q.effectiveTier}`, text: tierText(q.effectiveTier) }));
       if (q.reviewStatus === "disputed") metaBox.appendChild(el("span", { class: "badge disputed", text: "待核对" }));
+      else if (q.reviewStatus === "systematic") metaBox.appendChild(el("span", { class: "badge", text: "系统映射" }));
       else if (q.reviewStatus === "unreviewed" || q.mappingStatus === "candidate") {
         metaBox.appendChild(el("span", { class: "badge", text: "未审核" }));
       }

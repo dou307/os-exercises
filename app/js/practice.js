@@ -17,6 +17,7 @@ const TIER_TEXT = { core: "核心", bridge: "桥接", supplement: "补充", late
 const REVIEW_TEXT = {
   verified: "已核对",
   reviewed: "已核对归属",
+  systematic: "系统映射",
   disputed: "待核对",
   candidate: "未审核",
   unreviewed: "未审核",

@@ -17,6 +17,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from collections import Counter
 from pathlib import Path
@@ -45,37 +46,159 @@ CHAPTER_TITLES_ZH = {
     "15": "文件系统内部结构",
 }
 
-# 上游分区 → 课程章节的初筛规则（未逐题审核，仅用于导航分组）。
-SECTION_RULES = {
-    ("ch2", "toc-1"): ("3", ["4"]),
-    ("ch2", "toc-2"): ("5", ["3"]),
-    ("ch2", "toc-3"): ("6", ["7"]),
-    ("ch2", "toc-4"): ("8", ["6"]),
-    ("ch2", "toc-5"): ("5", ["3"]),
-    ("ch2", "toc-17"): ("7", ["6"]),
-    ("ch2", "toc-47"): ("8", ["6"]),
-    ("ch3", "toc-1"): ("9", []),
-    ("ch3", "toc-2"): ("10", ["9"]),
-    ("ch3", "toc-3"): ("9", ["10"]),
-    ("ch4", "toc-1"): ("13", []),
-    ("ch4", "toc-2"): ("13", ["14"]),
-    ("ch4", "toc-3"): ("14", ["15"]),
-    ("ch4", "toc-4"): ("14", ["15"]),
-    ("ch5", "toc-1"): ("12", []),
-    ("ch5", "toc-2"): ("12", []),
-    ("ch5", "toc-3"): ("11", ["12"]),
-    ("ch5", "toc-4"): ("12", ["11"]),
+# 上游分区 → 课程章节与知识点的小节级映射。
+#
+# 这是"系统映射"：同一小节的题目共用一组知识点，没有逐题人工审核答案。
+# 状态写 systematic，界面对应"系统映射"徽标，不冒充 verified。
+SECTION_MAP = {
+    ("ch2", "toc-1", None): {
+        "primary": "3",
+        "secondary": ["4"],
+        "topics": ["t3-1", "t3-1-1", "t3-1-2"],
+        "reason": "2.1 进程与线程简介：进程概念、状态与 PCB；线程相关内容按关键词改归第 4 章",
+    },
+    ("ch2", "toc-2", None): {
+        "primary": "5",
+        "secondary": ["3"],
+        "topics": ["t5-1", "t5-2", "t5-3"],
+        "reason": "2.2 CPU 调度：调度准则与 FCFS/SJF/RR/优先级/多级队列",
+    },
+    ("ch2", "toc-3", None): {
+        "primary": "6",
+        "secondary": ["7"],
+        "topics": ["t6-1", "t6-3", "t6-4", "t6-5"],
+        "reason": "2.3 同步与互斥：临界区、硬件指令、锁与信号量；经典问题在第 7 章",
+    },
+    ("ch2", "toc-4", None): {
+        "primary": "8",
+        "secondary": ["6"],
+        "topics": ["t8-3", "t8-5", "t8-6", "t8-7"],
+        "reason": "2.4 死锁：必要条件、预防/避免/检测与银行家算法",
+    },
+    ("ch2", "toc-5", None): {
+        "primary": "5",
+        "secondary": ["3"],
+        "topics": ["t5-3", "t3-2"],
+        "reason": "综合应用题（一）：调度时序、周转时间与利用率计算",
+    },
+    ("ch2", "toc-17", None): {
+        "primary": "7",
+        "secondary": ["6"],
+        "topics": ["t7-1", "t6-5"],
+        "reason": "综合应用题（二）：经典同步问题的 P/V 解法",
+    },
+    ("ch2", "toc-47", None): {
+        "primary": "8",
+        "secondary": ["6"],
+        "topics": ["t8-6"],
+        "reason": "综合应用题（三）：银行家算法与安全性判定",
+    },
+    ("ch3", "toc-1", None): {
+        "primary": "9",
+        "secondary": [],
+        "topics": ["t9-1", "t9-2", "t9-3", "t9-4"],
+        "reason": "3.1 内存管理概念：地址变换、连续分配、分页与页表结构",
+    },
+    ("ch3", "toc-2", None): {
+        "primary": "10",
+        "secondary": ["9"],
+        "topics": ["t10-2", "t10-4", "t10-5", "t10-6"],
+        "reason": "3.2 虚拟内存：请求分页、页面置换、帧分配与抖动",
+    },
+    ("ch3", "toc-3", "toc-4"): {
+        "primary": "9",
+        "secondary": [],
+        "topics": ["t9-2", "t9-3"],
+        "reason": "综合应用题：动态分区分配与页式地址变换",
+    },
+    ("ch3", "toc-3", "toc-5"): {
+        "primary": "10",
+        "secondary": ["9"],
+        "topics": ["t10-4", "t10-5", "t10-6"],
+        "reason": "综合应用题：置换算法、缺页率与工作集",
+    },
+    ("ch4", "toc-1", None): {
+        "primary": "13",
+        "secondary": [],
+        "topics": ["t13-1", "t13-2"],
+        "reason": "4.1 文件系统基础：文件属性、操作与访问方法",
+    },
+    ("ch4", "toc-2", None): {
+        "primary": "13",
+        "secondary": ["14"],
+        "topics": ["t13-3", "t13-4"],
+        "reason": "4.2 目录与文件：目录结构、共享与保护",
+    },
+    ("ch4", "toc-3", None): {
+        "primary": "14",
+        "secondary": ["15"],
+        "topics": ["t14-1", "t14-4", "t14-5"],
+        "reason": "4.3 文件系统：层次结构、分配方式与空闲空间管理",
+    },
+    ("ch4", "toc-4", "toc-5"): {
+        "primary": "14",
+        "secondary": [],
+        "topics": ["t14-4", "t14-5"],
+        "reason": "综合应用题：连续/链接/索引分配与空闲空间计算",
+    },
+    ("ch4", "toc-4", "toc-6"): {
+        "primary": "14",
+        "secondary": ["15"],
+        "topics": ["t14-4", "t14-7"],
+        "reason": "综合应用题：索引分配与目录检索的访盘次数",
+    },
+    ("ch5", "toc-1", None): {
+        "primary": "12",
+        "secondary": [],
+        "topics": ["t12-1", "t12-2"],
+        "reason": "5.1 I/O 管理概述：I/O 硬件、中断、DMA 与设备接口",
+    },
+    ("ch5", "toc-2", None): {
+        "primary": "12",
+        "secondary": [],
+        "topics": ["t12-2", "t12-3"],
+        "reason": "5.2 设备独立性软件：缓冲、缓存、SPOOLing 与错误处理",
+    },
+    ("ch5", "toc-3", None): {
+        "primary": "11",
+        "secondary": ["12"],
+        "topics": ["t11-1", "t11-2", "t11-8"],
+        "reason": "5.3 磁盘和固态硬盘：磁盘调度、SSD 与 RAID",
+    },
+    ("ch5", "toc-4", "toc-5"): {
+        "primary": "12",
+        "secondary": [],
+        "topics": ["t12-3", "t12-5"],
+        "reason": "综合应用题：I/O 请求到硬件的转换与性能开销",
+    },
+    ("ch5", "toc-4", "toc-6"): {
+        "primary": "12",
+        "secondary": [],
+        "topics": ["t12-2"],
+        "reason": "综合应用题：缓冲、设备独立性与 I/O 软件层次",
+    },
+    ("ch5", "toc-4", "toc-7"): {
+        "primary": "11",
+        "secondary": ["12"],
+        "topics": ["t11-2", "t11-1"],
+        "reason": "综合应用题：磁盘调度与访问时间计算",
+    },
 }
 
-# 综合应用题按 h3 子分区再细分
-SUBSECTION_RULES = {
-    ("ch3", "toc-3", "toc-4"): ("9", []),
-    ("ch3", "toc-3", "toc-5"): ("10", ["9"]),
-    ("ch4", "toc-4", "toc-5"): ("14", ["13"]),
-    ("ch4", "toc-4", "toc-6"): ("14", ["15"]),
-    ("ch5", "toc-4", "toc-5"): ("12", []),
-    ("ch5", "toc-4", "toc-6"): ("12", []),
-    ("ch5", "toc-4", "toc-7"): ("11", ["12"]),
+# 小节内部再按关键词细分（按顺序匹配，先命中先用）。
+# 只用于跨章或跨知识点差异明显的小节，避免过度自动化。
+KEYWORD_RULES = {
+    ("ch2", "toc-1", None): [
+        (r"线程|thread|用户级|内核级|多对一|一对一|多对多",
+         {"primary": "4", "topics": ["t4-1", "t4-3"],
+          "reason": "2.1 中的线程题：线程概念、用户级/内核级线程与多线程模型，归第 4 章"}),
+        (r"进程创建|创建进程|fork|子进程", {"topics": ["t3-3-1"], "reason": "2.1 中的进程创建：fork 与地址空间复制"}),
+        (r"进程终止|终止|退出|僵尸", {"topics": ["t3-3-2"], "reason": "2.1 中的进程终止：退出与回收"}),
+        (r"上下文|切换", {"topics": ["t3-2-3"], "reason": "2.1 中的上下文切换：现场保存与恢复"}),
+        (r"通信|管道|共享内存|消息|信号", {"topics": ["t3-5"], "reason": "2.1 中的进程通信：共享内存与消息传递"}),
+        (r"就绪|阻塞|运行态|状态", {"topics": ["t3-1-1"], "reason": "2.1 中的进程状态：三态/五态转换"}),
+        (r"PCB|进程控制块", {"topics": ["t3-1-2"], "reason": "2.1 中的 PCB：进程控制块的内容与作用"}),
+    ],
 }
 
 # --------------------------------------------------------------------------- #
@@ -432,8 +555,8 @@ def build_mappings(questions: list[dict]) -> dict:
             continue
 
         src = q["source"]
-        key = (q["chapter"], src["sectionId"])
-        rule = SUBSECTION_RULES.get((q["chapter"], src["sectionId"], src["subsectionId"])) or SECTION_RULES.get(key)
+        key = (q["chapter"], src["sectionId"], src["subsectionId"])
+        rule = SECTION_MAP.get(key)
         if rule is None:
             unknown.append(qid)
             by_question[qid] = {
@@ -447,22 +570,28 @@ def build_mappings(questions: list[dict]) -> dict:
                 "reviewStatus": "unresolved",
             }
             continue
-        primary, secondary = rule
+
+        chosen = dict(rule)
+        for pattern, override in KEYWORD_RULES.get(key, []):
+            if re.search(pattern, q["stemText"], re.IGNORECASE):
+                chosen = {**chosen, **override}
+                break
+
         by_question[qid] = {
-            "primaryChapterId": primary,
-            "secondaryChapterIds": secondary,
-            "topicIds": [],
-            "prerequisiteTopicIds": [],
+            "primaryChapterId": chosen["primary"],
+            "secondaryChapterIds": chosen.get("secondary", []),
+            "topicIds": chosen["topics"],
+            "prerequisiteTopicIds": chosen["topics"],
             "readinessTier": "later",
-            "mappingStatus": "candidate",
-            "mappingReason": f"按上游分区「{src['sectionTitle']}」初筛到第 {primary} 章；尚未逐题核对知识点与答案，不能当作已审核。",
-            "reviewStatus": "unreviewed",
+            "mappingStatus": "systematic",
+            "mappingReason": f'{chosen["reason"]}。按小节系统映射，答案未逐题人工复核。',
+            "reviewStatus": "systematic",
         }
 
     return {
         "schemaVersion": 1,
         "reviewedAt": REVIEW_DATE,
-        "reviewerNote": "第一章 88 道题逐题审核；其余章节仅按上游分区初筛，状态为 candidate。",
+        "reviewerNote": "第一章 88 道题逐题审核；其余章节按小节系统映射到知识点，状态为 systematic，答案未逐题人工复核。",
         "byQuestion": by_question,
         "unresolved": unknown,
     }
@@ -507,6 +636,22 @@ def write_review_doc(questions: list[dict], mappings: dict) -> None:
     )
     later_ch2 = later_to.get("2", 0)
     later_ch3 = later_to.get("3", 0)
+
+    section_counts = Counter(
+        (q["chapter"], q["source"]["sectionId"], q["source"]["subsectionId"])
+        for q in questions
+        if q["chapter"] != "ch1"
+    )
+    section_rows = []
+    for key, rule in SECTION_MAP.items():
+        count = section_counts.get(key, 0)
+        if not count:
+            continue
+        chapter, sec, sub = key
+        label = sec + (f"/{sub}" if sub else "")
+        section_rows.append(
+            f"| {chapter} {label} | {rule['primary']} | {'、'.join(rule['topics'])} | {count} | {rule['reason']} |"
+        )
 
     def fmt(counter: Counter) -> str:
         return " / ".join(f"{k} {v}" for k, v in counter.most_common()) or "—"
@@ -581,7 +726,20 @@ Resource Management、Three Conceptual Pieces、Design Goals。
 - `disputed`：存在实质疑点，原答案保留但隔离计分。
 - `candidate`：仅按上游分区初筛，**不是**已审核（第 2～5 章共 672 道全部处于此状态）。
 
-第一章之外的章节尚未逐题审核，不能对外声称“全库已适配”。
+第一章之外的章节尚未逐题审核，不能对外声称"全库已适配"。
+
+## 7. 其余章节的系统映射
+
+第 2～5 章共 672 道题按上游小节做系统映射：同一小节共用一组知识点，跨章差异明显的小节
+（2.1 进程与线程）再按关键词拆分。状态一律 `systematic`，界面标"系统映射"，
+**不代表答案已逐题人工复核**。
+
+| 上游分区 | 主归属章 | 知识点 | 题数 | 说明 |
+|---|---|---|---:|---|
+{chr(10).join(section_rows)}
+
+另有 348 道题的解析里直接写了"故选 X / 答案 X"，`validate_dataset.py` 会核对这些自述与答案字段是否一致，
+当前 0 处矛盾。这只说明"解析与答案不打架"，不等于答案本身正确。
 """
     (ROOT / "docs" / "映射审核记录.md").write_text(doc, encoding="utf-8")
 

@@ -162,7 +162,8 @@ def main() -> int:
                     "later": tiers.get("later", 0),
                     "supplement": tiers.get("supplement", 0),
                     "disputed": statuses.get("disputed", 0),
-                    "unreviewed": statuses.get("unreviewed", 0),
+                    "systematic": statuses.get("systematic", 0),
+                    "unreviewed": statuses.get("unreviewed", 0) + statuses.get("systematic", 0),
                     "scored": sum(1 for q in items if q["scoring"] == "auto"),
                     "coreScored": sum(1 for q in items if q["scoring"] == "auto" and q["readinessTier"] == "core"),
                     "coreSelfAssess": sum(
