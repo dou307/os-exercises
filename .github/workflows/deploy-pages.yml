@@ -1,0 +1,51 @@
+name: 构建并发布练习站
+
+# 只从 main 构建 dist/ 并发布到 GitHub Pages。
+# 注意：dist/ 不提交仓库，由本工作流现场构建，保证发布物与源码一致。
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 安装依赖
+        run: pip install -r requirements.txt
+
+      - name: 构建 dist/
+        run: python -X utf8 scripts/build.py
+
+      - name: 校验数据（构建失败即中断发布）
+        run: python -X utf8 scripts/validate_dataset.py
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
