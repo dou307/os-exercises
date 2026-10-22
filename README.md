@@ -4,9 +4,11 @@
 
 **当前阶段：P1～P5 已完成。760 道题已结构化并全部映射到章节与知识点；第一章 88 道逐题审核并形成练习闭环；第 2～5 章 672 道按小节系统映射，界面标注“系统映射”，答案未逐题人工复核。**
 
-- GitHub：<https://github.com/dou307/os-exercises>，私有仓库，未启用公开站点。
+- 线上地址：<https://dou307.github.io/os-exercises/>（push 到 `main` 自动构建发布，仓库已按用户选择公开）
+- 本地运行：`.\scripts\start.ps1` → <http://127.0.0.1:8765/>
 - 本地项目：`D:\desk\1learn\OS\exercises\os-exercises`。
 - 已确认的学习进度：仅第一章 Introduction 学完；其余章节状态 unknown。
+- 第三方内容与许可边界见 [`THIRD_PARTY_NOTICE.md`](THIRD_PARTY_NOTICE.md)：上游无 LICENSE、教材插图版权归原书作者，仅供个人学习。
 - 全库 760 道题已结构化；**只有第一章 88 道逐题审核过**，其余 672 道仅按上游分区初筛。
 
 ## 快速开始
