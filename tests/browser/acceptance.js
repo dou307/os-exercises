@@ -175,6 +175,80 @@ function check(name, ok, detail) {
   const sourceLinks = await page.locator('a[href*="kaoyan-408-os"]').count();
   check("原题库阅读入口存在", sourceLinks >= 5, `${sourceLinks} 个入口`);
 
+  // ---- P4：未审核章节导航与“标记已学” ----
+  await page.goto(BASE + "#/ch/3", { waitUntil: "networkidle" });
+  await page.waitForSelector("h1");
+  const ch3Text = await page.locator("main").innerText();
+  check("第 3 章可进入并标注未审核", /尚未逐题核对/.test(ch3Text) && /未审核/.test(ch3Text));
+  const markBtn = page.getByRole("button", { name: "标记本章已学完" });
+  check("提供本机“标记已学”按钮", await markBtn.count() === 1);
+  await markBtn.click();
+  await page.waitForTimeout(300);
+  const afterMark = await page.locator("main").innerText();
+  check("标记后本章题目进入核心练习", /核心练习/.test(afterMark) && /开始核心练习/.test(afterMark));
+
+  // ---- P4：记录导出 / 导入 ----
+  await page.goto(BASE, { waitUntil: "networkidle" });
+  const [download] = await Promise.all([
+    page.waitForEvent("download"),
+    page.getByRole("button", { name: "导出记录" }).click(),
+  ]);
+  const exportPath = path.join(SHOTS, "exported-progress.json");
+  await download.saveAs(exportPath);
+  const exported = JSON.parse(fs.readFileSync(exportPath, "utf8"));
+  const exportedCount = Object.keys(exported.answers || {}).length;
+  check("导出记录含版本与作答", exported.schemaVersion === 1 && exportedCount >= 1, `answers ${exportedCount}`);
+
+  const freshCtx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const freshPage = await freshCtx.newPage();
+  await freshPage.goto(BASE, { waitUntil: "networkidle" });
+  const beforeImport = await freshPage.locator("main").innerText();
+  await freshPage.setInputFiles('input[type="file"]', exportPath);
+  await freshPage.waitForTimeout(600);
+  const afterImport = await freshPage.locator("main").innerText();
+  check("新浏览器导入后恢复记录",
+    /本机已记录 0 道/.test(beforeImport) && new RegExp(`本机已记录 ${exportedCount} 道`).test(afterImport),
+    `导入前 0 道，导入后应为 ${exportedCount} 道`);
+  await freshCtx.close();
+
+  // ---- P4：断网时公式与图片本地可用 ----
+  const offlineCtx = await browser.newContext({ viewport: { width: 1100, height: 900 } });
+  const blocked = [];
+  await offlineCtx.route("**/*", (route) => {
+    const url = route.request().url();
+    if (url.startsWith("http://127.0.0.1:8765/")) return route.continue();
+    blocked.push(url);
+    return route.abort();
+  });
+  const offlinePage = await offlineCtx.newPage();
+  await offlinePage.goto(BASE + "vendor/kaoyan-408-os/ch1/quiz.html", { waitUntil: "networkidle" });
+  await offlinePage.waitForTimeout(900);
+  const offlineKatex = await offlinePage.locator(".katex").count();
+  check("断网时原题库公式仍渲染", offlineKatex > 0, `katex ${offlineKatex}`);
+  check("断网时无外部依赖请求", blocked.length === 0, blocked.slice(0, 2).join(" | "));
+  await offlinePage.goto(BASE + "#/q/c1-s2-0-q011", { waitUntil: "networkidle" });
+  await offlinePage.waitForSelector(".qcard");
+  await offlinePage.getByRole("button", { name: "查看解析" }).click();
+  await offlinePage.waitForTimeout(300);
+  const offlineAppKatex = await offlinePage.locator(".qcard .katex").count();
+  check("断网时练习页公式仍渲染", offlineAppKatex > 0, `katex ${offlineAppKatex}`);
+  await offlineCtx.close();
+
+  // ---- P4：子路径部署 ----
+  const SUB_BASE = "http://127.0.0.1:8766/dist/";
+  const subCtx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const subFailed = [];
+  const subPage = await subCtx.newPage();
+  subPage.on("response", (res) => { if (res.status() >= 400) subFailed.push(`${res.status()} ${res.url()}`); });
+  await subPage.goto(SUB_BASE, { waitUntil: "networkidle" });
+  await subPage.waitForSelector("h1");
+  const subTitle = await subPage.locator("h1").first().innerText();
+  await subPage.goto(SUB_BASE + "#/practice/1?scope=core&i=0", { waitUntil: "networkidle" });
+  await subPage.waitForSelector(".qcard");
+  check("子路径 /dist/ 下可加载并作答", subTitle === "OS 练习室" && (await subPage.locator(".options .opt").count()) >= 4);
+  check("子路径下无 4xx 资源", subFailed.length === 0, subFailed.slice(0, 2).join(" | "));
+  await subCtx.close();
+
   check("无控制台错误", consoleErrors.length === 0, consoleErrors.slice(0, 3).join(" | "));
   check("无资源加载失败", failedRequests.length === 0, failedRequests.slice(0, 3).join(" | "));
 

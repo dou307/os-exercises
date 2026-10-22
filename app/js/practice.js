@@ -9,7 +9,8 @@
  */
 
 import * as storage from "./storage.js";
-import { getTopics, practiceList, topicTitle } from "./questions.js";
+import { getMeta, getTopics, getChapterQuestions, topicTitle } from "./questions.js";
+import { completedChapters, filterByScope } from "./tiers.js";
 import { renderMath } from "./math.js";
 
 const TIER_TEXT = { core: "核心", bridge: "桥接", supplement: "补充", later: "稍后" };
@@ -165,6 +166,19 @@ export function buildCard(q, ctx) {
     card.appendChild(topicsBox);
   }
 
+  const notes = ctx.meta && ctx.meta.notes;
+  const firstTopic = q.topicIds && q.topicIds.length ? topics.get(q.topicIds[0]) : null;
+  if (notes && notes.configured && firstTopic && firstTopic.noteFile) {
+    const uri = `obsidian://open?vault=${encodeURIComponent(notes.vault)}&file=${encodeURIComponent(firstTopic.noteFile)}`;
+    const row = el("div", { class: "actions" });
+    row.appendChild(el("a", {
+      class: "btn ghost small",
+      href: uri,
+      text: `在笔记中打开 ${firstTopic.noteFile}`,
+    }));
+    card.appendChild(row);
+  }
+
   function paintSubmitted(record) {
     optionNodes.forEach((node, key) => {
       node.disabled = true;
@@ -276,8 +290,9 @@ function appendSelfAssess(card, q, showResult, ctx) {
 export async function renderPlayer(main, params) {
   const chapterId = params.chapterId;
   const scope = params.scope || "core";
-  const topics = await getTopics();
-  const list = await practiceList(chapterId, scope);
+  const [topics, meta] = await Promise.all([getTopics(), getMeta()]);
+  const completed = completedChapters(meta);
+  const list = filterByScope(await getChapterQuestions(chapterId), scope, completed);
   if (!list.length) {
     main.innerHTML = "";
     main.appendChild(el("div", { class: "card" }, [
@@ -297,7 +312,10 @@ export async function renderPlayer(main, params) {
     main.innerHTML = "";
 
     const head = el("div", { class: "card" });
-    const scopeText = scope === "core" ? "核心 + 桥接" : (scope === "supplement" ? "补充内容" : (scope === "disputed" ? "待核对" : "全部"));
+    const scopeText = scope === "core" ? "核心 + 桥接"
+      : scope === "supplement" ? "补充内容"
+      : scope === "disputed" ? "待核对"
+      : "全部题目";
     head.appendChild(el("div", { class: "crumbs", html: `<a href="#/">首页</a> / <a href="#/ch/${chapterId}">第 ${chapterId} 章</a> / 练习` }));
     head.appendChild(el("h1", { text: `第 ${chapterId} 章练习 · ${scopeText}` }));
     head.appendChild(el("p", { class: "sub", text: `范围：${scopeText}。进度按稳定题目 ID 记录，换端口不会自动继承。` }));
@@ -318,6 +336,7 @@ export async function renderPlayer(main, params) {
 
     const card = buildCard(q, {
       topics,
+      meta,
       onChange: () => {
         // 章节页的统计不常驻，这里只提示已保存状态
         if (!storage.isPersistent()) showToast("本地存储不可用，本次作答未持久保存");

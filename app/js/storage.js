@@ -191,3 +191,81 @@ export function wrongIds() {
 export function answeredIds() {
   return Object.keys(state.answers);
 }
+
+/** 导出学习记录（跨浏览器备份用），含版本与时间，不含页面 UI 状态。 */
+export function exportData() {
+  return {
+    schemaVersion: SCHEMA_VERSION,
+    datasetVersion,
+    exportedAt: new Date().toISOString(),
+    answers: state.answers,
+    drafts: state.drafts,
+  };
+}
+
+/**
+ * 导入学习记录：先校验格式与版本，再按题目 ID 合并。
+ * 同一题保留 lastAt 较新的一份，未知 ID 跳过并计数，不直接清空现有记录。
+ */
+export function importData(text, knownIds) {
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch (error) {
+    return { ok: false, message: "不是合法的 JSON 文件。" };
+  }
+  if (!data || typeof data !== "object") return { ok: false, message: "文件内容不是对象。" };
+  if (data.schemaVersion !== SCHEMA_VERSION) {
+    return { ok: false, message: `记录格式版本 ${data.schemaVersion ?? "缺失"} 与当前版本 ${SCHEMA_VERSION} 不一致。` };
+  }
+  if (!data.answers || typeof data.answers !== "object") {
+    return { ok: false, message: "文件里没有 answers 记录。" };
+  }
+
+  let added = 0;
+  let replaced = 0;
+  let skippedUnknown = 0;
+  let skippedOlder = 0;
+
+  Object.entries(data.answers).forEach(([id, record]) => {
+    if (!knownIds.has(id) || !record || typeof record !== "object") {
+      skippedUnknown += 1;
+      return;
+    }
+    const prev = state.answers[id];
+    if (!prev) {
+      state.answers[id] = record;
+      added += 1;
+      return;
+    }
+    const prevTime = prev.lastAt ? Date.parse(prev.lastAt) : 0;
+    const nextTime = record.lastAt ? Date.parse(record.lastAt) : 0;
+    if (nextTime > prevTime) {
+      state.answers[id] = record;
+      replaced += 1;
+    } else {
+      skippedOlder += 1;
+    }
+  });
+
+  let draftsAdded = 0;
+  Object.entries(data.drafts || {}).forEach(([id, text]) => {
+    if (!knownIds.has(id) || typeof text !== "string" || !text) return;
+    if (!state.drafts[id]) {
+      state.drafts[id] = text;
+      draftsAdded += 1;
+    }
+  });
+
+  persist();
+  return {
+    ok: true,
+    added,
+    replaced,
+    skippedUnknown,
+    skippedOlder,
+    draftsAdded,
+    datasetVersion: data.datasetVersion || "unknown",
+    persistent: !memoryOnly,
+  };
+}

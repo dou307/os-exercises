@@ -56,13 +56,3 @@ export function topicTitle(topics, id) {
   const topic = topics.get(id);
   return topic ? topic.title : id;
 }
-
-/** 按章节与范围取练习列表。core 范围含 bridge，因为它们同样可以现在做。 */
-export async function practiceList(chapterId, scope) {
-  const list = await getChapterQuestions(chapterId);
-  if (scope === "all") return list;
-  if (scope === "core") return list.filter((q) => q.readinessTier === "core" || q.readinessTier === "bridge");
-  if (scope === "supplement") return list.filter((q) => q.readinessTier === "supplement");
-  if (scope === "disputed") return list.filter((q) => q.reviewStatus === "disputed");
-  return list;
-}

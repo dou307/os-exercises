@@ -1,0 +1,5 @@
+{
+  "_comment": "复制本文件为 config.local.json 后填写。obsidianVault 是 Obsidian 库名称；留空则不生成笔记跳转链接，界面不会硬编码任何 vault。",
+  "notesRoot": "D:\\desk\\Obsidian\\1大三秋冬\\OS",
+  "obsidianVault": ""
+}

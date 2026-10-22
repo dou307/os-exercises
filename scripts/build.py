@@ -38,6 +38,45 @@ TIER_LABELS = {
     "disputed": "争议",
 }
 
+# 上游页面统一从 jsDelivr 加载 KaTeX；构建时改写为本地相对路径，保证断网可用。
+# 注意：只改 dist 副本，vendor/ 快照保持原始字节。
+CDN_REWRITES = [
+    ("https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css", "katex.min.css"),
+    ("https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js", "katex.min.js"),
+    ("https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js", "auto-render.min.js"),
+]
+
+
+def localize_vendor_pages(target_root: Path) -> int:
+    """把 dist 内上游页面的 CDN 公式资源改成相对路径，返回改写的文件数。"""
+    rewritten = 0
+    for path in target_root.rglob("*.html"):
+        rel = path.relative_to(target_root)
+        prefix = "../" * len(rel.parts)  # 回到 dist/vendor/
+        raw = path.read_bytes().decode("utf-8")
+        updated = raw
+        for url, filename in CDN_REWRITES:
+            updated = updated.replace(url, f"{prefix}katex/{filename}")
+        if updated != raw:
+            path.write_bytes(updated.encode("utf-8"))
+            rewritten += 1
+    return rewritten
+
+
+def load_local_config() -> dict:
+    """读取本机笔记路径配置；缺失或格式错误时返回空，不硬编码 vault 名称。"""
+    path = ROOT / "config.local.json"
+    if not path.exists():
+        return {}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(data, dict):
+            raise ValueError("顶层不是对象")
+        return data
+    except (json.JSONDecodeError, ValueError, OSError) as error:
+        print(f"  警告：config.local.json 无法解析（{error}），笔记链接保持关闭。")
+        return {}
+
 
 def load(name: str) -> dict:
     return json.loads((DATA / name).read_text(encoding="utf-8"))
@@ -85,6 +124,7 @@ def main() -> int:
     shutil.copytree(APP / "js", DIST / "js")
     shutil.copytree(APP / "vendor", DIST / "vendor")
     shutil.copytree(VENDOR, DIST / "vendor" / "kaoyan-408-os")
+    localized = localize_vendor_pages(DIST / "vendor" / "kaoyan-408-os")
 
     # ---- 数据 ----
     by_chapter: dict[str, list[dict]] = {}
@@ -132,6 +172,9 @@ def main() -> int:
             }
         )
 
+    local_config = load_local_config()
+    vault = (local_config.get("obsidianVault") or "").strip()
+    notes_root = (local_config.get("notesRoot") or "").strip()
     meta = {
         "schemaVersion": 1,
         "datasetVersion": questions_doc["datasetVersion"],
@@ -141,6 +184,11 @@ def main() -> int:
         "studyDefaults": study,
         "chapters": chapter_meta,
         "tierLabels": TIER_LABELS,
+        "notes": {
+            "configured": bool(vault),
+            "vault": vault,
+            "root": notes_root,
+        },
     }
     (DIST / "data" / "meta.json").write_text(
         json.dumps(meta, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8"
@@ -176,6 +224,8 @@ def main() -> int:
 
     total_bytes = sum(p.stat().st_size for p in DIST.rglob("*") if p.is_file())
     print(f"构建完成：dist/（{len(questions)} 道题，{len(by_chapter)} 个章节文件，{total_bytes / 1024 / 1024:.1f} MB）")
+    print(f"  上游页面公式资源本地化：{localized} 个 HTML 文件")
+    print(f"  笔记链接：{'已配置 ' + vault if vault else '未配置（config.local.json 缺失或未填 obsidianVault）'}")
     ch1 = next((c for c in chapter_meta if c["id"] == "1"), None)
     if ch1:
         print(f"  第一章：共 {ch1['counts']['total']} 道，核心 {ch1['counts']['core']}、桥接 {ch1['counts']['bridge']}、"

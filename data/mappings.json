@@ -813,8 +813,7 @@
     "t2-3"
    ],
    "prerequisiteTopicIds": [
-    "t1-4-2",
-    "t2-3"
+    "t1-4-2"
    ],
    "readinessTier": "core",
    "mappingStatus": "disputed",
@@ -962,8 +961,7 @@
     "t2-2-1"
    ],
    "prerequisiteTopicIds": [
-    "t1-4-2",
-    "t2-2-1"
+    "t1-4-2"
    ],
    "readinessTier": "core",
    "mappingStatus": "verified",
@@ -1316,8 +1314,7 @@
     "t2-3"
    ],
    "prerequisiteTopicIds": [
-    "t1-2-1",
-    "t2-3"
+    "t1-2-1"
    ],
    "readinessTier": "core",
    "mappingStatus": "verified",

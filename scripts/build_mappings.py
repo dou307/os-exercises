@@ -271,6 +271,14 @@ CH1_REVIEW = [
      "需进程状态、等待与 I/O 并行分析；题干要求画甘特图，前置为第 3 章进程概念与调度，留到进程阶段。"),
 ]
 
+# 少数题目的知识点含"辅助"小节（如命令解释器、系统调用），但作答本身只需第一章知识。
+# 这里把前置知识点收窄到已确认覆盖的范围，辅助知识点仍保留在 topicIds 里供跳转。
+PREREQ_OVERRIDES = {
+    "c1-s3-0-q009": ["t1-4-2"],
+    "c1-s3-0-q016": ["t1-4-2"],
+    "c1-s3-0-q033": ["t1-2-1"],
+}
+
 ERRATA = [
     {
         "questionId": "c1-s3-0-q009",
@@ -396,6 +404,8 @@ def build_mappings(questions: list[dict]) -> dict:
     reviewed: dict[str, dict] = {}
     for qid, tier, status, primary, topics, extra_prereq, reason in CH1_REVIEW:
         prereq = list(topics) if extra_prereq is None else list(dict.fromkeys(topics + extra_prereq))
+        if qid in PREREQ_OVERRIDES:
+            prereq = list(PREREQ_OVERRIDES[qid])
         reviewed[qid] = {
             "primaryChapterId": primary,
             "secondaryChapterIds": [],
@@ -594,6 +604,19 @@ def main() -> int:
         return 1
 
     mappings = build_mappings(questions)
+
+    # 学习范围守卫：第一章 core 题的前置知识点必须都落在已确认学完的第一章内
+    leaked = []
+    for qid, tier, status, primary, topic_list, _extra, _reason in CH1_REVIEW:
+        if tier != "core":
+            continue
+        entry = mappings["byQuestion"][qid]
+        outside = [t for t in entry["prerequisiteTopicIds"] if not t.startswith("t1-")]
+        if outside:
+            leaked.append((qid, outside))
+    if leaked:
+        print(f"前置知识越界，第一章 core 不应依赖后续章知识点：{leaked}", file=sys.stderr)
+        return 1
 
     (DATA / "chapters.json").write_text(json.dumps(chapters, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     (DATA / "topics.json").write_text(json.dumps(topics, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")

@@ -9,6 +9,7 @@ import { getMeta, getIndex, getTopics, getChapterQuestions } from "./questions.j
 import { buildCard, renderPlayer, showToast } from "./practice.js";
 import { parseHash, navigate } from "./router.js";
 import { renderSearch } from "./search.js";
+import { completedChapters, toggleChapterCompleted, withEffectiveTier } from "./tiers.js";
 
 const state = {
   meta: null,
@@ -44,8 +45,10 @@ function chapterLabel(chapter) {
 }
 
 function statusText(chapter) {
-  const status = state.meta.studyDefaults.chapterStatus[chapter.id];
-  if (status === "completed") return "已确认学完";
+  const completed = completedChapters(state.meta);
+  if (completed.has(String(chapter.id))) {
+    return state.meta.studyDefaults.chapterStatus[chapter.id] === "completed" ? "已确认学完" : "本机标记已学";
+  }
   return "进度未知";
 }
 
@@ -151,6 +154,8 @@ async function renderHome() {
   current.appendChild(note);
   container.appendChild(current);
 
+  container.appendChild(buildRecordsCard());
+
   const list = el("div", { class: "card" });
   list.appendChild(el("h2", { text: "全部章节" }));
   const table = el("ul", { class: "qlist" });
@@ -182,6 +187,57 @@ function statBox(value, label) {
   return box;
 }
 
+function buildRecordsCard() {
+  const card = el("div", { class: "card" });
+  card.appendChild(el("h2", { text: "学习记录" }));
+  const stats = storage.stats();
+  card.appendChild(el("p", {
+    class: "sub",
+    text: `本机已记录 ${stats.answered} 道（答对 ${stats.correct}、答错 ${stats.wrong}、自评 ${stats.selfAssessed}）。记录只存在当前浏览器与当前地址，换端口不会自动继承。`,
+  }));
+
+  const actions = el("div", { class: "actions" });
+  const exportBtn = el("button", { type: "button", class: "btn", text: "导出记录" });
+  exportBtn.addEventListener("click", () => {
+    const data = storage.exportData();
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = el("a", { href: url, download: `os-exercises-progress-${new Date().toISOString().slice(0, 10)}.json` });
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    showToast("已导出学习记录");
+  });
+
+  const importLabel = el("label", { class: "btn ghost", text: "导入记录" });
+  const fileInput = el("input", { type: "file", accept: "application/json,.json", style: "display:none" });
+  fileInput.addEventListener("change", async () => {
+    const file = fileInput.files && fileInput.files[0];
+    if (!file) return;
+    const text = await file.text();
+    const known = new Set(state.index.questions.map((q) => q.id));
+    const result = storage.importData(text, known);
+    fileInput.value = "";
+    if (!result.ok) {
+      showToast(`导入失败：${result.message}`);
+      return;
+    }
+    showToast(`导入完成：新增 ${result.added}、更新 ${result.replaced}、跳过 ${result.skippedUnknown + result.skippedOlder}`);
+    if (!result.persistent) showToast("本地存储不可用，导入只保留在内存中");
+    route();
+  });
+  importLabel.appendChild(fileInput);
+  actions.appendChild(exportBtn);
+  actions.appendChild(importLabel);
+  card.appendChild(actions);
+
+  if (!storage.isPersistent()) {
+    card.appendChild(el("div", { class: "notice bad", text: "当前浏览器无法持久保存记录；导出仍可用于备份。" }));
+  }
+  return card;
+}
+
 /* ------------------------------------------------------------------ */
 /* 章节                                                                */
 /* ------------------------------------------------------------------ */
@@ -208,26 +264,6 @@ async function renderChapter(chapterId) {
     return;
   }
 
-  const statRow = el("div", { class: "stat-row" });
-  statRow.appendChild(statBox(chapter.counts.core, "核心"));
-  statRow.appendChild(statBox(chapter.counts.bridge, "桥接"));
-  statRow.appendChild(statBox(chapter.counts.supplement, "补充"));
-  statRow.appendChild(statBox(chapter.counts.disputed, "待核对"));
-  head.appendChild(statRow);
-
-  const actions = el("div", { class: "actions" });
-  if (chapter.counts.core || chapter.counts.bridge) {
-    actions.appendChild(el("a", { class: "btn primary", href: `#/practice/${encodeURIComponent(chapterId)}?scope=core&i=0`, text: "开始核心练习" }));
-  }
-  if (chapter.counts.supplement) {
-    actions.appendChild(el("a", { class: "btn", href: `#/practice/${encodeURIComponent(chapterId)}?scope=supplement&i=0`, text: "补充题" }));
-  }
-  if (chapter.counts.disputed) {
-    actions.appendChild(el("a", { class: "btn", href: `#/practice/${encodeURIComponent(chapterId)}?scope=disputed&i=0`, text: "待核对题（不计分）" }));
-  }
-  head.appendChild(actions);
-  container.appendChild(head);
-
   let questions = [];
   try {
     questions = await loadChapter(chapterId);
@@ -238,19 +274,75 @@ async function renderChapter(chapterId) {
     return;
   }
 
+  const completed = completedChapters(state.meta);
+  const tagged = questions.map((q) => withEffectiveTier(q, completed));
+  const counts = {
+    core: tagged.filter((q) => q.effectiveTier === "core").length,
+    bridge: tagged.filter((q) => q.effectiveTier === "bridge").length,
+    supplement: tagged.filter((q) => q.effectiveTier === "supplement").length,
+    later: tagged.filter((q) => q.effectiveTier === "later").length,
+    disputed: tagged.filter((q) => q.reviewStatus === "disputed").length,
+  };
+
+  const statRow = el("div", { class: "stat-row" });
+  statRow.appendChild(statBox(counts.core, "核心"));
+  statRow.appendChild(statBox(counts.bridge, "桥接"));
+  statRow.appendChild(statBox(counts.supplement, "补充"));
+  statRow.appendChild(statBox(counts.disputed, "待核对"));
+  head.appendChild(statRow);
+
+  const actions = el("div", { class: "actions" });
+  if (counts.core || counts.bridge) {
+    actions.appendChild(el("a", { class: "btn primary", href: `#/practice/${encodeURIComponent(chapterId)}?scope=core&i=0`, text: "开始核心练习" }));
+  }
+  if (counts.supplement) {
+    actions.appendChild(el("a", { class: "btn", href: `#/practice/${encodeURIComponent(chapterId)}?scope=supplement&i=0`, text: "补充题" }));
+  }
+  if (counts.disputed) {
+    actions.appendChild(el("a", { class: "btn", href: `#/practice/${encodeURIComponent(chapterId)}?scope=disputed&i=0`, text: "待核对题（不计分）" }));
+  }
+  actions.appendChild(el("a", { class: "btn ghost", href: `#/practice/${encodeURIComponent(chapterId)}?scope=all&i=0`, text: "全部题目" }));
+
+  const confirmed = (state.meta.studyDefaults.confirmedCompletedChapters || []).map(String).includes(String(chapterId));
+  if (!confirmed) {
+    const isLocalDone = (storage.getUI().completedChapters || []).map(String).includes(String(chapterId));
+    const toggle = el("button", {
+      type: "button",
+      class: "btn ghost",
+      text: isLocalDone ? "取消“本章已学”标记" : "标记本章已学完",
+    });
+    toggle.addEventListener("click", () => {
+      toggleChapterCompleted(state.meta, chapterId);
+      route();
+    });
+    actions.appendChild(toggle);
+  }
+  head.appendChild(actions);
+
+  if (chapter.counts.unreviewed) {
+    head.appendChild(el("div", {
+      class: "notice warn",
+      text: `本章 ${chapter.counts.unreviewed} 道题只按上游分区系统初筛到本章，尚未逐题核对知识点与答案。可以练习，但答案与前置知识不能当作已审核结论。`,
+    }));
+  }
+  container.appendChild(head);
+
   const groups = [
-    { key: "core", title: "核心练习", filter: (q) => q.readinessTier === "core" || q.readinessTier === "bridge" },
-    { key: "supplement", title: "补充内容（课程外）", filter: (q) => q.readinessTier === "supplement" },
-    { key: "later", title: "归入其他章节", filter: (q) => q.readinessTier === "later" },
+    { key: "core", title: "核心练习", filter: (q) => q.effectiveTier === "core" || q.effectiveTier === "bridge" },
+    { key: "supplement", title: "补充内容（课程外）", filter: (q) => q.effectiveTier === "supplement" },
+    { key: "later", title: "稍后再学", filter: (q) => q.effectiveTier === "later" },
   ];
 
   groups.forEach((group) => {
-    const items = questions.filter(group.filter);
+    const items = tagged.filter(group.filter);
     if (!items.length) return;
     const card = el("div", { class: "card" });
     card.appendChild(el("h2", { text: `${group.title}（${items.length}）` }));
-    if (group.key === "core" && chapter.counts.disputed) {
-      card.appendChild(el("p", { class: "sub", text: `其中 ${chapter.counts.disputed} 道标为待核对，只读不计分。` }));
+    if (group.key === "core" && counts.disputed) {
+      card.appendChild(el("p", { class: "sub", text: `其中 ${counts.disputed} 道标为待核对，只读不计分。` }));
+    }
+    if (group.key === "later") {
+      card.appendChild(el("p", { class: "sub", text: "这些题归到本章，但当前学习进度未覆盖；标记本章已学后会自动进入核心练习。" }));
     }
     const ul = el("ul", { class: "qlist" });
     items.forEach((q) => {
@@ -260,8 +352,11 @@ async function renderChapter(chapterId) {
       a.appendChild(el("span", { class: "no", text: q.source.originalLabel.replace(/\s/g, "") }));
       a.appendChild(el("span", { class: "txt", text: q.stemText.slice(0, 90) }));
       const metaBox = el("span", { class: "meta" });
-      metaBox.appendChild(el("span", { class: `badge ${q.readinessTier}`, text: tierText(q.readinessTier) }));
+      metaBox.appendChild(el("span", { class: `badge ${q.effectiveTier}`, text: tierText(q.effectiveTier) }));
       if (q.reviewStatus === "disputed") metaBox.appendChild(el("span", { class: "badge disputed", text: "待核对" }));
+      else if (q.reviewStatus === "unreviewed" || q.mappingStatus === "candidate") {
+        metaBox.appendChild(el("span", { class: "badge", text: "未审核" }));
+      }
       if (q.type !== "single_choice") metaBox.appendChild(el("span", { class: "badge", text: q.type === "multi_blank" ? "多空" : "综合" }));
       if (record && record.correct === true) metaBox.appendChild(el("span", { class: "badge ok", text: "做对" }));
       if (record && record.correct === false) metaBox.appendChild(el("span", { class: "badge bad", text: "做错" }));
@@ -277,7 +372,7 @@ async function renderChapter(chapterId) {
 }
 
 function tierText(tier) {
-  return { core: "核心", bridge: "桥接", supplement: "补充", later: "其他章" }[tier] || tier;
+  return { core: "核心", bridge: "桥接", supplement: "补充", later: "稍后", disputed: "待核对" }[tier] || tier;
 }
 
 /* ------------------------------------------------------------------ */
@@ -334,6 +429,7 @@ async function renderQuestion(id) {
 
   container.appendChild(buildCard(question, {
     topics: state.topics,
+    meta: state.meta,
     onChange: () => showToast("记录已更新"),
   }));
 }
