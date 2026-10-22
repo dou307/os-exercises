@@ -322,6 +322,34 @@ def check_mapping_coverage() -> None:
         notes.append(f"映射覆盖：{len(mappings)} 道均有唯一主归属与有效知识点")
 
 
+def check_vendor_assets() -> None:
+    """上游页面里的图片引用必须全部是本地可解析文件。"""
+    total = 0
+    missing = []
+    external = []
+    empty = []
+    for path in VENDOR.rglob("*.html"):
+        text = path.read_text(encoding="utf-8")
+        for src in re.findall(r'<img[^>]+src="([^"]+)"', text):
+            total += 1
+            if src.startswith(("http://", "https://", "data:")):
+                external.append((path.name, src[:60]))
+                continue
+            target = (path.parent / src).resolve()
+            if not target.exists():
+                missing.append((str(path.relative_to(VENDOR)), src))
+            elif target.stat().st_size == 0:
+                empty.append(src)
+    if missing:
+        fail(f"图片引用缺失 {len(missing)} 处：{missing[:3]}")
+    if external:
+        fail(f"图片引用外部地址 {len(external)} 处：{external[:3]}")
+    if empty:
+        fail(f"图片文件为空 {len(empty)} 处：{empty[:3]}")
+    if not (missing or external or empty):
+        notes.append(f"图片引用：{total} 处全部为本地非空文件，无外部地址")
+
+
 def main() -> int:
     REPORTS.mkdir(parents=True, exist_ok=True)
     data = load_json(DATA / "questions.json")
@@ -334,6 +362,7 @@ def main() -> int:
     check_sanitized(data)
     check_source_fidelity(data)
     check_vendor_integrity(registry)
+    check_vendor_assets()
     check_fixtures(data)
     check_mapping_coverage()
     check_answer_consistency()

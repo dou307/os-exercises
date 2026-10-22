@@ -14,11 +14,15 @@
  */
 const fs = require("fs");
 const path = require("path");
-const { chromium } = require("playwright-core");
+const { chromium, firefox } = require("playwright-core");
 
 const BASE = process.env.BASE_URL || "http://127.0.0.1:8765/";
 const ROOT = path.resolve(__dirname, "..", "..");
 const SHOTS = path.join(ROOT, "_work", "screenshots");
+// BROWSER=firefox 可换第二个引擎（需先 npx playwright install firefox）
+const ENGINE = (process.env.BROWSER || "chrome").toLowerCase();
+const launcher = ENGINE === "firefox" ? firefox : chromium;
+const launchOptions = ENGINE === "firefox" ? {} : { channel: ENGINE === "msedge" ? "msedge" : "chrome" };
 const results = [];
 const consoleErrors = [];
 const failedRequests = [];
@@ -30,7 +34,8 @@ function check(name, ok, detail) {
 
 (async () => {
   fs.mkdirSync(SHOTS, { recursive: true });
-  const browser = await chromium.launch({ channel: "chrome", headless: true });
+  const browser = await launcher.launch({ ...launchOptions, headless: true });
+  console.log(`引擎：${ENGINE}`);
   const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
   const page = await context.newPage();
 
@@ -261,9 +266,9 @@ function check(name, ok, detail) {
   check("无控制台错误", consoleErrors.length === 0, consoleErrors.slice(0, 3).join(" | "));
   check("无资源加载失败", failedRequests.length === 0, failedRequests.slice(0, 3).join(" | "));
 
-  fs.writeFileSync(path.join(SHOTS, "acceptance.json"), JSON.stringify({ results, consoleErrors, failedRequests }, null, 2));
+  fs.writeFileSync(path.join(SHOTS, "acceptance.json"), JSON.stringify({ engine: ENGINE, results, consoleErrors, failedRequests }, null, 2));
   const failed = results.filter((r) => !r.ok);
-  console.log(`\n共 ${results.length} 项检查，失败 ${failed.length} 项。`);
+  console.log(`\n[${ENGINE}] 共 ${results.length} 项检查，失败 ${failed.length} 项。`);
   await browser.close();
   process.exit(failed.length ? 1 : 0);
 })().catch((error) => {
