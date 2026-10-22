@@ -16,6 +16,7 @@ export function parseHash(hash) {
         chapterId: decodeURIComponent(rest[0]),
         scope: query.get("scope") || "core",
         i: query.get("i") || "0",
+        qid: query.get("qid") || "",
       },
     };
   }

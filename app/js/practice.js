@@ -362,6 +362,10 @@ export async function renderPlayer(main, params, isCurrent = () => true) {
     return () => {};
   }
   let index = Number.parseInt(params.i, 10);
+  if (params.qid) {
+    const stableIndex = list.findIndex((q) => q.id === params.qid);
+    if (stableIndex >= 0) index = stableIndex;
+  }
   if (!Number.isFinite(index) || index < 0) index = 0;
   if (index >= list.length) index = list.length - 1;
 
@@ -480,7 +484,8 @@ export async function renderPlayer(main, params, isCurrent = () => true) {
 
   const go = (nextIndex) => {
     if (nextIndex < 0 || nextIndex >= list.length) return;
-    location.hash = `#/practice/${encodeURIComponent(chapterId)}?scope=${encodeURIComponent(scope)}&i=${nextIndex}`;
+    // 错题答对后会退出范围，重排后的数组下标已变化；用目标 ID 保证不跳过下一题。
+    location.hash = `#/practice/${encodeURIComponent(chapterId)}?scope=${encodeURIComponent(scope)}&i=${nextIndex}&qid=${encodeURIComponent(list[nextIndex].id)}`;
   };
 
   render();

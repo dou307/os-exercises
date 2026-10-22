@@ -157,6 +157,18 @@ const check = (name, value, detail = "") => {
     release(); await page.waitForLoadState("networkidle");
     check("快速换页时旧请求不会覆盖当前页", await page.locator("main h1").innerText() === "OS 练习室");
 
+    await page.evaluate(() => {
+      const s = window.__osExercises.storage;
+      ["c1-s1-0-q001", "c1-s1-0-q002", "c1-s1-0-q003"].forEach((id) => s.recordAnswer(id, "A", false, "auto"));
+    });
+    await goto("#/practice/1?scope=wrong&i=0");
+    await page.getByRole("button", { name: "重做本题", exact: true }).click();
+    await page.locator(".opt").nth(2).click();
+    await page.getByRole("button", { name: "提交答案", exact: true }).click();
+    await page.getByRole("button", { name: "下一题 →", exact: true }).click();
+    await page.waitForFunction(() => document.querySelector(".qcard")?.dataset.qid !== "c1-s1-0-q001");
+    check("错题答对后列表缩短，下一题仍按稳定 ID 连续推进", await page.locator(".qcard").getAttribute("data-qid") === "c1-s1-0-q002");
+
     await page.setViewportSize({ width: 390, height: 844 });
     for (const hash of ["#/ch/1", "#/search?type=single_choice", "#/practice/1?scope=core&i=0"]) {
       await goto(hash);
