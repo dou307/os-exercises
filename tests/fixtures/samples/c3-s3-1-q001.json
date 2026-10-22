@@ -1,0 +1,38 @@
+{
+ "id": "c3-s3-1-q001",
+ "type": "constructed_response",
+ "chapter": "ch3",
+ "source": {
+  "repository": "jlshdsdk/kaoyan-408-os",
+  "revision": "e360b96fbd6522656d633ad9e26b7dd91f7bd1b4",
+  "path": "ch3/quiz.html",
+  "sectionId": "toc-3",
+  "sectionTitle": "综合应用题",
+  "subsectionId": "toc-4",
+  "subsectionTitle": "3.1 内存管理概念 · 综合应用题",
+  "questionHeadingId": null,
+  "originalLabel": "第 1 题",
+  "originalNumber": 1,
+  "title": "",
+  "hasQContainer": true,
+  "contentHash": "sha256:ccb8f919cd1e7234c3859b76d780d736999c086f1bcac00c87c632459c37db32"
+ },
+ "stemHtml": "<p>某系统的空闲分区见下表，采用可变分区（动态分区）管理策略，现有如下作业序列：96KB、20KB、200KB。若用首次适应算法和最佳适应算法来处理该作业序列，则哪种算法能满足该作业序列的请求？为什么？</p>\n<table>\n<thead><tr><th>分区号</th><th>大小</th><th>始址</th></tr></thead>\n<tbody>\n<tr><td>1</td><td>32KB</td><td>100K</td></tr>\n<tr><td>2</td><td>10KB</td><td>150K</td></tr>\n<tr><td>3</td><td>5KB</td><td>200K</td></tr>\n<tr><td>4</td><td>218KB</td><td>220K</td></tr>\n<tr><td>5</td><td>96KB</td><td>530K</td></tr>\n</tbody>\n</table>",
+ "stemText": "某系统的空闲分区见下表，采用可变分区（动态分区）管理策略，现有如下作业序列：96KB、20KB、200KB。若用首次适应算法和最佳适应算法来处理该作业序列，则哪种算法能满足该作业序列的请求？为什么？ 分区号 大小 始址 1 32KB 100K 2 10KB 150K 3 5KB 200K 4 218KB 220K 5 96KB 530K",
+ "options": [],
+ "optionBlocks": [],
+ "originalAnswer": "最佳适应算法能满足，首次适应算法不能。",
+ "originalAnswerHtml": "答案：最佳适应算法能满足，首次适应算法不能。",
+ "answerFormat": "text",
+ "originalExplanationHtml": "<p><strong>（一）首次适应算法</strong>：从低地址开始，每次找第一个能满足请求的空闲分区。</p>\n<ol>\n<li>作业 96KB：1 号（32KB）、2 号（10KB）、3 号（5KB）都不够，4 号分区（218KB）够用，切出 96KB 分给作业，剩余 <strong>122KB，始址 316K</strong>；</li>\n<li>作业 20KB：1 号分区（32KB）即可满足，切出 20KB，剩余 <strong>12KB，始址 120K</strong>；</li>\n<li>作业 200KB：此时空闲分区为 12KB（120K）、10KB（150K）、5KB（200K）、122KB（316K）、96KB（530K），最大的 122KB &lt; 200KB，<strong>无法满足，分配失败</strong>。</li>\n</ol>\n<table>\n<thead><tr><th>始址</th><th>初始</th><th>分配 96KB 后</th><th>分配 20KB 后</th><th>处理 200KB 请求时</th></tr></thead>\n<tbody>\n<tr><td>100K</td><td>32KB 空闲</td><td>32KB 空闲</td><td>已分配（20KB 作业）</td><td>已分配</td></tr>\n<tr><td>120K</td><td>—</td><td>—</td><td>12KB 空闲</td><td>12KB 空闲</td></tr>\n<tr><td>150K</td><td>10KB 空闲</td><td>10KB 空闲</td><td>10KB 空闲</td><td>10KB 空闲</td></tr>\n<tr><td>200K</td><td>5KB 空闲</td><td>5KB 空闲</td><td>5KB 空闲</td><td>5KB 空闲</td></tr>\n<tr><td>220K</td><td>218KB 空闲</td><td>已分配（96KB 作业）</td><td>已分配</td><td>已分配</td></tr>\n<tr><td>316K</td><td>—</td><td>122KB 空闲</td><td>122KB 空闲</td><td>122KB 空闲（&lt; 200KB，不够）</td></tr>\n<tr><td>530K</td><td>96KB 空闲</td><td>96KB 空闲</td><td>96KB 空闲</td><td>96KB 空闲</td></tr>\n</tbody>\n</table>\n<p><strong>（二）最佳适应算法</strong>：每次从所有空闲分区中挑选<strong>容量最小且能容纳</strong>请求的分区。</p>\n<ol>\n<li>作业 96KB：能容纳的有 4 号（218KB）和 5 号（96KB），取最小的 5 号，<strong>恰好全部用完</strong>；</li>\n<li>作业 20KB：能容纳的有 1 号（32KB）和 4 号（218KB），取 1 号，剩余 <strong>12KB，始址 120K</strong>；</li>\n<li>作业 200KB：能容纳的仅剩 4 号（218KB），分配后剩余 <strong>18KB，始址 420K</strong>。三个作业全部装入。</li>\n</ol>\n<table>\n<thead><tr><th>始址</th><th>初始</th><th>分配 96KB 后</th><th>分配 20KB 后</th><th>分配 200KB 后</th></tr></thead>\n<tbody>\n<tr><td>100K</td><td>32KB 空闲</td><td>32KB 空闲</td><td>已分配（20KB 作业）</td><td>已分配</td></tr>\n<tr><td>120K</td><td>—</td><td>—</td><td>12KB 空闲</td><td>12KB 空闲</td></tr>\n<tr><td>150K</td><td>10KB 空闲</td><td>10KB 空闲</td><td>10KB 空闲</td><td>10KB 空闲</td></tr>\n<tr><td>200K</td><td>5KB 空闲</td><td>5KB 空闲</td><td>5KB 空闲</td><td>5KB 空闲</td></tr>\n<tr><td>220K</td><td>218KB 空闲</td><td>218KB 空闲</td><td>218KB 空闲</td><td>已分配（200KB 作业）</td></tr>\n<tr><td>420K</td><td>—</td><td>—</td><td>—</td><td>18KB 空闲</td></tr>\n<tr><td>530K</td><td>96KB 空闲</td><td>已分配（96KB 作业）</td><td>已分配</td><td>已分配</td></tr>\n</tbody>\n</table>\n<p>原因分析：首次适应算法把 96KB 的作业放入 4 号分区，将系统中唯一能容纳 200KB 的大分区“切碎”，导致 200KB 的作业无处安放；最佳适应算法按“最小可容纳”原则，把 96KB 的作业恰好放入 5 号分区（96KB 正好），从而为 200KB 的作业保住了 4 号大分区，故能满足整个作业序列。</p>",
+ "examYear": null,
+ "examYearVerified": false,
+ "assets": {
+  "images": [],
+  "tables": 3,
+  "codeBlocks": 0,
+  "formulas": 0
+ },
+ "reviewStatus": "unreviewed",
+ "searchText": "某系统的空闲分区见下表，采用可变分区（动态分区）管理策略，现有如下作业序列：96KB、20KB、200KB。若用首次适应算法和最佳适应算法来处理该作业序列，则哪种算法能满足该作业序列的请求？为什么？ 分区号 大小 始址 1 32KB 100K 2 10KB 150K 3 5KB 200K 4 218KB 220K 5 96KB 530K 最佳适应算法能满足，首次适应算法不能。 （一）首次适应算法 ：从低地址开始，每次找第一个能满足请求的空闲分区。 作业 96KB：1 号（32KB）、2 号（10KB）、3 号（5KB）都不够，4 号分区（218KB）够用，切出 96KB 分给作业，剩余 122KB，始址 316K ； 作业 20KB：1 号分区（32KB）即可满足，切出 20KB，剩余 12KB，始址 120K ； 作业 200KB：此时空闲分区为 12KB（120K）、10KB（150K）、5KB（200K）、122KB（316K）、96KB（530K），最大的 122KB < 200KB， 无法满足，分配失败 。 始址 初始 分配 96KB 后 分配 20KB 后 处理 200KB 请求时 100K 32KB 空闲 32KB 空闲 已分配（20KB 作业） 已分配 120K — — 12KB 空闲 12KB 空闲 150K 10KB 空闲 10KB 空闲 10KB 空闲 10KB 空闲 200K 5KB 空闲 5KB 空闲 5KB 空闲 5KB 空闲 220K 218KB 空闲 已分配（96KB 作业） 已分配 已分配 316K — 122KB 空闲 122KB 空闲 122KB 空闲（< 200KB，不够） 530K 96KB 空闲 96KB 空闲 96KB 空闲 96KB 空闲 （二）最佳适应算法 ：每次从所有空闲分区中挑选 容量最小且能容纳 请求的分区。 作业 96KB：能容纳的有 4 号（218KB）和 5 号（96KB），取最小的 5 号， 恰好全部用完 ； 作业 20KB：能容纳的有 1 号（32KB）和 4 号（218KB），取 1 号，剩余 12KB，始址 120K ； 作业 200KB：能容纳的仅剩 4 号（218KB），分配后剩余 18KB，始址 420K 。三个作业全部装入。 始址 初始 分配 96KB 后 分配 20KB 后 分配 200KB 后 100K 32KB 空闲 32KB 空闲 已分配（20KB 作业） 已分配 120K — — 12KB 空闲 12KB 空闲 150K 10KB 空闲 10KB 空闲 10KB 空闲 10KB 空闲 200K 5KB 空闲 5KB 空闲 5KB 空闲 5KB 空闲 220K 218KB 空闲 218KB 空闲 218KB 空闲 已分配（200KB 作业） 420K — — — 18KB "
+}

@@ -1,0 +1,49 @@
+{
+ "id": "c2-s2-0-q016",
+ "type": "multi_blank",
+ "chapter": "ch2",
+ "source": {
+  "repository": "jlshdsdk/kaoyan-408-os",
+  "revision": "e360b96fbd6522656d633ad9e26b7dd91f7bd1b4",
+  "path": "ch2/quiz.html",
+  "sectionId": "toc-2",
+  "sectionTitle": "2.2 CPU 调度 · 选择题",
+  "subsectionId": null,
+  "subsectionTitle": null,
+  "questionHeadingId": null,
+  "originalLabel": "第 16 题",
+  "originalNumber": 16,
+  "title": "",
+  "hasQContainer": true,
+  "contentHash": "sha256:a77455f23a4351a7c8cf559587b53a9012d50526a540796c8c224e8f3df92e2a"
+ },
+ "stemHtml": "<p>若每个作业只能建立一个进程，为了照顾短作业用户，应采用（　）；为了照顾紧急作业用户，应采用（　）；为了能实现人机交互，应采用（　）；而能使短作业、长作业和交互作业用户都满意，应采用（　）。</p>",
+ "stemText": "若每个作业只能建立一个进程，为了照顾短作业用户，应采用（ ）；为了照顾紧急作业用户，应采用（ ）；为了能实现人机交互，应采用（ ）；而能使短作业、长作业和交互作业用户都满意，应采用（ ）。",
+ "options": [],
+ "optionBlocks": [
+  {
+   "rawHtml": "<p class=\"mono\">A. FCFS调度算法　B. 短作业优先调度算法　C. 时间片轮转调度算法　D. 多级反馈队列调度算法　E. 剥夺式优先级调度算法</p>",
+   "keys": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ]
+  }
+ ],
+ "originalAnswer": "BECD",
+ "originalAnswerHtml": "答案：BECD",
+ "answerFormat": "compact_letters",
+ "originalExplanationHtml": "<p>解析：本题为多选题，四个空依次作答：照顾短作业用户选短作业优先（B）；照顾紧急作业即让优先级高的作业抢先运行，选基于优先级的剥夺式调度算法（E）；实现人机交互要保证每个作业都能在一定时间内轮到 CPU，选时间片轮转（C）；要同时使短作业、长作业和交互作业用户满意，需多级反馈队列对不同类型的作业自动分级调度（D）。FCFS（A）对短作业不利，不入选。</p>",
+ "examYear": null,
+ "examYearVerified": false,
+ "assets": {
+  "images": [],
+  "tables": 0,
+  "codeBlocks": 0,
+  "formulas": 0
+ },
+ "reviewStatus": "unreviewed",
+ "searchText": "若每个作业只能建立一个进程，为了照顾短作业用户，应采用（ ）；为了照顾紧急作业用户，应采用（ ）；为了能实现人机交互，应采用（ ）；而能使短作业、长作业和交互作业用户都满意，应采用（ ）。 BECD 解析：本题为多选题，四个空依次作答：照顾短作业用户选短作业优先（B）；照顾紧急作业即让优先级高的作业抢先运行，选基于优先级的剥夺式调度算法（E）；实现人机交互要保证每个作业都能在一定时间内轮到 CPU，选时间片轮转（C）；要同时使短作业、长作业和交互作业用户满意，需多级反馈队列对不同类型的作业自动分级调度（D）。FCFS（A）对短作业不利，不入选。"
+}

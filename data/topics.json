@@ -1,0 +1,3327 @@
+{
+ "schemaVersion": 1,
+ "source": "docs/audit/notes-outline.json",
+ "topics": [
+  {
+   "id": "t1-1",
+   "chapterId": "1",
+   "level": 2,
+   "parentId": null,
+   "title": "What Operating System Do",
+   "noteFile": "1-Introduction.md",
+   "noteLine": 20
+  },
+  {
+   "id": "t1-2",
+   "chapterId": "1",
+   "level": 2,
+   "parentId": null,
+   "title": "Computer-System Organization",
+   "noteFile": "1-Introduction.md",
+   "noteLine": 65
+  },
+  {
+   "id": "t1-2-1",
+   "chapterId": "1",
+   "level": 3,
+   "parentId": "t1-2",
+   "title": "Interrupts",
+   "noteFile": "1-Introduction.md",
+   "noteLine": 74
+  },
+  {
+   "id": "t1-2-2",
+   "chapterId": "1",
+   "level": 3,
+   "parentId": "t1-2",
+   "title": "Storage Structure",
+   "noteFile": "1-Introduction.md",
+   "noteLine": 121
+  },
+  {
+   "id": "t1-2-3",
+   "chapterId": "1",
+   "level": 3,
+   "parentId": "t1-2",
+   "title": "I/O Structure",
+   "noteFile": "1-Introduction.md",
+   "noteLine": 130
+  },
+  {
+   "id": "t1-3",
+   "chapterId": "1",
+   "level": 2,
+   "parentId": null,
+   "title": "Computer-System Architecture",
+   "noteFile": "1-Introduction.md",
+   "noteLine": 153
+  },
+  {
+   "id": "t1-3-1",
+   "chapterId": "1",
+   "level": 3,
+   "parentId": "t1-3",
+   "title": "Single-Processor Systems",
+   "noteFile": "1-Introduction.md",
+   "noteLine": 167
+  },
+  {
+   "id": "t1-3-2",
+   "chapterId": "1",
+   "level": 3,
+   "parentId": "t1-3",
+   "title": "Multiprocessor Systems",
+   "noteFile": "1-Introduction.md",
+   "noteLine": 172
+  },
+  {
+   "id": "t1-4",
+   "chapterId": "1",
+   "level": 2,
+   "parentId": null,
+   "title": "Operating-System Operations",
+   "noteFile": "1-Introduction.md",
+   "noteLine": 193
+  },
+  {
+   "id": "t1-4-1",
+   "chapterId": "1",
+   "level": 3,
+   "parentId": "t1-4",
+   "title": "Multiprogramming and Multitasking",
+   "noteFile": "1-Introduction.md",
+   "noteLine": 198
+  },
+  {
+   "id": "t1-4-2",
+   "chapterId": "1",
+   "level": 3,
+   "parentId": "t1-4",
+   "title": "Dual-Mode and Multimode Operation",
+   "noteFile": "1-Introduction.md",
+   "noteLine": 213
+  },
+  {
+   "id": "t1-4-3",
+   "chapterId": "1",
+   "level": 3,
+   "parentId": "t1-4",
+   "title": "Timer",
+   "noteFile": "1-Introduction.md",
+   "noteLine": 243
+  },
+  {
+   "id": "t1-5",
+   "chapterId": "1",
+   "level": 2,
+   "parentId": null,
+   "title": "Resource Management",
+   "noteFile": "1-Introduction.md",
+   "noteLine": 250
+  },
+  {
+   "id": "t1-6",
+   "chapterId": "1",
+   "level": 2,
+   "parentId": null,
+   "title": "Three Conceptual Pieces",
+   "noteFile": "1-Introduction.md",
+   "noteLine": 325
+  },
+  {
+   "id": "t1-7",
+   "chapterId": "1",
+   "level": 2,
+   "parentId": null,
+   "title": "Design Goals",
+   "noteFile": "1-Introduction.md",
+   "noteLine": 342
+  },
+  {
+   "id": "t2-1",
+   "chapterId": "2",
+   "level": 2,
+   "parentId": null,
+   "title": "Operating-System Services",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 18
+  },
+  {
+   "id": "t2-2",
+   "chapterId": "2",
+   "level": 2,
+   "parentId": null,
+   "title": "User and Operating-System Interface",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 52
+  },
+  {
+   "id": "t2-2-1",
+   "chapterId": "2",
+   "level": 3,
+   "parentId": "t2-2",
+   "title": "Command Interpreters",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 57
+  },
+  {
+   "id": "t2-2-2",
+   "chapterId": "2",
+   "level": 3,
+   "parentId": "t2-2",
+   "title": "Graphic User Interface",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 67
+  },
+  {
+   "id": "t2-2-3",
+   "chapterId": "2",
+   "level": 3,
+   "parentId": "t2-2",
+   "title": "Touch-Screen Interface",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 74
+  },
+  {
+   "id": "t2-2-4",
+   "chapterId": "2",
+   "level": 3,
+   "parentId": "t2-2",
+   "title": "Choice of Interface",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 79
+  },
+  {
+   "id": "t2-3",
+   "chapterId": "2",
+   "level": 2,
+   "parentId": null,
+   "title": "System Calls",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 90
+  },
+  {
+   "id": "t2-3-1",
+   "chapterId": "2",
+   "level": 3,
+   "parentId": "t2-3",
+   "title": "Application Programming Interface",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 95
+  },
+  {
+   "id": "t2-3-2",
+   "chapterId": "2",
+   "level": 3,
+   "parentId": "t2-3",
+   "title": "Types of System Calls",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 135
+  },
+  {
+   "id": "t2-4",
+   "chapterId": "2",
+   "level": 2,
+   "parentId": null,
+   "title": "System Services",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 181
+  },
+  {
+   "id": "t2-5",
+   "chapterId": "2",
+   "level": 2,
+   "parentId": null,
+   "title": "Linkers and Loaders",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 203
+  },
+  {
+   "id": "t2-6",
+   "chapterId": "2",
+   "level": 2,
+   "parentId": null,
+   "title": "Why Applications Are Operating-System Specific",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 231
+  },
+  {
+   "id": "t2-7",
+   "chapterId": "2",
+   "level": 2,
+   "parentId": null,
+   "title": "Operating-System Design and Implementation",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 255
+  },
+  {
+   "id": "t2-7-1",
+   "chapterId": "2",
+   "level": 3,
+   "parentId": "t2-7",
+   "title": "Design Goals",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 257
+  },
+  {
+   "id": "t2-7-2",
+   "chapterId": "2",
+   "level": 3,
+   "parentId": "t2-7",
+   "title": "Mechanisms and Policies",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 261
+  },
+  {
+   "id": "t2-7-3",
+   "chapterId": "2",
+   "level": 3,
+   "parentId": "t2-7",
+   "title": "Implementation",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 271
+  },
+  {
+   "id": "t2-8",
+   "chapterId": "2",
+   "level": 2,
+   "parentId": null,
+   "title": "Operating-System Structure",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 285
+  },
+  {
+   "id": "t2-8-1",
+   "chapterId": "2",
+   "level": 3,
+   "parentId": "t2-8",
+   "title": "Monolithic Structure",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 290
+  },
+  {
+   "id": "t2-8-2",
+   "chapterId": "2",
+   "level": 3,
+   "parentId": "t2-8",
+   "title": "Layered Approach",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 307
+  },
+  {
+   "id": "t2-8-3",
+   "chapterId": "2",
+   "level": 3,
+   "parentId": "t2-8",
+   "title": "Microkernels",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 325
+  },
+  {
+   "id": "t2-8-4",
+   "chapterId": "2",
+   "level": 3,
+   "parentId": "t2-8",
+   "title": "Modules",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 341
+  },
+  {
+   "id": "t2-8-5",
+   "chapterId": "2",
+   "level": 3,
+   "parentId": "t2-8",
+   "title": "Hybrid Systems",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 353
+  },
+  {
+   "id": "t2-9",
+   "chapterId": "2",
+   "level": 2,
+   "parentId": null,
+   "title": "Building and Booting an Operating System",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 361
+  },
+  {
+   "id": "t2-9-1",
+   "chapterId": "2",
+   "level": 3,
+   "parentId": "t2-9",
+   "title": "Operating-System Generation",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 363
+  },
+  {
+   "id": "t2-9-2",
+   "chapterId": "2",
+   "level": 3,
+   "parentId": "t2-9",
+   "title": "System Boot",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 374
+  },
+  {
+   "id": "t2-10",
+   "chapterId": "2",
+   "level": 2,
+   "parentId": null,
+   "title": "Operating-System Debugging",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 403
+  },
+  {
+   "id": "t2-10-1",
+   "chapterId": "2",
+   "level": 3,
+   "parentId": "t2-10",
+   "title": "Failure Analysis",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 408
+  },
+  {
+   "id": "t2-10-2",
+   "chapterId": "2",
+   "level": 3,
+   "parentId": "t2-10",
+   "title": "Performance Monitoring and Tuning",
+   "noteFile": "2-Operating-System Structures.md",
+   "noteLine": 417
+  },
+  {
+   "id": "t2.1-1",
+   "chapterId": "2.1",
+   "level": 2,
+   "parentId": null,
+   "title": "Linux Kernel Overview",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 31
+  },
+  {
+   "id": "t2.1-1-1",
+   "chapterId": "2.1",
+   "level": 3,
+   "parentId": "t2.1-1",
+   "title": "Why Study the Linux Kernel",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 33
+  },
+  {
+   "id": "t2.1-1-2",
+   "chapterId": "2.1",
+   "level": 3,
+   "parentId": "t2.1-1",
+   "title": "GNU/Linux Layered Structure",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 43
+  },
+  {
+   "id": "t2.1-1-3",
+   "chapterId": "2.1",
+   "level": 3,
+   "parentId": "t2.1-1",
+   "title": "Kernel Subsystems",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 62
+  },
+  {
+   "id": "t2.1-1-4",
+   "chapterId": "2.1",
+   "level": 3,
+   "parentId": "t2.1-1",
+   "title": "Monolithic but Modular",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 79
+  },
+  {
+   "id": "t2.1-2",
+   "chapterId": "2.1",
+   "level": 2,
+   "parentId": null,
+   "title": "Linux Kernel Source Tree",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 93
+  },
+  {
+   "id": "t2.1-2-1",
+   "chapterId": "2.1",
+   "level": 3,
+   "parentId": "t2.1-2",
+   "title": "Directory Structure",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 95
+  },
+  {
+   "id": "t2.1-2-2",
+   "chapterId": "2.1",
+   "level": 3,
+   "parentId": "t2.1-2",
+   "title": "Characteristics of Kernel Development",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 127
+  },
+  {
+   "id": "t2.1-2-3",
+   "chapterId": "2.1",
+   "level": 3,
+   "parentId": "t2.1-2",
+   "title": "Kernel Image",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 141
+  },
+  {
+   "id": "t2.1-3",
+   "chapterId": "2.1",
+   "level": 2,
+   "parentId": null,
+   "title": "Compiling the Linux Kernel",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 159
+  },
+  {
+   "id": "t2.1-3-1",
+   "chapterId": "2.1",
+   "level": 3,
+   "parentId": "t2.1-3",
+   "title": "What Rebuilding Actually Does",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 161
+  },
+  {
+   "id": "t2.1-3-2",
+   "chapterId": "2.1",
+   "level": 3,
+   "parentId": "t2.1-3",
+   "title": "Preparing the Source Tree",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 178
+  },
+  {
+   "id": "t2.1-3-3",
+   "chapterId": "2.1",
+   "level": 3,
+   "parentId": "t2.1-3",
+   "title": "Configuring the Kernel",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 199
+  },
+  {
+   "id": "t2.1-3-4",
+   "chapterId": "2.1",
+   "level": 3,
+   "parentId": "t2.1-3",
+   "title": "Building and Installing",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 223
+  },
+  {
+   "id": "t2.1-3-5",
+   "chapterId": "2.1",
+   "level": 3,
+   "parentId": "t2.1-3",
+   "title": "Build Flow Summary",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 260
+  },
+  {
+   "id": "t2.1-4",
+   "chapterId": "2.1",
+   "level": 2,
+   "parentId": null,
+   "title": "Linux Boot Process",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 283
+  },
+  {
+   "id": "t2.1-4-1",
+   "chapterId": "2.1",
+   "level": 3,
+   "parentId": "t2.1-4",
+   "title": "Overall Process",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 285
+  },
+  {
+   "id": "t2.1-4-2",
+   "chapterId": "2.1",
+   "level": 3,
+   "parentId": "t2.1-4",
+   "title": "BIOS, POST and Boot Sequence",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 306
+  },
+  {
+   "id": "t2.1-4-3",
+   "chapterId": "2.1",
+   "level": 3,
+   "parentId": "t2.1-4",
+   "title": "MBR, Partitions and Boot Loader",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 319
+  },
+  {
+   "id": "t2.1-4-4",
+   "chapterId": "2.1",
+   "level": 3,
+   "parentId": "t2.1-4",
+   "title": "Kernel Boot Stage",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 344
+  },
+  {
+   "id": "t2.1-4-5",
+   "chapterId": "2.1",
+   "level": 3,
+   "parentId": "t2.1-4",
+   "title": "PID 1 and the Init Stage",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 387
+  },
+  {
+   "id": "t2.1-4-6",
+   "chapterId": "2.1",
+   "level": 3,
+   "parentId": "t2.1-4",
+   "title": "`/etc/inittab`",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 401
+  },
+  {
+   "id": "t2.1-4-7",
+   "chapterId": "2.1",
+   "level": 3,
+   "parentId": "t2.1-4",
+   "title": "Run Levels",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 436
+  },
+  {
+   "id": "t2.1-5",
+   "chapterId": "2.1",
+   "level": 2,
+   "parentId": null,
+   "title": "Review: Follow the Transfer of Control",
+   "noteFile": "2.1-Rebuilding the Linux Kernel.md",
+   "noteLine": 455
+  },
+  {
+   "id": "t3-1",
+   "chapterId": "3",
+   "level": 2,
+   "parentId": null,
+   "title": "Concept",
+   "noteFile": "3-Processes.md",
+   "noteLine": 15
+  },
+  {
+   "id": "t3-1-1",
+   "chapterId": "3",
+   "level": 3,
+   "parentId": "t3-1",
+   "title": "Process State",
+   "noteFile": "3-Processes.md",
+   "noteLine": 67
+  },
+  {
+   "id": "t3-1-2",
+   "chapterId": "3",
+   "level": 3,
+   "parentId": "t3-1",
+   "title": "Process Control Block",
+   "noteFile": "3-Processes.md",
+   "noteLine": 82
+  },
+  {
+   "id": "t3-1-3",
+   "chapterId": "3",
+   "level": 3,
+   "parentId": "t3-1",
+   "title": "Threads",
+   "noteFile": "3-Processes.md",
+   "noteLine": 132
+  },
+  {
+   "id": "t3-2",
+   "chapterId": "3",
+   "level": 2,
+   "parentId": null,
+   "title": "Process Scheduling",
+   "noteFile": "3-Processes.md",
+   "noteLine": 139
+  },
+  {
+   "id": "t3-2-1",
+   "chapterId": "3",
+   "level": 3,
+   "parentId": "t3-2",
+   "title": "Scheduling Queues",
+   "noteFile": "3-Processes.md",
+   "noteLine": 149
+  },
+  {
+   "id": "t3-2-2",
+   "chapterId": "3",
+   "level": 3,
+   "parentId": "t3-2",
+   "title": "CPU Scheduling",
+   "noteFile": "3-Processes.md",
+   "noteLine": 170
+  },
+  {
+   "id": "t3-2-3",
+   "chapterId": "3",
+   "level": 3,
+   "parentId": "t3-2",
+   "title": "Context Switch",
+   "noteFile": "3-Processes.md",
+   "noteLine": 186
+  },
+  {
+   "id": "t3-3",
+   "chapterId": "3",
+   "level": 2,
+   "parentId": null,
+   "title": "Operations on Processes",
+   "noteFile": "3-Processes.md",
+   "noteLine": 199
+  },
+  {
+   "id": "t3-3-1",
+   "chapterId": "3",
+   "level": 3,
+   "parentId": "t3-3",
+   "title": "Process Creation",
+   "noteFile": "3-Processes.md",
+   "noteLine": 204
+  },
+  {
+   "id": "t3-3-2",
+   "chapterId": "3",
+   "level": 3,
+   "parentId": "t3-3",
+   "title": "Process Termination",
+   "noteFile": "3-Processes.md",
+   "noteLine": 358
+  },
+  {
+   "id": "t3-4",
+   "chapterId": "3",
+   "level": 2,
+   "parentId": null,
+   "title": "Mechanism: Limited Direct Execution",
+   "noteFile": "3-Processes.md",
+   "noteLine": 376
+  },
+  {
+   "id": "t3-4-1",
+   "chapterId": "3",
+   "level": 3,
+   "parentId": "t3-4",
+   "title": "Restricted Operations",
+   "noteFile": "3-Processes.md",
+   "noteLine": 394
+  },
+  {
+   "id": "t3-4-2",
+   "chapterId": "3",
+   "level": 3,
+   "parentId": "t3-4",
+   "title": "Switching Between Processes",
+   "noteFile": "3-Processes.md",
+   "noteLine": 418
+  },
+  {
+   "id": "t3-4-3",
+   "chapterId": "3",
+   "level": 3,
+   "parentId": "t3-4",
+   "title": "Worried About Concurrency",
+   "noteFile": "3-Processes.md",
+   "noteLine": 449
+  },
+  {
+   "id": "t3-5",
+   "chapterId": "3",
+   "level": 2,
+   "parentId": null,
+   "title": "Interprocess Communication",
+   "noteFile": "3-Processes.md",
+   "noteLine": 457
+  },
+  {
+   "id": "t3-5-1",
+   "chapterId": "3",
+   "level": 3,
+   "parentId": "t3-5",
+   "title": "Shared Memory",
+   "noteFile": "3-Processes.md",
+   "noteLine": 486
+  },
+  {
+   "id": "t3-5-2",
+   "chapterId": "3",
+   "level": 3,
+   "parentId": "t3-5",
+   "title": "Message Passing",
+   "noteFile": "3-Processes.md",
+   "noteLine": 552
+  },
+  {
+   "id": "t3-6",
+   "chapterId": "3",
+   "level": 2,
+   "parentId": null,
+   "title": "Communication in Client-Server Systems",
+   "noteFile": "3-Processes.md",
+   "noteLine": 692
+  },
+  {
+   "id": "t3-6-1",
+   "chapterId": "3",
+   "level": 3,
+   "parentId": "t3-6",
+   "title": "Sockets",
+   "noteFile": "3-Processes.md",
+   "noteLine": 697
+  },
+  {
+   "id": "t3-6-2",
+   "chapterId": "3",
+   "level": 3,
+   "parentId": "t3-6",
+   "title": "Remote Procedure Calls",
+   "noteFile": "3-Processes.md",
+   "noteLine": 784
+  },
+  {
+   "id": "t4-1",
+   "chapterId": "4",
+   "level": 2,
+   "parentId": null,
+   "title": "Overview",
+   "noteFile": "4-Threads and Concurrency.md",
+   "noteLine": 14
+  },
+  {
+   "id": "t4-1-1",
+   "chapterId": "4",
+   "level": 3,
+   "parentId": "t4-1",
+   "title": "Motivation",
+   "noteFile": "4-Threads and Concurrency.md",
+   "noteLine": 38
+  },
+  {
+   "id": "t4-1-2",
+   "chapterId": "4",
+   "level": 3,
+   "parentId": "t4-1",
+   "title": "Benefits",
+   "noteFile": "4-Threads and Concurrency.md",
+   "noteLine": 64
+  },
+  {
+   "id": "t4-2",
+   "chapterId": "4",
+   "level": 2,
+   "parentId": null,
+   "title": "Multicore Programming",
+   "noteFile": "4-Threads and Concurrency.md",
+   "noteLine": 80
+  },
+  {
+   "id": "t4-2-1",
+   "chapterId": "4",
+   "level": 3,
+   "parentId": "t4-2",
+   "title": "Programming Challenges",
+   "noteFile": "4-Threads and Concurrency.md",
+   "noteLine": 100
+  },
+  {
+   "id": "t4-2-2",
+   "chapterId": "4",
+   "level": 3,
+   "parentId": "t4-2",
+   "title": "Types of Parallelism",
+   "noteFile": "4-Threads and Concurrency.md",
+   "noteLine": 117
+  },
+  {
+   "id": "t4-3",
+   "chapterId": "4",
+   "level": 2,
+   "parentId": null,
+   "title": "Multithreading Model",
+   "noteFile": "4-Threads and Concurrency.md",
+   "noteLine": 142
+  },
+  {
+   "id": "t4-3-1",
+   "chapterId": "4",
+   "level": 3,
+   "parentId": "t4-3",
+   "title": "Many-to-One Model",
+   "noteFile": "4-Threads and Concurrency.md",
+   "noteLine": 154
+  },
+  {
+   "id": "t4-3-2",
+   "chapterId": "4",
+   "level": 3,
+   "parentId": "t4-3",
+   "title": "One-to-One Model",
+   "noteFile": "4-Threads and Concurrency.md",
+   "noteLine": 165
+  },
+  {
+   "id": "t4-3-3",
+   "chapterId": "4",
+   "level": 3,
+   "parentId": "t4-3",
+   "title": "Many-to-Many Model",
+   "noteFile": "4-Threads and Concurrency.md",
+   "noteLine": 177
+  },
+  {
+   "id": "t4-4",
+   "chapterId": "4",
+   "level": 2,
+   "parentId": null,
+   "title": "Thread Libraries",
+   "noteFile": "4-Threads and Concurrency.md",
+   "noteLine": 192
+  },
+  {
+   "id": "t4-4-1",
+   "chapterId": "4",
+   "level": 3,
+   "parentId": "t4-4",
+   "title": "Pthreads",
+   "noteFile": "4-Threads and Concurrency.md",
+   "noteLine": 222
+  },
+  {
+   "id": "t4-5",
+   "chapterId": "4",
+   "level": 2,
+   "parentId": null,
+   "title": "Implicit Threading",
+   "noteFile": "4-Threads and Concurrency.md",
+   "noteLine": 300
+  },
+  {
+   "id": "t4-5-1",
+   "chapterId": "4",
+   "level": 3,
+   "parentId": "t4-5",
+   "title": "Thread Pools",
+   "noteFile": "4-Threads and Concurrency.md",
+   "noteLine": 309
+  },
+  {
+   "id": "t4-5-2",
+   "chapterId": "4",
+   "level": 3,
+   "parentId": "t4-5",
+   "title": "Fork Join",
+   "noteFile": "4-Threads and Concurrency.md",
+   "noteLine": 333
+  },
+  {
+   "id": "t4-6",
+   "chapterId": "4",
+   "level": 2,
+   "parentId": null,
+   "title": "Threading Issues",
+   "noteFile": "4-Threads and Concurrency.md",
+   "noteLine": 345
+  },
+  {
+   "id": "t4-6-1",
+   "chapterId": "4",
+   "level": 3,
+   "parentId": "t4-6",
+   "title": "The fork() and exec() System Calls",
+   "noteFile": "4-Threads and Concurrency.md",
+   "noteLine": 351
+  },
+  {
+   "id": "t4-6-2",
+   "chapterId": "4",
+   "level": 3,
+   "parentId": "t4-6",
+   "title": "Signal Handling",
+   "noteFile": "4-Threads and Concurrency.md",
+   "noteLine": 362
+  },
+  {
+   "id": "t4-6-3",
+   "chapterId": "4",
+   "level": 3,
+   "parentId": "t4-6",
+   "title": "Thread Cancellation",
+   "noteFile": "4-Threads and Concurrency.md",
+   "noteLine": 404
+  },
+  {
+   "id": "t4-6-4",
+   "chapterId": "4",
+   "level": 3,
+   "parentId": "t4-6",
+   "title": "Thread-Local Storage",
+   "noteFile": "4-Threads and Concurrency.md",
+   "noteLine": 474
+  },
+  {
+   "id": "t4-6-5",
+   "chapterId": "4",
+   "level": 3,
+   "parentId": "t4-6",
+   "title": "Scheduler Activation",
+   "noteFile": "4-Threads and Concurrency.md",
+   "noteLine": 491
+  },
+  {
+   "id": "t5-1",
+   "chapterId": "5",
+   "level": 2,
+   "parentId": null,
+   "title": "Basic Concepts",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 24
+  },
+  {
+   "id": "t5-1-1",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-1",
+   "title": "CPU-I/O Burst Cycle",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 29
+  },
+  {
+   "id": "t5-1-2",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-1",
+   "title": "CPU Scheduler",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 50
+  },
+  {
+   "id": "t5-1-3",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-1",
+   "title": "Preemptive and Nonpreemptive Scheduling",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 56
+  },
+  {
+   "id": "t5-1-4",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-1",
+   "title": "Dispatcher",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 92
+  },
+  {
+   "id": "t5-2",
+   "chapterId": "5",
+   "level": 2,
+   "parentId": null,
+   "title": "Scheduling Criteria",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 140
+  },
+  {
+   "id": "t5-3",
+   "chapterId": "5",
+   "level": 2,
+   "parentId": null,
+   "title": "Scheduling Algorithms",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 195
+  },
+  {
+   "id": "t5-3-1",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-3",
+   "title": "First-Come, First-Served Scheduling",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 203
+  },
+  {
+   "id": "t5-3-2",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-3",
+   "title": "Shortest-Job-First Scheduling",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 241
+  },
+  {
+   "id": "t5-3-3",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-3",
+   "title": "Round-Robin Scheduling",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 306
+  },
+  {
+   "id": "t5-3-4",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-3",
+   "title": "Priority Scheduling",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 357
+  },
+  {
+   "id": "t5-3-5",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-3",
+   "title": "Multilevel Queue Scheduling",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 406
+  },
+  {
+   "id": "t5-3-6",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-3",
+   "title": "Multilevel Feedback Queue Scheduling",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 429
+  },
+  {
+   "id": "t5-4",
+   "chapterId": "5",
+   "level": 2,
+   "parentId": null,
+   "title": "Thread Scheduling",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 464
+  },
+  {
+   "id": "t5-4-1",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-4",
+   "title": "Contention Scope",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 469
+  },
+  {
+   "id": "t5-4-2",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-4",
+   "title": "Pthread Scheduling",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 479
+  },
+  {
+   "id": "t5-5",
+   "chapterId": "5",
+   "level": 2,
+   "parentId": null,
+   "title": "Multi-Processor Scheduling",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 550
+  },
+  {
+   "id": "t5-5-1",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-5",
+   "title": "Approaches to Multiple-Processor Scheduling",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 564
+  },
+  {
+   "id": "t5-5-2",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-5",
+   "title": "Multicore Processors",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 581
+  },
+  {
+   "id": "t5-5-3",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-5",
+   "title": "Load Balancing",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 620
+  },
+  {
+   "id": "t5-5-4",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-5",
+   "title": "Single-Queue Scheduling",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 644
+  },
+  {
+   "id": "t5-5-5",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-5",
+   "title": "Multi-Queue Scheduling",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 669
+  },
+  {
+   "id": "t5-5-6",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-5",
+   "title": "Processor Affinity",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 727
+  },
+  {
+   "id": "t5-5-7",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-5",
+   "title": "Heterogeneous Multiprocessing",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 758
+  },
+  {
+   "id": "t5-6",
+   "chapterId": "5",
+   "level": 2,
+   "parentId": null,
+   "title": "Real-time CPU Scheduling",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 773
+  },
+  {
+   "id": "t5-6-1",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-6",
+   "title": "Minimizing Latency",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 783
+  },
+  {
+   "id": "t5-6-2",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-6",
+   "title": "Priority-Based Scheduling",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 812
+  },
+  {
+   "id": "t5-6-3",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-6",
+   "title": "Rate-Monotonic Scheduling",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 832
+  },
+  {
+   "id": "t5-6-4",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-6",
+   "title": "Earliest-Deadline-First Scheduling",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 872
+  },
+  {
+   "id": "t5-6-5",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-6",
+   "title": "Proportional Share Scheduling",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 891
+  },
+  {
+   "id": "t5-6-6",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-6",
+   "title": "POSIX Real-Time Scheduling",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 1003
+  },
+  {
+   "id": "t5-7",
+   "chapterId": "5",
+   "level": 2,
+   "parentId": null,
+   "title": "OS Examples: Linux Scheduling",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 1067
+  },
+  {
+   "id": "t5-8",
+   "chapterId": "5",
+   "level": 2,
+   "parentId": null,
+   "title": "Algorithm Evaluation",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 1158
+  },
+  {
+   "id": "t5-8-1",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-8",
+   "title": "Deterministic Modeling",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 1163
+  },
+  {
+   "id": "t5-8-2",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-8",
+   "title": "Queueing Models",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 1192
+  },
+  {
+   "id": "t5-8-3",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-8",
+   "title": "Simulations",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 1218
+  },
+  {
+   "id": "t5-8-4",
+   "chapterId": "5",
+   "level": 3,
+   "parentId": "t5-8",
+   "title": "Implementation",
+   "noteFile": "5-CPU Scheduling.md",
+   "noteLine": 1241
+  },
+  {
+   "id": "t6-1",
+   "chapterId": "6",
+   "level": 2,
+   "parentId": null,
+   "title": "Critical-Section Problem",
+   "noteFile": "6-Synchronization Tools.md",
+   "noteLine": 74
+  },
+  {
+   "id": "t6-2",
+   "chapterId": "6",
+   "level": 2,
+   "parentId": null,
+   "title": "Peterson's Solution",
+   "noteFile": "6-Synchronization Tools.md",
+   "noteLine": 119
+  },
+  {
+   "id": "t6-3",
+   "chapterId": "6",
+   "level": 2,
+   "parentId": null,
+   "title": "Hardware Support for Synchronization",
+   "noteFile": "6-Synchronization Tools.md",
+   "noteLine": 218
+  },
+  {
+   "id": "t6-3-1",
+   "chapterId": "6",
+   "level": 3,
+   "parentId": "t6-3",
+   "title": "Memory Barriers",
+   "noteFile": "6-Synchronization Tools.md",
+   "noteLine": 223
+  },
+  {
+   "id": "t6-3-2",
+   "chapterId": "6",
+   "level": 3,
+   "parentId": "t6-3",
+   "title": "Hardware Instructions",
+   "noteFile": "6-Synchronization Tools.md",
+   "noteLine": 260
+  },
+  {
+   "id": "t6-3-3",
+   "chapterId": "6",
+   "level": 3,
+   "parentId": "t6-3",
+   "title": "Atomic Variables",
+   "noteFile": "6-Synchronization Tools.md",
+   "noteLine": 376
+  },
+  {
+   "id": "t6-4",
+   "chapterId": "6",
+   "level": 2,
+   "parentId": null,
+   "title": "Mutex Locks",
+   "noteFile": "6-Synchronization Tools.md",
+   "noteLine": 400
+  },
+  {
+   "id": "t6-5",
+   "chapterId": "6",
+   "level": 2,
+   "parentId": null,
+   "title": "Semaphores",
+   "noteFile": "6-Synchronization Tools.md",
+   "noteLine": 442
+  },
+  {
+   "id": "t6-5-1",
+   "chapterId": "6",
+   "level": 3,
+   "parentId": "t6-5",
+   "title": "Usage",
+   "noteFile": "6-Synchronization Tools.md",
+   "noteLine": 461
+  },
+  {
+   "id": "t6-5-2",
+   "chapterId": "6",
+   "level": 3,
+   "parentId": "t6-5",
+   "title": "Implementation",
+   "noteFile": "6-Synchronization Tools.md",
+   "noteLine": 542
+  },
+  {
+   "id": "t6-6",
+   "chapterId": "6",
+   "level": 2,
+   "parentId": null,
+   "title": "Monitors",
+   "noteFile": "6-Synchronization Tools.md",
+   "noteLine": 591
+  },
+  {
+   "id": "t6-6-1",
+   "chapterId": "6",
+   "level": 3,
+   "parentId": "t6-6",
+   "title": "Usage",
+   "noteFile": "6-Synchronization Tools.md",
+   "noteLine": 626
+  },
+  {
+   "id": "t6-6-2",
+   "chapterId": "6",
+   "level": 3,
+   "parentId": "t6-6",
+   "title": "Implementating a Monitor Using Semaphores",
+   "noteFile": "6-Synchronization Tools.md",
+   "noteLine": 665
+  },
+  {
+   "id": "t6-6-3",
+   "chapterId": "6",
+   "level": 3,
+   "parentId": "t6-6",
+   "title": "Resuming Processes with a Monitor",
+   "noteFile": "6-Synchronization Tools.md",
+   "noteLine": 702
+  },
+  {
+   "id": "t6-7",
+   "chapterId": "6",
+   "level": 2,
+   "parentId": null,
+   "title": "Liveness",
+   "noteFile": "6-Synchronization Tools.md",
+   "noteLine": 727
+  },
+  {
+   "id": "t6-7-1",
+   "chapterId": "6",
+   "level": 3,
+   "parentId": "t6-7",
+   "title": "Deadlock",
+   "noteFile": "6-Synchronization Tools.md",
+   "noteLine": 732
+  },
+  {
+   "id": "t6-7-2",
+   "chapterId": "6",
+   "level": 3,
+   "parentId": "t6-7",
+   "title": "Priority Inversion",
+   "noteFile": "6-Synchronization Tools.md",
+   "noteLine": 747
+  },
+  {
+   "id": "t6-8",
+   "chapterId": "6",
+   "level": 2,
+   "parentId": null,
+   "title": "Evaluation",
+   "noteFile": "6-Synchronization Tools.md",
+   "noteLine": 768
+  },
+  {
+   "id": "t7-1",
+   "chapterId": "7",
+   "level": 2,
+   "parentId": null,
+   "title": "Classic Problems on Synchronization",
+   "noteFile": "7-Synchronization Examples.md",
+   "noteLine": 11
+  },
+  {
+   "id": "t7-1-1",
+   "chapterId": "7",
+   "level": 3,
+   "parentId": "t7-1",
+   "title": "The Bounded-Buffer Problem",
+   "noteFile": "7-Synchronization Examples.md",
+   "noteLine": 16
+  },
+  {
+   "id": "t7-1-2",
+   "chapterId": "7",
+   "level": 3,
+   "parentId": "t7-1",
+   "title": "The Readers-Writers Problem",
+   "noteFile": "7-Synchronization Examples.md",
+   "noteLine": 70
+  },
+  {
+   "id": "t7-1-3",
+   "chapterId": "7",
+   "level": 3,
+   "parentId": "t7-1",
+   "title": "The Dining-Philosophers Problem",
+   "noteFile": "7-Synchronization Examples.md",
+   "noteLine": 136
+  },
+  {
+   "id": "t7-2",
+   "chapterId": "7",
+   "level": 2,
+   "parentId": null,
+   "title": "Sychronization within the Kernel",
+   "noteFile": "7-Synchronization Examples.md",
+   "noteLine": 236
+  },
+  {
+   "id": "t7-3",
+   "chapterId": "7",
+   "level": 2,
+   "parentId": null,
+   "title": "POSIX Synchronization",
+   "noteFile": "7-Synchronization Examples.md",
+   "noteLine": 265
+  },
+  {
+   "id": "t7-3-1",
+   "chapterId": "7",
+   "level": 3,
+   "parentId": "t7-3",
+   "title": "Mutex Locks",
+   "noteFile": "7-Synchronization Examples.md",
+   "noteLine": 270
+  },
+  {
+   "id": "t7-3-2",
+   "chapterId": "7",
+   "level": 3,
+   "parentId": "t7-3",
+   "title": "Semaphores",
+   "noteFile": "7-Synchronization Examples.md",
+   "noteLine": 291
+  },
+  {
+   "id": "t7-3-3",
+   "chapterId": "7",
+   "level": 3,
+   "parentId": "t7-3",
+   "title": "Condition Variables",
+   "noteFile": "7-Synchronization Examples.md",
+   "noteLine": 338
+  },
+  {
+   "id": "t7-4",
+   "chapterId": "7",
+   "level": 2,
+   "parentId": null,
+   "title": "Alternative Approaches",
+   "noteFile": "7-Synchronization Examples.md",
+   "noteLine": 362
+  },
+  {
+   "id": "t7-4-1",
+   "chapterId": "7",
+   "level": 3,
+   "parentId": "t7-4",
+   "title": "Transactional Memory",
+   "noteFile": "7-Synchronization Examples.md",
+   "noteLine": 364
+  },
+  {
+   "id": "t7-4-2",
+   "chapterId": "7",
+   "level": 3,
+   "parentId": "t7-4",
+   "title": "OpenMP",
+   "noteFile": "7-Synchronization Examples.md",
+   "noteLine": 394
+  },
+  {
+   "id": "t7-4-3",
+   "chapterId": "7",
+   "level": 3,
+   "parentId": "t7-4",
+   "title": "Functional Programming Languages",
+   "noteFile": "7-Synchronization Examples.md",
+   "noteLine": 415
+  },
+  {
+   "id": "t8-1",
+   "chapterId": "8",
+   "level": 2,
+   "parentId": null,
+   "title": "System Model",
+   "noteFile": "8-Deadlocks.md",
+   "noteLine": 15
+  },
+  {
+   "id": "t8-2",
+   "chapterId": "8",
+   "level": 2,
+   "parentId": null,
+   "title": "Deadlock in Multithreaded Applications",
+   "noteFile": "8-Deadlocks.md",
+   "noteLine": 29
+  },
+  {
+   "id": "t8-3",
+   "chapterId": "8",
+   "level": 2,
+   "parentId": null,
+   "title": "Deadlock Characterization",
+   "noteFile": "8-Deadlocks.md",
+   "noteLine": 121
+  },
+  {
+   "id": "t8-3-1",
+   "chapterId": "8",
+   "level": 3,
+   "parentId": "t8-3",
+   "title": "Necessary Conditions",
+   "noteFile": "8-Deadlocks.md",
+   "noteLine": 123
+  },
+  {
+   "id": "t8-3-2",
+   "chapterId": "8",
+   "level": 3,
+   "parentId": "t8-3",
+   "title": "Resource-Allocation Graph",
+   "noteFile": "8-Deadlocks.md",
+   "noteLine": 135
+  },
+  {
+   "id": "t8-4",
+   "chapterId": "8",
+   "level": 2,
+   "parentId": null,
+   "title": "Methods for Handling Deadlocks",
+   "noteFile": "8-Deadlocks.md",
+   "noteLine": 164
+  },
+  {
+   "id": "t8-5",
+   "chapterId": "8",
+   "level": 2,
+   "parentId": null,
+   "title": "Deadlock Prevention",
+   "noteFile": "8-Deadlocks.md",
+   "noteLine": 176
+  },
+  {
+   "id": "t8-5-1",
+   "chapterId": "8",
+   "level": 3,
+   "parentId": "t8-5",
+   "title": "Mutual Exclusion",
+   "noteFile": "8-Deadlocks.md",
+   "noteLine": 181
+  },
+  {
+   "id": "t8-5-2",
+   "chapterId": "8",
+   "level": 3,
+   "parentId": "t8-5",
+   "title": "Hold and Wait",
+   "noteFile": "8-Deadlocks.md",
+   "noteLine": 187
+  },
+  {
+   "id": "t8-5-3",
+   "chapterId": "8",
+   "level": 3,
+   "parentId": "t8-5",
+   "title": "No Preemption",
+   "noteFile": "8-Deadlocks.md",
+   "noteLine": 197
+  },
+  {
+   "id": "t8-5-4",
+   "chapterId": "8",
+   "level": 3,
+   "parentId": "t8-5",
+   "title": "Circular Wait",
+   "noteFile": "8-Deadlocks.md",
+   "noteLine": 204
+  },
+  {
+   "id": "t8-6",
+   "chapterId": "8",
+   "level": 2,
+   "parentId": null,
+   "title": "Deadlock Avoidance",
+   "noteFile": "8-Deadlocks.md",
+   "noteLine": 222
+  },
+  {
+   "id": "t8-6-1",
+   "chapterId": "8",
+   "level": 3,
+   "parentId": "t8-6",
+   "title": "Safe State",
+   "noteFile": "8-Deadlocks.md",
+   "noteLine": 227
+  },
+  {
+   "id": "t8-6-2",
+   "chapterId": "8",
+   "level": 3,
+   "parentId": "t8-6",
+   "title": "Resource-Allocation-Graph Algorithm",
+   "noteFile": "8-Deadlocks.md",
+   "noteLine": 241
+  },
+  {
+   "id": "t8-6-3",
+   "chapterId": "8",
+   "level": 3,
+   "parentId": "t8-6",
+   "title": "Banker's Algorithm",
+   "noteFile": "8-Deadlocks.md",
+   "noteLine": 262
+  },
+  {
+   "id": "t8-7",
+   "chapterId": "8",
+   "level": 2,
+   "parentId": null,
+   "title": "Deadlock Detection",
+   "noteFile": "8-Deadlocks.md",
+   "noteLine": 356
+  },
+  {
+   "id": "t8-7-1",
+   "chapterId": "8",
+   "level": 3,
+   "parentId": "t8-7",
+   "title": "Single Instance of Each Resource Type",
+   "noteFile": "8-Deadlocks.md",
+   "noteLine": 361
+  },
+  {
+   "id": "t8-7-2",
+   "chapterId": "8",
+   "level": 3,
+   "parentId": "t8-7",
+   "title": "Several Instances of a Resource Type",
+   "noteFile": "8-Deadlocks.md",
+   "noteLine": 372
+  },
+  {
+   "id": "t8-7-3",
+   "chapterId": "8",
+   "level": 3,
+   "parentId": "t8-7",
+   "title": "Detection-Algorithm Usage",
+   "noteFile": "8-Deadlocks.md",
+   "noteLine": 430
+  },
+  {
+   "id": "t8-8",
+   "chapterId": "8",
+   "level": 2,
+   "parentId": null,
+   "title": "Recovery from Deadlock",
+   "noteFile": "8-Deadlocks.md",
+   "noteLine": 440
+  },
+  {
+   "id": "t8-8-1",
+   "chapterId": "8",
+   "level": 3,
+   "parentId": "t8-8",
+   "title": "Process and Thread Termination",
+   "noteFile": "8-Deadlocks.md",
+   "noteLine": 445
+  },
+  {
+   "id": "t8-8-2",
+   "chapterId": "8",
+   "level": 3,
+   "parentId": "t8-8",
+   "title": "Resource Preemption",
+   "noteFile": "8-Deadlocks.md",
+   "noteLine": 461
+  },
+  {
+   "id": "t9-1",
+   "chapterId": "9",
+   "level": 2,
+   "parentId": null,
+   "title": "Background",
+   "noteFile": "9-Main Memory.md",
+   "noteLine": 29
+  },
+  {
+   "id": "t9-1-1",
+   "chapterId": "9",
+   "level": 3,
+   "parentId": "t9-1",
+   "title": "Basic Hardware",
+   "noteFile": "9-Main Memory.md",
+   "noteLine": 36
+  },
+  {
+   "id": "t9-1-2",
+   "chapterId": "9",
+   "level": 3,
+   "parentId": "t9-1",
+   "title": "Address Binding",
+   "noteFile": "9-Main Memory.md",
+   "noteLine": 51
+  },
+  {
+   "id": "t9-1-3",
+   "chapterId": "9",
+   "level": 3,
+   "parentId": "t9-1",
+   "title": "Logical v.s. Physical Address Space",
+   "noteFile": "9-Main Memory.md",
+   "noteLine": 65
+  },
+  {
+   "id": "t9-1-4",
+   "chapterId": "9",
+   "level": 3,
+   "parentId": "t9-1",
+   "title": "Dynamic Loading",
+   "noteFile": "9-Main Memory.md",
+   "noteLine": 82
+  },
+  {
+   "id": "t9-1-5",
+   "chapterId": "9",
+   "level": 3,
+   "parentId": "t9-1",
+   "title": "Dynamic Linking and Shared Libraries",
+   "noteFile": "9-Main Memory.md",
+   "noteLine": 89
+  },
+  {
+   "id": "t9-2",
+   "chapterId": "9",
+   "level": 2,
+   "parentId": null,
+   "title": "Contiguous Memory Allocation",
+   "noteFile": "9-Main Memory.md",
+   "noteLine": 111
+  },
+  {
+   "id": "t9-2-1",
+   "chapterId": "9",
+   "level": 3,
+   "parentId": "t9-2",
+   "title": "Memory Protection",
+   "noteFile": "9-Main Memory.md",
+   "noteLine": 118
+  },
+  {
+   "id": "t9-2-2",
+   "chapterId": "9",
+   "level": 3,
+   "parentId": "t9-2",
+   "title": "Memory Allocation",
+   "noteFile": "9-Main Memory.md",
+   "noteLine": 129
+  },
+  {
+   "id": "t9-2-3",
+   "chapterId": "9",
+   "level": 3,
+   "parentId": "t9-2",
+   "title": "Fragmentation",
+   "noteFile": "9-Main Memory.md",
+   "noteLine": 184
+  },
+  {
+   "id": "t9-3",
+   "chapterId": "9",
+   "level": 2,
+   "parentId": null,
+   "title": "Paging",
+   "noteFile": "9-Main Memory.md",
+   "noteLine": 218
+  },
+  {
+   "id": "t9-3-1",
+   "chapterId": "9",
+   "level": 3,
+   "parentId": "t9-3",
+   "title": "Basic Method",
+   "noteFile": "9-Main Memory.md",
+   "noteLine": 220
+  },
+  {
+   "id": "t9-3-2",
+   "chapterId": "9",
+   "level": 3,
+   "parentId": "t9-3",
+   "title": "Hardware Support",
+   "noteFile": "9-Main Memory.md",
+   "noteLine": 270
+  },
+  {
+   "id": "t9-3-3",
+   "chapterId": "9",
+   "level": 3,
+   "parentId": "t9-3",
+   "title": "Protection",
+   "noteFile": "9-Main Memory.md",
+   "noteLine": 305
+  },
+  {
+   "id": "t9-3-4",
+   "chapterId": "9",
+   "level": 3,
+   "parentId": "t9-3",
+   "title": "Shared Pages",
+   "noteFile": "9-Main Memory.md",
+   "noteLine": 323
+  },
+  {
+   "id": "t9-4",
+   "chapterId": "9",
+   "level": 2,
+   "parentId": null,
+   "title": "Structure of Page Table",
+   "noteFile": "9-Main Memory.md",
+   "noteLine": 338
+  },
+  {
+   "id": "t9-4-1",
+   "chapterId": "9",
+   "level": 3,
+   "parentId": "t9-4",
+   "title": "Hierarchical Paging",
+   "noteFile": "9-Main Memory.md",
+   "noteLine": 343
+  },
+  {
+   "id": "t9-4-2",
+   "chapterId": "9",
+   "level": 3,
+   "parentId": "t9-4",
+   "title": "Hashed Page Tables",
+   "noteFile": "9-Main Memory.md",
+   "noteLine": 389
+  },
+  {
+   "id": "t9-4-3",
+   "chapterId": "9",
+   "level": 3,
+   "parentId": "t9-4",
+   "title": "Inverted Page Tables",
+   "noteFile": "9-Main Memory.md",
+   "noteLine": 409
+  },
+  {
+   "id": "t9-5",
+   "chapterId": "9",
+   "level": 2,
+   "parentId": null,
+   "title": "Swapping",
+   "noteFile": "9-Main Memory.md",
+   "noteLine": 425
+  },
+  {
+   "id": "t9-5-1",
+   "chapterId": "9",
+   "level": 3,
+   "parentId": "t9-5",
+   "title": "Standard Swapping",
+   "noteFile": "9-Main Memory.md",
+   "noteLine": 434
+  },
+  {
+   "id": "t9-5-2",
+   "chapterId": "9",
+   "level": 3,
+   "parentId": "t9-5",
+   "title": "Swapping with Paging",
+   "noteFile": "9-Main Memory.md",
+   "noteLine": 445
+  },
+  {
+   "id": "t10-1",
+   "chapterId": "10",
+   "level": 2,
+   "parentId": null,
+   "title": "Background",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 32
+  },
+  {
+   "id": "t10-2",
+   "chapterId": "10",
+   "level": 2,
+   "parentId": null,
+   "title": "Demand Paging",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 68
+  },
+  {
+   "id": "t10-2-1",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-2",
+   "title": "Basic Concepts",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 73
+  },
+  {
+   "id": "t10-2-2",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-2",
+   "title": "Free-Frame List",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 120
+  },
+  {
+   "id": "t10-2-3",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-2",
+   "title": "Performance",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 127
+  },
+  {
+   "id": "t10-3",
+   "chapterId": "10",
+   "level": 2,
+   "parentId": null,
+   "title": "Copy-on-Write",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 155
+  },
+  {
+   "id": "t10-4",
+   "chapterId": "10",
+   "level": 2,
+   "parentId": null,
+   "title": "Page Replacement",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 177
+  },
+  {
+   "id": "t10-4-1",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-4",
+   "title": "Basic",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 182
+  },
+  {
+   "id": "t10-4-2",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-4",
+   "title": "FIFO",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 240
+  },
+  {
+   "id": "t10-4-3",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-4",
+   "title": "Optimal",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 279
+  },
+  {
+   "id": "t10-4-4",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-4",
+   "title": "LRU",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 298
+  },
+  {
+   "id": "t10-4-5",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-4",
+   "title": "LRU-Approximation",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 367
+  },
+  {
+   "id": "t10-4-6",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-4",
+   "title": "Counting-Based",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 422
+  },
+  {
+   "id": "t10-4-7",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-4",
+   "title": "Page-Buffering",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 436
+  },
+  {
+   "id": "t10-4-8",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-4",
+   "title": "Applications",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 452
+  },
+  {
+   "id": "t10-5",
+   "chapterId": "10",
+   "level": 2,
+   "parentId": null,
+   "title": "Allocations of Frames",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 468
+  },
+  {
+   "id": "t10-5-1",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-5",
+   "title": "Minimum Number of Frames",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 473
+  },
+  {
+   "id": "t10-5-2",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-5",
+   "title": "Allocation Algorithms",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 482
+  },
+  {
+   "id": "t10-5-3",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-5",
+   "title": "Global v.s. Local Allocation",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 496
+  },
+  {
+   "id": "t10-5-4",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-5",
+   "title": "Non-Uniform Memory Access",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 519
+  },
+  {
+   "id": "t10-6",
+   "chapterId": "10",
+   "level": 2,
+   "parentId": null,
+   "title": "Thrashing",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 536
+  },
+  {
+   "id": "t10-6-1",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-6",
+   "title": "Cause of Thrashing",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 541
+  },
+  {
+   "id": "t10-6-2",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-6",
+   "title": "Working-Set Model",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 567
+  },
+  {
+   "id": "t10-6-3",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-6",
+   "title": "Page-Fault Frequency",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 600
+  },
+  {
+   "id": "t10-7",
+   "chapterId": "10",
+   "level": 2,
+   "parentId": null,
+   "title": "Memory Compression",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 617
+  },
+  {
+   "id": "t10-8",
+   "chapterId": "10",
+   "level": 2,
+   "parentId": null,
+   "title": "Allocating Kernel Memory",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 651
+  },
+  {
+   "id": "t10-8-1",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-8",
+   "title": "Buddy System",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 661
+  },
+  {
+   "id": "t10-8-2",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-8",
+   "title": "Slab Allocation",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 679
+  },
+  {
+   "id": "t10-9",
+   "chapterId": "10",
+   "level": 2,
+   "parentId": null,
+   "title": "Other Considerations",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 717
+  },
+  {
+   "id": "t10-9-1",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-9",
+   "title": "Prepaging",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 722
+  },
+  {
+   "id": "t10-9-2",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-9",
+   "title": "Page Size",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 730
+  },
+  {
+   "id": "t10-9-3",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-9",
+   "title": "TLB Reach",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 740
+  },
+  {
+   "id": "t10-9-4",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-9",
+   "title": "Inverted Page Tables",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 750
+  },
+  {
+   "id": "t10-9-5",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-9",
+   "title": "Program Structure",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 753
+  },
+  {
+   "id": "t10-9-6",
+   "chapterId": "10",
+   "level": 3,
+   "parentId": "t10-9",
+   "title": "I/O Interlock and Page Locking",
+   "noteFile": "10-Virtual Memory.md",
+   "noteLine": 779
+  },
+  {
+   "id": "t11-1",
+   "chapterId": "11",
+   "level": 2,
+   "parentId": null,
+   "title": "Overview",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 18
+  },
+  {
+   "id": "t11-1-1",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-1",
+   "title": "Hard Disk Drives",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 23
+  },
+  {
+   "id": "t11-1-2",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-1",
+   "title": "Nonvolatile Memory Devices",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 48
+  },
+  {
+   "id": "t11-1-3",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-1",
+   "title": "Volatile Memory",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 80
+  },
+  {
+   "id": "t11-1-4",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-1",
+   "title": "Secondary Storage Connection Methods",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 88
+  },
+  {
+   "id": "t11-1-5",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-1",
+   "title": "Address Mapping",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 104
+  },
+  {
+   "id": "t11-2",
+   "chapterId": "11",
+   "level": 2,
+   "parentId": null,
+   "title": "HDD Scheduling",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 122
+  },
+  {
+   "id": "t11-2-1",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-2",
+   "title": "FCFS",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 143
+  },
+  {
+   "id": "t11-2-2",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-2",
+   "title": "SSTF",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 159
+  },
+  {
+   "id": "t11-2-3",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-2",
+   "title": "SCAN",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 167
+  },
+  {
+   "id": "t11-2-4",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-2",
+   "title": "C-SCAN",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 190
+  },
+  {
+   "id": "t11-2-5",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-2",
+   "title": "Selection of a Disk-Scheduling Algorithm",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 215
+  },
+  {
+   "id": "t11-3",
+   "chapterId": "11",
+   "level": 2,
+   "parentId": null,
+   "title": "NVM Scheduling",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 264
+  },
+  {
+   "id": "t11-4",
+   "chapterId": "11",
+   "level": 2,
+   "parentId": null,
+   "title": "Error Detection and Correction",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 279
+  },
+  {
+   "id": "t11-5",
+   "chapterId": "11",
+   "level": 2,
+   "parentId": null,
+   "title": "Storage Device Management",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 295
+  },
+  {
+   "id": "t11-5-1",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-5",
+   "title": "Drive Formatting, Partitions and Volumes",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 297
+  },
+  {
+   "id": "t11-5-2",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-5",
+   "title": "Boot Block",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 336
+  },
+  {
+   "id": "t11-5-3",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-5",
+   "title": "Bad Blocks",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 347
+  },
+  {
+   "id": "t11-6",
+   "chapterId": "11",
+   "level": 2,
+   "parentId": null,
+   "title": "Swap-Space Management",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 378
+  },
+  {
+   "id": "t11-6-1",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-6",
+   "title": "Swap-Space Use",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 389
+  },
+  {
+   "id": "t11-6-2",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-6",
+   "title": "Swap-Space Location",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 406
+  },
+  {
+   "id": "t11-7",
+   "chapterId": "11",
+   "level": 2,
+   "parentId": null,
+   "title": "Storage Attachment",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 418
+  },
+  {
+   "id": "t11-7-1",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-7",
+   "title": "Host-Attached Storage",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 427
+  },
+  {
+   "id": "t11-7-2",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-7",
+   "title": "Network-Attached Storage",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 436
+  },
+  {
+   "id": "t11-7-3",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-7",
+   "title": "Cloud Storage",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 452
+  },
+  {
+   "id": "t11-7-4",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-7",
+   "title": "Storage-Area Networks and Storage Arrays",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 463
+  },
+  {
+   "id": "t11-8",
+   "chapterId": "11",
+   "level": 2,
+   "parentId": null,
+   "title": "RAID Structure",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 476
+  },
+  {
+   "id": "t11-8-1",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-8",
+   "title": "Improvement of Reliability via Redundancy",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 481
+  },
+  {
+   "id": "t11-8-2",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-8",
+   "title": "Improvement in Performance via Parallelism",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 496
+  },
+  {
+   "id": "t11-8-3",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-8",
+   "title": "RAID Levels",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 515
+  },
+  {
+   "id": "t11-8-4",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-8",
+   "title": "Selecting a RAID Level",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 577
+  },
+  {
+   "id": "t11-8-5",
+   "chapterId": "11",
+   "level": 3,
+   "parentId": "t11-8",
+   "title": "Problems with RAID",
+   "noteFile": "11-Mass-Storage Structure.md",
+   "noteLine": 586
+  },
+  {
+   "id": "t12-1",
+   "chapterId": "12",
+   "level": 2,
+   "parentId": null,
+   "title": "I/O Hardware",
+   "noteFile": "12-I／O Systems.md",
+   "noteLine": 28
+  },
+  {
+   "id": "t12-1-1",
+   "chapterId": "12",
+   "level": 3,
+   "parentId": "t12-1",
+   "title": "Memory-Mapped I/O",
+   "noteFile": "12-I／O Systems.md",
+   "noteLine": 51
+  },
+  {
+   "id": "t12-1-2",
+   "chapterId": "12",
+   "level": 3,
+   "parentId": "t12-1",
+   "title": "Polling",
+   "noteFile": "12-I／O Systems.md",
+   "noteLine": 76
+  },
+  {
+   "id": "t12-1-3",
+   "chapterId": "12",
+   "level": 3,
+   "parentId": "t12-1",
+   "title": "Interrupts",
+   "noteFile": "12-I／O Systems.md",
+   "noteLine": 109
+  },
+  {
+   "id": "t12-1-4",
+   "chapterId": "12",
+   "level": 3,
+   "parentId": "t12-1",
+   "title": "Direct Memory Access",
+   "noteFile": "12-I／O Systems.md",
+   "noteLine": 157
+  },
+  {
+   "id": "t12-2",
+   "chapterId": "12",
+   "level": 2,
+   "parentId": null,
+   "title": "Application I/O Interface",
+   "noteFile": "12-I／O Systems.md",
+   "noteLine": 179
+  },
+  {
+   "id": "t12-2-1",
+   "chapterId": "12",
+   "level": 3,
+   "parentId": "t12-2",
+   "title": "Block and Character Devices",
+   "noteFile": "12-I／O Systems.md",
+   "noteLine": 220
+  },
+  {
+   "id": "t12-2-2",
+   "chapterId": "12",
+   "level": 3,
+   "parentId": "t12-2",
+   "title": "Network Devices",
+   "noteFile": "12-I／O Systems.md",
+   "noteLine": 244
+  },
+  {
+   "id": "t12-2-3",
+   "chapterId": "12",
+   "level": 3,
+   "parentId": "t12-2",
+   "title": "Clocks and Timers",
+   "noteFile": "12-I／O Systems.md",
+   "noteLine": 249
+  },
+  {
+   "id": "t12-2-4",
+   "chapterId": "12",
+   "level": 3,
+   "parentId": "t12-2",
+   "title": "Nonblocking and Asynchronous I/O",
+   "noteFile": "12-I／O Systems.md",
+   "noteLine": 280
+  },
+  {
+   "id": "t12-2-5",
+   "chapterId": "12",
+   "level": 3,
+   "parentId": "t12-2",
+   "title": "Vectored I/O",
+   "noteFile": "12-I／O Systems.md",
+   "noteLine": 306
+  },
+  {
+   "id": "t12-2-6",
+   "chapterId": "12",
+   "level": 3,
+   "parentId": "t12-2",
+   "title": "I/O Scheduling",
+   "noteFile": "12-I／O Systems.md",
+   "noteLine": 322
+  },
+  {
+   "id": "t12-2-7",
+   "chapterId": "12",
+   "level": 3,
+   "parentId": "t12-2",
+   "title": "Buffering",
+   "noteFile": "12-I／O Systems.md",
+   "noteLine": 324
+  },
+  {
+   "id": "t12-2-8",
+   "chapterId": "12",
+   "level": 3,
+   "parentId": "t12-2",
+   "title": "Caching",
+   "noteFile": "12-I／O Systems.md",
+   "noteLine": 326
+  },
+  {
+   "id": "t12-2-9",
+   "chapterId": "12",
+   "level": 3,
+   "parentId": "t12-2",
+   "title": "Spooling and Device Reservation",
+   "noteFile": "12-I／O Systems.md",
+   "noteLine": 328
+  },
+  {
+   "id": "t12-2-10",
+   "chapterId": "12",
+   "level": 3,
+   "parentId": "t12-2",
+   "title": "Error Handling",
+   "noteFile": "12-I／O Systems.md",
+   "noteLine": 330
+  },
+  {
+   "id": "t12-2-11",
+   "chapterId": "12",
+   "level": 3,
+   "parentId": "t12-2",
+   "title": "I/O Protection",
+   "noteFile": "12-I／O Systems.md",
+   "noteLine": 332
+  },
+  {
+   "id": "t12-2-12",
+   "chapterId": "12",
+   "level": 3,
+   "parentId": "t12-2",
+   "title": "Kernel Data Sturctures",
+   "noteFile": "12-I／O Systems.md",
+   "noteLine": 334
+  },
+  {
+   "id": "t12-2-13",
+   "chapterId": "12",
+   "level": 3,
+   "parentId": "t12-2",
+   "title": "Power Management",
+   "noteFile": "12-I／O Systems.md",
+   "noteLine": 336
+  },
+  {
+   "id": "t12-3",
+   "chapterId": "12",
+   "level": 2,
+   "parentId": null,
+   "title": "Transforming I/O Requests to Hardware Operations",
+   "noteFile": "12-I／O Systems.md",
+   "noteLine": 339
+  },
+  {
+   "id": "t12-4",
+   "chapterId": "12",
+   "level": 2,
+   "parentId": null,
+   "title": "STREAMS",
+   "noteFile": "12-I／O Systems.md",
+   "noteLine": 341
+  },
+  {
+   "id": "t12-5",
+   "chapterId": "12",
+   "level": 2,
+   "parentId": null,
+   "title": "Performance -->",
+   "noteFile": "12-I／O Systems.md",
+   "noteLine": 343
+  },
+  {
+   "id": "t13-1",
+   "chapterId": "13",
+   "level": 2,
+   "parentId": null,
+   "title": "File Concepts",
+   "noteFile": "13-File-System Interface.md",
+   "noteLine": 27
+  },
+  {
+   "id": "t13-1-1",
+   "chapterId": "13",
+   "level": 3,
+   "parentId": "t13-1",
+   "title": "File Attributes",
+   "noteFile": "13-File-System Interface.md",
+   "noteLine": 39
+  },
+  {
+   "id": "t13-1-2",
+   "chapterId": "13",
+   "level": 3,
+   "parentId": "t13-1",
+   "title": "File Operations",
+   "noteFile": "13-File-System Interface.md",
+   "noteLine": 60
+  },
+  {
+   "id": "t13-1-3",
+   "chapterId": "13",
+   "level": 3,
+   "parentId": "t13-1",
+   "title": "File Types",
+   "noteFile": "13-File-System Interface.md",
+   "noteLine": 125
+  },
+  {
+   "id": "t13-1-4",
+   "chapterId": "13",
+   "level": 3,
+   "parentId": "t13-1",
+   "title": "File Structure",
+   "noteFile": "13-File-System Interface.md",
+   "noteLine": 149
+  },
+  {
+   "id": "t13-1-5",
+   "chapterId": "13",
+   "level": 3,
+   "parentId": "t13-1",
+   "title": "Internal File Structure",
+   "noteFile": "13-File-System Interface.md",
+   "noteLine": 161
+  },
+  {
+   "id": "t13-2",
+   "chapterId": "13",
+   "level": 2,
+   "parentId": null,
+   "title": "Access Methods",
+   "noteFile": "13-File-System Interface.md",
+   "noteLine": 176
+  },
+  {
+   "id": "t13-2-1",
+   "chapterId": "13",
+   "level": 3,
+   "parentId": "t13-2",
+   "title": "Sequential Access",
+   "noteFile": "13-File-System Interface.md",
+   "noteLine": 178
+  },
+  {
+   "id": "t13-2-2",
+   "chapterId": "13",
+   "level": 3,
+   "parentId": "t13-2",
+   "title": "Direct Access",
+   "noteFile": "13-File-System Interface.md",
+   "noteLine": 192
+  },
+  {
+   "id": "t13-2-3",
+   "chapterId": "13",
+   "level": 3,
+   "parentId": "t13-2",
+   "title": "Other Access Methods",
+   "noteFile": "13-File-System Interface.md",
+   "noteLine": 211
+  },
+  {
+   "id": "t13-3",
+   "chapterId": "13",
+   "level": 2,
+   "parentId": null,
+   "title": "Directory Structure",
+   "noteFile": "13-File-System Interface.md",
+   "noteLine": 222
+  },
+  {
+   "id": "t13-3-1",
+   "chapterId": "13",
+   "level": 3,
+   "parentId": "t13-3",
+   "title": "Single-Level Directory",
+   "noteFile": "13-File-System Interface.md",
+   "noteLine": 241
+  },
+  {
+   "id": "t13-3-2",
+   "chapterId": "13",
+   "level": 3,
+   "parentId": "t13-3",
+   "title": "Two-Level Directory",
+   "noteFile": "13-File-System Interface.md",
+   "noteLine": 250
+  },
+  {
+   "id": "t13-3-3",
+   "chapterId": "13",
+   "level": 3,
+   "parentId": "t13-3",
+   "title": "Tree-Structured Directories",
+   "noteFile": "13-File-System Interface.md",
+   "noteLine": 298
+  },
+  {
+   "id": "t13-3-4",
+   "chapterId": "13",
+   "level": 3,
+   "parentId": "t13-3",
+   "title": "Acyclic-Graph Directories",
+   "noteFile": "13-File-System Interface.md",
+   "noteLine": 337
+  },
+  {
+   "id": "t13-3-5",
+   "chapterId": "13",
+   "level": 3,
+   "parentId": "t13-3",
+   "title": "General Graph Directory",
+   "noteFile": "13-File-System Interface.md",
+   "noteLine": 387
+  },
+  {
+   "id": "t13-4",
+   "chapterId": "13",
+   "level": 2,
+   "parentId": null,
+   "title": "Protection",
+   "noteFile": "13-File-System Interface.md",
+   "noteLine": 406
+  },
+  {
+   "id": "t13-4-1",
+   "chapterId": "13",
+   "level": 3,
+   "parentId": "t13-4",
+   "title": "Type of Access",
+   "noteFile": "13-File-System Interface.md",
+   "noteLine": 421
+  },
+  {
+   "id": "t13-4-2",
+   "chapterId": "13",
+   "level": 3,
+   "parentId": "t13-4",
+   "title": "Access Control",
+   "noteFile": "13-File-System Interface.md",
+   "noteLine": 436
+  },
+  {
+   "id": "t13-4-3",
+   "chapterId": "13",
+   "level": 3,
+   "parentId": "t13-4",
+   "title": "Other Protection Approaches",
+   "noteFile": "13-File-System Interface.md",
+   "noteLine": 464
+  },
+  {
+   "id": "t13-5",
+   "chapterId": "13",
+   "level": 2,
+   "parentId": null,
+   "title": "Memory-Mapped Files",
+   "noteFile": "13-File-System Interface.md",
+   "noteLine": 479
+  },
+  {
+   "id": "t14-1",
+   "chapterId": "14",
+   "level": 2,
+   "parentId": null,
+   "title": "File-System Structure",
+   "noteFile": "14-File-System Implementation.md",
+   "noteLine": 35
+  },
+  {
+   "id": "t14-2",
+   "chapterId": "14",
+   "level": 2,
+   "parentId": null,
+   "title": "File-System Operations",
+   "noteFile": "14-File-System Implementation.md",
+   "noteLine": 70
+  },
+  {
+   "id": "t14-3",
+   "chapterId": "14",
+   "level": 2,
+   "parentId": null,
+   "title": "Directory Implementation",
+   "noteFile": "14-File-System Implementation.md",
+   "noteLine": 125
+  },
+  {
+   "id": "t14-3-1",
+   "chapterId": "14",
+   "level": 3,
+   "parentId": "t14-3",
+   "title": "Linear List",
+   "noteFile": "14-File-System Implementation.md",
+   "noteLine": 130
+  },
+  {
+   "id": "t14-3-2",
+   "chapterId": "14",
+   "level": 3,
+   "parentId": "t14-3",
+   "title": "Hash Table",
+   "noteFile": "14-File-System Implementation.md",
+   "noteLine": 155
+  },
+  {
+   "id": "t14-4",
+   "chapterId": "14",
+   "level": 2,
+   "parentId": null,
+   "title": "Allocation Methods",
+   "noteFile": "14-File-System Implementation.md",
+   "noteLine": 173
+  },
+  {
+   "id": "t14-4-1",
+   "chapterId": "14",
+   "level": 3,
+   "parentId": "t14-4",
+   "title": "Contiguous Allocation",
+   "noteFile": "14-File-System Implementation.md",
+   "noteLine": 181
+  },
+  {
+   "id": "t14-4-2",
+   "chapterId": "14",
+   "level": 3,
+   "parentId": "t14-4",
+   "title": "Linked Allocation",
+   "noteFile": "14-File-System Implementation.md",
+   "noteLine": 231
+  },
+  {
+   "id": "t14-4-3",
+   "chapterId": "14",
+   "level": 3,
+   "parentId": "t14-4",
+   "title": "Indexed Allocation",
+   "noteFile": "14-File-System Implementation.md",
+   "noteLine": 290
+  },
+  {
+   "id": "t14-5",
+   "chapterId": "14",
+   "level": 2,
+   "parentId": null,
+   "title": "Free-Space Management",
+   "noteFile": "14-File-System Implementation.md",
+   "noteLine": 334
+  },
+  {
+   "id": "t14-5-1",
+   "chapterId": "14",
+   "level": 3,
+   "parentId": "t14-5",
+   "title": "Bit Vector",
+   "noteFile": "14-File-System Implementation.md",
+   "noteLine": 344
+  },
+  {
+   "id": "t14-5-2",
+   "chapterId": "14",
+   "level": 3,
+   "parentId": "t14-5",
+   "title": "Linked List",
+   "noteFile": "14-File-System Implementation.md",
+   "noteLine": 358
+  },
+  {
+   "id": "t14-5-3",
+   "chapterId": "14",
+   "level": 3,
+   "parentId": "t14-5",
+   "title": "Grouping",
+   "noteFile": "14-File-System Implementation.md",
+   "noteLine": 367
+  },
+  {
+   "id": "t14-5-4",
+   "chapterId": "14",
+   "level": 3,
+   "parentId": "t14-5",
+   "title": "Counting",
+   "noteFile": "14-File-System Implementation.md",
+   "noteLine": 375
+  },
+  {
+   "id": "t14-6",
+   "chapterId": "14",
+   "level": 2,
+   "parentId": null,
+   "title": "Efficiency and Performance",
+   "noteFile": "14-File-System Implementation.md",
+   "noteLine": 385
+  },
+  {
+   "id": "t14-6-1",
+   "chapterId": "14",
+   "level": 3,
+   "parentId": "t14-6",
+   "title": "Efficiency",
+   "noteFile": "14-File-System Implementation.md",
+   "noteLine": 390
+  },
+  {
+   "id": "t14-6-2",
+   "chapterId": "14",
+   "level": 3,
+   "parentId": "t14-6",
+   "title": "Performance",
+   "noteFile": "14-File-System Implementation.md",
+   "noteLine": 408
+  },
+  {
+   "id": "t14-7",
+   "chapterId": "14",
+   "level": 2,
+   "parentId": null,
+   "title": "Recovery",
+   "noteFile": "14-File-System Implementation.md",
+   "noteLine": 456
+  },
+  {
+   "id": "t14-7-1",
+   "chapterId": "14",
+   "level": 3,
+   "parentId": "t14-7",
+   "title": "Consistency Checking",
+   "noteFile": "14-File-System Implementation.md",
+   "noteLine": 461
+  },
+  {
+   "id": "t14-7-2",
+   "chapterId": "14",
+   "level": 3,
+   "parentId": "t14-7",
+   "title": "Log-Structured File Systems",
+   "noteFile": "14-File-System Implementation.md",
+   "noteLine": 490
+  },
+  {
+   "id": "t14-7-3",
+   "chapterId": "14",
+   "level": 3,
+   "parentId": "t14-7",
+   "title": "Backup and Restore",
+   "noteFile": "14-File-System Implementation.md",
+   "noteLine": 514
+  },
+  {
+   "id": "t15-1",
+   "chapterId": "15",
+   "level": 2,
+   "parentId": null,
+   "title": "File-System Mounting",
+   "noteFile": "15-File-System Internals.md",
+   "noteLine": 14
+  },
+  {
+   "id": "t15-2",
+   "chapterId": "15",
+   "level": 2,
+   "parentId": null,
+   "title": "Partitions and Mounting",
+   "noteFile": "15-File-System Internals.md",
+   "noteLine": 30
+  },
+  {
+   "id": "t15-3",
+   "chapterId": "15",
+   "level": 2,
+   "parentId": null,
+   "title": "File Sharing",
+   "noteFile": "15-File-System Internals.md",
+   "noteLine": 43
+  },
+  {
+   "id": "t15-4",
+   "chapterId": "15",
+   "level": 2,
+   "parentId": null,
+   "title": "Virtual File Systems",
+   "noteFile": "15-File-System Internals.md",
+   "noteLine": 57
+  },
+  {
+   "id": "t15-5",
+   "chapterId": "15",
+   "level": 2,
+   "parentId": null,
+   "title": "Remote File Systems",
+   "noteFile": "15-File-System Internals.md",
+   "noteLine": 98
+  },
+  {
+   "id": "t15-5-1",
+   "chapterId": "15",
+   "level": 3,
+   "parentId": "t15-5",
+   "title": "The Client-Server Model",
+   "noteFile": "15-File-System Internals.md",
+   "noteLine": 100
+  },
+  {
+   "id": "t15-5-2",
+   "chapterId": "15",
+   "level": 3,
+   "parentId": "t15-5",
+   "title": "Distributed Information Systems",
+   "noteFile": "15-File-System Internals.md",
+   "noteLine": 102
+  },
+  {
+   "id": "t15-5-3",
+   "chapterId": "15",
+   "level": 3,
+   "parentId": "t15-5",
+   "title": "Failure Modes",
+   "noteFile": "15-File-System Internals.md",
+   "noteLine": 104
+  },
+  {
+   "id": "t15-6",
+   "chapterId": "15",
+   "level": 2,
+   "parentId": null,
+   "title": "Consistency Semantics",
+   "noteFile": "15-File-System Internals.md",
+   "noteLine": 106
+  },
+  {
+   "id": "t15-6-1",
+   "chapterId": "15",
+   "level": 3,
+   "parentId": "t15-6",
+   "title": "UNIX Semantics",
+   "noteFile": "15-File-System Internals.md",
+   "noteLine": 108
+  },
+  {
+   "id": "t15-6-2",
+   "chapterId": "15",
+   "level": 3,
+   "parentId": "t15-6",
+   "title": "Sessions Semantics",
+   "noteFile": "15-File-System Internals.md",
+   "noteLine": 110
+  },
+  {
+   "id": "t15-6-3",
+   "chapterId": "15",
+   "level": 3,
+   "parentId": "t15-6",
+   "title": "Immutable-Shared-Files Semantics",
+   "noteFile": "15-File-System Internals.md",
+   "noteLine": 112
+  },
+  {
+   "id": "t15-7",
+   "chapterId": "15",
+   "level": 2,
+   "parentId": null,
+   "title": "NFS",
+   "noteFile": "15-File-System Internals.md",
+   "noteLine": 114
+  },
+  {
+   "id": "t15-7-1",
+   "chapterId": "15",
+   "level": 3,
+   "parentId": "t15-7",
+   "title": "The Mount Protocol",
+   "noteFile": "15-File-System Internals.md",
+   "noteLine": 116
+  },
+  {
+   "id": "t15-7-2",
+   "chapterId": "15",
+   "level": 3,
+   "parentId": "t15-7",
+   "title": "The NFS Protocol",
+   "noteFile": "15-File-System Internals.md",
+   "noteLine": 118
+  },
+  {
+   "id": "t15-7-3",
+   "chapterId": "15",
+   "level": 3,
+   "parentId": "t15-7",
+   "title": "Path-Name Translation",
+   "noteFile": "15-File-System Internals.md",
+   "noteLine": 120
+  },
+  {
+   "id": "t15-7-4",
+   "chapterId": "15",
+   "level": 3,
+   "parentId": "t15-7",
+   "title": "Remote Operations",
+   "noteFile": "15-File-System Internals.md",
+   "noteLine": 122
+  }
+ ]
+}

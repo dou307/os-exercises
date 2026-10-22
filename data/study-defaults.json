@@ -1,0 +1,26 @@
+{
+ "schemaVersion": 1,
+ "namespace": "os-exercises:v1",
+ "confirmedCompletedChapters": [
+  "1"
+ ],
+ "chapterStatus": {
+  "1": "completed",
+  "2": "unknown",
+  "2.1": "unknown",
+  "3": "unknown",
+  "4": "unknown",
+  "5": "unknown",
+  "6": "unknown",
+  "7": "unknown",
+  "8": "unknown",
+  "9": "unknown",
+  "10": "unknown",
+  "11": "unknown",
+  "12": "unknown",
+  "13": "unknown",
+  "14": "unknown",
+  "15": "unknown"
+ },
+ "note": "只有第 1 章由用户明确确认学完；其余章节状态 unknown，不读取笔记目录的 [x] 勾选。"
+}

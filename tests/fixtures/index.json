@@ -1,0 +1,89 @@
+{
+ "count": 12,
+ "samples": [
+  {
+   "id": "c1-s1-0-q001",
+   "type": "single_choice",
+   "label": "第 1 题",
+   "section": "1.1 操作系统的基本概念 · 选择题",
+   "reason": "普通单选：题干、四个选项、答案与解析边界"
+  },
+  {
+   "id": "c1-s2-0-q013",
+   "type": "multi_blank",
+   "label": "第 13 题",
+   "section": "1.2 操作系统发展历程 · 选择题",
+   "reason": "特殊题：四个空共用一组选项，答案 B、A、C、D"
+  },
+  {
+   "id": "c1-s5-0-q001",
+   "type": "constructed_response",
+   "label": "第 1 题",
+   "section": "综合应用题",
+   "reason": "ch1 独立综合题：无 .q 容器，含两张甘特图表格与 dfrac 公式"
+  },
+  {
+   "id": "c2-s1-0-q022",
+   "type": "multi_blank",
+   "label": "第 22 题",
+   "section": "2.1 进程与线程简介 · 选择题",
+   "reason": "特殊题：Ⅰ～Ⅵ 陈述列表与选项同用 mono 样式，不能误切"
+  },
+  {
+   "id": "c2-s2-0-q016",
+   "type": "multi_blank",
+   "label": "第 16 题",
+   "section": "2.2 CPU 调度 · 选择题",
+   "reason": "特殊题：五个选项、四个空、答案为紧凑字母 BECD"
+  },
+  {
+   "id": "c2-s3-0-q031",
+   "type": "multi_blank",
+   "label": "第 31 题",
+   "section": "2.3 同步与互斥 · 选择题",
+   "reason": "特殊题：两空各有独立 A～D 选项组"
+  },
+  {
+   "id": "c2-s5-0-q001",
+   "type": "constructed_response",
+   "label": "第 1 题",
+   "section": "综合应用题（一）进程与调度",
+   "reason": "ch2 H3 综合题：题干由 h3 引入，含 pre/code 代码块"
+  },
+  {
+   "id": "c3-s1-0-q034",
+   "type": "multi_blank",
+   "label": "第 34 题",
+   "section": "3.1 内存管理概念 · 选择题",
+   "reason": "特殊题：两空两组选项，首键前有全角冒号"
+  },
+  {
+   "id": "c3-s3-1-q001",
+   "type": "constructed_response",
+   "label": "第 1 题",
+   "section": "综合应用题",
+   "reason": "ch3 表格综合题：多张分区表完整保留"
+  },
+  {
+   "id": "c3-s3-2-q011",
+   "type": "constructed_response",
+   "label": "第 11 题",
+   "section": "综合应用题",
+   "reason": "ch3 公式综合题：位数换算公式保留"
+  },
+  {
+   "id": "c4-s4-1-q011",
+   "type": "constructed_response",
+   "label": "第 11 题",
+   "section": "综合应用题",
+   "reason": "ch4 表格综合题：目录树与 FAT 表完整保留"
+  },
+  {
+   "id": "c5-s4-3-q006",
+   "type": "constructed_response",
+   "label": "第 6 题",
+   "section": "综合应用题",
+   "reason": "ch5 统考真题综合题：C-SCAN 表格与位示图公式"
+  }
+ ]
+}

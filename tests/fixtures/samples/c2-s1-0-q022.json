@@ -1,0 +1,48 @@
+{
+ "id": "c2-s1-0-q022",
+ "type": "multi_blank",
+ "chapter": "ch2",
+ "source": {
+  "repository": "jlshdsdk/kaoyan-408-os",
+  "revision": "e360b96fbd6522656d633ad9e26b7dd91f7bd1b4",
+  "path": "ch2/quiz.html",
+  "sectionId": "toc-1",
+  "sectionTitle": "2.1 进程与线程简介 · 选择题",
+  "subsectionId": null,
+  "subsectionTitle": null,
+  "questionHeadingId": null,
+  "originalLabel": "第 22 题",
+  "originalNumber": 22,
+  "title": "",
+  "hasQContainer": true,
+  "contentHash": "sha256:9fba7a2c8f09e82b80e0266fdcabd02fdf16d308bbc15ed5d510a5d3b583e2b2"
+ },
+ "stemHtml": "<p>若一个进程实体由 PCB、共享正文段、数据堆段和数据栈段组成，请指出下列 C 语言程序中的内容及相关数据结构各位于哪一段中。（　）</p>\n<p class=\"mono\">Ⅰ. 全局赋值变量（　）　Ⅱ. 未赋值的局部变量（　）　Ⅲ. 函数调用实参传递值（　）<br/>Ⅳ. 用malloc()要求动态分配的存储区（　）　Ⅴ. 常量值（如1995、\"string\"）（　）　Ⅵ. 进程的优先级（　）</p>",
+ "stemText": "若一个进程实体由 PCB、共享正文段、数据堆段和数据栈段组成，请指出下列 C 语言程序中的内容及相关数据结构各位于哪一段中。（ ） Ⅰ. 全局赋值变量（ ） Ⅱ. 未赋值的局部变量（ ） Ⅲ. 函数调用实参传递值（ ） Ⅳ. 用malloc()要求动态分配的存储区（ ） Ⅴ. 常量值（如1995、\"string\"）（ ） Ⅵ. 进程的优先级（ ）",
+ "options": [],
+ "optionBlocks": [
+  {
+   "rawHtml": "<p class=\"mono\">A. PCB　B. 正文段　C. 堆段　D. 栈段</p>",
+   "keys": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ]
+  }
+ ],
+ "originalAnswer": "B、D、D、C、B、A（依次对应Ⅰ～Ⅵ）",
+ "originalAnswerHtml": "答案：B、D、D、C、B、A（依次对应Ⅰ～Ⅵ）",
+ "answerFormat": "text",
+ "originalExplanationHtml": "<p>解析：C 程序使用的内存一般分为三个段：二进制代码和常量存放在正文段，动态分配的存储区存放在数据堆段，临时使用的变量存放在数据栈段。据此：全局赋值变量属于正文段中的赋值数据段（Ⅰ-B）；未赋值的局部变量和函数调用实参传值都存放在栈段（Ⅱ-D、Ⅲ-D）；malloc() 动态申请的存储区在堆段（Ⅳ-C）；常量值存放在正文段（Ⅴ-B）；进程的优先级属于控制管理信息，只能存放在 PCB 中（Ⅵ-A）。</p>",
+ "examYear": null,
+ "examYearVerified": false,
+ "assets": {
+  "images": [],
+  "tables": 0,
+  "codeBlocks": 0,
+  "formulas": 0
+ },
+ "reviewStatus": "unreviewed",
+ "searchText": "若一个进程实体由 PCB、共享正文段、数据堆段和数据栈段组成，请指出下列 C 语言程序中的内容及相关数据结构各位于哪一段中。（ ） Ⅰ. 全局赋值变量（ ） Ⅱ. 未赋值的局部变量（ ） Ⅲ. 函数调用实参传递值（ ） Ⅳ. 用malloc()要求动态分配的存储区（ ） Ⅴ. 常量值（如1995、\"string\"）（ ） Ⅵ. 进程的优先级（ ） B、D、D、C、B、A（依次对应Ⅰ～Ⅵ） 解析：C 程序使用的内存一般分为三个段：二进制代码和常量存放在正文段，动态分配的存储区存放在数据堆段，临时使用的变量存放在数据栈段。据此：全局赋值变量属于正文段中的赋值数据段（Ⅰ-B）；未赋值的局部变量和函数调用实参传值都存放在栈段（Ⅱ-D、Ⅲ-D）；malloc() 动态申请的存储区在堆段（Ⅳ-C）；常量值存放在正文段（Ⅴ-B）；进程的优先级属于控制管理信息，只能存放在 PCB 中（Ⅵ-A）。"
+}

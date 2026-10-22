@@ -1,0 +1,52 @@
+{
+ "id": "c2-s3-0-q031",
+ "type": "multi_blank",
+ "chapter": "ch2",
+ "source": {
+  "repository": "jlshdsdk/kaoyan-408-os",
+  "revision": "e360b96fbd6522656d633ad9e26b7dd91f7bd1b4",
+  "path": "ch2/quiz.html",
+  "sectionId": "toc-3",
+  "sectionTitle": "2.3 同步与互斥 · 选择题",
+  "subsectionId": null,
+  "subsectionTitle": null,
+  "questionHeadingId": null,
+  "originalLabel": "第 31 题",
+  "originalNumber": 31,
+  "title": "",
+  "hasQContainer": true,
+  "contentHash": "sha256:0c4b5aa6965511ea9b8acfbeaeee95cb00242d77b7d073269c8746d19ddf01f9"
+ },
+ "stemHtml": "<p>若系统有 n 个进程，则就绪队列中进程的个数最多有（①）个；阻塞队列中进程的个数最多有（②）个。</p>",
+ "stemText": "若系统有 n 个进程，则就绪队列中进程的个数最多有（①）个；阻塞队列中进程的个数最多有（②）个。",
+ "options": [],
+ "optionBlocks": [
+  {
+   "rawHtml": "<p class=\"mono\">① A. n+1　B. n　C. n-1　D. 1<br/>② A. n+1　B. n　C. n-1　D. 1</p>",
+   "keys": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "A",
+    "B",
+    "C",
+    "D"
+   ]
+  }
+ ],
+ "originalAnswer": "①C ②B",
+ "originalAnswerHtml": "答案：①C　②B",
+ "answerFormat": "blank_sequence",
+ "originalExplanationHtml": "<p>解析：①系统至少有一个处理机在运行，n 个进程不可能同时都处于就绪态，至少有一个进程正在处理机上运行，因此就绪队列最多有 n-1 个进程，选 C；若认为就绪队列可有 n 个，就出现了\"处理机空闲而就绪队列全满\"的不可能状态。②所有 n 个进程可能同时被阻塞（例如发生死锁时 n 个进程互相等待），此时处理机空闲，阻塞队列最多可有 n 个进程，选 B；n-1 只是常见情形而非最大值。</p>",
+ "examYear": null,
+ "examYearVerified": false,
+ "assets": {
+  "images": [],
+  "tables": 0,
+  "codeBlocks": 0,
+  "formulas": 0
+ },
+ "reviewStatus": "unreviewed",
+ "searchText": "若系统有 n 个进程，则就绪队列中进程的个数最多有（①）个；阻塞队列中进程的个数最多有（②）个。 ①C ②B 解析：①系统至少有一个处理机在运行，n 个进程不可能同时都处于就绪态，至少有一个进程正在处理机上运行，因此就绪队列最多有 n-1 个进程，选 C；若认为就绪队列可有 n 个，就出现了\"处理机空闲而就绪队列全满\"的不可能状态。②所有 n 个进程可能同时被阻塞（例如发生死锁时 n 个进程互相等待），此时处理机空闲，阻塞队列最多可有 n 个进程，选 B；n-1 只是常见情形而非最大值。"
+}

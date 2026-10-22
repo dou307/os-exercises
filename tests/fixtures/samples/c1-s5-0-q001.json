@@ -1,0 +1,38 @@
+{
+ "id": "c1-s5-0-q001",
+ "type": "constructed_response",
+ "chapter": "ch1",
+ "source": {
+  "repository": "jlshdsdk/kaoyan-408-os",
+  "revision": "e360b96fbd6522656d633ad9e26b7dd91f7bd1b4",
+  "path": "ch1/quiz.html",
+  "sectionId": "toc-5",
+  "sectionTitle": "综合应用题",
+  "subsectionId": null,
+  "subsectionTitle": null,
+  "questionHeadingId": null,
+  "originalLabel": "第 1 题",
+  "originalNumber": 1,
+  "title": "",
+  "hasQContainer": false,
+  "contentHash": "sha256:49c16e0983478ac48f1437d425ae0b5e6a700622d91706807c2a3ff730c233ce"
+ },
+ "stemHtml": "<p>有两个程序，程序 A 依次使用 CPU 计 10s、设备甲计 5s、CPU 计 5s、设备乙计 10s、CPU 计 10s；程序 B 依次使用设备甲计 10s、CPU 计 10s、设备乙计 5s、CPU 计 5s、设备乙计 10s。假设先执行程序 A 再执行程序 B，在单道程序环境下，CPU 的利用率是多少？在多道程序环境下，CPU 的利用率是多少？</p>",
+ "stemText": "有两个程序，程序 A 依次使用 CPU 计 10s、设备甲计 5s、CPU 计 5s、设备乙计 10s、CPU 计 10s；程序 B 依次使用设备甲计 10s、CPU 计 10s、设备乙计 5s、CPU 计 5s、设备乙计 10s。假设先执行程序 A 再执行程序 B，在单道程序环境下，CPU 的利用率是多少？在多道程序环境下，CPU 的利用率是多少？",
+ "options": [],
+ "optionBlocks": [],
+ "originalAnswer": "单道程序环境下 CPU 利用率为 50%；多道程序环境下 CPU 利用率约为 88.9%。",
+ "originalAnswerHtml": "答案：单道程序环境下 CPU 利用率为 50%；多道程序环境下 CPU 利用率约为 88.9%。",
+ "answerFormat": "text",
+ "originalExplanationHtml": "<p><strong>（1）单道程序环境</strong>：内存中始终只有一道程序，程序 A 全部执行完才开始执行程序 B，两程序只能顺序执行。</p>\n<ul>\n<li>程序 A 总耗时 = 10s + 5s + 5s + 10s + 10s = 40s，其中占用 CPU 的时间 = 10s + 5s + 10s = 25s；</li>\n<li>程序 B 总耗时 = 10s + 10s + 5s + 5s + 10s = 40s，其中占用 CPU 的时间 = 10s + 5s = 15s；</li>\n<li>两个程序运行总时间 = 40s + 40s = 80s，CPU 工作时间 = 25s + 15s = 40s；</li>\n<li>CPU 利用率 = \\( \\dfrac{40\\,\\text{s}}{80\\,\\text{s}} = 50\\% \\)。</li>\n</ul>\n<table>\n<caption>单道环境下的执行过程（甘特图）</caption>\n<tr><th>程序＼时间/s</th><td>0～10</td><td>10～15</td><td>15～20</td><td>20～30</td><td>30～40</td><td>40～50</td><td>50～60</td><td>60～65</td><td>65～70</td><td>70～80</td></tr>\n<tr><th>程序 A</th><td>CPU</td><td>设备甲</td><td>CPU</td><td>设备乙</td><td>CPU</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>\n<tr><th>程序 B</th><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>设备甲</td><td>CPU</td><td>设备乙</td><td>CPU</td><td>设备乙</td></tr>\n</table>\n<p>可见单道执行时，程序进行 I/O 的 40s（A 的 15s + B 的 25s）内 CPU 只能空等，利用率低。</p>\n<p><strong>（2）多道程序环境</strong>：两道程序同时驻留内存并发执行，一道程序使用设备（I/O）时，CPU 可切换去执行另一道程序；但 CPU 与每台设备同一时刻只能被一个程序占用，其余程序须排队等待。逐步分析如下：</p>\n<ul>\n<li>t = 0s：程序 A 获得 CPU（用 10s），程序 B 同时使用设备甲（用 10s）；</li>\n<li>t = 10s：A 用完 CPU，转用设备甲（用 5s）；B 恰好用完设备甲，随即获得 CPU（用 10s）；</li>\n<li>t = 15s：A 用完设备甲，申请 CPU，但 CPU 正被 B 占用，A 只能等待；</li>\n<li>t = 20s：B 用完 CPU，转用设备乙（用 5s）；CPU 空闲，A 立即获得 CPU（用 5s）；</li>\n<li>t = 25s：A 用完 CPU，转用设备乙（用 10s）；B 用完设备乙，随即获得 CPU（用 5s）；</li>\n<li>t = 30s：B 用完 CPU，申请设备乙，但设备乙正被 A 占用，B 只能等待；</li>\n<li>t = 35s：A 用完设备乙，随即获得 CPU（用 10s）；B 同时获得设备乙（用 10s）；</li>\n<li>t = 45s：两个程序同时完成。</li>\n</ul>\n<table>\n<caption>多道环境下的执行过程（甘特图）</caption>\n<tr><th>程序＼时间/s</th><td>0～10</td><td>10～15</td><td>15～20</td><td>20～25</td><td>25～30</td><td>30～35</td><td>35～45</td></tr>\n<tr><th>程序 A</th><td>CPU</td><td>设备甲</td><td>等待 CPU</td><td>CPU</td><td>设备乙</td><td>设备乙</td><td>CPU</td></tr>\n<tr><th>程序 B</th><td>设备甲</td><td>CPU</td><td>CPU</td><td>设备乙</td><td>CPU</td><td>等待设备乙</td><td>设备乙</td></tr>\n</table>\n<p>CPU 工作时间 = 10s + 5s + 10s（程序 A）+ 10s + 5s（程序 B）= 40s；两程序运行总时间 = 45s。CPU 利用率 = \\( \\dfrac{40\\,\\text{s}}{45\\,\\text{s}} \\approx 88.9\\% \\)。</p>\n<p>可见多道程序设计使 CPU 与设备并行工作，将总时间从 80s 缩短到 45s，CPU 利用率从 50% 提高到约 88.9%。</p>\n<div class=\"callout tip\"><span class=\"callout-title\">提示</span>此类题目务必先画甘特图：横坐标标时间刻度，纵坐标标程序名，再用不同线型画出各程序占用 CPU、各设备的时段。注意 CPU、打印机等资源同一时刻只能被一个程序使用，另一程序的请求只能排队等待。</div>",
+ "examYear": null,
+ "examYearVerified": false,
+ "assets": {
+  "images": [],
+  "tables": 2,
+  "codeBlocks": 0,
+  "formulas": 2
+ },
+ "reviewStatus": "unreviewed",
+ "searchText": "有两个程序，程序 A 依次使用 CPU 计 10s、设备甲计 5s、CPU 计 5s、设备乙计 10s、CPU 计 10s；程序 B 依次使用设备甲计 10s、CPU 计 10s、设备乙计 5s、CPU 计 5s、设备乙计 10s。假设先执行程序 A 再执行程序 B，在单道程序环境下，CPU 的利用率是多少？在多道程序环境下，CPU 的利用率是多少？ 单道程序环境下 CPU 利用率为 50%；多道程序环境下 CPU 利用率约为 88.9%。 （1）单道程序环境 ：内存中始终只有一道程序，程序 A 全部执行完才开始执行程序 B，两程序只能顺序执行。 程序 A 总耗时 = 10s + 5s + 5s + 10s + 10s = 40s，其中占用 CPU 的时间 = 10s + 5s + 10s = 25s； 程序 B 总耗时 = 10s + 10s + 5s + 5s + 10s = 40s，其中占用 CPU 的时间 = 10s + 5s = 15s； 两个程序运行总时间 = 40s + 40s = 80s，CPU 工作时间 = 25s + 15s = 40s； CPU 利用率 = \\( \\dfrac{40\\,\\text{s}}{80\\,\\text{s}} = 50\\% \\)。 单道环境下的执行过程（甘特图） 程序＼时间/s 0～10 10～15 15～20 20～30 30～40 40～50 50～60 60～65 65～70 70～80 程序 A CPU 设备甲 CPU 设备乙 CPU — — — — — 程序 B — — — — — 设备甲 CPU 设备乙 CPU 设备乙 可见单道执行时，程序进行 I/O 的 40s（A 的 15s + B 的 25s）内 CPU 只能空等，利用率低。 （2）多道程序环境 ：两道程序同时驻留内存并发执行，一道程序使用设备（I/O）时，CPU 可切换去执行另一道程序；但 CPU 与每台设备同一时刻只能被一个程序占用，其余程序须排队等待。逐步分析如下： t = 0s：程序 A 获得 CPU（用 10s），程序 B 同时使用设备甲（用 10s）； t = 10s：A 用完 CPU，转用设备甲（用 5s）；B 恰好用完设备甲，随即获得 CPU（用 10s）； t = 15s：A 用完设备甲，申请 CPU，但 CPU 正被 B 占用，A 只能等待； t = 20s：B 用完 CPU，转用设备乙（用 5s）；CPU 空闲，A 立即获得 CPU（用 5s）； t = 25s：A 用完 CPU，转用设备乙（用 10s）；B 用完设备乙，随即获得 CPU（用 5s）； t = 30s：B 用完 CPU，申请设备乙，但设备乙正被 A 占用，B 只能等待； t = 35s：A 用完设备乙，随即获得 CPU（用 10s）；B 同时获得设备乙（用 "
+}

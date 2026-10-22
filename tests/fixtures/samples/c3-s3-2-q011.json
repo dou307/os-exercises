@@ -1,0 +1,38 @@
+{
+ "id": "c3-s3-2-q011",
+ "type": "constructed_response",
+ "chapter": "ch3",
+ "source": {
+  "repository": "jlshdsdk/kaoyan-408-os",
+  "revision": "e360b96fbd6522656d633ad9e26b7dd91f7bd1b4",
+  "path": "ch3/quiz.html",
+  "sectionId": "toc-3",
+  "sectionTitle": "综合应用题",
+  "subsectionId": "toc-5",
+  "subsectionTitle": "3.2 虚拟内存管理 · 综合应用题",
+  "questionHeadingId": null,
+  "originalLabel": "第 11 题",
+  "originalNumber": 11,
+  "title": "",
+  "hasQContainer": true,
+  "contentHash": "sha256:f3e8af29b7683724f4d185a523587cb830ef7a4254f6fd78a9adf808b79633f5"
+ },
+ "stemHtml": "<p>某系统有 4 个页框，某个进程的页面使用情况见下表，问采用 FIFO、LRU、简单 CLOCK 和改进型 CLOCK 置换算法，将会替换哪一页？其中，R 是读（访问）标志位，M 是修改标志位。</p>\n<table>\n<thead><tr><th>页号</th><th>装入时间</th><th>上次引用时间</th><th>R</th><th>M</th></tr></thead>\n<tbody>\n<tr><td>0</td><td>126</td><td>279</td><td>0</td><td>0</td></tr>\n<tr><td>1</td><td>230</td><td>260</td><td>1</td><td>0</td></tr>\n<tr><td>2</td><td>120</td><td>272</td><td>1</td><td>1</td></tr>\n<tr><td>3</td><td>160</td><td>280</td><td>1</td><td>1</td></tr>\n</tbody>\n</table>",
+ "stemText": "某系统有 4 个页框，某个进程的页面使用情况见下表，问采用 FIFO、LRU、简单 CLOCK 和改进型 CLOCK 置换算法，将会替换哪一页？其中，R 是读（访问）标志位，M 是修改标志位。 页号 装入时间 上次引用时间 R M 0 126 279 0 0 1 230 260 1 0 2 120 272 1 1 3 160 280 1 1",
+ "options": [],
+ "optionBlocks": [],
+ "originalAnswer": "FIFO 替换第 2 页，LRU 替换第 1 页，简单 CLOCK 替换第 0 页，改进型 CLOCK 替换第 0 页。",
+ "originalAnswerHtml": "答案：FIFO 替换第 2 页，LRU 替换第 1 页，简单 CLOCK 替换第 0 页，改进型 CLOCK 替换第 0 页。",
+ "answerFormat": "text",
+ "originalExplanationHtml": "<table>\n<thead><tr><th>算法</th><th>决策过程</th><th>替换页</th></tr></thead>\n<tbody>\n<tr><td>FIFO</td><td>选最先进入内存的页。装入时间最小者为页 2（120）</td><td>第 2 页</td></tr>\n<tr><td>LRU</td><td>选最近最长时间未使用的页。上次引用时间最小者为页 1（260）</td><td>第 1 页</td></tr>\n<tr><td>简单 CLOCK</td><td>从上一次位置开始顺序扫描，选第一个 R=0 的页。依次扫描页 2、页 0：页 2 的 R=1 放过，页 0 的 R=0，扫描结束</td><td>第 0 页</td></tr>\n<tr><td>改进型 CLOCK</td><td>优先寻找 R=0 且 M=0 的页。由表中 R、M 位可知，只有页 0 满足 R=0、M=0</td><td>第 0 页</td></tr>\n</tbody>\n</table>",
+ "examYear": null,
+ "examYearVerified": false,
+ "assets": {
+  "images": [],
+  "tables": 2,
+  "codeBlocks": 0,
+  "formulas": 0
+ },
+ "reviewStatus": "unreviewed",
+ "searchText": "某系统有 4 个页框，某个进程的页面使用情况见下表，问采用 FIFO、LRU、简单 CLOCK 和改进型 CLOCK 置换算法，将会替换哪一页？其中，R 是读（访问）标志位，M 是修改标志位。 页号 装入时间 上次引用时间 R M 0 126 279 0 0 1 230 260 1 0 2 120 272 1 1 3 160 280 1 1 FIFO 替换第 2 页，LRU 替换第 1 页，简单 CLOCK 替换第 0 页，改进型 CLOCK 替换第 0 页。 算法 决策过程 替换页 FIFO 选最先进入内存的页。装入时间最小者为页 2（120） 第 2 页 LRU 选最近最长时间未使用的页。上次引用时间最小者为页 1（260） 第 1 页 简单 CLOCK 从上一次位置开始顺序扫描，选第一个 R=0 的页。依次扫描页 2、页 0：页 2 的 R=1 放过，页 0 的 R=0，扫描结束 第 0 页 改进型 CLOCK 优先寻找 R=0 且 M=0 的页。由表中 R、M 位可知，只有页 0 满足 R=0、M=0 第 0 页"
+}

@@ -1,0 +1,59 @@
+{
+ "id": "c1-s1-0-q001",
+ "type": "single_choice",
+ "chapter": "ch1",
+ "source": {
+  "repository": "jlshdsdk/kaoyan-408-os",
+  "revision": "e360b96fbd6522656d633ad9e26b7dd91f7bd1b4",
+  "path": "ch1/quiz.html",
+  "sectionId": "toc-1",
+  "sectionTitle": "1.1 操作系统的基本概念 · 选择题",
+  "subsectionId": null,
+  "subsectionTitle": null,
+  "questionHeadingId": null,
+  "originalLabel": "第 1 题",
+  "originalNumber": 1,
+  "title": "",
+  "hasQContainer": true,
+  "contentHash": "sha256:1ef04aada68c867a1a9cbd981a00eeb0dec43bf22313c773becbcbb37d127985"
+ },
+ "stemHtml": "<p>操作系统是对（　）进行管理的软件。</p>",
+ "stemText": "操作系统是对（ ）进行管理的软件。",
+ "options": [
+  {
+   "key": "A",
+   "html": "软件",
+   "text": "软件"
+  },
+  {
+   "key": "B",
+   "html": "硬件",
+   "text": "硬件"
+  },
+  {
+   "key": "C",
+   "html": "计算机资源",
+   "text": "计算机资源"
+  },
+  {
+   "key": "D",
+   "html": "应用程序",
+   "text": "应用程序"
+  }
+ ],
+ "optionBlocks": [],
+ "originalAnswer": "C",
+ "originalAnswerHtml": "答案：C",
+ "answerFormat": "single_letter",
+ "originalExplanationHtml": "<p>解析：操作系统管理的对象是计算机系统中的全部硬件资源和软件资源，它们统称为计算机资源，故选 C。注意操作系统不仅管理处理机、存储器等硬件资源，还管理文件，而文件并不属于硬件资源，说明 A、B 都只覆盖了一半；D 应用程序只是运行在操作系统之上、被管理的对象之一，均以偏概全。</p>",
+ "examYear": null,
+ "examYearVerified": false,
+ "assets": {
+  "images": [],
+  "tables": 0,
+  "codeBlocks": 0,
+  "formulas": 0
+ },
+ "reviewStatus": "unreviewed",
+ "searchText": "操作系统是对（ ）进行管理的软件。 软件 硬件 计算机资源 应用程序 C 解析：操作系统管理的对象是计算机系统中的全部硬件资源和软件资源，它们统称为计算机资源，故选 C。注意操作系统不仅管理处理机、存储器等硬件资源，还管理文件，而文件并不属于硬件资源，说明 A、B 都只覆盖了一半；D 应用程序只是运行在操作系统之上、被管理的对象之一，均以偏概全。"
+}

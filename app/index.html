@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OS 练习室 · 按笔记章节练习</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="vendor/katex/katex.min.css">
+<link rel="stylesheet" href="styles.css">
+<script defer src="vendor/katex/katex.min.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主内容</a>
+<header class="topbar">
+  <button class="icon-btn" id="navToggle" type="button" aria-expanded="false" aria-controls="sidebar">
+    <span aria-hidden="true">☰</span><span class="sr-only">打开章节导航</span>
+  </button>
+  <a class="brand" href="#/">OS 练习室</a>
+  <form class="search" id="searchForm" role="search">
+    <label class="sr-only" for="searchInput">搜索题目</label>
+    <input id="searchInput" type="search" placeholder="搜索题干 / 知识点 / 题号" autocomplete="off">
+  </form>
+</header>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar" aria-label="课程章节">
+    <div id="chapterNav" class="nav-body"></div>
+  </aside>
+  <main id="main" tabindex="-1">
+    <p class="loading">正在加载题目数据…</p>
+  </main>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<noscript><p class="noscript">本页面需要启用 JavaScript。</p></noscript>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+{
+ "schemaVersion": 1,
+ "policy": "原答案保留不动；勘误单独记录，争议题不计分。",
+ "entries": [
+  {
+   "questionId": "c1-s3-0-q009",
+   "kind": "disputed_answer",
+   "originalAnswer": "C",
+   "issue": "把“系统调用指令”判为必须在内核态执行，与同章第 11 题（内核态不能执行访管指令）、第 20 题（Trap 指令可在用户态执行）互相矛盾。",
+   "detail": "“发起系统调用的指令”（访管/陷入指令）在用户态执行；“系统调用服务程序”在内核态执行。原题把两者混为一项，导致与同章其它题的判据冲突。",
+   "evidence": "同章 c1-s3-0-q011 解析“访管指令在用户态执行”；c1-s3-0-q020 解析“Trap 指令可在用户态执行”。",
+   "displayAdvice": "保留原答案，同时标注“待核对：系统调用指令与内核服务程序需区分”，不进入自动计分。",
+   "scoring": "excluded",
+   "status": "open",
+   "reviewedAt": "2026-10-21"
+  },
+  {
+   "questionId": "c1-s3-0-q011",
+   "kind": "disputed_answer",
+   "originalAnswer": "D",
+   "issue": "“内核态不能执行访管指令”被当作一般结论，实际依赖具体指令集体系结构。",
+   "detail": "x86 的 int n 在 CPL0 也能执行，RISC-V 的 ecall 在 M 态同样可执行。原解析的结论来自教材简化模型（访管指令专供用户态发起系统调用），并非所有体系结构都成立。",
+   "evidence": "Intel SDM 对 INT n 在 CPL0 的行为说明；RISC-V 特权规范对 ecall 在 M 态的描述。本项目未做逐条引文核对，仅记录该前提差异。",
+   "displayAdvice": "保留原答案并标注“教材模型结论，跨体系结构需加前提”，不进入自动计分。",
+   "scoring": "excluded",
+   "status": "open",
+   "reviewedAt": "2026-10-21"
+  },
+  {
+   "questionId": "c1-s2-0-q009",
+   "kind": "disputed_answer",
+   "originalAnswer": "C",
+   "issue": "“优先级＋非抢占式调度”是否普遍改善分时系统响应时间存疑。",
+   "detail": "非抢占式调度下长作业一旦获得 CPU 会持续占用，交互请求可能长时间得不到响应；原解析只论证了“重要作业尽快响应”，未处理长作业阻塞问题。其余选项同样不理想，因此不强行改判。",
+   "evidence": "笔记 1.4.1 Multiprogramming and Multitasking 对响应时间与时间片轮转的说明；原解析自身未覆盖非抢占的副作用。",
+   "displayAdvice": "保留原答案，标注“待核对：非抢占调度的副作用”，不进入自动计分。",
+   "scoring": "excluded",
+   "status": "open",
+   "reviewedAt": "2026-10-21"
+  },
+  {
+   "questionId": "c1-s3-0-q010",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "“设备驱动程序必须在内核态执行”只在传统大内核模型下成立。",
+   "detail": "微内核与用户态驱动框架（如 FUSE、UIO）中，部分驱动运行在用户态。原题按王道教材的大内核模型命题。",
+   "evidence": "笔记第 2 章 Microkernels 小节对“服务移出内核”的描述。",
+   "displayAdvice": "保留原答案，在解析旁注明“按传统大内核模型作答”。",
+   "scoring": "normal",
+   "status": "noted",
+   "reviewedAt": "2026-10-21"
+  },
+  {
+   "questionId": "c1-s2-0-q019",
+   "kind": "wording",
+   "originalAnswer": "C",
+   "issue": "原解析用“宏观并行、微观交替”描述单 CPU 多任务，措辞不严谨。",
+   "detail": "并发是同一时间间隔内交替推进，不应称为“宏观并行”。答案 C（仅 I、II）本身不受影响。",
+   "evidence": "笔记 1.4.1 对 concurrency 与 parallelism 的区分。",
+   "displayAdvice": "保留原答案；解析措辞问题不影响作答，仅在审核记录中备注。",
+   "scoring": "normal",
+   "status": "noted",
+   "reviewedAt": "2026-10-21"
+  }
+ ]
+}

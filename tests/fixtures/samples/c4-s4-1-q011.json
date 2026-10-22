@@ -1,0 +1,38 @@
+{
+ "id": "c4-s4-1-q011",
+ "type": "constructed_response",
+ "chapter": "ch4",
+ "source": {
+  "repository": "jlshdsdk/kaoyan-408-os",
+  "revision": "e360b96fbd6522656d633ad9e26b7dd91f7bd1b4",
+  "path": "ch4/quiz.html",
+  "sectionId": "toc-4",
+  "sectionTitle": "综合应用题",
+  "subsectionId": "toc-5",
+  "subsectionTitle": "4.2 文件管理 · 综合应用题",
+  "questionHeadingId": null,
+  "originalLabel": "第 11 题",
+  "originalNumber": 11,
+  "title": "",
+  "hasQContainer": true,
+  "contentHash": "sha256:ee1d3a48e68530adc01169e6024ac4d43462e09884ab0d61ebba4e55f1ae9351"
+ },
+ "stemHtml": "<p>【2016 统考真题】某磁盘文件系统使用链接分配方式组织文件，簇大小为 4KB。目录文件的每个目录项包括文件名和文件的第一个簇号，其他簇号存放在文件分配表 FAT 中。目录树及各文件占用的簇号如下表所示（dir、dir1 是目录，file1、file2 是用户文件；file1 占簇 100、106、108，file2 占簇 200、201、202）：</p>\n<table>\n<thead><tr><th>文件</th><th>占用的簇号（按顺序）</th></tr></thead>\n<tbody>\n<tr><td>dir1</td><td>48</td></tr>\n<tr><td>file1（dir1 下的文件）</td><td>100、106、108</td></tr>\n<tr><td>file2</td><td>200、201、202</td></tr>\n</tbody>\n</table>\n<p>（1）请给出所有目录文件的内容。（2）若 FAT 的每个表项仅存放簇号、占 2B，则 FAT 的最大长度为多少字节？该文件系统支持的文件长度最大是多少？（3）说明 file1 的 106、108 两个簇号分别存放在 FAT 的哪个表项中。（4）假设仅 FAT 和 dir 目录文件已读入内存，若需将文件 dir/dir1/file1 的第 5000 个字节读入内存，则要访问哪几个簇？</p>",
+ "stemText": "【2016 统考真题】某磁盘文件系统使用链接分配方式组织文件，簇大小为 4KB。目录文件的每个目录项包括文件名和文件的第一个簇号，其他簇号存放在文件分配表 FAT 中。目录树及各文件占用的簇号如下表所示（dir、dir1 是目录，file1、file2 是用户文件；file1 占簇 100、106、108，file2 占簇 200、201、202）： 文件 占用的簇号（按顺序） dir1 48 file1（dir1 下的文件） 100、106、108 file2 200、201、202 （1）请给出所有目录文件的内容。（2）若 FAT 的每个表项仅存放簇号、占 2B，则 FAT 的最大长度为多少字节？该文件系统支持的文件长度最大是多少？（3）说明 file1 的 106、108 两个簇号分别存放在 FAT 的哪个表项中。（4）假设仅 FAT 和 dir 目录文件已读入内存，若需将文件 dir/dir1/file1 的第 5000 个字节读入内存，则要访问哪几个簇？",
+ "options": [],
+ "optionBlocks": [],
+ "originalAnswer": "（2）FAT 最大 128KB，文件最大 256MB；（3）106 存放在 FAT 的 100 号表项中，108 存放在 106 号表项中；（4）访问 48 号簇和 106 号簇。",
+ "originalAnswerHtml": "答案：（2）FAT 最大 128KB，文件最大 256MB；（3）106 存放在 FAT 的 100 号表项中，108 存放在 106 号表项中；（4）访问 48 号簇和 106 号簇。",
+ "answerFormat": "text",
+ "originalExplanationHtml": "<p><strong>（1）</strong>目录项只登记各文件的第一个簇号，后续簇号在 FAT 中链接：</p>\n<table>\n<thead><tr><th colspan=\"2\">dir 目录文件</th><th colspan=\"2\">dir1 目录文件</th></tr><tr><th>文件名</th><th>簇号</th><th>文件名</th><th>簇号</th></tr></thead>\n<tbody>\n<tr><td>dir1</td><td>48</td><td>file1</td><td>100</td></tr>\n<tr><td>file1</td><td>100</td><td colspan=\"2\">（dir1 仅含此目录项）</td></tr>\n<tr><td>file2</td><td>200</td><td colspan=\"2\"></td></tr>\n</tbody>\n</table>\n<p><strong>（2）</strong>FAT 表项占 2B 即 16 位，簇号最多有 \\(2^{16} = 65536\\) 个，故 FAT 最多有 65536 个表项，FAT 的最大长度 = \\(2^{16} \\times 2\\text{B} = 128\\text{KB}\\)。一个文件最多包含 65536 个簇，每簇 4KB，故文件最大长度 = \\(2^{16} \\times 4\\text{KB} = 256\\text{MB}\\)。</p>\n<p><strong>（3）</strong>FAT 的每个表项中存放文件的下一个簇号：file1 的首簇号 100 登记在目录项里，下一簇 106 存放在 FAT 的 <strong>100 号表项</strong>中；再下一簇 108 存放在 FAT 的 <strong>106 号表项</strong>中。</p>\n<p><strong>（4）</strong>加法分解：FAT 和 dir 已在内存，由 dir 中的目录项可知 dir1 的首簇号为 48，但 dir1 目录文件的内容尚未读入，须先读 <strong>48 号簇</strong>（第 1 次访盘）得到 dir1 的目录项，从而知道 file1 的首簇号为 100。第 5000 个字节的位置：每簇 4KB = 4096B，\\(5000 / 4096 = 1.22\\)，即在第 2 个簇中（第 1 簇存字节 0～4095，第 2 簇存字节 4096～8191）。查内存中的 FAT：100 号表项的内容为 106，故第 2 个簇是 106 号簇，读 <strong>106 号簇</strong>（第 2 次访盘）。因此共要访问 48 号簇和 106 号簇。</p>",
+ "examYear": 2016,
+ "examYearVerified": false,
+ "assets": {
+  "images": [],
+  "tables": 2,
+  "codeBlocks": 0,
+  "formulas": 4
+ },
+ "reviewStatus": "unreviewed",
+ "searchText": "【2016 统考真题】某磁盘文件系统使用链接分配方式组织文件，簇大小为 4KB。目录文件的每个目录项包括文件名和文件的第一个簇号，其他簇号存放在文件分配表 FAT 中。目录树及各文件占用的簇号如下表所示（dir、dir1 是目录，file1、file2 是用户文件；file1 占簇 100、106、108，file2 占簇 200、201、202）： 文件 占用的簇号（按顺序） dir1 48 file1（dir1 下的文件） 100、106、108 file2 200、201、202 （1）请给出所有目录文件的内容。（2）若 FAT 的每个表项仅存放簇号、占 2B，则 FAT 的最大长度为多少字节？该文件系统支持的文件长度最大是多少？（3）说明 file1 的 106、108 两个簇号分别存放在 FAT 的哪个表项中。（4）假设仅 FAT 和 dir 目录文件已读入内存，若需将文件 dir/dir1/file1 的第 5000 个字节读入内存，则要访问哪几个簇？ （2）FAT 最大 128KB，文件最大 256MB；（3）106 存放在 FAT 的 100 号表项中，108 存放在 106 号表项中；（4）访问 48 号簇和 106 号簇。 （1） 目录项只登记各文件的第一个簇号，后续簇号在 FAT 中链接： dir 目录文件 dir1 目录文件 文件名 簇号 文件名 簇号 dir1 48 file1 100 file1 100 （dir1 仅含此目录项） file2 200 （2） FAT 表项占 2B 即 16 位，簇号最多有 \\(2^{16} = 65536\\) 个，故 FAT 最多有 65536 个表项，FAT 的最大长度 = \\(2^{16} \\times 2\\text{B} = 128\\text{KB}\\)。一个文件最多包含 65536 个簇，每簇 4KB，故文件最大长度 = \\(2^{16} \\times 4\\text{KB} = 256\\text{MB}\\)。 （3） FAT 的每个表项中存放文件的下一个簇号：file1 的首簇号 100 登记在目录项里，下一簇 106 存放在 FAT 的 100 号表项 中；再下一簇 108 存放在 FAT 的 106 号表项 中。 （4） 加法分解：FAT 和 dir 已在内存，由 dir 中的目录项可知 dir1 的首簇号为 48，但 dir1 目录文件的内容尚未读入，须先读 48 号簇 （第 1 次访盘）得到 dir1 的目录项，从而知道 file1 的首簇号为 100。第 5000 个字节的位置：每簇 4KB = 4096B，\\(5000 / 4096 = 1.22\\)，即在第 2 个簇中（第 1 簇存字节 0～4095，第 2 簇存字节 4096～8191）。查内存中的 FAT：100 号表项的"
+}

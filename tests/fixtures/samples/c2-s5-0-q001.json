@@ -1,0 +1,38 @@
+{
+ "id": "c2-s5-0-q001",
+ "type": "constructed_response",
+ "chapter": "ch2",
+ "source": {
+  "repository": "jlshdsdk/kaoyan-408-os",
+  "revision": "e360b96fbd6522656d633ad9e26b7dd91f7bd1b4",
+  "path": "ch2/quiz.html",
+  "sectionId": "toc-5",
+  "sectionTitle": "综合应用题（一）进程与调度",
+  "subsectionId": null,
+  "subsectionTitle": null,
+  "questionHeadingId": "toc-6",
+  "originalLabel": "第 1 题",
+  "originalNumber": 1,
+  "title": "（2025 统考真题）进程的实体与状态",
+  "hasQContainer": false,
+  "contentHash": "sha256:9cd4a736410b38f0fd7e49f95e07498aa729c12f90ccc9ca2fbea5fe6ee37c11"
+ },
+ "stemHtml": "<p>某系统中进程的虚拟地址空间包括内核区、用户栈、运行时堆、可读/写数据段、只读代码段等区域。现有 C 语言程序的部分代码如下：</p><pre><code>char *ptr;\r\nvoid main() {\r\n    int length;\r\n    ptr = (char *)malloc(100);\r\n    scanf(\"%s\", ptr);\r\n    length = strlen(ptr);\r\n    printf(\"length = %d\\n\", length);\r\n    free(ptr);\r\n}</code></pre><p>请回答：</p><p>1）上述程序执行时，其进程控制块（PCB）位于哪个区域？执行 scanf() 等待键盘输入时，该进程处于什么状态？</p><p>2）main() 函数的代码位于哪个区域？其直接调用的哪些函数的功能需通过执行驱动程序实现？</p><p>3）变量 ptr 被分配在哪个区域？若变量 length 未被分配在寄存器中，则会被分配在哪个区域？ptr 指向的字符串位于哪个区域？</p>",
+ "stemText": "某系统中进程的虚拟地址空间包括内核区、用户栈、运行时堆、可读/写数据段、只读代码段等区域。现有 C 语言程序的部分代码如下： char *ptr; void main() { int length; ptr = (char *)malloc(100); scanf(\"%s\", ptr); length = strlen(ptr); printf(\"length = %d\\n\", length); free(ptr); } 请回答： 1）上述程序执行时，其进程控制块（PCB）位于哪个区域？执行 scanf() 等待键盘输入时，该进程处于什么状态？ 2）main() 函数的代码位于哪个区域？其直接调用的哪些函数的功能需通过执行驱动程序实现？ 3）变量 ptr 被分配在哪个区域？若变量 length 未被分配在寄存器中，则会被分配在哪个区域？ptr 指向的字符串位于哪个区域？",
+ "options": [],
+ "optionBlocks": [],
+ "originalAnswer": "1）PCB 位于内核区，等待输入时进程处于阻塞态；2）main() 的代码位于只读代码段，scanf() 与 printf() 依赖驱动程序；3）ptr 在可读/写数据段，length 在用户栈，ptr 指向的字符串在运行时堆。",
+ "originalAnswerHtml": "答案：1）PCB 位于内核区，等待输入时进程处于阻塞态；2）main() 的代码位于只读代码段，scanf() 与 printf() 依赖驱动程序；3）ptr 在可读/写数据段，length 在用户栈，ptr 指向的字符串在运行时堆。",
+ "answerFormat": "text",
+ "originalExplanationHtml": "<p>解析：1）进程控制块是操作系统内核用于管理进程的核心数据结构，只能由内核访问和维护，因此始终位于虚拟地址空间的内核区。执行 scanf() 时进程需要等待键盘 I/O，会主动放弃 CPU 进入阻塞态，待输入完成后被唤醒回到就绪态。</p>\n<p>2）main() 函数的二进制代码存放在只读代码段（正文段）。scanf() 和 printf() 虽然是标准库函数，但其底层要通过系统调用访问键盘、终端等设备，真正的 I/O 操作由相应的设备驱动程序完成。</p>\n<p>3）ptr 是全局指针变量，分配在可读/写数据段；length 是 main() 中的局部变量，若未被编译器优化进寄存器，则分配在用户栈；ptr 指向的字符串由 malloc() 动态分配，位于运行时堆中。</p>",
+ "examYear": null,
+ "examYearVerified": false,
+ "assets": {
+  "images": [],
+  "tables": 0,
+  "codeBlocks": 1,
+  "formulas": 0
+ },
+ "reviewStatus": "unreviewed",
+ "searchText": "某系统中进程的虚拟地址空间包括内核区、用户栈、运行时堆、可读/写数据段、只读代码段等区域。现有 C 语言程序的部分代码如下： char *ptr; void main() { int length; ptr = (char *)malloc(100); scanf(\"%s\", ptr); length = strlen(ptr); printf(\"length = %d\\n\", length); free(ptr); } 请回答： 1）上述程序执行时，其进程控制块（PCB）位于哪个区域？执行 scanf() 等待键盘输入时，该进程处于什么状态？ 2）main() 函数的代码位于哪个区域？其直接调用的哪些函数的功能需通过执行驱动程序实现？ 3）变量 ptr 被分配在哪个区域？若变量 length 未被分配在寄存器中，则会被分配在哪个区域？ptr 指向的字符串位于哪个区域？ 1）PCB 位于内核区，等待输入时进程处于阻塞态；2）main() 的代码位于只读代码段，scanf() 与 printf() 依赖驱动程序；3）ptr 在可读/写数据段，length 在用户栈，ptr 指向的字符串在运行时堆。 解析：1）进程控制块是操作系统内核用于管理进程的核心数据结构，只能由内核访问和维护，因此始终位于虚拟地址空间的内核区。执行 scanf() 时进程需要等待键盘 I/O，会主动放弃 CPU 进入阻塞态，待输入完成后被唤醒回到就绪态。 2）main() 函数的二进制代码存放在只读代码段（正文段）。scanf() 和 printf() 虽然是标准库函数，但其底层要通过系统调用访问键盘、终端等设备，真正的 I/O 操作由相应的设备驱动程序完成。 3）ptr 是全局指针变量，分配在可读/写数据段；length 是 main() 中的局部变量，若未被编译器优化进寄存器，则分配在用户栈；ptr 指向的字符串由 malloc() 动态分配，位于运行时堆中。"
+}
