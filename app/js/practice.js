@@ -78,8 +78,14 @@ function errataBlock(q) {
   box.appendChild(el("h4", { text: "本地审核备注" }));
   const list = el("ul");
   q.errata.forEach((entry) => {
-    const kind = entry.kind === "disputed_answer" ? "答案存疑" : (entry.kind === "assumption" ? "前提说明" : "措辞备注");
-    list.appendChild(el("li", { text: `${kind}：${entry.issue}${entry.detail ? ` ${entry.detail}` : ""}` }));
+      const kind = entry.kind === "disputed_answer" ? "答案存疑" : (entry.kind === "assumption" ? "前提说明" : (entry.kind === "explanation" ? "解析勘误" : "措辞备注"));
+      const item = el("li", { text: `${kind}：${entry.issue}${entry.detail ? ` ${entry.detail}` : ""}` });
+      if (entry.suggestedCorrection) item.appendChild(el("p", { text: `修正建议：${entry.suggestedCorrection}` }));
+      (entry.evidenceLinks || []).forEach((source) => {
+        if (!/^https:\/\//.test(source.url)) return;
+        item.appendChild(el("a", { href: source.url, target: "_blank", rel: "noopener noreferrer", text: ` 依据：${source.title}` }));
+      });
+      list.appendChild(item);
   });
   box.appendChild(list);
   if (q.errata.some((e) => e.scoring === "excluded")) {
@@ -108,7 +114,7 @@ export function buildCard(q, ctx) {
   head.appendChild(badge(q.source.originalLabel));
   head.appendChild(badge(TYPE_TEXT[q.type] || q.type));
   const reviewCls = q.reviewStatus === "disputed" ? "disputed" : (q.reviewStatus === "verified" ? "ok" : "");
-  head.appendChild(badge(REVIEW_TEXT[q.reviewStatus] || q.reviewStatus, reviewCls));
+  head.appendChild(badge(q.answerReview?.status === "qualified" ? "已复核（有备注）" : (REVIEW_TEXT[q.reviewStatus] || q.reviewStatus), reviewCls));
   head.appendChild(el("span", { class: "qid", text: q.id }));
   card.appendChild(head);
 
@@ -124,6 +130,7 @@ export function buildCard(q, ctx) {
   });
   if (needed.length) card.appendChild(el("div", { class: "notice", text: `涉及尚未标记学完的知识点：${needed.map((id) => topicTitle(topics, id)).join("、")}。可先阅读相关笔记，再练习本题。` }));
   if (q.reviewStatus === "systematic") card.appendChild(el("p", { class: "notice", text: "本题为系统映射，答案未逐题人工复核；判分依据为原站答案。" }));
+  (q.prerequisiteGaps || []).forEach((gap) => card.appendChild(el("div", { class: "notice warn", text: `前置缺口：${gap}` })));
 
   const stem = el("div", { class: "stem", html: q.stemHtml });
   card.appendChild(stem);
@@ -191,6 +198,7 @@ export function buildCard(q, ctx) {
   card.appendChild(explainBox);
   const errata = errataBlock(q);
   if (errata) card.appendChild(errata);
+  if (q.answerReview) card.appendChild(el("p", { class: "qmeta", text: `本地逐题复核（${q.answerReview.reviewedAt}）：${q.answerReview.conclusion}` }));
 
   if (q.topicIds && q.topicIds.length) {
     const topicsBox = el("div", { class: "topic-list" });
@@ -247,7 +255,9 @@ export function buildCard(q, ctx) {
 
   if (submitted) {
     paintSubmitted(recorded);
-    if (recorded.selfAssessment) {
+    if (recorded.scoringRetired) {
+      showResult("neutral", `本题现已列为争议，旧自动判分退出当前统计；原选 ${recorded.selected}、首次时间与次数仍保留。`);
+    } else if (recorded.selfAssessment) {
       showResult("neutral", recorded.selfAssessment === "got" ? "自评：已掌握" : "自评：仍需复习");
     } else if (recorded.correct === true) {
       showResult("ok", `回答正确，选 ${recorded.selected}`);

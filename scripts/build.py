@@ -106,6 +106,8 @@ def main() -> int:
         merged["mappingStatus"] = m["mappingStatus"]
         merged["mappingReason"] = m["mappingReason"]
         merged["reviewStatus"] = m.get("reviewStatus", "unreviewed")
+        merged["answerReview"] = m.get("answerReview")
+        merged["prerequisiteGaps"] = m.get("prerequisiteGaps", [])
         merged["errata"] = errata_by_q.get(q["id"], [])
         merged["scoring"] = (
             "excluded"
@@ -212,6 +214,8 @@ def main() -> int:
                 "status": q["mappingStatus"],
                 "review": q["reviewStatus"],
                 "scoring": q["scoring"],
+                # 只允许本次新增争议的旧单选自动记录作为历史事实迁入，不恢复其计分。
+                "legacyAutoAllowed": q["chapter"] == "ch2" and q["type"] == "single_choice" and q["reviewStatus"] == "disputed",
                 # 题干保留全文：索引同时承担搜索语料，截断会让长题干的题搜不到关键词。
                 # 题单里只显示前 90 字，靠 CSS 省略，不需要在数据层裁剪。
                 "stem": q["stemText"],

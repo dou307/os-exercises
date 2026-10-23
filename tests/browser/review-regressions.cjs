@@ -88,15 +88,17 @@ const check = (name, value, detail = "") => {
     await goto("#/ch/3");
     await page.getByRole("button", { name: "标记本章已学完", exact: true }).click();
     await goto("#/search?ch=3&tier=bridge");
-    check("已学标记在搜索桥接筛选中生效", await page.locator(".qlist li").count() === 56);
+    const reviewIndex = await page.evaluate(async () => (await (await fetch("data/index.json")).json()).questions);
+    const chapter3Available = reviewIndex.filter((q) => q.ch === "3" && q.review !== "disputed" && q.tier !== "supplement").length;
+    check("已学标记在搜索桥接筛选中生效", await page.locator(".qlist li").count() === chapter3Available);
     await page.locator(".qlist a.qitem").nth(1).click();
     await page.waitForSelector(".qcard");
-    check("单题徽标与搜索分层一致且保留系统映射", await page.locator(".qhead .badge.bridge").count() === 1
-      && (await page.locator(".qhead").innerText()).includes("系统映射"));
+    check("单题徽标与搜索分层一致，已审题不再标系统映射", await page.locator(".qhead .badge.bridge").count() === 1
+      && !(await page.locator(".qhead").innerText()).includes("系统映射"));
     await goto("#/search?ch=1&tier=disputed");
     check("待核对搜索仅显示三题", await page.locator(".qlist li").count() === 3);
     await goto("#/search?q=Threads%20and%20Concurrency");
-    check("章节名称可搜索", await page.locator(".qlist li").count() === 18);
+    check("章节名称可搜索", await page.locator(".qlist li").count() === reviewIndex.filter((q) => q.ch === "4").length);
     const questions = JSON.parse(fs.readFileSync(path.join(ROOT, "data/questions.json"), "utf8")).questions;
     const long = questions.find((q) => q.stemText.length > 400 && q.type === "constructed_response");
     const tail = long.stemText.slice(-28).trim();

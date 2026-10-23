@@ -207,7 +207,7 @@ async function renderHome() {
   }));
   current.appendChild(el("div", {
     class: "notice",
-    text: "来源题库第 2～5 章的 672 道题已按小节映射到课程知识点，尚未逐题核对答案和前置知识。各章可提前浏览；学完后可在章节页标记进度，相关题进入桥接练习，仍保留“系统映射”标识。",
+    text: "来源题库第一、二章共 364 道已逐题复核答案、映射和前置知识；第三至五章 396 道仍为系统映射。来源第二章覆盖课程的进程、线程、调度、同步与死锁。学完相应课程章后可在本机标记进度；争议题单列不计分。",
   }));
   current.appendChild(el("div", {
     class: "notice",
@@ -844,7 +844,7 @@ async function boot() {
     return;
   }
 
-  storage.init(state.meta.datasetVersion, showStorageWarning);
+  storage.init(state.meta.datasetVersion, showStorageWarning, state.index.questions);
   // 调试钩子：浏览器验收与排障时可以直接看内存里的真实状态（不影响功能）
   window.__osExercises = { storage, meta: state.meta };
   if (!storage.isPersistent()) {

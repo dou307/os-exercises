@@ -14,6 +14,7 @@ let state = null;
 let memoryOnly = false;
 let failureReason = "";
 let onFailure = null;
+let questionPolicies = new Map();
 
 const isObject = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
 const validId = (id) => /^c\d+-s\d+-\d+-q\d+(?:-\d+)?$/.test(id);
@@ -29,7 +30,7 @@ function normalizeRecord(record, entry) {
   if (record.scoring === "auto" && (!record.selected || typeof record.correct !== "boolean")) return null;
   if (record.scoring !== "auto" && record.correct !== null) return null;
   if (entry && record.scoring === "auto"
-    && (entry.type !== "single_choice" || entry.scoring !== "auto" || entry.review === "disputed")) return null;
+    && (entry.type !== "single_choice" || ((entry.scoring !== "auto" || entry.review === "disputed") && !entry.legacyAutoAllowed))) return null;
   return {
     selected: record.selected, correct: record.correct, scoring: record.scoring,
     firstCorrect: record.firstCorrect === undefined ? record.correct : record.firstCorrect, attempts: record.attempts,
@@ -62,8 +63,9 @@ function detectStorage() {
   }
 }
 
-export function init(version, failureCallback) {
+export function init(version, failureCallback, entries = []) {
   datasetVersion = version || "unknown";
+  questionPolicies = new Map(entries.map((entry) => [entry.id, entry]));
   onFailure = failureCallback || null;
   memoryOnly = false;
   failureReason = "";
@@ -115,7 +117,14 @@ export function storageFailure() {
 }
 
 export function getAnswer(id) {
-  return state.answers[id] || null;
+  const record = state.answers[id];
+  if (!record) return null;
+  const policy = questionPolicies.get(id);
+  if (record.scoring === "auto" && policy && (policy.scoring !== "auto" || policy.review === "disputed")) {
+    // 原作答不覆盖、不删除；所有当前统计读取投影，导出仍保留真实旧选项、结果和次数。
+    return { ...record, correct: null, scoring: "excluded", scoringRetired: true };
+  }
+  return record;
 }
 
 /**
@@ -226,7 +235,7 @@ export function setUI(patch) {
 }
 
 export function stats() {
-  const values = Object.values(state.answers);
+  const values = Object.keys(state.answers).map(getAnswer);
   return {
     answered: values.length,
     correct: values.filter((a) => a.correct === true).length,
@@ -236,12 +245,13 @@ export function stats() {
 }
 
 export function wrongIds() {
-  return Object.keys(state.answers).filter((id) => state.answers[id].correct === false);
+  return Object.keys(state.answers).filter((id) => getAnswer(id).correct === false);
 }
 
 /** 错题回顾用的记录：答错，或综合题自评“还需复习”。按最近一次时间倒序。 */
 export function reviewEntries() {
   return Object.entries(state.answers)
+    .map(([id]) => [id, getAnswer(id)])
     .filter(([, record]) => record.correct === false || record.selfAssessment === "review")
     .map(([id, record]) => ({ id, record: Object.assign({}, record) }))
     .sort((a, b) => String(b.record.lastAt || "").localeCompare(String(a.record.lastAt || "")));
@@ -252,7 +262,7 @@ export function chapterStats(ids) {
   let answered = 0;
   let correct = 0;
   ids.forEach((id) => {
-    const record = state.answers[id];
+    const record = getAnswer(id);
     if (!record) return;
     answered += 1;
     if (record.correct === true) correct += 1;

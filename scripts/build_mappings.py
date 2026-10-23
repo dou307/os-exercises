@@ -4,14 +4,14 @@
 输入：
 * ``docs/audit/notes-outline.json`` —— 16 个真实笔记文件的标题结构与哈希（只读依据）
 * ``data/questions.json`` —— P1 的提取结果
-* 本文件中的 ``CH1_REVIEW`` —— 第一章 88 道题的逐题人工审核结论
+* 本文件中的 ``CH1_REVIEW`` 与 ``data/reviews/ch2.json`` —— 第一、二章逐题复核
 
 输出：
 * ``data/chapters.json``、``data/topics.json``、``data/mappings.json``、
   ``data/study-defaults.json``、``data/overrides/errata.json``
 
 第一章逐题审核是本脚本的核心资产：每条记录写明分层、知识点、前置知识与理由。
-其余章节只按上游分区做初筛，状态一律 ``candidate``，不冒充已审核。
+来源第三至五章只做小节级系统映射，状态 ``systematic``，不冒充已审核。
 """
 
 from __future__ import annotations
@@ -21,6 +21,8 @@ import re
 import sys
 from collections import Counter
 from pathlib import Path
+from chapter_review import load_review, overlay, render_report
+from review_ch2_checks import run_checks
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
@@ -640,7 +642,7 @@ def write_review_doc(questions: list[dict], mappings: dict) -> None:
     section_counts = Counter(
         (q["chapter"], q["source"]["sectionId"], q["source"]["subsectionId"])
         for q in questions
-        if q["chapter"] != "ch1"
+        if mappings["byQuestion"][q["id"]]["reviewStatus"] == "systematic"
     )
     section_rows = []
     for key, rule in SECTION_MAP.items():
@@ -659,6 +661,7 @@ def write_review_doc(questions: list[dict], mappings: dict) -> None:
     doc = f"""# 第一章映射审核记录
 
 日期：{REVIEW_DATE}。审核对象：第一章 88 道题（86 道选择 + 2 道综合）。
+2026-10-23 更新：来源第二章 276 题已另行逐题复核，见 [第二章逐题复核](第二章逐题复核.md)；其余 396 题仍为系统映射。
 审核依据：本地笔记 `1-Introduction.md` 的真实二级/三级标题（`docs/audit/notes-outline.json`）。
 
 ## 1. 审核口径
@@ -724,14 +727,14 @@ Resource Management、Three Conceptual Pieces、Design Goals。
 - `verified`：已逐题核对题干、选项、答案与解析，结论可用。
 - `reviewed`：已逐题核对归属与分层，答案本身未发现需要改判的问题。
 - `disputed`：存在实质疑点，原答案保留但隔离计分。
-- `candidate`：仅按上游分区初筛，**不是**已审核（第 2～5 章共 672 道全部处于此状态）。
+- `systematic`：仅按上游分区系统映射，**不是**已逐题审核（来源第 3～5 章共 396 道）。
 
-第一章之外的章节尚未逐题审核，不能对外声称"全库已适配"。
+来源第二章已在独立审核表中复核，不能据此对外声称全库答案均已审核。
 
 ## 7. 其余章节的系统映射
 
-第 2～5 章共 672 道题按上游小节做系统映射：同一小节共用一组知识点，跨章差异明显的小节
-（2.1 进程与线程）再按关键词拆分。状态一律 `systematic`，界面标"系统映射"，
+来源第 3～5 章共 396 道题仍按上游小节做系统映射，同一小节共用一组知识点。
+状态一律 `systematic`，界面标"系统映射"，
 **不代表答案已逐题人工复核**。
 
 | 上游分区 | 主归属章 | 知识点 | 题数 | 说明 |
@@ -762,6 +765,9 @@ def main() -> int:
         return 1
 
     mappings = build_mappings(questions)
+    ch2_review = load_review(questions, topics['topics'])
+    ch2_errata = overlay(mappings, ch2_review)
+    calculations = run_checks()
 
     # 学习范围守卫：第一章 core 题的前置知识点必须都落在已确认学完的第一章内
     leaked = []
@@ -796,7 +802,7 @@ def main() -> int:
     errata = {
         "schemaVersion": 1,
         "policy": "原答案保留不动；勘误单独记录，争议题不计分。",
-        "entries": ERRATA,
+        "entries": ERRATA + ch2_errata,
     }
     (DATA / "overrides" / "errata.json").write_text(
         json.dumps(errata, ensure_ascii=False, indent=1) + "\n", encoding="utf-8"
@@ -804,7 +810,8 @@ def main() -> int:
 
     if "--write-doc" in sys.argv:
         write_review_doc(questions, mappings)
-        print("已写出 docs/映射审核记录.md")
+        render_report(ch2_review, questions, calculations)
+        print("已写出 docs/映射审核记录.md 与 docs/第二章逐题复核.md")
 
     tiers = Counter(v["readinessTier"] for k, v in mappings["byQuestion"].items() if k in ch1_ids)
     statuses = Counter(v["mappingStatus"] for k, v in mappings["byQuestion"].items() if k in ch1_ids)
@@ -812,7 +819,7 @@ def main() -> int:
     print(f"第一章分层：{dict(tiers)}")
     print(f"第一章映射状态：{dict(statuses)}")
     print(f"全库映射状态：{dict(Counter(v['mappingStatus'] for v in mappings['byQuestion'].values()))}")
-    print(f"勘误条目：{len(ERRATA)}（其中不计分 {sum(1 for e in ERRATA if e['scoring'] == 'excluded')}）")
+    print(f"勘误条目：{len(errata['entries'])}（其中不计分 {sum(1 for e in errata['entries'] if e['scoring'] == 'excluded')}）")
     return 0
 
 

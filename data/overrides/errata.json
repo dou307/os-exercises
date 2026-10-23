@@ -61,6 +61,1332 @@
    "scoring": "normal",
    "status": "noted",
    "reviewedAt": "2026-10-21"
+  },
+  {
+   "questionId": "c2-s1-0-q002",
+   "kind": "assumption",
+   "issue": "普通地址保护模型",
+   "detail": "这里排除未经授权的任意地址读取；调试、授权跨进程读取与显式共享映射不是反例式的普通访问。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s1-0-q005",
+   "kind": "disputed_answer",
+   "issue": "生命周期与 CPU 执行连续性混淆",
+   "detail": "进程生命周期存续与断续获得 CPU 是两个概念。D 的不可再现性只说明可能的竞态现象，不能覆盖全部正确同步的并发程序。",
+   "suggestedCorrection": "题干若改问未同步共享变量的并发执行，D 才可表达其典型风险。",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s1-0-q009",
+   "kind": "assumption",
+   "issue": "当前程序映像不等于终身只运行同一程序",
+   "detail": "保留 B 的单次程序映像模型；exec 可在同一进程身份下替换程序映像。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "fork"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "Linux fork 手册",
+     "url": "https://man7.org/linux/man-pages/man2/fork.2.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c2-s1-0-q010",
+   "kind": "assumption",
+   "issue": "典型创建事件不是无条件规则",
+   "detail": "某些请求由现有服务进程处理；本题按教材典型事件分类，不意味着每个服务请求必新建进程。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s1-0-q013",
+   "kind": "assumption",
+   "issue": "九个就绪者需要稳态运行前提",
+   "detail": "假定十个均为可运行用户进程、调度器工作保守，且其中一个正占 CPU；内核运行或调度过渡瞬间不能直接套十减一。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s1-0-q015",
+   "kind": "assumption",
+   "issue": "I/O 完成唤醒限定阻塞式调用",
+   "detail": "异步 I/O 的提交者未必曾阻塞。此处完成事件满足的是阻塞等待者的条件。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s1-0-q017",
+   "kind": "disputed_answer",
+   "issue": "分时系统不能推出多数进程就绪",
+   "detail": "以等待用户输入为主的交互负载可有多数阻塞者。仅由系统类型无法确定三态比例。",
+   "suggestedCorrection": "补充 CPU 密集且多用户持续可运行的负载条件后讨论比例。",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s1-0-q021",
+   "kind": "assumption",
+   "issue": "父子并发不等于互不影响",
+   "detail": "父子可共享打开文件描述等关系，也会受共同资源竞争影响；原选 B 只用于排除强制串行。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "fork"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "Linux fork 手册",
+     "url": "https://man7.org/linux/man-pages/man2/fork.2.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c2-s1-0-q022",
+   "kind": "disputed_answer",
+   "issue": "全局可写数据被塞入共享正文段",
+   "detail": "初始化全局变量属于可写数据区，不能归为只读可共享正文。题设只列正文/堆/栈而漏数据区；实参还可能按 ABI 传寄存器。",
+   "suggestedCorrection": "增加数据区选项；正文存代码/只读常量，初始化全局在数据区，malloc 对象在堆，调用帧按 ABI 分配。",
+   "evidenceRefs": [
+    "threads"
+   ],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "POSIX threads 手册",
+     "url": "https://man7.org/linux/man-pages/man7/pthreads.7.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c2-s1-0-q025",
+   "kind": "assumption",
+   "issue": "创建上限不只取决于内存",
+   "detail": "保留简化资源模型的 A；实际创建还受 PID、进程数及内核资源限额约束。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s1-0-q026",
+   "kind": "explanation",
+   "issue": "不能从队列名字否认运行队列",
+   "detail": "原解析否认运行队列的用语过强。实际内核 runqueue 可保存可运行任务；教材三态的 ready 定义仍有效。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s1-0-q027",
+   "kind": "disputed_answer",
+   "issue": "忽略主动 yield",
+   "detail": "本章第 71 题已承认 yield。进程自身既可因等待而阻塞，也可主动让出 CPU 变就绪，原答案 A 不是唯一。",
+   "suggestedCorrection": "将题干改为主动等待某事件的状态迁移；或同时接受运行→阻塞与运行→就绪。",
+   "evidenceRefs": [
+    "yield"
+   ],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "Linux sched_yield 手册",
+     "url": "https://man7.org/linux/man-pages/man2/sched_yield.2.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c2-s1-0-q028",
+   "kind": "assumption",
+   "issue": "原子语义不等于物理禁止一切中断",
+   "detail": "允许内部被抢占而以锁/重试等方式保证外部不可观察中间状态。原选 D 保留在原语语义层面。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s1-0-q029",
+   "kind": "assumption",
+   "issue": "共享内存的性能比较是常规模型",
+   "detail": "低复制开销是常见优势，不能无条件推出所有消息传递实现都更慢。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s1-0-q030",
+   "kind": "explanation",
+   "issue": "邮箱不保证永不等待",
+   "detail": "间接通信不要求收发双方同时运行，但有界邮箱可在满/空时等待；原答案 B 不受影响。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s1-0-q031",
+   "kind": "assumption",
+   "issue": "明确不可捕获的信号例外",
+   "detail": "SIGKILL 和 SIGSTOP 不能被捕获、阻塞或忽略；不要把普通可处理信号的规则推广到它们。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "signals"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "Linux signal 手册",
+     "url": "https://man7.org/linux/man-pages/man7/signal.7.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c2-s1-0-q032",
+   "kind": "assumption",
+   "issue": "信号交付时刻采用 Linux 模型",
+   "detail": "Linux 会在内核返回用户态等机会检查待处理且未屏蔽信号；B 不是 POSIX 对所有 OS 的唯一时刻承诺。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "signals"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "Linux signal 手册",
+     "url": "https://man7.org/linux/man-pages/man7/signal.7.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c2-s1-0-q044",
+   "kind": "disputed_answer",
+   "issue": "状态迁移不必切换到不同进程",
+   "detail": "如果最高优先级可运行者只有自己，yield 后仍可运行自己。原选 B 依赖另有被选中的进程等未给条件。",
+   "suggestedCorrection": "区分发生调度与实际切到另一进程；不能仅凭运行→就绪断言必有跨进程切换。",
+   "evidenceRefs": [
+    "yield"
+   ],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "Linux sched_yield 手册",
+     "url": "https://man7.org/linux/man-pages/man2/sched_yield.2.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c2-s1-0-q048",
+   "kind": "explanation",
+   "issue": "混淆进程总份额与单线程份额",
+   "detail": "KLT 逐线程 RR 时各线程可各得一份；拥有一百线程的进程总份额可能更大，不代表每个线程的份额关系与 ULT 情形正好相反。",
+   "suggestedCorrection": "分别列进程级份额与线程级份额，保留原选 B。",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s1-0-q049",
+   "kind": "assumption",
+   "issue": "内核线程管理与执行特权分开",
+   "detail": "内核可感知/调度线程，不表示该线程的用户程序体始终在内核态运行。保留开销方面的 A。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s1-0-q050",
+   "kind": "assumption",
+   "issue": "限定 M:1 的阻塞系统调用",
+   "detail": "用户线程库内的同步等待可只切换 ULT；只有唯一内核执行实体被阻塞时才暂停整个进程。非阻塞系统调用也不满足此前提。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s1-0-q051",
+   "kind": "disputed_answer",
+   "issue": "线程库可移植性不等于跨 OS 二进制免修改",
+   "detail": "D 对 M:1 不成立，但 C 的不经修改直接运行也无一般保证，仍受 ABI、系统接口及库移植限制。",
+   "suggestedCorrection": "C 改为在提供兼容接口且已移植的运行库上，应用源代码可能更易移植；D 限定 M:1。",
+   "evidenceRefs": [
+    "threads"
+   ],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "POSIX threads 手册",
+     "url": "https://man7.org/linux/man-pages/man7/pthreads.7.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c2-s1-0-q055",
+   "kind": "assumption",
+   "issue": "限定 M:1 的阻塞系统调用",
+   "detail": "用户线程库内的同步等待可只切换 ULT；只有唯一内核执行实体被阻塞时才暂停整个进程。非阻塞系统调用也不满足此前提。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s1-0-q057",
+   "kind": "disputed_answer",
+   "issue": "系统调用不一定阻塞",
+   "detail": "D 未写阻塞式系统调用；getpid 等通常不会等待外部事件。原解析擅自增加阻塞条件，导致单选 C 不严密。",
+   "suggestedCorrection": "D 补充会阻塞唯一内核实体的系统调用后，才能单选 C。",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s1-0-q059",
+   "kind": "assumption",
+   "issue": "线程栈是执行上下文私有而非内存隔离",
+   "detail": "线程有各自栈和栈指针，但同进程线程共用虚拟地址空间，持合法指针时可以访问彼此仍存活的栈对象。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "threads"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "POSIX threads 手册",
+     "url": "https://man7.org/linux/man-pages/man7/pthreads.7.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c2-s1-0-q062",
+   "kind": "explanation",
+   "issue": "管道容量并非通常固定为一页",
+   "detail": "Linux 管道默认容量与版本和资源限制相关，常见默认为多页且可调整；容量与 PIPE_BUF 原子写上限也不同。原选 C 保留。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "pipe"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "Linux pipe 容量与原子写手册",
+     "url": "https://man7.org/linux/man-pages/man7/pipe.7.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c2-s1-0-q063",
+   "kind": "explanation",
+   "issue": "P/wait 不总是阻塞",
+   "detail": "资源或条件满足时 P 可立即返回；只有无法取得份额时等待，原答案 D 不变。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s1-0-q067",
+   "kind": "assumption",
+   "issue": "虚拟地址空间独立与 COW 物理共享并存",
+   "detail": "fork 的写时复制不等于父子共享同一普通可写虚拟地址空间，保留 B。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "fork"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "Linux fork 手册",
+     "url": "https://man7.org/linux/man-pages/man2/fork.2.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c2-s1-0-q072",
+   "kind": "assumption",
+   "issue": "退出与 PCB 回收分开",
+   "detail": "退出后的僵尸可保留 PID/退出码等管理记录直到被回收；原文立即释放 PCB 的概括应按逻辑终止理解。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "fork"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "Linux fork 手册",
+     "url": "https://man7.org/linux/man-pages/man2/fork.2.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c2-s1-0-q073",
+   "kind": "assumption",
+   "issue": "线程栈是执行上下文私有而非内存隔离",
+   "detail": "线程有各自栈和栈指针，但同进程线程共用虚拟地址空间，持合法指针时可以访问彼此仍存活的栈对象。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "threads"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "POSIX threads 手册",
+     "url": "https://man7.org/linux/man-pages/man7/pthreads.7.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c2-s2-0-q004",
+   "kind": "explanation",
+   "issue": "RR 吞吐不作绝对比较",
+   "detail": "量子长短、上下文切换成本和负载不同会改变吞吐，原选 A 只说明交互响应适配性。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s2-0-q012",
+   "kind": "assumption",
+   "issue": "优先级抢占不是截止期证明",
+   "detail": "实时系统还需可调度性与最坏执行时间等分析；保留 C 的算法分类结论。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s2-0-q013",
+   "kind": "disputed_answer",
+   "issue": "新进程创建也可能直接触发抢占",
+   "detail": "新建高优先级进程进入 ready 可立即引发重新调度；与本节第 41、51 题的可抢占模型不能无条件并列。",
+   "suggestedCorrection": "明确当前进程继续运行且新建者不足以抢占等条件，再排除 D。",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s2-0-q016",
+   "kind": "explanation",
+   "issue": "四空顺序作答不是任意多选",
+   "detail": "原串 BECD 分别对应短作业、紧急、人机交互、综合兼顾；现有多空自评方式正确。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s2-0-q022",
+   "kind": "assumption",
+   "issue": "运行降优先级限定题设策略",
+   "detail": "动态优先级可有多种规则，只有本题假设的 CPU 使用惩罚/等待补偿模型支持该概括。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s2-0-q027",
+   "kind": "explanation",
+   "issue": "优先级调度的中间平均值算错",
+   "detail": "B、E、A、C、D 对应完成 6、14、24、26、30，平均为 20，不是解析的 21.6；SJF 的 14 仍最小，原选 D 不变。",
+   "suggestedCorrection": "优先级方案平均周转改为 20。",
+   "evidenceRefs": [],
+   "checkIds": [
+    "schedule-s2-27"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s2-0-q032",
+   "kind": "assumption",
+   "issue": "SJF 最优性限定同时到达的静态批次",
+   "detail": "已知各 CPU burst、无抢占且所有任务同时就绪时平均等待最小；不自动推广到未知未来到达或 I/O 阶段。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s2-0-q039",
+   "kind": "assumption",
+   "issue": "HRRN 的防饥饿结论需要正常负载",
+   "detail": "等待使响应比上升，但无限到达、无界服务或异常选择规则不能据此获得一般性最终服务保证。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s2-0-q040",
+   "kind": "assumption",
+   "issue": "260 是可实现的最短时间线而非唯一策略",
+   "detail": "CPU 总需求 240，最后 P2 的 I/O 后 CPU40 提供 260 的下界；存在达到该界的时间线，不必唯一非抢占策略。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [
+    "schedule-s2-40"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s2-0-q042",
+   "kind": "explanation",
+   "issue": "I/O 密集优先的理由不是数据保存时长",
+   "detail": "其收益在于及早启动设备并与 CPU 工作重叠，数据能否保存不是给高优先级的一般依据。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s2-0-q043",
+   "kind": "assumption",
+   "issue": "RR 无饥饿依赖公平轮转与有限份额",
+   "detail": "只针对持续 ready 的进程、有限量子与可获得调度的有限排队情形，不承诺阻塞事件一定完成。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s2-0-q052",
+   "kind": "assumption",
+   "issue": "六次包含首次分派",
+   "detail": "若只统计不同进程之间的切换，则不计初次 idle→P1，数值会为五；本题按六次调度计。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [
+    "schedule-s2-52"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s3-0-q002",
+   "kind": "explanation",
+   "issue": "锁和管程不必须由信号量实现",
+   "detail": "互斥锁可由原子指令实现，管程也可借其他同步底层实现。D 按并发进程未必有合作依赖的意图保留，不能沿用 ABC 全依赖信号量的解析。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s3-0-q006",
+   "kind": "explanation",
+   "issue": "临界区主体与进入退出操作分开",
+   "detail": "P/V 常构成进入区和退出区；真正被保护的是访问共享临界资源的代码，不将二者当作严格同义。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s3-0-q014",
+   "kind": "assumption",
+   "issue": "不可分割是原子性抽象",
+   "detail": "实际实现可在硬件原子、锁和调度协作下保持语义；不能理解成所有 P/V 都是一条禁中断指令。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s3-0-q019",
+   "kind": "assumption",
+   "issue": "可重入不只要求代码字节只读",
+   "detail": "还需处理共享可变状态；本题按纯代码与私有调用状态模型保留 C。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s3-0-q021",
+   "kind": "assumption",
+   "issue": "非持有者 unlock 的结果依锁类型",
+   "detail": "普通非健壮 NORMAL 锁是未定义行为；ERRORCHECK 等可报错。所有者原则保留，但不统一声称系统一定报告错误。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "mutex"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "POSIX pthread_mutex_lock 锁类型语义",
+     "url": "https://man7.org/linux/man-pages/man3/pthread_mutex_lock.3p.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c2-s3-0-q022",
+   "kind": "disputed_answer",
+   "issue": "非递归互斥锁重复加锁可自死锁",
+   "detail": "NORMAL 锁由同一线程再次 lock 会等待自己释放；ERRORCHECK 报错、RECURSIVE 增计数。故不能把 A/B 全排除；C 也需相应交错才发生。",
+   "suggestedCorrection": "补充锁类型及持锁交错，或改成多选可能导致死锁。",
+   "evidenceRefs": [
+    "mutex"
+   ],
+   "checkIds": [
+    "mutex-self-deadlock"
+   ],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "POSIX pthread_mutex_lock 锁类型语义",
+     "url": "https://man7.org/linux/man-pages/man3/pthread_mutex_lock.3p.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c2-s3-0-q029",
+   "kind": "assumption",
+   "issue": "管程实例生命周期依语言而定",
+   "detail": "保留条件变量通知不计数的 C；原解析不能普遍否认现代语言可创建/销毁管程对象。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s3-0-q031",
+   "kind": "assumption",
+   "issue": "三态数目使用工作保守单 CPU 模型",
+   "detail": "只有稳态至少一可运行进程正在 CPU 上时才可按运行一、就绪 n-1 上界；无可运行任务时 CPU 可空闲。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s3-0-q032",
+   "kind": "assumption",
+   "issue": "两个假如是独立情形",
+   "detail": "第二问从推得的初值十开始，不是接在第一问最终零后再做 15P2V；后者会得十三个等待者。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s3-0-q033",
+   "kind": "assumption",
+   "issue": "高级赋值表达式按一步原子操作处理",
+   "detail": "原选 B 建立在整条赋值不可分割上；若 x*x 两次读取可穿插 x 的写入，结果集会变。真实 C 数据竞争还涉及语言未定义行为。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s3-0-q036",
+   "kind": "assumption",
+   "issue": "Peterson 依赖顺序一致与原子读写",
+   "detail": "伪代码证明不能直接套到没有原子变量/内存屏障的现代 C 或弱内存硬件。第 48 题的有界等待也不等于严格先到先服务。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s3-0-q041",
+   "kind": "assumption",
+   "issue": "考虑多个生产者和消费者",
+   "detail": "mutex 的等待队列可包含同类和异类，因此释放锁也可能唤醒任一类；若只假设各一个则推理范围改变。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s3-0-q046",
+   "kind": "explanation",
+   "issue": "V(s1) 时 x 不一定已经完成两步赋值",
+   "detail": "P1 可以先于 P2 开始并发布 s1；但 P2 的自身程序顺序确保计算 x+y 前 x 已为二，最终 5、12、9 不变。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [
+    "pv-s3-46"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s3-0-q048",
+   "kind": "assumption",
+   "issue": "Peterson 依赖顺序一致与原子读写",
+   "detail": "伪代码证明不能直接套到没有原子变量/内存屏障的现代 C 或弱内存硬件。第 48 题的有界等待也不等于严格先到先服务。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s3-0-q051",
+   "kind": "explanation",
+   "issue": "原子 TSL 不必通过锁整条总线实现",
+   "detail": "具体硬件可用缓存一致性协议等保证原子性；这里保留自旋不让权的 B。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s3-0-q053",
+   "kind": "assumption",
+   "issue": "十分之一是等概率交错模型结果",
+   "detail": "20 个合法指令交错只有两条得到二，但调度器并不自动让这 20 条等概率。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [
+    "interleavings-s3-49-53"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s3-0-q055",
+   "kind": "assumption",
+   "issue": "让出 CPU 限定阻塞式信号量",
+   "detail": "整型忙等实现不满足让权等待，不能把 C 泛化为所有名为信号量的实现。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s4-0-q001",
+   "kind": "explanation",
+   "issue": "死循环、饥饿、自死锁是不同概念",
+   "detail": "死循环是控制流不结束，饥饿是服务机会无限推迟；单线程重复锁非递归锁也可死锁，原解析至少二进程过强。原选 C 不变。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "mutex"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "POSIX pthread_mutex_lock 锁类型语义",
+     "url": "https://man7.org/linux/man-pages/man3/pthread_mutex_lock.3p.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c2-s4-0-q002",
+   "kind": "disputed_answer",
+   "issue": "防死锁不自动保证无饥饿",
+   "detail": "同时原子申请两筷可避免持有等待，但无公平分配仍可能饥饿；限流还必须明确小于哲学家总人数。原解析据无饥饿排除 B 不成立。",
+   "suggestedCorrection": "明确允许拿筷者至多 n-1，并把 B 的必然饥饿改为可能饥饿，重新设计单选项。",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s4-0-q005",
+   "kind": "explanation",
+   "issue": "资源不足也可能参与死锁",
+   "detail": "不足与不当分配顺序可以共同形成环路；不能断言资源不足只会饥饿不会死锁，原选择 A 仍是教材最佳项。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s4-0-q012",
+   "kind": "assumption",
+   "issue": "恢复牺牲策略不是普适禁令",
+   "detail": "通常优先处理死锁相关进程；是否能选择其他进程还取决于恢复政策与资源可剥夺性。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s4-0-q015",
+   "kind": "disputed_answer",
+   "issue": "无死锁不能推出每次请求必获满足",
+   "detail": "资源可能暂时为零；不公平分配甚至可让某进程长期得不到资源。无死锁只保证某个进程可以推进，不能推出 C 的逐请求保证。",
+   "suggestedCorrection": "题目结论改为不可能发生所述同类资源死锁，并另列公平性条件。",
+   "evidenceRefs": [],
+   "checkIds": [
+    "resource-bound"
+   ],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s4-0-q017",
+   "kind": "assumption",
+   "issue": "限定本质不可共享资源",
+   "detail": "只读文件可共享，打印可用假脱机改造；保留 B 对无法共享的临界资源的结论。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s4-0-q018",
+   "kind": "explanation",
+   "issue": "安全状态也能被错误的后续分配破坏",
+   "detail": "安全意味着当前有安全序列；以后持续执行安全性检查才有保持安全的不变式。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s4-0-q023",
+   "kind": "disputed_answer",
+   "issue": "解析增加了未给的每方向多实例",
+   "detail": "题面只有 P1/P2 两个执行体，各计数至多一；解析的同向络绎不绝依赖多个实例。两个执行体的饥饿问题还需明确调度与 semaphore 公平性。",
+   "suggestedCorrection": "补充每方向多个进程及公平假设，再用连续同向流说明算法可能使另一方向饥饿。",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s4-0-q024",
+   "kind": "explanation",
+   "issue": "无限循环不能只枚举一轮的三种结果",
+   "detail": "非确定性选择 C 可保留；完整无限执行中的 x 不受一轮赋值排列得到的三个值所界定。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s4-0-q028",
+   "kind": "disputed_answer",
+   "issue": "混淆任意分配资源界与银行家必要条件",
+   "detail": "m=3、n=2、每进程最大三件，总需求六已大于 m+n=5；初始各分配零时仍安全，可依银行家串行满足两人。",
+   "suggestedCorrection": "银行家条件应写试分配后存在安全序列；总需求界只讨论无需运行时避免的最坏分配保证。",
+   "evidenceRefs": [],
+   "checkIds": [
+    "banker-s4-28"
+   ],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s4-0-q030",
+   "kind": "disputed_answer",
+   "issue": "银行家安全序列不必从请求者开始",
+   "detail": "总三件，P0 已占一最大三、P1 已占一最大一、空闲一；给 P0 再一件后空闲零，P1 可先结束再让 P0 完成。D 的局部情形也可能安全。",
+   "suggestedCorrection": "校验 Request≤Need、Request≤Available，并试分配后检查所有进程的安全序列。",
+   "evidenceRefs": [],
+   "checkIds": [
+    "banker-s4-30"
+   ],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s4-0-q036",
+   "kind": "explanation",
+   "issue": "漏列起始可完成的 P4",
+   "detail": "P4 的 Need=(1,1,0)≤Available=(2,3,3)，也可作为第一步。选项 D 的整条序列仍可行，不改原答案。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [
+    "banker-s4-36"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s4-0-q042",
+   "kind": "assumption",
+   "issue": "至少两个只限教材多进程不同资源模型",
+   "detail": "一般非递归锁存在同线程自死锁。保留 B 需显式排除重入自等待场景，不能把该题结论当一般死锁定义。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "mutex"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "POSIX pthread_mutex_lock 锁类型语义",
+     "url": "https://man7.org/linux/man-pages/man3/pthread_mutex_lock.3p.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c2-s5-0-q001",
+   "kind": "assumption",
+   "issue": "地址布局与标准 I/O 使用常规模型",
+   "detail": "全局 ptr 在可写数据区、其 malloc 对象在堆；局部 length 通常栈上，也可优化进寄存器。stdio 底层使用驱动不表示每次库函数都即时发系统调用。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s5-0-q003",
+   "kind": "disputed_answer",
+   "issue": "同一独占 I/O1 在原图被重复占用",
+   "detail": "B 在 I/O1 的 160–190 尚未完成，A 在 180 请求的末次 I/O1 必须等待，不能排为 180–210。按题给 30 的时长应为 190–220。",
+   "suggestedCorrection": "完成时刻 A=220、B=190、C=200；CPU 总忙 180，利用率 180/220≈81.82%。若另一本书图时长不同，需另核书面原件，不能替代本网页题干。",
+   "evidenceRefs": [],
+   "checkIds": [
+    "schedule-s5-03"
+   ],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s5-0-q004",
+   "kind": "disputed_answer",
+   "issue": "状态与入队方向不能唯一识别 RR",
+   "detail": "主动 yield、其他尾插就绪队列的策略也可出现图中迁移，不能由现图排除。",
+   "suggestedCorrection": "可答与 RR 相容；若要唯一判 RR，应明确运行者因固定量子到期被强制移到队尾。",
+   "evidenceRefs": [
+    "yield"
+   ],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "Linux sched_yield 手册",
+     "url": "https://man7.org/linux/man-pages/man2/sched_yield.2.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c2-s5-0-q006",
+   "kind": "assumption",
+   "issue": "同一时刻完成和新到达先汇总再接纳",
+   "detail": "t=50 J2 完成且 J4 到达，先合并该时刻事件才能按 SJF 接纳 J4；若换边界约定会改变接纳次序，需在作答中声明。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [
+    "admission-s5-06"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s5-0-q007",
+   "kind": "explanation",
+   "issue": "SRTF 部分 t=2 的 P2 剩余量误写",
+   "detail": "P2 在 t=1 开始执行，至 t=2 仅用一单位，剩余应为三而非解析写的二。后续 t=3 剩二、t=5 完成正确，最终 SRTF 平均 13 与 RR 平均 19.25 不变。",
+   "suggestedCorrection": "将 SRTF 时刻 2 的 P2 剩余值改为三；RR 部分无需改动。",
+   "evidenceRefs": [],
+   "checkIds": [
+    "schedule-s5-07"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s5-0-q011",
+   "kind": "assumption",
+   "issue": "动态优先级防饥饿须有限性条件",
+   "detail": "等待奖励必须实际使等待者达到可选优先级，并假定 nice/服务/调度机会正常有界；无限异常负载下无绝对保证。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s6-0-q001",
+   "kind": "assumption",
+   "issue": "互斥范围覆盖共享值的使用",
+   "detail": "不能只保护 x 的写入；要连同依赖该值的判断一起保护。串行化只保证等价串行结果，不规定哪个进程最后写 x。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s6-0-q002",
+   "kind": "explanation",
+   "issue": "差值限制使 Sa/Sb 有有限上界",
+   "detail": "在无在途操作的稳定点，Sa=M-1-(A-B)、Sb=N-1+(A-B)，两者和 M+N-2，均有有限上界；在途保留与阻塞队列需单独计数。M=N=1 时严格要求 A=B，单件入库从空仓起本就无法前进。",
+   "suggestedCorrection": "删除无固定上界，写明正整数参数及至少存在合法首步的可行性条件。",
+   "evidenceRefs": [],
+   "checkIds": [
+    "warehouse-bounds"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s6-0-q003",
+   "kind": "disputed_answer",
+   "issue": "取号与叫号没有对应到特定顾客",
+   "detail": "顾客须保存本地 ticket，销售员须在同一互斥区读取并取出已入队 ticket，然后通知该 ticket。原代码等待全局 i 且 i 的读取未统一保护，休息也无明确唤醒。",
+   "suggestedCorrection": "单一队列锁+customers=0；取号入 FIFO 后 V(customers)，每个 ticket 配 called[ticket]=0；销售员取票后 V(called[ticket])，必要时另加服务结束握手。",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s6-0-q006",
+   "kind": "disputed_answer",
+   "issue": "一个 Sy 通知被两个 P 消耗",
+   "detail": "P2 的 V(Sy) 只产生一份许可，P1、P3 各 P(Sy)；谁先获得都会使另一方永远等待，P1 还需等 P3 的 Sz。",
+   "suggestedCorrection": "删除 P1 的 P(Sy)：P1 等到 Sz 已传递保证 P3 完成 z，而 P3 此前等过 y。或为两个接收者各设独立 y 完成通知。",
+   "evidenceRefs": [],
+   "checkIds": [
+    "pv-s6-06"
+   ],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s6-0-q007",
+   "kind": "assumption",
+   "issue": "方向互斥不保证公平轮换",
+   "detail": "同方向持续新来可能使对向无限等待；原题未要求无饥饿时保留方案。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s6-0-q009",
+   "kind": "assumption",
+   "issue": "货箱取放操作需有原子结构保护",
+   "detail": "配额保证容量与车架/车轮组合，但实际共享链表/下标还须互斥或原子槽位实现；若放入、取出不是原子抽象，应增箱结构锁。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s6-0-q010",
+   "kind": "disputed_answer",
+   "issue": "直接读信号量值的检查后执行竞态",
+   "detail": "R 读 empty==1 后，P 可抢先取得该许可；R 随后阻塞，不再是依据真实空满原子选择动作。预留许可后，计数本身也不是实物占用。",
+   "suggestedCorrection": "用单一管程锁保护真实空满状态，R 在锁内选择生产或消费并更新状态，P/Q 用 notFull/notEmpty 条件等待；或采用原子 trywait 并处理失败分支。",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s6-0-q011",
+   "kind": "explanation",
+   "issue": "barbers 的等待队列不止一人",
+   "detail": "在理发师下次发布服务许可之前，可有多位已入座顾客在 P(barbers) 上等待，因此下界不是 -1；n=0 的接待语义也需另设计。",
+   "suggestedCorrection": "n>0 的经典方案可用；计数表应结合 n 与已取 customers 的阶段计算，不写固定 -1。",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s6-0-q012",
+   "kind": "disputed_answer",
+   "issue": "缺少等待者到达顺序的实现",
+   "detail": "每片计数器加共享放映锁只约束片种互斥；普通信号量未声明 FIFO，且同片后到者可以合入已有批次，无法保证题设等待者按到达顺序。",
+   "suggestedCorrection": "明确允许同片合批的服务规则；维护带到达序号的待播队列和批次交接，不能靠未指定公平性的 P/V 隐含保证顺序。",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s6-0-q015",
+   "kind": "assumption",
+   "issue": "缓冲互斥不等于打印机互斥",
+   "detail": "假定各消费者的计算/结果私有，且打印一个结果是原子设备操作；否则另设 printLock 保护打印，不持缓冲锁等打印。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s6-0-q016",
+   "kind": "disputed_answer",
+   "issue": "先通知后发布材料",
+   "detail": "V(offerX) 后可立即切到对应吸烟者，此时供应者还未放材料。原表 offer1 对应拥有胶水者而不是拥有烟草者。",
+   "suggestedCorrection": "放入两种材料→V(缺第三种材料的吸烟者通知)→P(finish)；材料放好以后才可发信号。",
+   "evidenceRefs": [],
+   "checkIds": [
+    "pv-s6-16"
+   ],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s6-0-q018",
+   "kind": "disputed_answer",
+   "issue": "共享 service 不能表达按号码叫到谁",
+   "detail": "票号与等待者没有一一绑定；后取号顾客也可先 V(full)，普通 P(service) 可唤醒任意等待者。座位限额与叫号顺序是两项约束。",
+   "suggestedCorrection": "在队列锁内取号并入队；营业员 FIFO 出队，按 ticket 的独立通知唤醒顾客，叫到后归还等候座位；必要时等服务完毕。",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s6-0-q022",
+   "kind": "explanation",
+   "issue": "局部并不自动意味着永不共享",
+   "detail": "本题各 w 不逃逸，故无需互斥；一般程序可把局部地址发布给其他线程。三组共享 y/z 冲突的加锁方案保留。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s6-0-q025",
+   "kind": "assumption",
+   "issue": "关中断实现限定单 CPU 抽象调度窗口",
+   "detail": "只关本核中断不能排除其他核并发；方法二还要求开中断窗口实际可交付中断/重新调度，不能直接视为任意指令集上的可移植实现。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s6-0-q027",
+   "kind": "assumption",
+   "issue": "swap 指硬件原子交换",
+   "detail": "while 与出口修正依赖原子且具适当内存顺序的 swap；普通 C 三条赋值不能替代。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s6-0-q029",
+   "kind": "assumption",
+   "issue": "树坑配额何时归还须先定义",
+   "detail": "原解把放苗后视作不再是未使用树坑并立即归还配额；若要求填土完才消耗树坑，应把 V(position) 移至填土后。水桶仅丙使用，无须额外互斥量。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s7-0-q002",
+   "kind": "explanation",
+   "issue": "可行方法列表不是穷尽",
+   "detail": "静态分配、顺序申请、银行家是示例；还可讨论可剥夺资源、检测恢复等方案，不能把三种写成全部方法。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s7-0-q003",
+   "kind": "disputed_answer",
+   "issue": "不安全不等于此时全部进程死锁",
+   "detail": "Max 表示未来上界，不是当前 Request。安全性计算能说明同时批准后无安全序列，却不能仅据这几张表断定实际当前死锁或断言未死锁；死锁集合也可以只是全系统子集。",
+   "suggestedCorrection": "保留前两问安全性结果；第三问答不安全，当前是否死锁还需要各进程现时请求及等待关系。",
+   "evidenceRefs": [],
+   "checkIds": [
+    "banker-s7-03"
+   ],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c2-s7-0-q005",
+   "kind": "explanation",
+   "issue": "安全起步者与死锁概念两处错误",
+   "detail": "第一种 Available=(1,4,0) 不足 P0 的 C 类一件，应由 P2 起步。第二种无安全序列仅表示不安全，不能直接等同当前死锁。",
+   "suggestedCorrection": "保留安全/不安全两结论，修正起步 P2，并注明缺当前请求时无法作死锁检测。",
+   "evidenceRefs": [],
+   "checkIds": [
+    "banker-s7-05"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
   }
  ]
 }

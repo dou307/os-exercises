@@ -1,0 +1,84 @@
+/** 第二章审核发布验收；始终使用隔离浏览器上下文，不接触用户浏览器。 */
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const {chromium,firefox} = require('playwright-core');
+const ROOT=path.resolve(__dirname,'../..');
+const OUT=path.join(ROOT,'_work/ch2-review/browser');
+const BASE=process.env.BASE_URL || 'http://127.0.0.1:8765/';
+const ENGINE=process.env.BROWSER || 'chrome';
+const checks=[],errors=[],failures=[];
+const check=(name,value)=>{checks.push({name,ok:Boolean(value)});console.log(`${value?'PASS':'FAIL'} ${name}`);assert.ok(value,name);};
+(async()=>{
+ fs.mkdirSync(OUT,{recursive:true});
+ const browser=await (ENGINE==='firefox'?firefox:chromium).launch(ENGINE==='firefox'?{headless:true}:{headless:true,channel:ENGINE});
+ try {
+  const context=await browser.newContext({viewport:{width:1360,height:980}});
+  const page=await context.newPage();
+  page.on('pageerror',e=>errors.push(e.message));
+  page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
+  page.on('response',r=>{if(r.status()>=400)failures.push(`${r.status()} ${r.url()}`);});
+  const go=async(hash)=>{await page.goto(BASE+hash,{waitUntil:'networkidle'});await page.waitForSelector('main h1');};
+  await go('');
+  check('首页交代364已复核与396系统映射',/364/.test(await page.locator('main').innerText()) && /396/.test(await page.locator('main').innerText()));
+  const index=await page.evaluate(async()=> (await (await fetch('data/index.json')).json()).questions);
+  const chapter2=index.filter(q=>q.id.startsWith('c2-'));
+  check('276题覆盖且全部退出systematic',chapter2.length===276 && chapter2.every(q=>q.status==='reviewed' && q.review!=='systematic'));
+  check('第二章23争议全部不计分',chapter2.filter(q=>q.review==='disputed').length===23 && chapter2.filter(q=>q.review==='disputed').every(q=>q.scoring==='excluded'));
+  check('初始学习事实仍只有课程第一章',JSON.stringify(await page.evaluate(()=>window.__osExercises.meta.studyDefaults.confirmedCompletedChapters))==='["1"]');
+  await go('#/q/c2-s2-0-q021');
+  check('HRRN显示课程外补充和真实前置缺口',(await page.locator('.qhead').innerText()).includes('补充') && (await page.locator('.qcard').innerText()).includes('前置缺口：') && (await page.locator('.qcard').innerText()).includes('HRRN'));
+  await go('#/q/c2-s5-0-q001');
+  check('原综合首题归进程而非调度',chapter2.find(q=>q.id==='c2-s5-0-q001').ch==='3' && (await page.locator('.qcard').innerText()).includes('PCB'));
+  await go('#/q/c2-s2-0-q027');
+  check('中间数值勘误显示且保留单选计分',(await page.locator('.errata').innerText()).includes('20') && chapter2.find(q=>q.id==='c2-s2-0-q027').scoring==='auto');
+  await page.locator('.opt').nth(3).click();
+  await page.getByRole('button',{name:'提交答案',exact:true}).click();
+  check('解析备注题仍按保留答案正确判D',(await page.evaluate(()=>window.__osExercises.storage.getAnswer('c2-s2-0-q027'))).correct===true);
+  await go('#/q/c2-s5-0-q003');
+  check('I/O冲突题呈现220与81.82修正',(await page.locator('.errata').innerText()).includes('220') && (await page.locator('.errata').innerText()).includes('81.82'));
+  await page.getByRole('button',{name:'查看解析',exact:true}).click();
+  check('原答案210仍保留并明确排除计分',(await page.locator('.explain').innerText()).includes('210') && chapter2.find(q=>q.id==='c2-s5-0-q003').scoring==='excluded');
+  await page.screenshot({path:path.join(OUT,`${ENGINE}-io-errata.png`),fullPage:true});
+  await go('#/q/c2-s3-0-q022');
+  check('互斥锁自死锁给出可追溯原始手册链接',await page.locator('.errata a[href="https://man7.org/linux/man-pages/man3/pthread_mutex_lock.3p.html"]').count()===1);
+  await go('#/q/c2-s6-0-q006');
+  check('Sy双等待反例和删除P1等待建议可见',(await page.locator('.errata').innerText()).includes('删除 P1') && (await page.locator('.errata').innerText()).includes('一份许可'));
+  const unreviewed=index.find(q=>q.review==='systematic');
+  await go(`#/q/${unreviewed.id}`);
+  check('来源第三章以后仍显示未逐题复核',(await page.locator('.qhead').innerText()).includes('系统映射') && (await page.locator('.qcard').innerText()).includes('未逐题人工复核'));
+  // 旧导出真有自动分数，允许保留原始记录；当前投影撤出计分。不是把correct重写为null。
+  const migrated=await page.evaluate(async()=>{
+   const s=window.__osExercises.storage;
+   const idx=(await (await fetch('data/index.json')).json()).questions;
+   const known=new Map(idx.map(q=>[q.id,q]));
+   const old={selected:'A',correct:false,scoring:'auto',firstCorrect:false,attempts:2,firstAt:'2026-10-20T10:00:00Z',lastAt:'2026-10-21T10:00:00Z'};
+   const result=s.importData(JSON.stringify({schemaVersion:1,answers:{'c2-s1-0-q027':old,'c2-s1-0-q044':{...old,correct:true,firstCorrect:true}}}),known);
+   return {result,raw:s.exportData().answers['c2-s1-0-q027'],projected:s.getAnswer('c2-s1-0-q027'),stats:s.stats(),wrong:s.wrongIds(),review:s.reviewEntries()};
+  });
+  check('本次新增争议题旧备份可迁入',migrated.result.ok && migrated.result.added===2);
+  check('原选项首次时间次数及旧分数保留',migrated.raw.correct===false && migrated.raw.selected==='A' && migrated.raw.attempts===2 && migrated.raw.firstAt==='2026-10-20T10:00:00Z');
+  check('当前统计投影排除旧争议自动分数',migrated.projected.correct===null && migrated.projected.scoringRetired && migrated.stats.correct===1 && migrated.stats.wrong===0 && !migrated.wrong.length && !migrated.review.length);
+  await go('#/q/c2-s1-0-q027');
+  check('刷新后旧题卡标明原分数退出统计',(await page.locator('.result').innerText()).includes('旧自动判分退出当前统计') && await page.locator('.opt.ok,.opt.bad').count()===0);
+  const retained=await page.evaluate(()=>window.__osExercises.storage.exportData().answers['c2-s1-0-q027']);
+  check('刷新不覆盖历史原判分',retained.correct===false && retained.attempts===2);
+  await page.getByRole('button',{name:'自评：还需复习',exact:true}).click();
+  await go('#/review');
+  check('争议题可通过自评主动进入回顾',(await page.locator('main').innerText()).includes('需复习') && (await page.locator('main').innerText()).includes('自评'));
+  await page.setViewportSize({width:390,height:844});
+  await page.emulateMedia({colorScheme:'dark'});
+  await go('#/q/c2-s6-0-q006');
+  await page.keyboard.press('Escape');
+  await page.waitForFunction(()=>document.querySelector('#sidebar').getBoundingClientRect().right<=1);
+  check('390px勘误长文不横向溢出',await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+  await page.screenshot({path:path.join(OUT,`${ENGINE}-pv-mobile.png`),fullPage:true});
+  check('无控制台脚本错误',errors.length===0);
+  check('无资源4xx/5xx',failures.length===0);
+  await context.close();
+ } finally {
+  fs.writeFileSync(path.join(OUT,`${ENGINE}-checks.json`),JSON.stringify({BASE,ENGINE,checks,errors,failures},null,2));
+  await browser.close();
+ }
+ console.log(`${checks.length}/${checks.length} PASS`);
+})().catch(e=>{console.error(e);process.exitCode=1;});

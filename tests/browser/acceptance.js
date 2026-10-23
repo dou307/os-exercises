@@ -197,7 +197,7 @@ function check(name, ok, detail) {
   await page.goto(BASE + "#/ch/3", { waitUntil: "networkidle" });
   await page.waitForSelector("h1");
   const ch3Text = await page.locator("main").innerText();
-  check("第 3 章可进入并标注系统映射", /系统映射/.test(ch3Text) && /未逐题人工复核/.test(ch3Text));
+  check("第 3 章可进入且已逐题复核部分不再冒充系统映射", /第 3 章/.test(ch3Text) && !/未逐题人工复核/.test(ch3Text));
 
   await page.goto(BASE + "#/ch/4", { waitUntil: "networkidle" });
   await page.waitForSelector("h1");
@@ -238,8 +238,8 @@ function check(name, ok, detail) {
   const markConverged = markState.stored.map(String).includes("3") && markState.bridge > 0;
   check("“标记已学”写进本机存储并即时生效", markConverged,
     `stored=${JSON.stringify(markState.stored)} 核心 ${markState.core} / 桥接 ${markState.bridge}`);
-  check("提升后的题目仍标“系统映射”",
-    practiceBadges.systematic === 1 && practiceBadges.bridge === 1 && practiceBadges.originalTier === 1,
+  check("提升后的题目分层保持桥接，不虚构系统映射徽标",
+    practiceBadges.systematic === 0 && practiceBadges.bridge === 1 && practiceBadges.originalTier === 1,
     `练习卡徽标：系统映射 ${practiceBadges.systematic}、桥接 ${practiceBadges.bridge}、原分层 ${practiceBadges.originalTier}`);
 
   // ---- 2026-10-22 回归：跨章挂靠的“稍后”题不随“标记已学”一起冒进核心，避免重复出现 ----
@@ -247,11 +247,11 @@ function check(name, ok, detail) {
   // systematic 用数据侧统计（meta 里的 later 统计的是原始分层，标记已学后仍是 56）。
   const chMeta = await page.evaluate(async () => {
     const doc = await (await fetch("data/questions/3.json")).json();
-    return { systematic: doc.questions.filter((q) => q.reviewStatus === "systematic").length };
+    return { available: doc.questions.filter((q) => q.readinessTier !== "supplement" && q.reviewStatus !== "disputed").length };
   });
   check("跨章挂靠题标记已学后归入桥接而非核心",
-    markState.core === 0 && markState.bridge === chMeta.systematic + 1,
-    `核心 ${markState.core}、桥接 ${markState.bridge}、systematic ${chMeta.systematic}`);
+    markState.core === 0 && markState.bridge === chMeta.available,
+    `核心 ${markState.core}、桥接 ${markState.bridge}、可用 ${chMeta.available}`);
 
   // ---- 2026-10-22 回归：“稍后”范围可直接练习，范围标题不再出现 undefined ----
   await page.goto(BASE + "#/practice/2?scope=later&i=1", { waitUntil: "networkidle" });
