@@ -423,57 +423,60 @@ export async function renderPlayer(main, params, isCurrent = () => true) {
     progress.appendChild(el("span", { class: "bar", style: `width:${percent}%` }));
     head.appendChild(progress);
 
-    const bar = el("div", { class: "pager-bar" });
-    const prev = el("button", { type: "button", class: "btn small", text: "← 上一题" });
-    prev.disabled = index === 0;
-    prev.addEventListener("click", () => go(index - 1));
-    const next = el("button", { type: "button", class: "btn small primary", text: "下一题 →" });
-    next.disabled = index === list.length - 1;
-    next.addEventListener("click", () => go(index + 1));
-    const nav = el("div", { class: "actions", style: "margin:0" });
-    nav.appendChild(prev);
-    nav.appendChild(next);
-    const pos = el("span", { class: "pos", text: `第 ${index + 1} / ${list.length} 题` });
+    const buildPager = (placement) => {
+      const bar = el("div", { class: `pager-bar pager-${placement}`, role: "group", "aria-label": placement === "bottom" ? "底部题目导航" : "顶部题目导航" });
+      const prev = el("button", { type: "button", class: "btn small", text: "← 上一题" });
+      prev.disabled = index === 0;
+      prev.addEventListener("click", () => go(index - 1));
+      const next = el("button", { type: "button", class: "btn small primary", text: "下一题 →" });
+      next.disabled = index === list.length - 1;
+      next.addEventListener("click", () => go(index + 1));
+      const nav = el("div", { class: "actions", style: "margin:0" });
+      nav.appendChild(prev);
+      nav.appendChild(next);
+      const pos = el("span", { class: "pos", text: `第 ${index + 1} / ${list.length} 题` });
 
-    // 题号直达：276 道题的章节靠“下一题”翻页不现实，输入题号即可跳
-    const jump = el("label", { class: "jump" });
-    jump.appendChild(el("span", { class: "sr-only", text: "跳到第几题" }));
-    const jumpInput = el("input", {
-      type: "number",
-      class: "jump-input",
-      min: "1",
-      max: String(list.length),
-      value: String(index + 1),
-      inputmode: "numeric",
-      "aria-label": `跳到第几题（1 到 ${list.length}）`,
-    });
-    const jumpBtn = el("button", { type: "button", class: "btn small", text: "跳转" });
-    const doJump = () => {
-      const parsed = Number.parseInt(jumpInput.value, 10);
-      if (!Number.isFinite(parsed)) { jumpInput.value = String(index + 1); return; }
-      const target = Math.min(Math.max(parsed, 1), list.length) - 1;
-      if (target === index) { jumpInput.value = String(index + 1); return; }
-      go(target);
+      // 题号直达：276 道题的章节靠“下一题”翻页不现实，输入题号即可跳
+      const jump = el("label", { class: "jump" });
+      jump.appendChild(el("span", { class: "sr-only", text: "跳到第几题" }));
+      const jumpInput = el("input", {
+        type: "number",
+        class: "jump-input",
+        min: "1",
+        max: String(list.length),
+        value: String(index + 1),
+        inputmode: "numeric",
+        "aria-label": `跳到第几题（1 到 ${list.length}）`,
+      });
+      const jumpBtn = el("button", { type: "button", class: "btn small", text: "跳转" });
+      const doJump = () => {
+        const parsed = Number.parseInt(jumpInput.value, 10);
+        if (!Number.isFinite(parsed)) { jumpInput.value = String(index + 1); return; }
+        const target = Math.min(Math.max(parsed, 1), list.length) - 1;
+        if (target === index) { jumpInput.value = String(index + 1); return; }
+        go(target);
+      };
+      jumpBtn.addEventListener("click", doJump);
+      jumpInput.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter") return;
+        // 回车在这里是“跳题”，不能让全局监听把它当成“提交答案”
+        event.preventDefault();
+        event.stopPropagation();
+        doJump();
+      });
+      jump.appendChild(jumpInput);
+      jump.appendChild(jumpBtn);
+
+      bar.appendChild(pos);
+      bar.appendChild(jump);
+      bar.appendChild(nav);
+      return bar;
     };
-    jumpBtn.addEventListener("click", doJump);
-    jumpInput.addEventListener("keydown", (event) => {
-      if (event.key !== "Enter") return;
-      // 回车在这里是“跳题”，不能让全局监听把它当成“提交答案”
-      event.preventDefault();
-      event.stopPropagation();
-      doJump();
-    });
-    jump.appendChild(jumpInput);
-    jump.appendChild(jumpBtn);
-
-    bar.appendChild(pos);
-    bar.appendChild(jump);
-    bar.appendChild(nav);
-    head.appendChild(bar);
+    head.appendChild(buildPager("top"));
     head.appendChild(el("p", { class: "kbd-hint", text: "键盘：A–E 选选项 · Enter 提交 · ← → 切题" }));
     main.appendChild(head);
 
-    main.appendChild(buildCard(q, {
+    const questionCard = buildCard(q, {
       topics,
       meta,
       onChange: () => {
@@ -482,7 +485,9 @@ export async function renderPlayer(main, params, isCurrent = () => true) {
         summary.textContent = `本范围 ${list.length} 道，已作答 ${answered} 道、答对 ${correct} 道 · 进度按稳定题目 ID 记录，换端口不会自动继承`;
         if (!storage.isPersistent()) showToast("本地存储不可用，本次作答未持久保存");
       },
-    }));
+    });
+    questionCard.appendChild(buildPager("bottom"));
+    main.appendChild(questionCard);
 
     const foot = el("div", { class: "actions" });
     const reset = el("button", { type: "button", class: "btn ghost small", text: "重做本题" });

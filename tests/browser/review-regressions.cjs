@@ -167,7 +167,7 @@ const check = (name, value, detail = "") => {
     await page.getByRole("button", { name: "重做本题", exact: true }).click();
     await page.locator(".opt").nth(2).click();
     await page.getByRole("button", { name: "提交答案", exact: true }).click();
-    await page.getByRole("button", { name: "下一题 →", exact: true }).click();
+    await page.getByRole("button", { name: "下一题 →", exact: true }).first().click();
     await page.waitForFunction(() => document.querySelector(".qcard")?.dataset.qid !== "c1-s1-0-q001");
     check("错题答对后列表缩短，下一题仍按稳定 ID 连续推进", await page.locator(".qcard").getAttribute("data-qid") === "c1-s1-0-q002");
 

@@ -308,6 +308,8 @@ h3 { font-size: 16px; margin: 0 0 8px; }
   flex-wrap: wrap;
 }
 .pager-bar .pos { color: var(--text-dim); font-size: 14px; font-variant-numeric: tabular-nums; }
+.pager-bottom { justify-content: flex-end; }
+.pager-bottom .pos { margin-right: auto; }
 
 /* 练习进度条：位置靠“第 x / y 题”的文字仍然保留，进度条只做视觉提示 */
 .progress {

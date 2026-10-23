@@ -257,7 +257,7 @@ function check(name, ok, detail) {
   await page.goto(BASE + "#/practice/2?scope=later&i=1", { waitUntil: "networkidle" });
   await page.waitForSelector(".qcard");
   const laterH1 = await page.locator("main h1").innerText();
-  const laterPos = await page.locator(".pager-bar .pos").innerText();
+  const laterPos = await page.locator(".pager-bar .pos").first().innerText();
   check("“稍后”范围可直接练习且标题无 undefined",
     /稍后再学/.test(laterH1) && !/undefined/.test(laterH1) && /第 2 \//.test(laterPos),
     `${laterH1.trim()} · ${laterPos.trim()}`);
