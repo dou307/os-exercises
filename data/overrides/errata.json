@@ -1387,6 +1387,1140 @@
    "scoring": "normal",
    "reviewedAt": "2026-10-23",
    "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s1-0-q002",
+   "kind": "assumption",
+   "issue": "限定通常原生进程的硬件保护",
+   "detail": "普通进程内存隔离按硬件地址检查与OS配置协作讨论；受控解释器、验证器的软件沙箱属于另一安全模型，且共享映射不是非法跨界。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s1-0-q004",
+   "kind": "assumption",
+   "issue": "动态分区不自动要求动态重定位",
+   "detail": "原C使用允许紧凑移动的经典动态分区模型。仅按请求大小建立分区但装入后不再移动时，可用静态重定位；不能把分配粒度和绑定时机当作同一分类。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "free-space"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "OSTEP作者原版Free-Space Management",
+     "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-freespace.pdf"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s1-0-q007",
+   "kind": "disputed_answer",
+   "issue": "Best Fit忽略题表中的50KB空闲分区",
+   "detail": "逐项按原表选洞时，50KB@280K比60KB@330K更适合40KB，280K却不在选项里。若先把相邻50和60合并成110，则102KB@410K成为最佳，选D。两种解释都不支持原C。",
+   "suggestedCorrection": "先明确是否合并相邻空闲分区并修订题表/选项；不能沿用原C。",
+   "evidenceRefs": [
+    "free-space"
+   ],
+   "checkIds": [
+    "best-s1-07",
+    "best-s1-07-coalesced"
+   ],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "OSTEP作者原版Free-Space Management",
+     "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-freespace.pdf"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s1-0-q010",
+   "kind": "assumption",
+   "issue": "一个寄存器限定单CPU基址模型",
+   "detail": "每个CPU/执行上下文需要当前硬件状态，多核不能说全系统只有一个。每进程保存自己的基址值，不是每进程独占一个物理寄存器。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s1-0-q011",
+   "kind": "assumption",
+   "issue": "装入准备与运行时访存分开",
+   "detail": "保留C指整个装入并执行的教材流程；实际每次访存直接依赖当前基址/转换硬件，不需反复调用可重定位装入程序。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s1-0-q013",
+   "kind": "disputed_answer",
+   "issue": "可变分区也可静态重定位",
+   "detail": "若可变分区按大小建立后保持不动，装入器可一次绑定地址。只有再要求紧凑/换入异址等运行时移动时才必须动态重定位。",
+   "suggestedCorrection": "题干加装入后允许移动等条件，或把A/B的可行性分别讨论，不把A无条件作唯一可用方式。",
+   "evidenceRefs": [
+    "free-space"
+   ],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "OSTEP作者原版Free-Space Management",
+     "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-freespace.pdf"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s1-0-q014",
+   "kind": "assumption",
+   "issue": "一个寄存器限定单CPU基址模型",
+   "detail": "每个CPU/执行上下文需要当前硬件状态，多核不能说全系统只有一个。每进程保存自己的基址值，不是每进程独占一个物理寄存器。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s1-0-q017",
+   "kind": "assumption",
+   "issue": "不计对齐和分配器最小粒度",
+   "detail": "按每段精确长度分配的抽象模型无内碎片；真实实现若有对齐/最小分配单位仍可能额外留空。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "segmentation"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "OSTEP作者原版Segmentation",
+     "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-segmentation.pdf"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s1-0-q020",
+   "kind": "assumption",
+   "issue": "不排序应是不用按大小排序",
+   "detail": "经典首次适应链仍常按地址递增。最佳/最坏适应也可以在未按大小排序链上全扫描实现，原解析必须按长度排序过强。",
+   "suggestedCorrection": "题干改不需按空闲区大小排序；声明采用教材有序链实现，保留A。",
+   "evidenceRefs": [
+    "free-space"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "OSTEP作者原版Free-Space Management",
+     "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-freespace.pdf"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s1-0-q023",
+   "kind": "assumption",
+   "issue": "策略与数据结构实现不是一一对应",
+   "detail": "最佳适应同样可以用大小索引树实现；此题D仅对应教材列举的顺序链版分类。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "free-space"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "OSTEP作者原版Free-Space Management",
+     "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-freespace.pdf"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s1-0-q026",
+   "kind": "assumption",
+   "issue": "共享代码数据与共享物理段互为目的和实现",
+   "detail": "A描述登记的逻辑内容，B描述物理共享后果；保留教材最具体目的A，但不应把B说成共享段表绝对不能实现的效果。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s1-0-q029",
+   "kind": "explanation",
+   "issue": "透明不代表程序永远无法感知页",
+   "detail": "分页不要求普通程序员手工指定页结构；系统调用、页大小查询、对齐分配或编译优化可以利用分页信息。原B保留。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s1-0-q031",
+   "kind": "assumption",
+   "issue": "限定硬件管理页表遍历",
+   "detail": "有软件管理TLB的体系结构，TLB失效时由陷入处理程序查表；原C使用硬件MMU遍历模型，不能断言任何软件都不参与。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "tlb"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "OSTEP作者原版TLB",
+     "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-tlbs.pdf"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s1-0-q033",
+   "kind": "explanation",
+   "issue": "分页也支持动态链接",
+   "detail": "分段的模块对应关系有利于描述链接，但现代分页系统同样使用共享库/动态链接；不是其难以或不能支持的硬限制。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "linker"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "GNU ld手册",
+     "url": "https://man7.org/linux/man-pages/man1/ld.1.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s1-0-q034",
+   "kind": "assumption",
+   "issue": "模块相对零不是所有格式的强制地址",
+   "detail": "保留两个空B/C的教学模型；链接脚本、固定镜像或特定目标格式可采用不同段址布局。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "linker"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "GNU ld手册",
+     "url": "https://man7.org/linux/man-pages/man1/ld.1.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s1-0-q036",
+   "kind": "assumption",
+   "issue": "代价最小按教材简化实现比较",
+   "detail": "不将简单分区的概念复杂度比较推广为所有嵌入式平台必须选分区，也不否认其保护硬件成本。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s1-0-q038",
+   "kind": "explanation",
+   "issue": "小页不必单调提高缺页率",
+   "detail": "页长改变会同时改变帧数、局部性覆盖和I/O大小；不由页小直接推出任意程序缺页更多。原C的两项取舍保留。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "paging"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "OSTEP作者原版Paging",
+     "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-paging.pdf"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s1-0-q039",
+   "kind": "assumption",
+   "issue": "固定等页模型之外允许多种页长",
+   "detail": "原B限于本题基本固定页长模型；大页/混合尺寸有现实实现，原解析大小不一无法实现错误。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "mmap"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "Linux mmap手册",
+     "url": "https://man7.org/linux/man-pages/man2/mmap.2.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s1-0-q041",
+   "kind": "assumption",
+   "issue": "寻址粒度不同于硬件传输粒度",
+   "detail": "B针对教材按字节/字编址；缓存行、突发传输及向量访问可能一次搬运更多字节。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s1-0-q044",
+   "kind": "assumption",
+   "issue": "访存次数忽略其他缓存",
+   "detail": "页/段表在主存且无快表、页表遍历缓存与数据缓存命中，才可按两/三次主存访问直接计数。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "tlb"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "OSTEP作者原版TLB",
+     "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-tlbs.pdf"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s1-0-q045",
+   "kind": "assumption",
+   "issue": "访存次数忽略其他缓存",
+   "detail": "页/段表在主存且无快表、页表遍历缓存与数据缓存命中，才可按两/三次主存访问直接计数。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "tlb"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "OSTEP作者原版TLB",
+     "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-tlbs.pdf"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s1-0-q048",
+   "kind": "assumption",
+   "issue": "每进程一张表不是所有页表实现的通则",
+   "detail": "原A为基本独立线性页表模型；倒排页表可全局组织，线程共用地址空间，非运行上下文的部分表页也可不驻留。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "paging"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "OSTEP作者原版Paging",
+     "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-paging.pdf"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s1-0-q053",
+   "kind": "assumption",
+   "issue": "访存次数忽略其他缓存",
+   "detail": "页/段表在主存且无快表、页表遍历缓存与数据缓存命中，才可按两/三次主存访问直接计数。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "tlb"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "OSTEP作者原版TLB",
+     "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-tlbs.pdf"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s1-0-q054",
+   "kind": "assumption",
+   "issue": "虚地址宽度不能单独决定主存容量",
+   "detail": "18位页号+偏移结构决定虚空间；256KiB物理上限还需物理地址同为18位且按字节编址。原B按此前提保留。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s1-0-q058",
+   "kind": "assumption",
+   "issue": "复制页表映射只是共享别名",
+   "detail": "若复制要指独立可写快照，需要只读映射及写时复制等额外机制；单改PTE无法复制数据。分页保护也主要依页权限与合法映射，不是统一界地址寄存器。",
+   "suggestedCorrection": "将II写成建立同一物理页的别名/只读共享；独立写入另描述COW。",
+   "evidenceRefs": [
+    "paging",
+    "mmap"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "OSTEP作者原版Paging",
+     "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-paging.pdf"
+    },
+    {
+     "title": "Linux mmap手册",
+     "url": "https://man7.org/linux/man-pages/man2/mmap.2.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s1-0-q063",
+   "kind": "assumption",
+   "issue": "完整链接布局与模块相对地址有别",
+   "detail": "原C指多个模块链接后的完整程序布局；编译已能生成模块相对地址，动态链接与装入还可能继续重定位。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "linker"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "GNU ld手册",
+     "url": "https://man7.org/linux/man-pages/man1/ld.1.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s1-0-q069",
+   "kind": "assumption",
+   "issue": "碎片比较是经验而非所有轨迹定理",
+   "detail": "特定请求/释放序列下FF也可能比BF更差；原C按教材常见小洞现象保留。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "free-space"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "OSTEP作者原版Free-Space Management",
+     "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-freespace.pdf"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s1-0-q072",
+   "kind": "explanation",
+   "issue": "相邻同大小还必须互为伙伴",
+   "detail": "块首址的同阶伙伴由地址异或块大小确定；不能任意把相邻的两个同阶块合并。",
+   "suggestedCorrection": "检查伙伴地址=addr XOR size且两块同阶空闲，再向上合并。",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s2-0-q002",
+   "kind": "assumption",
+   "issue": "减少不是任意顺序扫描的严格结论",
+   "detail": "顺序扫描的代码范围若在一张小页中，大页仍只缺一次；应说通常减少或不增加首次调入，且默认无其他数据页干扰。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s2-0-q010",
+   "kind": "disputed_answer",
+   "issue": "链接与需求分页混淆",
+   "detail": "静态链接把符号/地址布局先解决，运行时仍可按页调入其可执行映像；不需要每次调页都做动态链接。",
+   "suggestedCorrection": "应选D：三种链接时机均可与虚拟内存配合。原答案C保留作来源，不自动判分。",
+   "evidenceRefs": [
+    "linker",
+    "demand"
+   ],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "GNU ld手册",
+     "url": "https://man7.org/linux/man-pages/man1/ld.1.html"
+    },
+    {
+     "title": "OSTEP作者原版Beyond Physical Memory",
+     "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys.pdf"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s2-0-q012",
+   "kind": "assumption",
+   "issue": "元素长度和初始条件未写全",
+   "detail": "按常规int=4B（行128×4=512B）或其他使不同行落不同页的布局，数据页初始未驻留，才得到每次访问缺页；真实C不由int语法保证4B。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [
+    "array-s2-12"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s2-0-q013",
+   "kind": "disputed_answer",
+   "issue": "未指定算法却给唯一列访问缺页数",
+   "detail": "数组页对齐、两行一页且三个数据帧时，FIFO/LRU=2048，OPT=1917。原C并非固定分配局部置换本身的必然结果，页首对齐也应明确。",
+   "suggestedCorrection": "补充LRU或FIFO与数组页首对齐，可保留C；否则只能条件作答。",
+   "evidenceRefs": [],
+   "checkIds": [
+    "array-s2-13"
+   ],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s2-0-q015",
+   "kind": "explanation",
+   "issue": "CLOCK与NRU并非统一同义名称",
+   "detail": "CLOCK通常指循环第二次机会，NRU通常按引用/修改类别选择；不同教材可能借用名称，须先给具体算法，原D判断不变。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s2-0-q016",
+   "kind": "assumption",
+   "issue": "下界n限定纯单页按需装入",
+   "detail": "无预取、共享已驻留副本、初始全空、每个首次访问页各触发一次需求故障；预调页可改变异常次数下界。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s2-0-q018",
+   "kind": "explanation",
+   "issue": "理论地址上限与可兑现后备空间分开",
+   "detail": "2^32字节为字节编址的理论上界，不保证每次匿名提交均可兑现。实际可用量还涉及文件共享、零页、过量承诺等，不普遍等于RAM+磁盘简单相加。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s2-0-q021",
+   "kind": "explanation",
+   "issue": "页面尺寸与缺页/I/O不必单调",
+   "detail": "D的小页减少内部零头成立；原解析页越小缺页率必越高把复杂局部性问题说成定律，应删除绝对表述。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s2-0-q023",
+   "kind": "explanation",
+   "issue": "LRU不必在缺页时遍历所有驻留页",
+   "detail": "哈希表加双向链表可O(1)维护理想抽象LRU，难点是捕获并更新每次内存访问的历史成本。保留D的维护历史含义，删除必O(n)。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s2-0-q024",
+   "kind": "assumption",
+   "issue": "合法位、存在位和保护异常不同",
+   "detail": "原A将有效位按当前在RAM的存在位解释。硬件page fault也可能代表保护或无效映射，不等于每次异常都能从磁盘调页恢复。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "demand"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "OSTEP作者原版Beyond Physical Memory",
+     "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys.pdf"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s2-0-q031",
+   "kind": "assumption",
+   "issue": "不是主要因素不等于物理无影响",
+   "detail": "教材把页交换瓶颈归磁盘I/O和策略，保留D；实际处理器服务、内存带宽/DMA也会影响端到端换页时间，不能说完全无关。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s2-0-q032",
+   "kind": "assumption",
+   "issue": "全局仅在可置换集合中选页",
+   "detail": "固定内核页、锁定页及设备不可迁移页不因全局置换而可随意回收。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s2-0-q033",
+   "kind": "disputed_answer",
+   "issue": "NRU不是可证明无Belady的栈算法",
+   "detail": "一个允许的NRU实例：只读页、每次引用前清访问位、同类按进入先后选牺牲页，行为退化FIFO。经典串三/四帧9/10缺页即可构成反例，因此选项D也可能。",
+   "suggestedCorrection": "改问哪种是经典FIFO异常例，或删除NRU选项；只可对LRU/OPT证明无异常。",
+   "evidenceRefs": [],
+   "checkIds": [
+    "nru-s2-33"
+   ],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s2-0-q034",
+   "kind": "explanation",
+   "issue": "初始装入比例不是固定百分比",
+   "detail": "按程序局部性、预取与实现确定，可能纯需求或其他数量；删除一般只装10%～30%的无来源定量断言。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s2-0-q036",
+   "kind": "assumption",
+   "issue": "写入文件须可写共享映射",
+   "detail": "MAP_SHARED配适当权限可回写，MAP_PRIVATE的修改仅COW私有副本，不写回原文件；还需考虑同步/持久化时机。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "mmap"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "Linux mmap手册",
+     "url": "https://man7.org/linux/man-pages/man2/mmap.2.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s2-0-q039",
+   "kind": "explanation",
+   "issue": "LRU名称是最近最久未使用",
+   "detail": "原选B保留；不要与LFU最近最少次数混淆。工作集覆盖有助减少故障，但缺一页也不等于马上持续抖动。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s2-0-q040",
+   "kind": "disputed_answer",
+   "issue": "更快换页盘也可能提高性能",
+   "detail": "加内存可降低故障频率，通常是最佳治本方案；但更快盘缩短每次阻塞时间也能提升CPU利用率。题干问能提高而非最佳，A不能被无条件排除。",
+   "suggestedCorrection": "若改问最能缓解工作集不足的措施，可选D；保留原题则注明A亦可能。",
+   "evidenceRefs": [],
+   "checkIds": [
+    "faster-disk-s2-40-41"
+   ],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s2-0-q041",
+   "kind": "disputed_answer",
+   "issue": "不能因频率未降就排除I/O变快的收益",
+   "detail": "更快交换盘虽不修复帧不足，却可能降低等待时间并提高CPU利用率；V与I/III并不互斥，题给选项没有I、III、V。",
+   "suggestedCorrection": "改问直接缓解内存压力的措施可选B；若仍问可能改进CPU利用率，需包含V或补条件。",
+   "evidenceRefs": [],
+   "checkIds": [
+    "faster-disk-s2-40-41"
+   ],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s2-0-q042",
+   "kind": "assumption",
+   "issue": "提高TLB覆盖不保证任何轨迹命中率严格增加",
+   "detail": "可行是有机会改善；关联冲突、页长支持与程序分布仍影响结果，保留A而不作严格单调保证。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s2-0-q045",
+   "kind": "assumption",
+   "issue": "虚存按教材请求部分装入定义",
+   "detail": "原B指页/段按需调入；不把连续虚拟地址误作要求连续物理分配，也不拿不同历史虚拟化定义混算。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s2-0-q046",
+   "kind": "assumption",
+   "issue": "需求缺页不同于任意硬件page fault",
+   "detail": "本题按合法地址、目标页不驻留讨论B。真实硬件故障可先进入OS再检查映射合法性；原解析已缺页就说明地址绝对合法不普适。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "demand"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "OSTEP作者原版Beyond Physical Memory",
+     "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys.pdf"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s2-0-q048",
+   "kind": "explanation",
+   "issue": "只在FIFO限于列出的三个算法",
+   "detail": "在FIFO/LRU/OPT三者中仅II正确；NRU及其他非栈策略不能据此获得无异常保证。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [
+    "belady-s2-17"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s2-0-q051",
+   "kind": "explanation",
+   "issue": "类别优先是对当前位快照的抽象",
+   "detail": "扫描实现可能清R、发生后续访问或异步写回，不能把静态四类顺序当作所有实现永恒不变的四轮次序；原A按题设当前类别成立。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s2-0-q052",
+   "kind": "assumption",
+   "issue": "t标记需解释且大纲说法未核实",
+   "detail": "原pre代码块箭头落在分隔附近；此处沿原解析将t解释为前缀1,3,4,5,6,0,3,2,3,2之后。若读成另一引用时刻工作集会变。题面最新大纲删除之说没有权威核对，不用于判断用户学习范围。",
+   "suggestedCorrection": "明确t位于第二个2之后，最近六次为6/0/3/2/3/2，集合A。",
+   "evidenceRefs": [],
+   "checkIds": [
+    "working-set-s2-52"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s2-0-q056",
+   "kind": "assumption",
+   "issue": "必须磁盘读只限已有外存副本",
+   "detail": "需求零填充、COW或软缺页可能无需读磁盘；原A的唯一性按本题经典磁盘需求调页范围保留。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "demand"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "OSTEP作者原版Beyond Physical Memory",
+     "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys.pdf"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s2-0-q057",
+   "kind": "explanation",
+   "issue": "工作集不是分配帧数，缓冲页仍可能在RAM",
+   "detail": "B项讨论工作集，却被解析换成分配帧数；页缓冲保留内容可减磁盘I/O，恢复时仍可能触发软缺页。原D限这种故障计数口径，不能说缓冲不改变任何在RAM内容。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [
+    "restore-s32-17"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s2-0-q061",
+   "kind": "explanation",
+   "issue": "磁盘块位置不是由一般页表统一保存",
+   "detail": "PTE主要描述虚页到物理帧及状态；文件偏移到磁盘块由文件系统等结构定位。保留A按映射目标/IPC的定义，II的间接实现关系不宜据页表维护磁盘块作解释。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [
+    "mmap"
+   ],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": [
+    {
+     "title": "Linux mmap手册",
+     "url": "https://man7.org/linux/man-pages/man2/mmap.2.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c3-s3-1-q002",
+   "kind": "assumption",
+   "issue": "本例不能证明FF普遍胜过BF",
+   "detail": "在此请求/释放序列下FF保住高址大洞；其他轨迹可以相反，结论只针对本例。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [
+    "allocate-s31-02-first",
+    "allocate-s31-02-best"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s3-1-q003",
+   "kind": "explanation",
+   "issue": "不能仅凭相邻表项小而否定段式",
+   "detail": "无段长信息时，不能从12+586超过另一始址直接推导矛盾；由题给块号×页长与段基址+位移的变换规则判断即可。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [
+    "address-s31-03"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s3-1-q005",
+   "kind": "assumption",
+   "issue": "没有驻留映射不代表必非法",
+   "detail": "页6的区域合法性已由进程十页范围给出；页表暂未建立/存在位零按需求缺页处理。真实系统需查区域元数据区分非法访问。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s3-1-q006",
+   "kind": "assumption",
+   "issue": "四页表示分配容量而非精确程序字节数",
+   "detail": "四帧可分配16KiB，实际有效长度可在12KiB到16KiB之间，最后页未必填满；原总长按占用容量解释。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s3-1-q009",
+   "kind": "assumption",
+   "issue": "取内存次数限定无缓存成功查表",
+   "detail": "2/2/3采用基本一级结构；真实TLB、walk cache和数据cache可减少实际DRAM访问。串行TLB平均不含缺页开销。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s3-1-q010",
+   "kind": "assumption",
+   "issue": "5.2KiB按近似容量使用",
+   "detail": "若KiB按1024换算，5.2KiB不是整数个字节；本题使用近似容量得0.8KiB，精确字节零头须先给整数作业长度。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s3-2-q002",
+   "kind": "assumption",
+   "issue": "缺页时间视作基础访问之外的额外服务",
+   "detail": "20ms额外含一次磁盘调入、不另计脏写回和重试查表，TLB时间忽略；按该模型401.2μs，现实额外CPU/调度开销另算。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s3-2-q004",
+   "kind": "explanation",
+   "issue": "OPT三帧缺页标记行单元数不足",
+   "detail": "原HTML中十二个引用对应的缺页/命中行只有十一项。按模型缺页位置应为1、2、3、4、7、10、11；最终7/12未错。",
+   "suggestedCorrection": "按每次引用补齐十二个状态，保留全部六组汇总缺页数。",
+   "evidenceRefs": [],
+   "checkIds": [
+    "replace-s32-04"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s3-2-q005",
+   "kind": "assumption",
+   "issue": "利用率是诊断线索而非唯一故障证明",
+   "detail": "双低还可能等待其他设备/输入或锁，不能仅凭CPU与交换盘两数断言并发进程不足；有独立可运行且内存充足的新工作时才可增并发。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s3-2-q006",
+   "kind": "assumption",
+   "issue": "70%比例须涵盖所计缺页分支",
+   "detail": "若70%仅在真正置换事件中成立，而仍有一部分缺页用空帧，需另给该比例。原6.1%按无空帧或所有缺页有70%脏写回的模型成立。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s3-2-q007",
+   "kind": "disputed_answer",
+   "issue": "严格小于120与至多120的边界不同",
+   "detail": "二级EAT=310-200h。h=0.95时正好120，不满足题干小于120；解为h>0.95，连续概率区间没有达到的最小值，95%只是下确界。",
+   "suggestedCorrection": "第四问改h严格大于95%；若要原95%可作最小值，题干改不超过120ns。其余各问原数值保留。",
+   "evidenceRefs": [],
+   "checkIds": [
+    "eat-s32-07",
+    "threshold-s32-07"
+   ],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s3-2-q008",
+   "kind": "explanation",
+   "issue": "三帧表缺少一次初装缺页标记",
+   "detail": "原行十二次引用只列十一项状态，第三次访问页2应为缺页；缺页位置为1/2/3/7/10/12，最终六次和四次正确。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [
+    "replace-s32-08"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s3-2-q009",
+   "kind": "explanation",
+   "issue": "表格应逐列标出三次缺页",
+   "detail": "原状态行不足以对应全部11次引用；正确故障在第1、8、10步。第10步牺牲页4的最近引用实际是第6步，原解析称第1步后未再用不实。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [
+    "replace-s32-09"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s3-2-q010",
+   "kind": "explanation",
+   "issue": "给出的是充分条件，不是必要条件",
+   "detail": "例如1,2,1,2：容量一两者均四次缺页，容量至少二两者均只初装两页，尽管有不连续重复仍对任意正容量行为相同。",
+   "suggestedCorrection": "表述为一种充分情形：连续重复压缩后页面互异；一般条件应检查每次实际牺牲者相同。",
+   "evidenceRefs": [],
+   "checkIds": [
+    "fifo-lru-s32-10"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s3-2-q012",
+   "kind": "disputed_answer",
+   "issue": "矩阵列访问答案依赖置换策略",
+   "detail": "按页首对齐，LRU/FIFO支持原50/5000和100/10000；OPT在两数据帧下的列访问分别4898、9900，原唯一答案条件缺失。",
+   "suggestedCorrection": "补充LRU/FIFO及数组对齐，且两行同页的一对元素应先缺后命中；原解析称相邻两行分属不同页与其结论自相矛盾。",
+   "evidenceRefs": [],
+   "checkIds": [
+    "array-s32-12-200",
+    "array-s32-12-100"
+   ],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s3-2-q013",
+   "kind": "assumption",
+   "issue": "按题设每级满页且索引位宽相同",
+   "detail": "得到32KiB上界要求所有四级各自的全部项都可用完整Y-3索引位。最高无效高位须约束/检查，不能随意把不同高位别名为同一有效VA。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [
+    "levels-s32-13"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s3-2-q014",
+   "kind": "explanation",
+   "issue": "条件概率与重试模型要写清",
+   "detail": "分支概率应0.02×0.1=0.002，原展开式又写0.002×0.1却算出20000ns，算式系数不一致。按条件总耗10ms+220ns为20014.02ns；具体二级表页缺失后的重走/预填TLB是否含在10ms未说明，不能保证小数位唯一。",
+   "suggestedCorrection": "声明10ms已覆盖处理/必要重试或另给额外成本；保留约20014ns的量级结果，修正分支系数。",
+   "evidenceRefs": [],
+   "checkIds": [
+    "eat-s32-14"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s3-2-q018",
+   "kind": "assumption",
+   "issue": "1025页是完整展开的最大页表",
+   "detail": "稀疏虚地址未必为所有1024个目录项都建立二级表，实际占用按有效映射而定；本题计算覆盖整个32位空间的表容量。",
+   "suggestedCorrection": "",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s3-2-q019",
+   "kind": "disputed_answer",
+   "issue": "题面缺少机器指令地址表",
+   "detail": "快照题干没有函数机器码、首末指令地址、push ebp的地址，也无对应图片，故前两问无法验证原一页/1号目录1号索引。",
+   "suggestedCorrection": "补齐可核实的代码地址表再复核；状态题可条件回答：若scanf需等待外设输入，则运行→阻塞→就绪→运行并发生内核执行，缓冲已有数据时未必阻塞。",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s3-2-q020",
+   "kind": "disputed_answer",
+   "issue": "题干未给页目录/索引/偏移位数",
+   "detail": "原解析直接加入32位10/10/12。页目录6、页索引6、偏移8在其他合法位宽下产生不同VA，因此0x01806008不是现题面唯一结果。",
+   "suggestedCorrection": "先补地址格式，按10/10/12可得0x01806008；后两问按常规独立进程/共享线程地址空间和访问位、修改位条件作答。",
+   "evidenceRefs": [],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
+  },
+  {
+   "questionId": "c3-s3-2-q022",
+   "kind": "explanation",
+   "issue": "4MiB页偏移保留22位而非低五位十六进制",
+   "detail": "0xBAB45678的页内偏移为0x345678，与原VA一致；原解析末处写45678H漏掉高两位。PTE位置及页框号均正确。",
+   "suggestedCorrection": "页内偏移改为345678H，帧号仍2EAH。",
+   "evidenceRefs": [],
+   "checkIds": [
+    "pte-s32-22"
+   ],
+   "scoring": "normal",
+   "reviewedAt": "2026-10-23",
+   "evidenceLinks": []
   }
  ]
 }

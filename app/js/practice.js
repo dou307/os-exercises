@@ -59,6 +59,10 @@ function autoScored(q) {
 function explainDetails(q) {
   const wrap = el("div", { class: "explain" });
   wrap.appendChild(el("div", { class: "answer-line", text: `原站答案：${q.originalAnswer || "—"}` }));
+  if (q.answerReview) wrap.appendChild(el("p", { class: "qmeta", text: `本地逐题复核（${q.answerReview.reviewedAt}）：${q.answerReview.conclusion}` }));
+  if (q.answerReview && q.mappingReason) wrap.appendChild(el("p", { class: "qmeta", text: `完整归属依据：${q.mappingReason}` }));
+  const errata = errataBlock(q);
+  if (errata) wrap.appendChild(errata);
   // 多空题：题干用（ ）占位，答案用 ①②③ 或“依次对应”编号；这里把两者对应关系写清楚，
   // 否则读者要在长题干里自己数第几个空。
   if (q.type === "multi_blank" && q.optionBlocks && q.optionBlocks.length) {
@@ -123,7 +127,10 @@ export function buildCard(q, ctx) {
     text: `${q.source.sectionTitle}${q.source.subsectionTitle ? ` / ${q.source.subsectionTitle}` : ""}`,
   }));
   if (q.source.title) card.appendChild(el("p", { class: "qmeta", text: `原题标题：${q.source.title}（年份为原站标注）` }));
-  if (q.mappingReason) card.appendChild(el("p", { class: "qmeta", text: `章节归属依据：${q.mappingReason}` }));
+  if (q.mappingReason) card.appendChild(el("p", { class: "qmeta", text: q.answerReview
+    ? `章节归属：围绕 ${(q.topicIds || []).map((id) => topicTitle(topics, id)).join("、")}`
+    : `章节归属依据：${q.mappingReason}` }));
+  if (q.errata?.length) card.appendChild(el("p", { class: "notice warn", text: "本题有本地审核备注；请先自答，提交或查看解析后对照原答案与勘误。" }));
   const needed = (q.prerequisiteTopicIds || []).filter((id) => {
     const topic = topics.get(id);
     return topic && !(ctx.meta ? completedChapters(ctx.meta) : new Set()).has(String(topic.chapterId));
@@ -196,9 +203,6 @@ export function buildCard(q, ctx) {
   const explainBox = explainDetails(q);
   explainBox.hidden = true;
   card.appendChild(explainBox);
-  const errata = errataBlock(q);
-  if (errata) card.appendChild(errata);
-  if (q.answerReview) card.appendChild(el("p", { class: "qmeta", text: `本地逐题复核（${q.answerReview.reviewedAt}）：${q.answerReview.conclusion}` }));
 
   if (q.topicIds && q.topicIds.length) {
     const topicsBox = el("div", { class: "topic-list" });

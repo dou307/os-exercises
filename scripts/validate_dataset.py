@@ -24,6 +24,7 @@ from bs4 import BeautifulSoup
 from verify_source_content import verify as verify_full_content
 from chapter_review import load_review, overlay
 from review_ch2_checks import run_checks
+from review_ch3_checks import run_checks as run_memory_checks
 
 ROOT = Path(__file__).resolve().parents[1]
 VENDOR = ROOT / "vendor" / "kaoyan-408-os"
@@ -342,28 +343,28 @@ def check_mapping_coverage() -> None:
         notes.append(f"映射覆盖：{len(mappings)} 道均有唯一主归属与有效知识点")
 
 
-def check_ch2_review() -> None:
+def check_chapter_review(chapter) -> None:
     """阻止漏审、旧来源沿用审核、争议重新计分及手改生成层脱离底稿。"""
     try:
         questions=load_json(DATA/'questions.json')['questions']
-        doc=load_review(questions,load_json(DATA/'topics.json')['topics'])
-        calculations=run_checks()
+        doc=load_review(questions,load_json(DATA/'topics.json')['topics'],chapter)
+        calculations=run_checks() if chapter=='ch2' else run_memory_checks()
         replay={'byQuestion':{}}
         errata=overlay(replay,doc)
         actual=load_json(DATA/'mappings.json')['byQuestion']
         for qid,entry in replay['byQuestion'].items():
             if actual.get(qid)!=entry:
                 fail(f'{qid} 映射与逐题审核输入不一致，须重跑 build_mappings.py')
-        saved=[e for e in load_json(DATA/'overrides/errata.json')['entries'] if e['questionId'].startswith('c2-')]
-        if saved!=errata:fail('第二章勘误生成层与正式审核输入不一致')
+        saved=[e for e in load_json(DATA/'overrides/errata.json')['entries'] if e['questionId'].startswith('c'+chapter[2:]+'-')]
+        if saved!=errata:fail(f'{chapter}勘误生成层与正式审核输入不一致')
         for r in doc['questions']:
             checks=r['answerReview']['checkIds']+[c for e in r['errata'] for c in e['checkIds']]
             if not set(checks)<=set(calculations):fail(f"{r['questionId']} 引用不存在的计算证据")
         pending=sum(m['reviewStatus']=='systematic' for m in actual.values())
-        if pending!=396:fail(f'剩余系统映射应为396，实际{pending}')
-        notes.append(f'第二章逐题复核 276/276，输入哈希/笔记定位/生成映射/勘误一致；{len(calculations)} 组独立复算和有限反例检查通过')
+        if pending!=230:fail(f'剩余系统映射应为230，实际{pending}')
+        notes.append(f"{chapter}逐题复核{len(doc['questions'])}题，输入哈希/笔记定位/生成映射/勘误一致；{len(calculations)}组复算通过")
     except (ValueError,KeyError,AssertionError) as exc:
-        fail(f'第二章审核校验失败：{exc}')
+        fail(f'{chapter}审核校验失败：{exc}')
 
 
 def check_vendor_assets() -> None:
@@ -409,7 +410,8 @@ def main() -> int:
     check_vendor_assets()
     check_fixtures(data)
     check_mapping_coverage()
-    check_ch2_review()
+    check_chapter_review('ch2')
+    check_chapter_review('ch3')
     check_answer_consistency()
     check_duplicates(data)
 
