@@ -485,11 +485,11 @@ async function renderChapter(chapterId) {
         card.appendChild(el("p", { class: "sub", text: "这些题归到本章，但当前学习进度未覆盖；标记本章已学后会进入核心练习。" }));
       }
       const ul = el("ul", { class: "qlist" });
-      items.forEach((q) => {
+      items.forEach((q, index) => {
         const record = storage.getAnswer(q.id);
         const li = el("li");
         const a = el("a", { class: "qitem", href: `#/q/${encodeURIComponent(q.id)}` });
-        a.appendChild(el("span", { class: "no", text: q.source.originalLabel.replace(/\s/g, "") }));
+        a.appendChild(el("span", { class: "no", text: `第${index + 1}题` }));
         a.appendChild(el("span", { class: "txt", text: q.stemText.slice(0, 90) }));
         const metaBox = el("span", { class: "meta" });
         metaBox.appendChild(el("span", { class: `badge ${q.effectiveTier}`, text: tierText(q.effectiveTier) }));
