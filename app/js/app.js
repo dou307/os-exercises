@@ -8,7 +8,8 @@
 import * as storage from "./storage.js";
 import { getMeta, getIndex, getTopics, getChapterQuestions } from "./questions.js";
 import { buildCard, renderPlayer, showToast } from "./practice.js";
-import { parseHash, navigate } from "./router.js";
+import { parseHash, navigate, buildHash } from "./router.js";
+import { matchesListFilters, questionNumber, questionNumbers } from "./numbering.js";
 import { renderSearch } from "./search.js";
 import { completedChapters, toggleChapterCompleted, withEffectiveTier, SCOPE_TEXT } from "./tiers.js";
 
@@ -112,6 +113,7 @@ function renderNav(activeChapterId) {
   mainGroup.appendChild(el("div", { class: "nav-label", text: "课程章节" }));
   mainGroup.appendChild(navLink("#/", "首页 · 概览", null, activeChapterId === "home"));
   mainGroup.appendChild(navLink("#/review", "错题回顾", null, activeChapterId === "review"));
+  mainGroup.appendChild(navLink("#/favorites", "我的收藏", null, activeChapterId === "favorites"));
   nav.appendChild(mainGroup);
 
   const groups = [
@@ -184,7 +186,8 @@ async function renderHome() {
   const last = ui.lastQuestionId;
   if (last) {
     const entry = indexEntry(last);
-    const where = entry ? `（${chapterTitleOf(entry.ch)} · ${entry.label.replace(/\s/g, "")}）` : "";
+    const number = entry ? questionNumbers(state.index.questions, completedChapters(meta)).get(entry.id) : null;
+    const where = entry ? `（${chapterTitleOf(entry.ch)} · 第${number}题）` : "";
     actions.appendChild(el("a", { class: "btn", href: `#/q/${encodeURIComponent(last)}`, text: `继续上次的题${where}` }));
   }
   actions.appendChild(el("a", { class: "btn", href: "#/ch/1", text: "查看第一章题单" }));
@@ -285,7 +288,7 @@ function buildRecordsCard() {
       showToast(`导入失败：${result.message}`);
       return;
     }
-    showToast(`导入完成：新增 ${result.added}、更新 ${result.replaced}、跳过 ${result.skippedUnknown + result.skippedOlder}`);
+    showToast(`导入完成：作答新增 ${result.added}、更新 ${result.replaced}、跳过 ${result.skippedUnknown + result.skippedOlder}；收藏更新 ${result.favoritesUpdated}`);
     if (!result.persistent) showToast("本地存储不可用，导入只保留在内存中");
     route();
   });
@@ -293,6 +296,7 @@ function buildRecordsCard() {
   actions.appendChild(fileInput);
   actions.appendChild(exportBtn);
   actions.appendChild(importLabel);
+  actions.appendChild(el("a", { class: "btn ghost", href: "#/favorites", text: "我的收藏（" + storage.favoriteIds().length + "）" }));
   card.appendChild(actions);
 
   if (!storage.isPersistent()) {
@@ -425,12 +429,13 @@ async function renderChapter(chapterId) {
     { key: "todo", label: "未作答" },
     { key: "wrong", label: "做错" },
     { key: "right", label: "做对" },
+    { key: "favorite", label: "已收藏" },
   ].forEach((option) => {
     const chip = el("button", { type: "button", class: "chip", text: option.label, "aria-pressed": String(listFilter.status === option.key) });
     chip.addEventListener("click", () => {
       listFilter.status = option.key;
       statusChips.querySelectorAll(".chip").forEach((node, i) => {
-        node.setAttribute("aria-pressed", String(["all", "todo", "wrong", "right"][i] === option.key));
+        node.setAttribute("aria-pressed", String(["all", "todo", "wrong", "right", "favorite"][i] === option.key));
       });
       paint();
     });
@@ -462,20 +467,12 @@ async function renderChapter(chapterId) {
 
   function paint() {
     lists.innerHTML = "";
-    const matchStatus = (q) => {
-      const record = storage.getAnswer(q.id);
-      if (listFilter.status === "todo") return !record || !(record.attempts > 0);
-      if (listFilter.status === "wrong") return Boolean(record && record.correct === false);
-      if (listFilter.status === "right") return Boolean(record && record.correct === true);
-      return true;
-    };
-    const matchType = (q) => listFilter.type === "all" || q.type === listFilter.type;
     const filtering = listFilter.status !== "all" || listFilter.type !== "all";
     let shown = 0;
 
     groups.forEach((group) => {
       const all = tagged.filter(group.filter);
-      const items = all.filter((q) => matchStatus(q) && matchType(q));
+      const items = all.filter((q) => matchesListFilters(q, listFilter));
       shown += items.length;
       if (!items.length) return;
       const card = el("div", { class: "card" });
@@ -488,10 +485,12 @@ async function renderChapter(chapterId) {
       items.forEach((q, index) => {
         const record = storage.getAnswer(q.id);
         const li = el("li");
-        const a = el("a", { class: "qitem", href: `#/q/${encodeURIComponent(q.id)}` });
+        const href = buildHash("#/q/" + encodeURIComponent(q.id), filtering ? listFilter : {});
+        const a = el("a", { class: "qitem", href });
         a.appendChild(el("span", { class: "no", text: `第${index + 1}题` }));
         a.appendChild(el("span", { class: "txt", text: q.stemText.slice(0, 90) }));
         const metaBox = el("span", { class: "meta" });
+        if (storage.isFavorite(q.id)) metaBox.appendChild(el("span", { class: "badge favorite", text: "★ 已收藏" }));
         metaBox.appendChild(el("span", { class: `badge ${q.effectiveTier}`, text: tierText(q.effectiveTier) }));
         if (q.reviewStatus === "disputed") metaBox.appendChild(el("span", { class: "badge disputed", text: "待核对" }));
         else if (q.reviewStatus === "systematic") metaBox.appendChild(el("span", { class: "badge", text: "系统映射" }));
@@ -577,14 +576,16 @@ function tierText(tier) {
 /* ------------------------------------------------------------------ */
 /* 单题                                                                */
 /* ------------------------------------------------------------------ */
-async function renderQuestion(id, isCurrent = () => true) {
+async function renderQuestion(id, isCurrent = () => true, filters = {}) {
   const container = main();
   container.innerHTML = "";
   let question = null;
+  let chapterQuestions = [];
   try {
     const entry = indexEntry(id);
     if (!entry) throw new Error("题目不存在");
     const list = await loadChapter(entry.ch);
+    chapterQuestions = list;
     if (!isCurrent()) return;
     question = list.find((q) => q.id === id) || null;
   } catch (error) {
@@ -634,6 +635,7 @@ async function renderQuestion(id, isCurrent = () => true) {
   container.appendChild(buildCard(withEffectiveTier(question, completedChapters(state.meta)), {
     topics: state.topics,
     meta: state.meta,
+    questionNumber: questionNumber(chapterQuestions, question, completedChapters(state.meta), filters),
     onChange: () => showToast(storage.isPersistent() ? "记录已保存" : "记录只保留在本页内存中"),
   }));
   const redo = el("button", { type: "button", class: "btn ghost", text: "重做本题" });
@@ -692,13 +694,14 @@ async function renderReview(params) {
 
   const card = el("div", { class: "card" });
   const ul = el("ul", { class: "qlist" });
+  const numbers = questionNumbers(state.index.questions, completedChapters(state.meta));
   entries.forEach((item) => {
     const entry = indexEntry(item.id);
     if (!entry) return;
     const record = item.record;
     const li = el("li");
     const row = el("div", { class: "qitem" });
-    row.appendChild(el("span", { class: "no", text: entry.label.replace(/\s/g, "") }));
+    row.appendChild(el("span", { class: "no", text: "第" + numbers.get(entry.id) + "题" }));
     const txt = el("a", { class: "txt", href: `#/q/${encodeURIComponent(entry.id)}`, text: entry.stem });
     row.appendChild(txt);
     const metaBox = el("span", { class: "meta" });
@@ -719,6 +722,51 @@ async function renderReview(params) {
     ul.appendChild(li);
   });
   card.appendChild(ul);
+  container.appendChild(card);
+}
+
+function renderFavorites(params = {}) {
+  const container = main();
+  container.innerHTML = "";
+  const chapterId = params.ch || "";
+  const entries = storage.favoriteIds().map(indexEntry).filter((entry) => entry
+    && (!chapterId || String(entry.ch) === chapterId));
+  const head = el("div", { class: "card" });
+  head.appendChild(el("h1", { text: "我的收藏" }));
+  head.appendChild(el("p", { class: "sub", text: "共 " + entries.length + " 道。答错自动收藏，答对后仍保留，也可以手动取消。" }));
+  const select = el("select", { class: "select", "aria-label": "按收藏章节筛选" });
+  select.appendChild(el("option", { value: "", text: "全部章节" }));
+  state.meta.chapters.forEach((chapter) => {
+    select.appendChild(el("option", { value: String(chapter.id), text: chapterLabel(chapter) }));
+  });
+  select.value = chapterId;
+  select.addEventListener("change", () => navigate(buildHash("#/favorites", { ch: select.value })));
+  head.appendChild(select);
+  container.appendChild(head);
+  const card = el("div", { class: "card" });
+  if (!entries.length) {
+    card.appendChild(el("p", { class: "empty", text: "这里还没有收藏。打开题目点“收藏”，或答错一道题后会自动加入。" }));
+  } else {
+    const numbers = questionNumbers(state.index.questions, completedChapters(state.meta));
+    const ul = el("ul", { class: "qlist" });
+    entries.forEach((entry) => {
+      const row = el("div", { class: "qitem" });
+      row.appendChild(el("span", { class: "no", text: "第" + numbers.get(entry.id) + "题" }));
+      row.appendChild(el("a", { class: "txt", href: "#/q/" + encodeURIComponent(entry.id), text: entry.stem }));
+      const meta = el("span", { class: "meta" });
+      meta.appendChild(el("a", { class: "badge", href: "#/ch/" + encodeURIComponent(entry.ch), text: chapterTitleOf(entry.ch) }));
+      const remove = el("button", { class: "btn small ghost", type: "button", text: "取消收藏" });
+      remove.addEventListener("click", () => {
+        storage.setFavorite(entry.id, false);
+        renderFavorites(params);
+        showToast(storage.isPersistent() ? "已取消收藏" : "已取消收藏，本页内存中生效");
+      });
+      meta.appendChild(remove);
+      row.appendChild(meta);
+      ul.appendChild(el("li", null, [row]));
+    });
+    card.appendChild(ul);
+  }
   container.appendChild(card);
 }
 
@@ -791,8 +839,9 @@ async function route() {
       if (!isCurrent()) { if (dispose) dispose(); return; }
       state.dispose = dispose;
     }
-    else if (name === "question") { renderNav(null); await renderQuestion(params.id, isCurrent); }
+    else if (name === "question") { renderNav(null); await renderQuestion(params.id, isCurrent, params); }
     else if (name === "review") { renderNav("review"); await renderReview(params); }
+    else if (name === "favorites") { renderNav("favorites"); renderFavorites(params); }
     else if (name === "search") { renderNav(null); await renderSearch(container, params, isCurrent); }
     else if (name === "source") { renderNav(null); renderSource(); }
     else {

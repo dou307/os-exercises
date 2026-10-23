@@ -6,7 +6,15 @@
 本文件是给下一个接手者（人或 AI）的完整交接：已经做了什么、为什么这么做、还剩什么、怎么继续。
 先核对 Git 状态再动手：`git status --short --branch`、`git rev-parse HEAD`，以实时状态为准，不要相信本文里的旧时间戳。
 
-## 最新增量：2026-10-23 第三章逐题复核
+## 最新增量：2026-10-23 统一编号与收藏
+
+- 题卡不再读来源题号；新模块 app/js/numbering.js 统一章节分组编号、筛选匹配与搜索/错题/收藏的编号。筛选上下文写入单题URL，原始题库和稳定ID不改。
+- 题卡可手动收藏/取消，自动判分答错自动收藏，答对不自动移除；新增 #/favorites 和章节“已收藏”筛选。
+- storage.js 在既有v1中加入可选 favorites：按题目ID保存 saved/updatedAt，保留取消标记，以独立时间合并。首次升级旧本机记录补入当前错题，旧争议计分不补入；旧备份兼容且不覆盖已有取消决定。
+- 新增 tests/browser/favorites-numbering.cjs，37项编号/收藏/迁移回归在Chrome、Edge、Firefox通过。现有Chrome基础闭环46项、交互回归36项、Python16项及全库校验通过。测试证据位于 _work/favorites-numbering/。
+- 当前源码及发布版本用Git和Actions现场核对；此前题卡底部导航、跨课程复用指南已在仓库。其余审核范围和保护边界不变。
+
+## 历史增量：2026-10-23 第三章逐题复核
 
 - 来源第三章166/166完成：90 verified、65 qualified、11 disputed（不计分），76条勘误/前提。详见 [第三章逐题复核](第三章逐题复核.md)。
 - 正式输入 `data/reviews/ch3.json`；通用 `load_review(..., chapter)` 校验来源章/覆盖/哈希/笔记定位，`build_mappings.py --write-doc`叠加并生成报告。前两章364条映射逐字段未变。

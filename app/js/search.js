@@ -3,6 +3,7 @@
 import { getIndex, getTopics, getMeta, topicTitle } from "./questions.js";
 import { completedChapters, effectiveTier } from "./tiers.js";
 import { navigate, buildHash } from "./router.js";
+import { questionNumbers } from "./numbering.js";
 
 export const TYPE_FILTERS = [
   { key: "", label: "全部题型" },
@@ -215,6 +216,7 @@ export async function renderSearch(main, params, isCurrent = () => true) {
 
   const list = document.createElement("ul");
   list.className = "qlist";
+  const numbers = questionNumbers(rawIndex.questions, completed);
   items.forEach((entry) => {
     const li = document.createElement("li");
     const link = document.createElement("a");
@@ -222,7 +224,7 @@ export async function renderSearch(main, params, isCurrent = () => true) {
     link.href = `#/q/${encodeURIComponent(entry.id)}`;
     const no = document.createElement("span");
     no.className = "no";
-    no.textContent = entry.label.replace(/\s/g, "") || "—";
+    no.textContent = "第" + numbers.get(entry.id) + "题";
     const txt = document.createElement("span");
     txt.className = "txt";
     highlightInto(txt, entry.stem, terms);

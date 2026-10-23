@@ -19,6 +19,7 @@ let questionPolicies = new Map();
 const isObject = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
 const validId = (id) => /^c\d+-s\d+-\d+-q\d+(?:-\d+)?$/.test(id);
 const validDate = (value) => typeof value === "string" && Number.isFinite(Date.parse(value));
+const validFavorite = (value) => isObject(value) && typeof value.saved === "boolean" && validDate(value.updatedAt);
 
 function normalizeRecord(record, entry) {
   if (!isObject(record) || typeof record.selected !== "string" || !/^[A-H]?$/.test(record.selected)) return null;
@@ -45,6 +46,7 @@ function blank() {
     datasetVersion,
     answers: {},
     drafts: {},
+    favorites: {},
     ui: { completedChapters: [], pending: {}, retrying: {} },
   };
 }
@@ -79,16 +81,31 @@ export function init(version, failureCallback, entries = []) {
     const raw = window.localStorage.getItem(KEY);
     const parsed = raw ? JSON.parse(raw) : blank();
     if (!isObject(parsed) || parsed.schemaVersion !== SCHEMA_VERSION || !isObject(parsed.answers)
-      || !isObject(parsed.drafts || {})) throw new Error("记录结构或版本不受支持");
+      || !isObject(parsed.drafts || {})
+      || (parsed.favorites !== undefined && !isObject(parsed.favorites))) throw new Error("记录结构或版本不受支持");
     const answers = {};
     for (const [id, record] of Object.entries(parsed.answers)) {
       const normalized = validId(id) && normalizeRecord(record);
       if (!normalized) throw new Error("作答字段无效");
       answers[id] = normalized;
     }
+    const favorites = {};
+    for (const [id, value] of Object.entries(parsed.favorites || {})) {
+      if (!validId(id) || !validFavorite(value)) throw new Error("收藏字段无效");
+      favorites[id] = { saved: value.saved, updatedAt: new Date(value.updatedAt).toISOString() };
+    }
     state = { ...blank(), answers, drafts: Object.fromEntries(Object.entries(parsed.drafts || {})
-      .filter(([id, text]) => validId(id) && typeof text === "string")), ui: normalizeUI(parsed.ui || {}) };
+      .filter(([id, text]) => validId(id) && typeof text === "string")), favorites, ui: normalizeUI(parsed.ui || {}) };
     state.datasetVersion = datasetVersion;
+    // 只在首次升级旧记录时补入当前错题；显式取消收藏的标记不会在刷新时被覆盖。
+    if (parsed.favorites === undefined) {
+      Object.keys(answers).forEach((id) => {
+        if (questionPolicies.has(id) && getAnswer(id).correct === false) {
+          state.favorites[id] = { saved: true, updatedAt: answers[id].lastAt };
+        }
+      });
+      if (raw) persist();
+    }
   } catch (error) {
     memoryOnly = true;
     state = blank();
@@ -149,6 +166,8 @@ export function recordAnswer(id, selected, correct, scoring) {
   };
   delete state.ui.retrying[id];
   if (state.ui.pending) delete state.ui.pending[id];
+  const policy = questionPolicies.get(id);
+  if (correct === false && scoring === "auto" && policy?.scoring === "auto" && policy.review !== "disputed") updateFavorite(id, true);
   persist();
   return state.answers[id];
 }
@@ -274,6 +293,28 @@ export function answeredIds() {
   return Object.keys(state.answers);
 }
 
+export function isFavorite(id) {
+  return state.favorites[id]?.saved === true;
+}
+
+export function favoriteIds() {
+  return Object.keys(state.favorites).filter(isFavorite)
+    .sort((a, b) => Date.parse(state.favorites[b].updatedAt) - Date.parse(state.favorites[a].updatedAt));
+}
+
+function updateFavorite(id, saved) {
+  const previous = state.favorites[id];
+  const time = Math.max(Date.now(), previous ? Date.parse(previous.updatedAt) + 1 : 0);
+  state.favorites[id] = { saved, updatedAt: new Date(time).toISOString() };
+}
+
+export function setFavorite(id, saved) {
+  if (!validId(id) || !questionPolicies.has(id) || typeof saved !== "boolean") return false;
+  updateFavorite(id, saved);
+  persist();
+  return true;
+}
+
 /** 导出学习记录（跨浏览器备份用），含版本与时间，不含页面 UI 状态。 */
 export function exportData() {
   return {
@@ -282,6 +323,7 @@ export function exportData() {
     exportedAt: new Date().toISOString(),
     answers: state.answers,
     drafts: state.drafts,
+    favorites: state.favorites,
     completedChapters: state.ui.completedChapters,
   };
 }
@@ -308,6 +350,9 @@ export function importData(text, knownIds) {
     || data.completedChapters.some((id) => typeof id !== "string" || !/^(?:[1-9]|1[0-5]|2\.1)$/.test(id)))) {
     return { ok: false, message: "已学章节标记格式无效；未导入任何记录。" };
   }
+  if (data.favorites !== undefined && !isObject(data.favorites)) {
+    return { ok: false, message: "收藏记录格式无效；未导入任何记录。" };
+  }
 
   // 先完整验证，再变更内存或 localStorage，不能导入半份后才报错。
   const normalized = {};
@@ -319,6 +364,24 @@ export function importData(text, knownIds) {
   }
   for (const [id, draft] of Object.entries(data.drafts || {})) {
     if (knownIds.has(id) && typeof draft !== "string") return { ok: false, message: `题目 ${id} 的自答草稿不是文本；未导入任何记录。` };
+  }
+  const favoriteUpdates = {};
+  for (const [id, value] of Object.entries(data.favorites || {})) {
+    if (!knownIds.has(id)) continue;
+    if (!validFavorite(value)) return { ok: false, message: "收藏字段或时间无效；未导入任何记录。" };
+    favoriteUpdates[id] = { saved: value.saved, updatedAt: new Date(value.updatedAt).toISOString() };
+  }
+  if (data.favorites === undefined) {
+    // 兼容旧备份，只补没有收藏决策的当前错题；不撤销用户已经明确取消的收藏。
+    Object.entries(normalized).forEach(([id, record]) => {
+      const policy = questionPolicies.get(id);
+      const previous = state.answers[id];
+      if (record.correct === false && policy?.scoring === "auto" && policy.review !== "disputed"
+        && !Object.hasOwn(state.favorites, id)
+        && (!previous || Date.parse(record.lastAt) > Date.parse(previous.lastAt))) {
+        favoriteUpdates[id] = { saved: true, updatedAt: record.lastAt };
+      }
+    });
   }
 
   let added = 0;
@@ -364,6 +427,14 @@ export function importData(text, knownIds) {
     }
   });
   state.ui.completedChapters = [...new Set([...state.ui.completedChapters, ...(data.completedChapters || [])])];
+  let favoritesUpdated = 0;
+  Object.entries(favoriteUpdates).forEach(([id, value]) => {
+    const previous = state.favorites[id];
+    if (!previous || Date.parse(value.updatedAt) > Date.parse(previous.updatedAt)) {
+      state.favorites[id] = value;
+      favoritesUpdated += 1;
+    }
+  });
 
   persist();
   return {
@@ -373,6 +444,7 @@ export function importData(text, knownIds) {
     skippedUnknown,
     skippedOlder,
     draftsAdded,
+    favoritesUpdated,
     datasetVersion: data.datasetVersion || "unknown",
     persistent: !memoryOnly,
   };

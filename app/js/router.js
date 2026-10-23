@@ -20,8 +20,11 @@ export function parseHash(hash) {
       },
     };
   }
-  if (head === "q" && rest[0]) return { name: "question", params: { id: decodeURIComponent(rest[0]) } };
+  if (head === "q" && rest[0]) return { name: "question", params: {
+    id: decodeURIComponent(rest[0]), type: query.get("type") || "", status: query.get("status") || "",
+  } };
   if (head === "review") return { name: "review", params: { ch: query.get("ch") || "" } };
+  if (head === "favorites") return { name: "favorites", params: { ch: query.get("ch") || "" } };
   if (head === "search") {
     return {
       name: "search",

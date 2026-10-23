@@ -16,6 +16,7 @@ import * as storage from "./storage.js";
 import { getMeta, getTopics, getChapterQuestions, topicTitle } from "./questions.js";
 import { completedChapters, filterByScope, SCOPE_TEXT } from "./tiers.js";
 import { renderMath } from "./math.js";
+import { questionNumber } from "./numbering.js";
 
 const TIER_TEXT = { core: "核心", bridge: "桥接", supplement: "补充", later: "稍后", disputed: "待核对" };
 const REVIEW_TEXT = {
@@ -115,11 +116,25 @@ export function buildCard(q, ctx) {
   if (q.originalReadinessTier && q.originalReadinessTier !== tier) {
     head.appendChild(badge(`原分层：${TIER_TEXT[q.originalReadinessTier] || q.originalReadinessTier}`, "later"));
   }
-  head.appendChild(badge(q.source.originalLabel));
+  if (ctx.questionNumber > 0) head.appendChild(badge("第" + ctx.questionNumber + "题", "question-number"));
   head.appendChild(badge(TYPE_TEXT[q.type] || q.type));
   const reviewCls = q.reviewStatus === "disputed" ? "disputed" : (q.reviewStatus === "verified" ? "ok" : "");
   head.appendChild(badge(q.answerReview?.status === "qualified" ? "已复核（有备注）" : (REVIEW_TEXT[q.reviewStatus] || q.reviewStatus), reviewCls));
-  head.appendChild(el("span", { class: "qid", text: q.id }));
+  const favoriteButton = el("button", { type: "button", class: "btn ghost small favorite-toggle" });
+  const paintFavorite = () => {
+    const saved = storage.isFavorite(q.id);
+    favoriteButton.textContent = saved ? "★ 已收藏" : "☆ 收藏";
+    favoriteButton.setAttribute("aria-pressed", String(saved));
+    favoriteButton.classList.toggle("is-favorite", saved);
+  };
+  paintFavorite();
+  favoriteButton.addEventListener("click", () => {
+    const saved = !storage.isFavorite(q.id);
+    storage.setFavorite(q.id, saved);
+    paintFavorite();
+    showToast((saved ? "已加入收藏" : "已取消收藏") + (storage.isPersistent() ? "" : "，仅保留在本页内存中"));
+  });
+  head.appendChild(favoriteButton);
   card.appendChild(head);
 
   card.appendChild(el("p", {
@@ -297,7 +312,7 @@ export function buildCard(q, ctx) {
       paintSubmitted({ selected });
       showResult(correct ? "ok" : "bad", correct
         ? `回答正确，选 ${selected}`
-        : `回答错误（按原站答案），你选了 ${selected}，原站答案是 ${q.originalAnswer}`);
+        : `回答错误（按原站答案），你选了 ${selected}，原站答案是 ${q.originalAnswer}，已加入收藏`);
       reveal();
       onChange();
       return;
@@ -313,6 +328,7 @@ export function buildCard(q, ctx) {
   }
 
   function onChange() {
+    paintFavorite();
     if (ctx.onChange) ctx.onChange(q.id);
   }
 
@@ -364,7 +380,8 @@ export async function renderPlayer(main, params, isCurrent = () => true) {
   const scope = params.scope || "core";
   const [topics, meta] = await Promise.all([getTopics(), getMeta()]);
   const completed = completedChapters(meta);
-  const list = filterByScope(await getChapterQuestions(chapterId), scope, completed);
+  const chapterQuestions = await getChapterQuestions(chapterId);
+  const list = filterByScope(chapterQuestions, scope, completed);
   if (!isCurrent()) return () => {};
   if (!list.length) {
     main.innerHTML = "";
@@ -479,6 +496,7 @@ export async function renderPlayer(main, params, isCurrent = () => true) {
     const questionCard = buildCard(q, {
       topics,
       meta,
+      questionNumber: questionNumber(chapterQuestions, q, completed),
       onChange: () => {
         const answered = list.filter((item) => storage.getAnswer(item.id)).length;
         const correct = list.filter((item) => storage.getAnswer(item.id)?.correct === true).length;
