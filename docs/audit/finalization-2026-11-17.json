@@ -93,5 +93,19 @@
     "Obsidian实际打开被桌面工具URL安全检查中止",
     "108年份标签仅文字片段对应，全部均非官方认证",
     "62张源图主体裁切、22张图题或页边裁切未伪造修复"
-  ]
+  ],
+  "release": {
+    "implementationCommit": "298688de23083eaef8d5c1623055938a5e477536",
+    "actionsRun": 44096106288,
+    "actionsUrl": "https://github.com/dou307/os-exercises/actions/runs/44096106288",
+    "build": "success",
+    "deploy": "success",
+    "onlineFavoritesNumberingPassed": 37,
+    "onlineLivePrivateSyncPassed": 17,
+    "liveAcceptanceFileDeleted": true,
+    "productionProgressFileTouched": false,
+    "progressRepositoryPrivate": true,
+    "onlineBuildContentCompared": 6,
+    "comparison": "normalized CRLF to LF; all content equal"
+  }
 }
