@@ -37,6 +37,7 @@ export function parseHash(hash) {
     };
   }
   if (head === "source") return { name: "source", params: {} };
+  if (head === "settings") return { name: "settings", params: {} };
   return { name: "notfound", params: {} };
 }
 

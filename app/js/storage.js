@@ -47,6 +47,8 @@ function blank() {
     answers: {},
     drafts: {},
     favorites: {},
+    draftChanges: {},
+    chapterChanges: {},
     ui: { completedChapters: [], pending: {}, retrying: {} },
   };
 }
@@ -94,9 +96,19 @@ export function init(version, failureCallback, entries = []) {
       if (!validId(id) || !validFavorite(value)) throw new Error("收藏字段无效");
       favorites[id] = { saved: value.saved, updatedAt: new Date(value.updatedAt).toISOString() };
     }
+    for (const name of ['draftChanges','chapterChanges']) {
+      if (parsed[name] !== undefined && !isObject(parsed[name])) throw new Error("同步字段无效");
+      for (const [id, value] of Object.entries(parsed[name] || {})) {
+        if (!isObject(value) || !validDate(value.updatedAt)
+          || (name === 'chapterChanges' && (typeof value.completed !== 'boolean' || !/^(?:[1-9]|1[0-5]|2\.1)$/.test(id)))
+          || (name === 'draftChanges' && !validId(id))) throw new Error("同步时间或状态无效");
+      }
+    }
     state = { ...blank(), answers, drafts: Object.fromEntries(Object.entries(parsed.drafts || {})
       .filter(([id, text]) => validId(id) && typeof text === "string")), favorites, ui: normalizeUI(parsed.ui || {}) };
     state.datasetVersion = datasetVersion;
+    state.draftChanges = parsed.draftChanges || {};
+    state.chapterChanges = parsed.chapterChanges || {};
     // 只在首次升级旧记录时补入当前错题；显式取消收藏的标记不会在刷新时被覆盖。
     if (parsed.favorites === undefined) {
       Object.keys(answers).forEach((id) => {
@@ -115,6 +127,7 @@ export function init(version, failureCallback, entries = []) {
 }
 
 function persist() {
+  window.dispatchEvent(new Event("os-exercises:changed"));
   if (memoryOnly) return;
   try {
     window.localStorage.setItem(KEY, JSON.stringify(state));
@@ -207,6 +220,7 @@ export function getDraft(id) {
 export function saveDraft(id, text) {
   if (text) state.drafts[id] = text;
   else delete state.drafts[id];
+  state.draftChanges[id] = { updatedAt: nextTimestamp(state.draftChanges[id]) };
   persist();
 }
 
@@ -249,6 +263,15 @@ function normalizeUI(ui) {
 }
 
 export function setUI(patch) {
+  if (patch.completedChapters) {
+    const previous = new Set(state.ui.completedChapters);
+    const next = new Set(patch.completedChapters);
+    new Set([...previous,...next]).forEach(id => {
+      if (previous.has(id) !== next.has(id)) state.chapterChanges[id] = {
+        completed: next.has(id), updatedAt: nextTimestamp(state.chapterChanges[id]),
+      };
+    });
+  }
   state.ui = normalizeUI(Object.assign({}, state.ui, patch));
   persist();
 }
@@ -303,9 +326,12 @@ export function favoriteIds() {
 }
 
 function updateFavorite(id, saved) {
-  const previous = state.favorites[id];
+  state.favorites[id] = { saved, updatedAt: nextTimestamp(state.favorites[id]) };
+}
+
+function nextTimestamp(previous) {
   const time = Math.max(Date.now(), previous ? Date.parse(previous.updatedAt) + 1 : 0);
-  state.favorites[id] = { saved, updatedAt: new Date(time).toISOString() };
+  return new Date(time).toISOString();
 }
 
 export function setFavorite(id, saved) {
@@ -324,6 +350,8 @@ export function exportData() {
     answers: state.answers,
     drafts: state.drafts,
     favorites: state.favorites,
+    draftChanges: state.draftChanges,
+    chapterChanges: state.chapterChanges,
     completedChapters: state.ui.completedChapters,
   };
 }
@@ -352,6 +380,16 @@ export function importData(text, knownIds) {
   }
   if (data.favorites !== undefined && !isObject(data.favorites)) {
     return { ok: false, message: "收藏记录格式无效；未导入任何记录。" };
+  }
+  for (const name of ["draftChanges", "chapterChanges"]) {
+    if (data[name] !== undefined && !isObject(data[name])) return { ok:false, message:"同步状态字段无效；未导入任何记录。" };
+    for (const [id,value] of Object.entries(data[name] || {})) {
+      if (name === "draftChanges" && !knownIds.has(id)) continue;
+      if (!isObject(value) || !validDate(value.updatedAt)
+        || (name === "chapterChanges" && (typeof value.completed !== "boolean" || !/^(?:[1-9]|1[0-5]|2\.1)$/.test(id)))) {
+        return { ok:false, message:"同步状态时间或标记无效；未导入任何记录。" };
+      }
+    }
   }
 
   // 先完整验证，再变更内存或 localStorage，不能导入半份后才报错。
@@ -421,12 +459,30 @@ export function importData(text, knownIds) {
   let draftsAdded = 0;
   Object.entries(data.drafts || {}).forEach(([id, text]) => {
     if (!knownIds.has(id) || typeof text !== "string" || !text) return;
-    if (!state.drafts[id]) {
+    if (!state.drafts[id] && !state.draftChanges[id] && !data.draftChanges?.[id]) {
       state.drafts[id] = text;
       draftsAdded += 1;
     }
   });
   state.ui.completedChapters = [...new Set([...state.ui.completedChapters, ...(data.completedChapters || [])])];
+  Object.entries(data.draftChanges || {}).forEach(([id,value]) => {
+    if (!knownIds.has(id)) return;
+    const previous=state.draftChanges[id];
+    if (!previous || Date.parse(value.updatedAt)>Date.parse(previous.updatedAt)) {
+      state.draftChanges[id]={ updatedAt:value.updatedAt };
+      if (data.drafts?.[id]) state.drafts[id]=data.drafts[id]; else delete state.drafts[id];
+    }
+  });
+  Object.entries(data.chapterChanges || {}).forEach(([id,value]) => {
+    const previous=state.chapterChanges[id];
+    if (!previous || Date.parse(value.updatedAt)>Date.parse(previous.updatedAt)) state.chapterChanges[id]={...value};
+  });
+  // 在旧备份的并集合并之后重新应用独立修改时间，取消已学不会被旧备份恢复。
+  Object.entries(state.chapterChanges).forEach(([id,value]) => {
+    const set=new Set(state.ui.completedChapters);
+    if (value.completed) set.add(id); else set.delete(id);
+    state.ui.completedChapters=[...set];
+  });
   let favoritesUpdated = 0;
   Object.entries(favoriteUpdates).forEach(([id, value]) => {
     const previous = state.favorites[id];

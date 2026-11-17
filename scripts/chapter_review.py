@@ -66,10 +66,14 @@ def overlay(mappings, doc):
     mappings['reviewerNote']='来源第一章 88 题与第二章 276 题已逐题复核；来源第三至五章 396 题仍为 systematic，不代表答案已审核。'
     if doc['sourceChapter']=='ch3':
         mappings['reviewerNote']='来源第一至三章共530题已逐题复核；来源第四至五章230题仍为systematic，不代表答案已审核。'
+    if doc['sourceChapter'] in ('ch4','ch5'):
+        pending=sum(m.get('reviewStatus')=='systematic' for m in mappings['byQuestion'].values())
+        mappings['reviewerNote']=f'已逐题复核{len(mappings["byQuestion"])-pending}题；剩余系统映射{pending}题。审核不等于官方答案认证或用户已学完。'
     return errata
 
 
 def render_report(doc, questions, checks):
+    if doc['sourceChapter'] in ('ch4','ch5'):return render_remaining_report(doc,questions,checks)
     if doc['sourceChapter']=='ch3':return render_memory_report(doc,questions,checks)
     byid={q['id']:q for q in questions}
     status=Counter(r['answerReview']['status'] for r in doc['questions'])
@@ -127,7 +131,7 @@ def render_memory_report(doc,questions,checks):
       f"- 逐题覆盖166/166：verified {counts['verified']}、qualified {counts['qualified']}、disputed {counts['disputed']}。",
       f"- 勘误/前提共{len(entries)}条，{sum(e['scoring']=='excluded' for e in entries)}道题不计分；原题、原答案与vendor字节不变。",
       '- 课程归属：'+ '；'.join(f'第{k}章{v}题' for k,v in sorted(chapters.items(),key=lambda kv:int(kv[0])))+'。',
-      '- 全库累计530题逐题复核，第四至五章230题仍仅系统映射。学习进度只确认课程第一章；真题年份及题面所谓最新大纲均未作权威核实。',
+      '- 本批次结束时累计530题；2026-11-17已补完第四、五章，全库760题逐题复核。学习进度只确认课程第一章；题面所谓最新大纲未作权威核实，年份证据见真题年份核查报告。',
       '- 分段位于实际笔记第9章209行补充callout，不虚构独立知识点；段页组合列出额外前置缺口。',
       '', '## 逐题结论','',
       '正式输入 `data/reviews/ch3.json` 含原题内容哈希、笔记文件/行号、主次归属、完整前置及逐题理由。下面原答案列不替换来源。','',
@@ -156,3 +160,32 @@ def render_memory_report(doc,questions,checks):
       '每题先写页长、元素字节数、地址单位、初始帧内容、置换算法、是否计算初装、TLB是否串行/是否重试等前提，再计算。争议题看原文与勘误对照，不自动计分。',
       '更新正式审核JSON后运行 `build_mappings.py --write-doc`、`validate_dataset.py` 和回归。哈希变化需重新审核，不自动沿用旧结论。旧自动结果仅历史保留，当前统计投影排除争议题。']
     (ROOT/'docs/第三章逐题复核.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
+
+
+def render_remaining_report(doc, questions, checks):
+    label={'ch4':'第四章','ch5':'第五章'}[doc['sourceChapter']]
+    byid={q['id']:q for q in questions}
+    counts=Counter(r['answerReview']['status'] for r in doc['questions'])
+    chapters=Counter(r['mapping']['primaryChapterId'] for r in doc['questions'])
+    lines=[f'# 来源{label}逐题复核与课程适配','',f'日期：{doc["reviewedAt"]}。来源章节编号不同于课程笔记编号。','',doc['policy'],'',
+      f'- 逐题覆盖{len(doc["questions"])}/{len(doc["questions"])}，状态：{dict(counts)}。',
+      '- 主课程归属：'+str(dict(chapters))+'。',
+      '- 学习进度不扩展；I/O笔记注释中的空标题如实记录为前置缺口，不当成已提供的课程正文。',
+      '', '## 逐题结论','',
+      '| ID | 原答案 | 状态 | 主课程章 | 知识点/前置 | 结论 |',
+      '|---|---|---|---|---|---|']
+    for r in doc['questions']:
+        q=byid[r['questionId']]
+        cells=[q['id'],q['originalAnswer'],r['answerReview']['status'],r['mapping']['primaryChapterId'],
+          ', '.join(r['mapping']['prerequisiteTopicIds']),r['answerReview']['conclusion']]
+        lines.append('| '+' | '.join(str(c).replace('|','／').replace('\n',' ') for c in cells)+' |')
+    lines+=['','## 独立复算','',f'脚本 scripts/review_ch45_checks.py：本章{len(checks)}组，具体输入/模型见脚本，计算不读取原题答案。','',
+      '| 检查 | 结果 |','|---|---|']
+    for key,result in checks.items():lines.append('| '+key+' | '+json.dumps(result['actual'],ensure_ascii=False,default=str)+' |')
+    lines+=['','## 资料依据','']
+    for s in doc['sources']:
+        lines.append('- '+(f'[{s["title"]}]({s["url"]})' if 'url' in s else s['title']+'：'+s.get('path','')))
+    lines+=['','## 维护','',
+      f'正式输入 data/reviews/{doc["sourceChapter"]}.json 含来源哈希、逐题证据、勘误、前置缺口与真实笔记定位。',
+      '原始题目/原答案不覆盖；争议题不自动计分，旧自动结果可作历史导入。后续获得可靠新条件时另记修正，不悄悄改变来源。']
+    (ROOT/f'docs/{label}逐题复核.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')

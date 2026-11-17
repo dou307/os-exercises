@@ -392,8 +392,8 @@ function check(name, ok, detail) {
   await offlineCtx.close();
 
   // ---- P4：子路径部署（仅本地有第二个服务时适用） ----
-  const SUB_BASE = "http://127.0.0.1:8766/dist/";
-  if (BASE === "http://127.0.0.1:8765/") {
+  const SUB_BASE = process.env.SUB_BASE || "http://127.0.0.1:8766/dist/";
+  if (process.env.SUB_BASE || BASE === "http://127.0.0.1:8765/") {
     const subCtx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
     const subFailed = [];
     const subPage = await subCtx.newPage();
@@ -407,7 +407,7 @@ function check(name, ok, detail) {
     check("子路径下无 4xx 资源", subFailed.length === 0, subFailed.slice(0, 2).join(" | "));
     await subCtx.close();
   } else {
-    check("子路径部署", true, "非本地 BASE_URL，跳过（线上本身就在 /os-exercises/ 子路径下，已由上面的加载检查覆盖）");
+    check("子路径部署", true, "跳过独立子路径服务检查；可设置SUB_BASE，线上实际子路径由其加载检查覆盖");
   }
 
   check("无控制台错误", consoleErrors.length === 0, consoleErrors.slice(0, 3).join(" | "));

@@ -1,0 +1,303 @@
+{
+ "schemaVersion": 1,
+ "reviewedAt": "2026-11-17",
+ "policy": "对旧37道争议逐条复审。补明建议不覆盖原题，不为减少争议数字强行恢复自动计分。",
+ "questions": [
+  {
+   "questionId": "c1-s3-0-q009",
+   "sourceContentHash": "sha256:106f4cb1463322100781ff51a52984df851131a81ca9225430d86062e64f5eb5",
+   "resolution": "缺正确选项",
+   "conclusion": "明确用户态发起的trap/syscall与内核服务代码不同；若II指发起指令，则仅III/V特权，现有选项没有该组合。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c1-s3-0-q011",
+   "sourceContentHash": "sha256:87ea294ea60293e8407083a5ba4ee578bbef9176f48bc6ec99426e261ddc64f6",
+   "resolution": "教材模型须限定",
+   "conclusion": "RISC-V ecall按当前特权级产生环境调用异常，内核态也可执行；改成教材用户访管约定后才可用D。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c1-s2-0-q009",
+   "sourceContentHash": "sha256:786f9fad98406e66f4b26cf1b492e32b5ad4caf0bcbb592b9ec4676837d9ebd3",
+   "resolution": "无唯一改善措施",
+   "conclusion": "非抢占优先级不能抢走已运行长任务；“有利改善响应”须给负载和评价指标，不擅改选项。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s1-0-q005",
+   "sourceContentHash": "sha256:517d86060ce300a172d493c24d7c1ae4a98c7c742618182fbb561e394582651c",
+   "resolution": "措辞非唯一",
+   "conclusion": "正确同步程序可重现，未同步程序可能竞态；存续生命周期与执行断续不同，A/D都不能按原解析无条件排除/确认。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s1-0-q017",
+   "sourceContentHash": "sha256:a446fe6a9ec95fe7e2f95a2bc3355fd0718b647ea47aa0f07e4e7bdfe9cc6443",
+   "resolution": "缺工作负载",
+   "conclusion": "大量终端等待输入时可多数阻塞，大量CPU任务时可多数就绪；系统类型不决定比例。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s1-0-q022",
+   "sourceContentHash": "sha256:9fba7a2c8f09e82b80e0266fdcabd02fdf16d308bbc15ed5d510a5d3b583e2b2",
+   "resolution": "缺数据段与ABI",
+   "conclusion": "初始化可写全局数据非共享只读text；实参与局部量可在寄存器，不能套唯一B/D段答案。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s1-0-q027",
+   "sourceContentHash": "sha256:9a45c4ecd58f7238e03d55dfac377a2319252b33405d390cdcca6d0d55024ec4",
+   "resolution": "非唯一选项",
+   "conclusion": "阻塞请求可导致A，主动yield可导致B；需限定不考虑主动让出才沿用A。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s1-0-q044",
+   "sourceContentHash": "sha256:b638a9d320c63450e5a5679d71bf1d81e374e85bc9d240210ca6c8139d5e7f90",
+   "resolution": "可明确修正",
+   "conclusion": "ready后仍可能选回自己，B不“必会”切换；若切换指不同进程且问必然，D更合适。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s1-0-q051",
+   "sourceContentHash": "sha256:c341c348138dc3047b38cae8d9a7ba7fee0ed4cd76132bd11afea09538f6785d",
+   "resolution": "多项不正确",
+   "conclusion": "M:1不能跨核是D错误，跨OS未经修改直接运行C也受ABI/库限制；补可移植库前提仍需改措辞。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s1-0-q057",
+   "sourceContentHash": "sha256:43ca7b8b9134b762a66f7fb53caaa9d0d78c7a08e7513afa4624ae84e9c90843",
+   "resolution": "缺阻塞限定",
+   "conclusion": "非阻塞系统调用不阻塞整个M:1进程；D应改成“一个用户线程执行阻塞系统调用且无运行库转化”。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s2-0-q013",
+   "sourceContentHash": "sha256:e03c2f8b353301dc417261db43fea756bf9cebfcf8a7fa099d51b3c1abbbab9b",
+   "resolution": "缺抢占模型",
+   "conclusion": "高优先级进程创建可触发抢占；不抢占模型中D才可能是教材期望，原题需补条件。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s3-0-q022",
+   "sourceContentHash": "sha256:9caeb872cfa2a89ce018bfdae7cb6269187481034c8fa15a670762495fdd4f50",
+   "resolution": "缺锁类型和交错",
+   "conclusion": "非递归NORMAL自锁可死锁；相反顺序双锁只有重叠持有交错时死锁，不能排除A/B。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s4-0-q002",
+   "sourceContentHash": "sha256:715b39ddfe1cd8c2aed1d9cd9379b4b26c61acc4ba132114e872ae5ae7b79d44",
+   "resolution": "缺公平性与限流人数",
+   "conclusion": "原子双筷申请避免持有等待但可能饥饿；限制必须<n才可论证防环，B和C题面均不足以形成唯一C。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s4-0-q015",
+   "sourceContentHash": "sha256:8108592c5d35c3cc8fe1b382f86de729ccbb7e6d828f5b229fd6dcf6979ad43d",
+   "resolution": "安全不保证逐请求",
+   "conclusion": "四资源三进程各最多二可无死锁，但请求会暂时等待；不公平调度还能饥饿，不把安全性写成每次必得。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s4-0-q023",
+   "sourceContentHash": "sha256:4008b133a98206abdc5b210b40ff8b3fc86570aecd1ca16efe16c4cc0db99d5d",
+   "resolution": "执行体数量/公平性缺失",
+   "conclusion": "只有两个执行体时计数不持续积累，解析的同向流需多个实例；是否饥饿还依赖锁公平。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s4-0-q028",
+   "sourceContentHash": "sha256:c1ed918050d91c158f02432565200173d3814c71bc3cac578f97900a04a1586c",
+   "resolution": "把充分条件当必要",
+   "conclusion": "m=3,n=2,k=3，银行家可串行满足两者，总最大6>m+n5仍安全。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s4-0-q030",
+   "sourceContentHash": "sha256:ab29eba1383c3de63a5cc0e3dff70a6aa8de76e0ec6a14ce105b33ad63c86603",
+   "resolution": "局部条件不等价全局安全",
+   "conclusion": "给P0后先让P1完成再满足P0的具体安全序列证明D情形也可安全；应要求试分配存在全局安全序列。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s5-0-q003",
+   "sourceContentHash": "sha256:8b0352b7270056b9df8d05c5d76803bb19c6894d333b7fd0595361e477872aa8",
+   "resolution": "可明确修正",
+   "conclusion": "原时间线让A/B在180至190同时占独占I/O1；A末次应190至220，B190结束、C200、A220，CPU利用率180/220。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s5-0-q004",
+   "sourceContentHash": "sha256:64b2f6c311db59d0ae6856070910a5f8504960b02381d5c1f522ea62a5ce7cb5",
+   "resolution": "不能唯一反推算法",
+   "conclusion": "运行回ready尾可由主动yield产生；状态迁移图未给时间片触发条件，不能唯一推出RR。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s6-0-q003",
+   "sourceContentHash": "sha256:e51f79eb3ebe1abda8e70625b88785e0e503fb428b3d9b97c31fcf9e07247ba6",
+   "resolution": "同步算法不完整",
+   "conclusion": "共享队列在同一锁下原子入队/取队，顾客保存本地ticket并用每票通知；原全局i等待与分离锁不保证叫号。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s6-0-q006",
+   "sourceContentHash": "sha256:dbc9f1871003244502fdc5b352bc7678477af7a2a83c9d61cbe32feb5f51d3aa",
+   "resolution": "可明确修正",
+   "conclusion": "y就绪必须向两个等待者分别发许可（两个信号量或两个V），或P1只等待z因z已蕴含y完成；单个V会死锁。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s6-0-q010",
+   "sourceContentHash": "sha256:2cbf4c559f57645b81a9514f5609763c68575527511210583972044d02b08dcd",
+   "resolution": "非原子状态查询",
+   "conclusion": "R检查empty后P可先占，信号量值也含预约而非实物状态；应使用同一监视器原子选择/等待，不能查计数再P。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s6-0-q012",
+   "sourceContentHash": "sha256:429c082d5a5d0186fae2c3c0cc290b1215202896fd52a67af68712d7645eb9b1",
+   "resolution": "顺序要求未实现",
+   "conclusion": "片种计数器加总锁仅互斥，不保证题设到达顺序；需显式FIFO批次队列与同片合批规则。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s6-0-q016",
+   "sourceContentHash": "sha256:836dcdba1728ced4d000634d6932e60afd725e4d3e4bde57803ada79f1b4b33e",
+   "resolution": "可明确修正",
+   "conclusion": "先把材料放桌，再V对应offer，P(finish)；offer1对应缺胶水者，原表标签也要改。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s6-0-q018",
+   "sourceContentHash": "sha256:1fe7580c2287173a224b7054c84c338777241d34fb010423ae53b3ffa53a85cb",
+   "resolution": "票号未绑定等待者",
+   "conclusion": "公共service可让后到者先获许可；用FIFO票队列/每顾客通知才能满足按号服务，座位上限是另一约束。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c2-s7-0-q003",
+   "sourceContentHash": "sha256:9006b31b4a8979fc20529df2dc2a6e7d85230d443c8a460e9f8876939fea1048",
+   "resolution": "当前死锁信息不足",
+   "conclusion": "Max是未来上界而非当前待满足请求；同时批准后不安全不能唯一断言当前死锁/未死锁，需实际Request和等待状态。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c3-s1-0-q007",
+   "sourceContentHash": "sha256:e202942664a317088ca7d178819666d169f395d13abcfc8bb1dbbf0ceb965b49",
+   "resolution": "可明确修正但口径分叉",
+   "conclusion": "不合并相邻空闲条目时40KiB最佳为280K，选项缺失；若先合并50+60成110，则最佳为410K选D。原C两模型都不成立。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c3-s1-0-q013",
+   "sourceContentHash": "sha256:800a63fdb0325cf1c1bb71e489661bac3e9b83a56ac60a07463571f3531ce0b6",
+   "resolution": "非唯一选项",
+   "conclusion": "不紧凑的动态分区也可装入时静态绑定；需排除运行中不移动的可变分区才可唯一A。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c3-s2-0-q010",
+   "sourceContentHash": "sha256:59e74ad22df60cf0ebfac018a1ab51612d9678623c1ce6bd86d25dd43e297dab",
+   "resolution": "可明确修正",
+   "conclusion": "静态链接映像同样可需求分页；程序链接与按页调入独立，现有D“不确定”比C“必然运行时”合理。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c3-s2-0-q013",
+   "sourceContentHash": "sha256:032d81b9285b1419a07e400415e95d667a53a3d2a2fd261f436e8bbb1b3d3b34",
+   "resolution": "缺置换算法与对齐",
+   "conclusion": "LRU/FIFO页对齐给2048，OPT给1917；已有独立模拟复验，不强行把C恢复成无条件答案。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c3-s2-0-q033",
+   "sourceContentHash": "sha256:5c5a289f28aa7b9ec4c567be6a4252ae5a76ae7361d0092ece593095b628e99c",
+   "resolution": "NRU实现不唯一",
+   "conclusion": "允许的清R/同类FIFO淘汰使NRU退化FIFO并有Belady；原B并非题面唯一，需限定算法或删除D。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c3-s2-0-q040",
+   "sourceContentHash": "sha256:9840b13ea67eb5bb2438acf1f373bfd11d0e7850481d2fafdfe081cd582be25d",
+   "resolution": "能改善与最佳不同",
+   "conclusion": "更快交换盘可降低等待，加内存常是治本最佳；题面只问能提高，A/D不能一概排他。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c3-s2-0-q041",
+   "sourceContentHash": "sha256:fc515f9ce1b95b5bdec07574b54eb17797e00c493eb27ccc6c5c3d5f60607724",
+   "resolution": "选项组合缺失",
+   "conclusion": "I/III可治本，V更快交换区也可能改善等待；若问可能，缺I/III/V组合，不恢复B。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c3-s3-2-q007",
+   "sourceContentHash": "sha256:c258b35ef5b8e5b6ae223e442d67f1a334ef145276e0815a569c7bda1daacfba",
+   "resolution": "可明确修正",
+   "conclusion": "二级EAT=310−200h，严格<120要求h>0.95；95%只是下确界，题应改≤120或答案用严格不等式。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c3-s3-2-q012",
+   "sourceContentHash": "sha256:64aea4298decc33fefd8810b78271ab96e7960f7972eb5f707180b8654f55414",
+   "resolution": "缺算法与页对齐",
+   "conclusion": "两数据框且页对齐：LRU/FIFO为50/5000和100/10000，OPT列序4898/9900；完整算法前提须补。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c3-s3-2-q019",
+   "sourceContentHash": "sha256:d09e03fd814a4705c60bc7aa332730d780dd5e232cb71bafdb845a212f9b632c",
+   "resolution": "缺失原始机器码",
+   "conclusion": "原题库没有首末地址与push ebp地址；没有可靠题图不能验证页数和目录/页号，暂不补写猜测的代码。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  },
+  {
+   "questionId": "c3-s3-2-q020",
+   "sourceContentHash": "sha256:3be2bd2d3e8fb9341a87bf7d247ab115f061e74451317449e92235b09bf0e530",
+   "resolution": "缺地址格式",
+   "conclusion": "只有目录6/页6/偏移8，不给10/10/12，0x01806008不是必然；线程共享地址空间限定普通同进程，保留争议。",
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17"
+  }
+ ]
+}

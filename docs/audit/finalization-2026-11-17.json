@@ -1,0 +1,97 @@
+{
+  "checkedAt": "2026-11-17",
+  "baselineCommit": "1e1febf96e55eb3e7509f62bbffa3ec446eb9b67",
+  "questionReview": {
+    "total": 760,
+    "ch4": {
+      "total": 110,
+      "verified": 33,
+      "qualified": 68,
+      "disputed": 9,
+      "calculations": 26
+    },
+    "ch5": {
+      "total": 120,
+      "verified": 32,
+      "qualified": 82,
+      "disputed": 6,
+      "calculations": 35
+    },
+    "errata": 343,
+    "excluded": 52,
+    "oldDisputesRechecked": 37
+  },
+  "protectedFiles": {
+    "count": 422,
+    "changes": 0
+  },
+  "pythonTests": {
+    "passed": 22,
+    "failed": 0
+  },
+  "datasetValidation": "passed",
+  "browser": {
+    "chrome": {
+      "favoritesNumbering": {
+        "passed": 37,
+        "failed": 0
+      },
+      "acceptance": {
+        "passed": 47,
+        "failed": 0
+      },
+      "reviewRegressions": {
+        "passed": 36,
+        "failed": 0
+      },
+      "chapter2": {
+        "passed": 22,
+        "failed": 0
+      },
+      "chapter3": {
+        "passed": 28,
+        "failed": 0
+      },
+      "syncSettings": {
+        "passed": 26,
+        "failed": 0
+      }
+    },
+    "msedge": {
+      "favoritesNumbering": {
+        "passed": 37,
+        "failed": 0
+      },
+      "syncSettings": {
+        "passed": 26,
+        "failed": 0
+      }
+    },
+    "firefox": {
+      "favoritesNumbering": {
+        "passed": 37,
+        "failed": 0
+      },
+      "syncSettings": {
+        "passed": 26,
+        "failed": 0
+      }
+    },
+    "webkit": {
+      "favoritesNumbering": {
+        "passed": 37,
+        "failed": 0
+      },
+      "syncSettings": {
+        "passed": 26,
+        "failed": 0
+      }
+    }
+  },
+  "limits": [
+    "真实安卓与Safari未验收",
+    "Obsidian实际打开被桌面工具URL安全检查中止",
+    "108年份标签仅文字片段对应，全部均非官方认证",
+    "62张源图主体裁切、22张图题或页边裁切未伪造修复"
+  ]
+}

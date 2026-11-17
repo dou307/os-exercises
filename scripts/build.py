@@ -95,6 +95,8 @@ def main() -> int:
         errata_by_q.setdefault(entry["questionId"], []).append(entry)
 
     questions = []
+    followups = {row["questionId"]: row for row in load("reviews/dispute-followup.json")["questions"]}
+    year_notices = {row["questionId"]: row for row in load("reviews/exam-years.json")["questions"] if row.get("displayNotice")}
     for q in questions_doc["questions"]:
         m = mappings_doc["byQuestion"][q["id"]]
         merged = OrderedDict(q)
@@ -109,6 +111,14 @@ def main() -> int:
         merged["answerReview"] = m.get("answerReview")
         merged["prerequisiteGaps"] = m.get("prerequisiteGaps", [])
         merged["errata"] = errata_by_q.get(q["id"], [])
+        if q["id"] in followups:
+            if followups[q["id"]]["sourceContentHash"] != q["source"]["contentHash"]:
+                raise ValueError(f"争议复审来源哈希失效：{q['id']}")
+            merged["disputeFollowup"] = followups[q["id"]]
+        if q["id"] in year_notices:
+            if year_notices[q["id"]]["sourceContentHash"] != q["source"]["contentHash"]:
+                raise ValueError(f"年份核查来源哈希失效：{q['id']}")
+            merged["yearAuditNotice"] = year_notices[q["id"]]["displayNotice"]
         merged["scoring"] = (
             "excluded"
             if any(e.get("scoring") == "excluded" for e in merged["errata"])
@@ -215,7 +225,7 @@ def main() -> int:
                 "review": q["reviewStatus"],
                 "scoring": q["scoring"],
                 # 只允许本次新增争议的旧单选自动记录作为历史事实迁入，不恢复其计分。
-                "legacyAutoAllowed": q["chapter"] in ("ch2", "ch3") and q["type"] == "single_choice" and q["reviewStatus"] == "disputed",
+                "legacyAutoAllowed": q["chapter"] in ("ch2", "ch3", "ch4", "ch5") and q["type"] == "single_choice" and q["reviewStatus"] == "disputed",
                 # 题干保留全文：索引同时承担搜索语料，截断会让长题干的题搜不到关键词。
                 # 题单里只显示前 90 字，靠 CSS 省略，不需要在数据层裁剪。
                 "stem": q["stemText"],

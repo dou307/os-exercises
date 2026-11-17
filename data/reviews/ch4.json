@@ -1,0 +1,5824 @@
+{
+ "schemaVersion": 1,
+ "sourceChapter": "ch4",
+ "reviewedAt": "2026-11-17",
+ "policy": "逐题读取锁定题干、选项、原答案与完整解析，按真实笔记及一手技术资料复核。verified=本轮未发现实质问题；qualified=原答案限定模型沿用并记录前提/解析问题；disputed=题面条件不全、非唯一或原答案不成立，排除自动计分。原题/原答案不修改，学习进度不自动扩展；不是官方勘误。",
+ "sources": [
+  {
+   "id": "snapshot",
+   "title": "锁定原题快照",
+   "path": "vendor/kaoyan-408-os/",
+   "commit": "e360b96fbd6522656d633ad9e26b7dd91f7bd1b4"
+  },
+  {
+   "id": "notes",
+   "title": "真实课程笔记目录与正文（只读）",
+   "path": "docs/audit/notes-outline.json"
+  },
+  {
+   "id": "osc-files",
+   "title": "UIC课程：文件系统实现",
+   "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+  },
+  {
+   "id": "osc-io",
+   "title": "UIC课程：I/O系统",
+   "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+  },
+  {
+   "id": "osc-disks",
+   "title": "UIC课程：大容量存储",
+   "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+  },
+  {
+   "id": "linux-vfs",
+   "title": "Linux内核文档：VFS",
+   "url": "https://docs.kernel.org/filesystems/vfs.html"
+  },
+  {
+   "id": "linux-open",
+   "title": "Linux man-pages：open",
+   "url": "https://man7.org/linux/man-pages/man2/open.2.html"
+  },
+  {
+   "id": "linux-close",
+   "title": "Linux man-pages：close",
+   "url": "https://man7.org/linux/man-pages/man2/close.2.html"
+  },
+  {
+   "id": "linux-unlink",
+   "title": "Linux man-pages：unlink",
+   "url": "https://man7.org/linux/man-pages/man2/unlink.2.html"
+  },
+  {
+   "id": "fat32",
+   "title": "Microsoft：文件系统功能与权限比较",
+   "url": "https://learn.microsoft.com/en-us/windows/win32/fileio/filesystem-functionality-comparison"
+  },
+  {
+   "id": "blk-mq",
+   "title": "Linux内核：多队列块I/O",
+   "url": "https://docs.kernel.org/block/blk-mq.html"
+  },
+  {
+   "id": "dma",
+   "title": "Linux内核：DMA映射",
+   "url": "https://docs.kernel.org/core-api/dma-api-howto.html"
+  }
+ ],
+ "questions": [
+  {
+   "questionId": "c4-s1-0-q001",
+   "sourceContentHash": "sha256:d4efd8332421383c3963547db50ab57300f258fa2e5ed76ce4d4575af18d33fc",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "按UNIX字符/块设备节点分类选D；并非所有I/O对象都必须有路径名，网络套接字另有接口。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [
+     "12"
+    ],
+    "topicIds": [
+     "t13-1-3",
+     "t12-2-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-1-3",
+     "t12-2-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：按UNIX字符/块设备节点分类选D；并非所有I/O对象都必须有路径名，网络套接字另有接口。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s1-0-q001",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "按UNIX字符/块设备节点分类选D",
+     "detail": "按UNIX字符/块设备节点分类选D；并非所有I/O对象都必须有路径名，网络套接字另有接口。",
+     "suggestedCorrection": "按UNIX字符/块设备节点分类选D；并非所有I/O对象都必须有路径名，网络套接字另有接口。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-1-3",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 125
+    },
+    {
+     "topicId": "t12-2-1",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 220
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s1-0-q002",
+   "sourceContentHash": "sha256:60dd2421dd8ef492a595cf92301cc043af5a63510ee2f286a53c8624aa253f5a",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "流式描述用户可见的字节序列，连续和链接描述落盘组织，选D。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-1-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-1-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：流式描述用户可见的字节序列，连续和链接描述落盘组织，选D。",
+    "prerequisiteGaps": [
+     "教材记录式/索引顺序文件术语需对照；课程以字节流与访问方法为主，不把目录索引和记录索引混为一类。"
+    ]
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t13-1-4",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 149
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s1-0-q003",
+   "sourceContentHash": "sha256:6e79718d9e3a2a0175657161071b61da4c22ab2d0e00fc49ef9112ecb4ce2d6d",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "逻辑结构服务用户的数据组织，存储介质约束主要属于物理实现，选D。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-1-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-1-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：逻辑结构服务用户的数据组织，存储介质约束主要属于物理实现，选D。",
+    "prerequisiteGaps": [
+     "教材记录式/索引顺序文件术语需对照；课程以字节流与访问方法为主，不把目录索引和记录索引混为一类。"
+    ]
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t13-1-4",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 149
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s1-0-q004",
+   "sourceContentHash": "sha256:9381d9ed03f59a75a097cc1e9b598333979f38c4d96f5c833c5b47d46743c156",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "按单索引的教材记录文件模型选B；多重索引或纯顺序扫描不受“每记录仅一索引项、必须查索引”的普遍限制。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-2-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-2-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：按单索引的教材记录文件模型选B；多重索引或纯顺序扫描不受“每记录仅一索引项、必须查索引”的普遍限制。",
+    "prerequisiteGaps": [
+     "教材记录式/索引顺序文件术语需对照；课程以字节流与访问方法为主，不把目录索引和记录索引混为一类。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c4-s1-0-q004",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "按单索引的教材记录文件模型选B",
+     "detail": "按单索引的教材记录文件模型选B；多重索引或纯顺序扫描不受“每记录仅一索引项、必须查索引”的普遍限制。",
+     "suggestedCorrection": "按单索引的教材记录文件模型选B；多重索引或纯顺序扫描不受“每记录仅一索引项、必须查索引”的普遍限制。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-2-3",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 211
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s1-0-q005",
+   "sourceContentHash": "sha256:796b639128c18d5a00bd108a6d3e285b9c5f990a77e06461d93723b88c8b9994",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "两层均顺序查找、分100组时近似50+50=100选C；等概率精确含端点均值为101，不是最坏查找100次。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "index-search"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-2-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-2-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：两层均顺序查找、分100组时近似50+50=100选C；等概率精确含端点均值为101，不是最坏查找100次。",
+    "prerequisiteGaps": [
+     "教材记录式/索引顺序文件术语需对照；课程以字节流与访问方法为主，不把目录索引和记录索引混为一类。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c4-s1-0-q005",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "两层均顺序查找、分100组时近似50+50=100选C",
+     "detail": "两层均顺序查找、分100组时近似50+50=100选C；等概率精确含端点均值为101，不是最坏查找100次。",
+     "suggestedCorrection": "两层均顺序查找、分100组时近似50+50=100选C；等概率精确含端点均值为101，不是最坏查找100次。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [
+      "index-search"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-2-3",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 211
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q001",
+   "sourceContentHash": "sha256:9dd4351369d0914c1f6572292bbc653db76a3e910a54959697cee3c9d7dff831",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "选A的访问/打开引用计数是运行态信息；不要和磁盘inode的硬链接计数混用。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [
+     "13"
+    ],
+    "topicIds": [
+     "t14-2",
+     "t13-1-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-2",
+     "t13-1-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：选A的访问/打开引用计数是运行态信息；不要和磁盘inode的硬链接计数混用。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q001",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "选A的访问/打开引用计数是运行态信息",
+     "detail": "选A的访问/打开引用计数是运行态信息；不要和磁盘inode的硬链接计数混用。",
+     "suggestedCorrection": "选A的访问/打开引用计数是运行态信息；不要和磁盘inode的硬链接计数混用。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 70
+    },
+    {
+     "topicId": "t13-1-2",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 60
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q002",
+   "sourceContentHash": "sha256:83aaecd61a107b54919d41b5a4179e01ec41431ec64ee63551a4fa47d571f092",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "目录记录其直接子目录及普通文件的目录项，选D，不是递归复制所有后代数据。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：目录记录其直接子目录及普通文件的目录项，选D，不是递归复制所有后代数据。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t13-3",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 222
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q003",
+   "sourceContentHash": "sha256:279ddeb633b562de31f18f71b7e333b17d4d83b95acf5b8a9ab62d658f30771d",
+   "answerReview": {
+    "status": "disputed",
+    "conclusion": "题干明确FAT32但解析套用一般FCB；FAT32目录项不具有NTFS式访问权限ACL，B也有问题，不能唯一据此选C。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files",
+     "fat32"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [
+     "14"
+    ],
+    "topicIds": [
+     "t13-1-1",
+     "t14-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-1-1",
+     "t14-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：题干明确FAT32但解析套用一般FCB；FAT32目录项不具有NTFS式访问权限ACL，B也有问题，不能唯一据此选C。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q003",
+     "kind": "disputed_answer",
+     "originalAnswer": "C",
+     "issue": "题干明确FAT32但解析套用一般FCB",
+     "detail": "题干明确FAT32但解析套用一般FCB；FAT32目录项不具有NTFS式访问权限ACL，B也有问题，不能唯一据此选C。",
+     "suggestedCorrection": "题干明确FAT32但解析套用一般FCB；FAT32目录项不具有NTFS式访问权限ACL，B也有问题，不能唯一据此选C。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files",
+      "fat32"
+     ],
+     "checkIds": [],
+     "scoring": "excluded",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-1-1",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 39
+    },
+    {
+     "topicId": "t14-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 70
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q004",
+   "sourceContentHash": "sha256:1bd8a2df7f998b94a415b29d0bb90a7f3e88d7afb39e4f3041ba0e7db17afe74",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "分离文件名和inode缩小目录项，减少按名搜索的目录I/O，选C。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-3",
+     "t14-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-3",
+     "t14-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：分离文件名和inode缩小目录项，减少按名搜索的目录I/O，选C。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t14-3",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 125
+    },
+    {
+     "topicId": "t14-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 70
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q005",
+   "sourceContentHash": "sha256:14ab39f9358f01d9309b8ea761a680445d5e894d64c8f079d05e4b021c93e92b",
+   "answerReview": {
+    "status": "disputed",
+    "conclusion": "异步I/O可以提高文件系统吞吐和重叠性能；“不减少I/O次数”不等于“不提升性能”，D缺乏唯一错误依据。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [
+     "12"
+    ],
+    "topicIds": [
+     "t14-6-2",
+     "t12-2-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-6-2",
+     "t12-2-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：异步I/O可以提高文件系统吞吐和重叠性能；“不减少I/O次数”不等于“不提升性能”，D缺乏唯一错误依据。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q005",
+     "kind": "disputed_answer",
+     "originalAnswer": "D",
+     "issue": "异步I/O可以提高文件系统吞吐和重叠性能",
+     "detail": "异步I/O可以提高文件系统吞吐和重叠性能；“不减少I/O次数”不等于“不提升性能”，D缺乏唯一错误依据。",
+     "suggestedCorrection": "异步I/O可以提高文件系统吞吐和重叠性能；“不减少I/O次数”不等于“不提升性能”，D缺乏唯一错误依据。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "excluded",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-6-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 408
+    },
+    {
+     "topicId": "t12-2-4",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 280
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q006",
+   "sourceContentHash": "sha256:164264f3bf8755a38ebf759c678b4fb540828373770bb6bb917364703bd9e221",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "按无缓存顺序目录检索模型，项数、项长及所在位置影响开销，选B；哈希和缓存改变成本。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-3-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-3-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：按无缓存顺序目录检索模型，项数、项长及所在位置影响开销，选B；哈希和缓存改变成本。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q006",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "按无缓存顺序目录检索模型，项数、项长及所在位置影响开销，选B",
+     "detail": "按无缓存顺序目录检索模型，项数、项长及所在位置影响开销，选B；哈希和缓存改变成本。",
+     "suggestedCorrection": "按无缓存顺序目录检索模型，项数、项长及所在位置影响开销，选B；哈希和缓存改变成本。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-3-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 130
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q007",
+   "sourceContentHash": "sha256:a57f8fc36ef479ea2dc4ffbbef8d2e5d328371c169f4eb1d27df11f3f4acbe7c",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "名称在同一父目录内须唯一，不同路径允许同名，选D。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-3-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-3-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：名称在同一父目录内须唯一，不同路径允许同名，选D。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t13-3-3",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 298
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q008",
+   "sourceContentHash": "sha256:4d6fdead35f4a314f921a1c10328036ca7fdd8b2d889e3e1c6defa905af9c388",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "按名检索目录建立名称到元数据和数据位置的映射，选B。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：按名检索目录建立名称到元数据和数据位置的映射，选B。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t13-3",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 222
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q009",
+   "sourceContentHash": "sha256:9c2a4571fc158a58bc6aecfbe73a4474b4aabe6035f657ccd49c5b534028d7f5",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "3200/16=200块，教材近似平均100次选C；等概率从第一块读起的精确值100.5。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "directory-means"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-3-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-3-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：3200/16=200块，教材近似平均100次选C；等概率从第一块读起的精确值100.5。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q009",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "3200/16=200块，教材近似平均100次选C",
+     "detail": "3200/16=200块，教材近似平均100次选C；等概率从第一块读起的精确值100.5。",
+     "suggestedCorrection": "3200/16=200块，教材近似平均100次选C；等概率从第一块读起的精确值100.5。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [
+      "directory-means"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-3-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 130
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q010",
+   "sourceContentHash": "sha256:c019ed2571a2fbabcd2ab53bd3acfb5d50332ce9f5b2b4eb841727f18cfa95a9",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "目录50块再读inode，教材近似25+1=26选B；精确均值25.5+1=26.5，不应写成精确次数。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "directory-means"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-3-1",
+     "t14-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-3-1",
+     "t14-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：目录50块再读inode，教材近似25+1=26选B；精确均值25.5+1=26.5，不应写成精确次数。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q010",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "目录50块再读inode，教材近似25+1=26选B",
+     "detail": "目录50块再读inode，教材近似25+1=26选B；精确均值25.5+1=26.5，不应写成精确次数。",
+     "suggestedCorrection": "目录50块再读inode，教材近似25+1=26选B；精确均值25.5+1=26.5，不应写成精确次数。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [
+      "directory-means"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-3-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 130
+    },
+    {
+     "topicId": "t14-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 70
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q011",
+   "sourceContentHash": "sha256:f39c6e2dab8d63f27d8f9b69e4ac22115708581626da803acb9fc92238db8a0c",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "无创建副作用的普通路径解析遇缺失分量应失败，选C；哈希是否普及不是本题定理。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [
+     "13"
+    ],
+    "topicIds": [
+     "t14-3-1",
+     "t13-3-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-3-1",
+     "t13-3-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：无创建副作用的普通路径解析遇缺失分量应失败，选C；哈希是否普及不是本题定理。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q011",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "无创建副作用的普通路径解析遇缺失分量应失败，选C",
+     "detail": "无创建副作用的普通路径解析遇缺失分量应失败，选C；哈希是否普及不是本题定理。",
+     "suggestedCorrection": "无创建副作用的普通路径解析遇缺失分量应失败，选C；哈希是否普及不是本题定理。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-3-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 130
+    },
+    {
+     "topicId": "t13-3-3",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 298
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q012",
+   "sourceContentHash": "sha256:4fd31549035623c3822b9f4e2ee997ad87f24a87a7d2e497bcbf23dc02175899",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "相对路径以当前工作目录为解释起点，选A。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-3-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-3-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：相对路径以当前工作目录为解释起点，选A。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t13-3-3",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 298
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q013",
+   "sourceContentHash": "sha256:405b082d38b773fc5ceb2749d563131a773614155bb7d9a28029d471946e20b1",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "按题目主旨选C，多级命名空间解决不同目录下同名；不能保证总查找速度必然更快。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-3-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-3-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：按题目主旨选C，多级命名空间解决不同目录下同名；不能保证总查找速度必然更快。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q013",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "按题目主旨选C，多级命名空间解决不同目录下同名",
+     "detail": "按题目主旨选C，多级命名空间解决不同目录下同名；不能保证总查找速度必然更快。",
+     "suggestedCorrection": "按题目主旨选C，多级命名空间解决不同目录下同名；不能保证总查找速度必然更快。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-3-3",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 298
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q014",
+   "sourceContentHash": "sha256:b61e649cf07f5de9617785fba3217cc9de31ab5fbad8f5bb7dea309c17c8b7f6",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "单级目录同一命名空间不能容纳两个同名目录项，选A。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-3-1",
+     "t13-3-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-3-1",
+     "t13-3-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：单级目录同一命名空间不能容纳两个同名目录项，选A。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t13-3-1",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 241
+    },
+    {
+     "topicId": "t13-3-2",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 250
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q015",
+   "sourceContentHash": "sha256:db63810a696925de6bd8b0e9ada146d1bcba158d43a848706c30dfd77d0677bd",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "按教材磁带顺序访问模型选A；“只能”是效率模型限制，不是不能在磁带上编码索引。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-2-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-2-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：按教材磁带顺序访问模型选A；“只能”是效率模型限制，不是不能在磁带上编码索引。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q015",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "按教材磁带顺序访问模型选A",
+     "detail": "按教材磁带顺序访问模型选A；“只能”是效率模型限制，不是不能在磁带上编码索引。",
+     "suggestedCorrection": "按教材磁带顺序访问模型选A；“只能”是效率模型限制，不是不能在磁带上编码索引。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-2-1",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 178
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q016",
+   "sourceContentHash": "sha256:e95b5877fc0bc3749ae89b4f8c975ec1007e645e83df8d5fad93236786ef10f6",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "隐式链接须沿链定位，选B；不能把该结论直接推广为内存FAT也不能逻辑随机定位。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：隐式链接须沿链定位，选B；不能把该结论直接推广为内存FAT也不能逻辑随机定位。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q016",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "隐式链接须沿链定位，选B",
+     "detail": "隐式链接须沿链定位，选B；不能把该结论直接推广为内存FAT也不能逻辑随机定位。",
+     "suggestedCorrection": "隐式链接须沿链定位，选B；不能把该结论直接推广为内存FAT也不能逻辑随机定位。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 231
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q017",
+   "sourceContentHash": "sha256:9430610279e7a188c7779c8f920d3c82270dec4ea28835cd4708676b498dacc1",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "单区连续分配受邻接空闲空间制约，最不便增长，选A。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：单区连续分配受邻接空闲空间制约，最不便增长，选A。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 181
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q018",
+   "sourceContentHash": "sha256:d992b3aac6918aa790b5cdc8192ea2e3ef3da95ff8231877ac07a271ab89c2d5",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "单区连续文件用起始块及长度定位，不需要索引表，选B。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：单区连续文件用起始块及长度定位，不需要索引表，选B。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 181
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q019",
+   "sourceContentHash": "sha256:22f0002992d5a15eb03d013a2b4e349325cb8ee3b742c189e505d2cbeb85b365",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "这里碎片指外部碎片，连续存放最易产生，选B；索引和链接仍可能有尾块内部碎片。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：这里碎片指外部碎片，连续存放最易产生，选B；索引和链接仍可能有尾块内部碎片。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q019",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "这里碎片指外部碎片，连续存放最易产生，选B",
+     "detail": "这里碎片指外部碎片，连续存放最易产生，选B；索引和链接仍可能有尾块内部碎片。",
+     "suggestedCorrection": "这里碎片指外部碎片，连续存放最易产生，选B；索引和链接仍可能有尾块内部碎片。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 181
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q020",
+   "sourceContentHash": "sha256:58a360bf0adf81d043c4232dc88425d64dee791c1661df4b9d8e27b121eddee3",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "按教材内核统一决定物理组织选D；现实预分配/文件系统选择接口可让应用影响布局策略。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：按教材内核统一决定物理组织选D；现实预分配/文件系统选择接口可让应用影响布局策略。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q020",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "按教材内核统一决定物理组织选D",
+     "detail": "按教材内核统一决定物理组织选D；现实预分配/文件系统选择接口可让应用影响布局策略。",
+     "suggestedCorrection": "按教材内核统一决定物理组织选D；现实预分配/文件系统选择接口可让应用影响布局策略。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 173
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q021",
+   "sourceContentHash": "sha256:eb111001bba70b32b0bfcb79246f6ef446e6974f161e1acc873ca2655a60bbc7",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "题面须限定索引分配才是每文件一张索引表，选C；其他分配方式没有这个普遍要求。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：题面须限定索引分配才是每文件一张索引表，选C；其他分配方式没有这个普遍要求。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q021",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "题面须限定索引分配才是每文件一张索引表，选C",
+     "detail": "题面须限定索引分配才是每文件一张索引表，选C；其他分配方式没有这个普遍要求。",
+     "suggestedCorrection": "题面须限定索引分配才是每文件一张索引表，选C；其他分配方式没有这个普遍要求。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-3",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 290
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q022",
+   "sourceContentHash": "sha256:838918e72b94215bc494776b238acd86de6d2eeaa54ecb64a3156910cdf51e45",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "链接块可离散所以B错；A的记录访问单位只针对记录式文件，散列动态回收也依赖实现。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [
+     "13"
+    ],
+    "topicIds": [
+     "t14-4-2",
+     "t13-1-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-2",
+     "t13-1-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：链接块可离散所以B错；A的记录访问单位只针对记录式文件，散列动态回收也依赖实现。",
+    "prerequisiteGaps": [
+     "教材记录式/索引顺序文件术语需对照；课程以字节流与访问方法为主，不把目录索引和记录索引混为一类。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q022",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "链接块可离散所以B错",
+     "detail": "链接块可离散所以B错；A的记录访问单位只针对记录式文件，散列动态回收也依赖实现。",
+     "suggestedCorrection": "链接块可离散所以B错；A的记录访问单位只针对记录式文件，散列动态回收也依赖实现。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 231
+    },
+    {
+     "topicId": "t13-1-4",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 149
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q023",
+   "sourceContentHash": "sha256:652d33194dd01a9a0f6379a64df3a2b5a4aa72d1bc3860bf2e03704760153795",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "题目问实际落盘组织，介质特性约束最直接，选B；不应把“逻辑文件”括注成“物理结构”。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [
+     "13"
+    ],
+    "topicIds": [
+     "t14-4",
+     "t13-1-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4",
+     "t13-1-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：题目问实际落盘组织，介质特性约束最直接，选B；不应把“逻辑文件”括注成“物理结构”。",
+    "prerequisiteGaps": [
+     "教材记录式/索引顺序文件术语需对照；课程以字节流与访问方法为主，不把目录索引和记录索引混为一类。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q023",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "题目问实际落盘组织，介质特性约束最直接，选B",
+     "detail": "题目问实际落盘组织，介质特性约束最直接，选B；不应把“逻辑文件”括注成“物理结构”。",
+     "suggestedCorrection": "题目问实际落盘组织，介质特性约束最直接，选B；不应把“逻辑文件”括注成“物理结构”。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 173
+    },
+    {
+     "topicId": "t13-1-4",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 149
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q024",
+   "sourceContentHash": "sha256:ff656b8043ccbf2fbbe2cf172226f7a4dbe855351158cfffb436c356a7c330ed",
+   "answerReview": {
+    "status": "disputed",
+    "conclusion": "未说明插入位置和邻接空闲块；若尾部恰有空闲块，连续追加可一次写，不能断言其I/O必最多。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-1",
+     "t14-4-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-1",
+     "t14-4-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：未说明插入位置和邻接空闲块；若尾部恰有空闲块，连续追加可一次写，不能断言其I/O必最多。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q024",
+     "kind": "disputed_answer",
+     "originalAnswer": "A",
+     "issue": "未说明插入位置和邻接空闲块",
+     "detail": "未说明插入位置和邻接空闲块；若尾部恰有空闲块，连续追加可一次写，不能断言其I/O必最多。",
+     "suggestedCorrection": "未说明插入位置和邻接空闲块；若尾部恰有空闲块，连续追加可一次写，不能断言其I/O必最多。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "excluded",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 181
+    },
+    {
+     "topicId": "t14-4-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 231
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q025",
+   "sourceContentHash": "sha256:8da7aec3cdd5b0057aae9e8d9d8c4933e82b736d82b3daa267405768e669519f",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "指针可装入余下12B且无额外缓存时，每块5记录，第22记录在第5块，5读1写共6次选D。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "linked-record"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [
+     "13"
+    ],
+    "topicIds": [
+     "t14-4-2",
+     "t13-1-5"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-2",
+     "t13-1-5"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：指针可装入余下12B且无额外缓存时，每块5记录，第22记录在第5块，5读1写共6次选D。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q025",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "指针可装入余下12B且无额外缓存时，每块5记录，第22记录在第5块，5读1写共6次选D。",
+     "detail": "指针可装入余下12B且无额外缓存时，每块5记录，第22记录在第5块，5读1写共6次选D。",
+     "suggestedCorrection": "指针可装入余下12B且无额外缓存时，每块5记录，第22记录在第5块，5读1写共6次选D。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [
+      "linked-record"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 231
+    },
+    {
+     "topicId": "t13-1-5",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 161
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q026",
+   "sourceContentHash": "sha256:d36827c9867e46614150de1c6a1a6d975296ac0c610205c5cd84e4f1ea82e79b",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "1569字节落在第4个512B记录，物理块80选B；一基“第几个字节”的块内偏移为32而非33，块号不变。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "linked-record"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：1569字节落在第4个512B记录，物理块80选B；一基“第几个字节”的块内偏移为32而非33，块号不变。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q026",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "1569字节落在第4个512B记录，物理块80选B",
+     "detail": "1569字节落在第4个512B记录，物理块80选B；一基“第几个字节”的块内偏移为32而非33，块号不变。",
+     "suggestedCorrection": "1569字节落在第4个512B记录，物理块80选B；一基“第几个字节”的块内偏移为32而非33，块号不变。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [
+      "linked-record"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 231
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q027",
+   "sourceContentHash": "sha256:012ac421615c60ca4e80b73fe5360c8e5f1f9a106fa979ce54723db2796d57f8",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "从头找L5需5次读，保存前驱及后继地址后写新块和前驱共2次写，选C；不含分配元数据写回。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "linked-record"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：从头找L5需5次读，保存前驱及后继地址后写新块和前驱共2次写，选C；不含分配元数据写回。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q027",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "从头找L5需5次读，保存前驱及后继地址后写新块和前驱共2次写，选C",
+     "detail": "从头找L5需5次读，保存前驱及后继地址后写新块和前驱共2次写，选C；不含分配元数据写回。",
+     "suggestedCorrection": "从头找L5需5次读，保存前驱及后继地址后写新块和前驱共2次写，选C；不含分配元数据写回。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [
+      "linked-record"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 231
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q028",
+   "sourceContentHash": "sha256:a1ed02eb8deb2bef3af512a9c96328e0be506a0bf0af15f95699c78e5b097c14",
+   "answerReview": {
+    "status": "disputed",
+    "conclusion": "最大文件512MiB只能给该文件至少需65536簇，不能推出卷的总簇数和FAT长度；128KiB须另给全卷65536簇。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "fat-underdetermined"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：最大文件512MiB只能给该文件至少需65536簇，不能推出卷的总簇数和FAT长度；128KiB须另给全卷65536簇。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q028",
+     "kind": "disputed_answer",
+     "originalAnswer": "B",
+     "issue": "最大文件512MiB只能给该文件至少需65536簇，不能推出卷的总簇数和FAT长度",
+     "detail": "最大文件512MiB只能给该文件至少需65536簇，不能推出卷的总簇数和FAT长度；128KiB须另给全卷65536簇。",
+     "suggestedCorrection": "最大文件512MiB只能给该文件至少需65536簇，不能推出卷的总簇数和FAT长度；128KiB须另给全卷65536簇。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [
+      "fat-underdetermined"
+     ],
+     "scoring": "excluded",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 231
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q029",
+   "sourceContentHash": "sha256:c5191c205dc90bda626a2f986ab296d3f19fb94c90758de7ee705f0c18181442",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "这里链接为隐式且链地址无缓存，取第3记录必须先读前两块，选C。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：这里链接为隐式且链地址无缓存，取第3记录必须先读前两块，选C。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q029",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "这里链接为隐式且链地址无缓存，取第3记录必须先读前两块，选C。",
+     "detail": "这里链接为隐式且链地址无缓存，取第3记录必须先读前两块，选C。",
+     "suggestedCorrection": "这里链接为隐式且链地址无缓存，取第3记录必须先读前两块，选C。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 231
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q030",
+   "sourceContentHash": "sha256:c4432ff8a8574bf1bab12d23738366ba560fc3f704c2515c710c9304eebf4eb8",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "只计本次内存重排、允许延迟写回时B无需立即数据I/O；持久化索引最终仍要写盘。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：只计本次内存重排、允许延迟写回时B无需立即数据I/O；持久化索引最终仍要写盘。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q030",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "只计本次内存重排、允许延迟写回时B无需立即数据I/O",
+     "detail": "只计本次内存重排、允许延迟写回时B无需立即数据I/O；持久化索引最终仍要写盘。",
+     "suggestedCorrection": "只计本次内存重排、允许延迟写回时B无需立即数据I/O；持久化索引最终仍要写盘。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-3",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 290
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q031",
+   "sourceContentHash": "sha256:96b5106af926c36aacd0797d5cf73e2e7a514ddca7c59ebe29fc54148f80f317",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "连续分配搬移成本最大选A；若前方可扩，可移前45块而非必移后55块；其他方式新增数据也需写盘。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-1",
+     "t14-4-2",
+     "t14-4-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-1",
+     "t14-4-2",
+     "t14-4-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：连续分配搬移成本最大选A；若前方可扩，可移前45块而非必移后55块；其他方式新增数据也需写盘。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q031",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "连续分配搬移成本最大选A",
+     "detail": "连续分配搬移成本最大选A；若前方可扩，可移前45块而非必移后55块；其他方式新增数据也需写盘。",
+     "suggestedCorrection": "连续分配搬移成本最大选A；若前方可扩，可移前45块而非必移后55块；其他方式新增数据也需写盘。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 181
+    },
+    {
+     "topicId": "t14-4-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 231
+    },
+    {
+     "topicId": "t14-4-3",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 290
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q032",
+   "sourceContentHash": "sha256:b743c109eda00e6147af7085f1cd63c9868d552ad42cda4daa2abb07e66d4652",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "4KiB/4B=1024，10直接加1024间接数据块得1034，选D。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "index-data-blocks"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：4KiB/4B=1024，10直接加1024间接数据块得1034，选D。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-3",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 290
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q033",
+   "sourceContentHash": "sha256:3508c502067443e4a45e1cd11d88c151b28c36bb27960f6c2be09d3161472486",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "纯二级索引容量256²×1024B=64MiB，选A。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "double-index"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：纯二级索引容量256²×1024B=64MiB，选A。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-3",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 290
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q034",
+   "sourceContentHash": "sha256:b865c937855f0c1cc2ad898f8a25551b0338af203500c6d461cb94ebef76c649",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "纯三级索引容量256³×1024B=16GiB，选B。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "triple-index"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：纯三级索引容量256³×1024B=16GiB，选B。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-3",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 290
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q035",
+   "sourceContentHash": "sha256:c20f3cd64db8008958db3d6258cbbb56c5082e156b43f2c4f9d160c355470a57",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "经典线性表模型选C，就绪队列可用链表；页表还有层次/散列/倒排实现，解析“只能数组”不能普遍成立。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "3",
+    "secondaryChapterIds": [
+     "14",
+     "9"
+    ],
+    "topicIds": [
+     "t3-2-3",
+     "t14-4-2",
+     "t9-3-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t3-2-3",
+     "t14-4-2",
+     "t9-3-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：经典线性表模型选C，就绪队列可用链表；页表还有层次/散列/倒排实现，解析“只能数组”不能普遍成立。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q035",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "经典线性表模型选C，就绪队列可用链表",
+     "detail": "经典线性表模型选C，就绪队列可用链表；页表还有层次/散列/倒排实现，解析“只能数组”不能普遍成立。",
+     "suggestedCorrection": "经典线性表模型选C，就绪队列可用链表；页表还有层次/散列/倒排实现，解析“只能数组”不能普遍成立。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t3-2-3",
+     "noteFile": "3-Processes.md",
+     "noteLine": 186
+    },
+    {
+     "topicId": "t14-4-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 231
+    },
+    {
+     "topicId": "t9-3-2",
+     "noteFile": "9-Main Memory.md",
+     "noteLine": 270
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q036",
+   "sourceContentHash": "sha256:b95cae50e8ea1326fc3c7060e2491525db6dd17c9137faa40f46c2e913adc313",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "创建新文件时加入目录项选A；硬链接说明目录项与文件实体并非严格一对一。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-1-2",
+     "t13-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-1-2",
+     "t13-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：创建新文件时加入目录项选A；硬链接说明目录项与文件实体并非严格一对一。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q036",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "创建新文件时加入目录项选A",
+     "detail": "创建新文件时加入目录项选A；硬链接说明目录项与文件实体并非严格一对一。",
+     "suggestedCorrection": "创建新文件时加入目录项选A；硬链接说明目录项与文件实体并非严格一对一。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-1-2",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 60
+    },
+    {
+     "topicId": "t13-3",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 222
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q037",
+   "sourceContentHash": "sha256:c2b9a8c84d01791a368c9b57d9696fa1e6abaed6cfbd351782563f5433cebcf0",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "教材用载入控制信息概括open选A，实际路径解析属于open过程，命中缓存时不必重新读盘。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [
+     "14"
+    ],
+    "topicIds": [
+     "t13-1-2",
+     "t14-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-1-2",
+     "t14-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：教材用载入控制信息概括open选A，实际路径解析属于open过程，命中缓存时不必重新读盘。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q037",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "教材用载入控制信息概括open选A，实际路径解析属于open过程，命中缓存时不必重新读盘。",
+     "detail": "教材用载入控制信息概括open选A，实际路径解析属于open过程，命中缓存时不必重新读盘。",
+     "suggestedCorrection": "教材用载入控制信息概括open选A，实际路径解析属于open过程，命中缓存时不必重新读盘。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-1-2",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 60
+    },
+    {
+     "topicId": "t14-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 70
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q038",
+   "sourceContentHash": "sha256:270793196ab42471aa000fdda5f4d815f67e1a6fb4d042abd5946bd5d014c970",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "open按路径打开选B；真实Linux每次独立open创建open-file description，即使inode已缓存，不是首次打开才增系统表项。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files",
+     "linux-open"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-1-2",
+     "t13-3-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-1-2",
+     "t13-3-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：open按路径打开选B；真实Linux每次独立open创建open-file description，即使inode已缓存，不是首次打开才增系统表项。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q038",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "open按路径打开选B",
+     "detail": "open按路径打开选B；真实Linux每次独立open创建open-file description，即使inode已缓存，不是首次打开才增系统表项。",
+     "suggestedCorrection": "open按路径打开选B；真实Linux每次独立open创建open-file description，即使inode已缓存，不是首次打开才增系统表项。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files",
+      "linux-open"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-1-2",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 60
+    },
+    {
+     "topicId": "t13-3-4",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 337
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q039",
+   "sourceContentHash": "sha256:c72c4c9b3de9e5168e0ab31b95e6906e01c924d0967cb62fa5b23a1644a41987",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "按教材控制信息收尾选B；close不保证数据或元数据已落盘，持久化须区分fsync和后台回写。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files",
+     "linux-close"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [
+     "14"
+    ],
+    "topicIds": [
+     "t13-1-2",
+     "t14-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-1-2",
+     "t14-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：按教材控制信息收尾选B；close不保证数据或元数据已落盘，持久化须区分fsync和后台回写。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q039",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "按教材控制信息收尾选B",
+     "detail": "按教材控制信息收尾选B；close不保证数据或元数据已落盘，持久化须区分fsync和后台回写。",
+     "suggestedCorrection": "按教材控制信息收尾选B；close不保证数据或元数据已落盘，持久化须区分fsync和后台回写。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files",
+      "linux-close"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-1-2",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 60
+    },
+    {
+     "topicId": "t14-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 70
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q040",
+   "sourceContentHash": "sha256:520ce6088a065640834bd260d961b86827276def6089bf24d30637edfdb1f29e",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "抽象读流程为描述符定位→授权→映射→设备请求，选B；缓存命中不必下发设备I/O。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [
+     "12"
+    ],
+    "topicIds": [
+     "t13-1-2",
+     "t12-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-1-2",
+     "t12-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：抽象读流程为描述符定位→授权→映射→设备请求，选B；缓存命中不必下发设备I/O。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Transforming I/O Requests to Hardware Operations。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q040",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "抽象读流程为描述符定位→授权→映射→设备请求，选B",
+     "detail": "抽象读流程为描述符定位→授权→映射→设备请求，选B；缓存命中不必下发设备I/O。",
+     "suggestedCorrection": "抽象读流程为描述符定位→授权→映射→设备请求，选B；缓存命中不必下发设备I/O。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-1-2",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 60
+    },
+    {
+     "topicId": "t12-3",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 339
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q041",
+   "sourceContentHash": "sha256:8308f1a73026463dc7748732911a8b50ef9559d30630f6f36daeb01d741e04e6",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "物理结构可异、优先级非权限、跨目录可同名、备份非访问矩阵，四项按教材均错选D。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [
+     "14"
+    ],
+    "topicIds": [
+     "t13-4",
+     "t14-7"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-4",
+     "t14-7"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：物理结构可异、优先级非权限、跨目录可同名、备份非访问矩阵，四项按教材均错选D。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q041",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "物理结构可异、优先级非权限、跨目录可同名、备份非访问矩阵，四项按教材均错选D。",
+     "detail": "物理结构可异、优先级非权限、跨目录可同名、备份非访问矩阵，四项按教材均错选D。",
+     "suggestedCorrection": "物理结构可异、优先级非权限、跨目录可同名、备份非访问矩阵，四项按教材均错选D。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-4",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 406
+    },
+    {
+     "topicId": "t14-7",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 456
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q042",
+   "sourceContentHash": "sha256:e28d4eaed1616ef9613b38f9dda4bab0dd5a74a13307c66fee24b22bf07851c4",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "已打开文件的read/write以描述符引用，不再传路径，选D。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-1-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-1-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：已打开文件的read/write以描述符引用，不再传路径，选D。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t13-1-2",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 60
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q043",
+   "sourceContentHash": "sha256:b1e1a3e7892681604f96b266cbc87b170d8c47f3c8c97bb7aba0f2936ec8c5c7",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "硬链接加一再删除减一，符号链接inode独立，最终两个计数均1，选A。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files",
+     "linux-unlink"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-3-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-3-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：硬链接加一再删除减一，符号链接inode独立，最终两个计数均1，选A。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t13-3-4",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 337
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q044",
+   "sourceContentHash": "sha256:6a6cb97fb9cf98c64c0406f772b8cc383cdaca231120d1f13413e431aa93edb6",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "若inode起初不在缓存且第二次仍驻留，两个硬链接打开只读一次inode选A；已有缓存时也可能零次。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [
+     "14"
+    ],
+    "topicIds": [
+     "t13-3-4",
+     "t14-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-3-4",
+     "t14-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：若inode起初不在缓存且第二次仍驻留，两个硬链接打开只读一次inode选A；已有缓存时也可能零次。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q044",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "若inode起初不在缓存且第二次仍驻留，两个硬链接打开只读一次inode选A",
+     "detail": "若inode起初不在缓存且第二次仍驻留，两个硬链接打开只读一次inode选A；已有缓存时也可能零次。",
+     "suggestedCorrection": "若inode起初不在缓存且第二次仍驻留，两个硬链接打开只读一次inode选A；已有缓存时也可能零次。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-3-4",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 337
+    },
+    {
+     "topicId": "t14-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 70
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q045",
+   "sourceContentHash": "sha256:31a4ab204ee414fc6cdfc5a0e5bd3703046d382a07867a76a28e5bd744effe47",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "题意是访问授权保护选A；不等于连系统管理员和离线物理读取也绝对无法访问。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-4-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-4-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：题意是访问授权保护选A；不等于连系统管理员和离线物理读取也绝对无法访问。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q045",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "题意是访问授权保护选A",
+     "detail": "题意是访问授权保护选A；不等于连系统管理员和离线物理读取也绝对无法访问。",
+     "suggestedCorrection": "题意是访问授权保护选A；不等于连系统管理员和离线物理读取也绝对无法访问。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-4-2",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 436
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q046",
+   "sourceContentHash": "sha256:f92b742e75f2a8eb10287771ff7058277fd006cfc0dafd34cbf84a6bc70d6f97",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "关闭描述符不是访问控制机制所以D；关闭也不代表必然写回所有内容。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：关闭描述符不是访问控制机制所以D；关闭也不代表必然写回所有内容。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q046",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "关闭描述符不是访问控制机制所以D",
+     "detail": "关闭描述符不是访问控制机制所以D；关闭也不代表必然写回所有内容。",
+     "suggestedCorrection": "关闭描述符不是访问控制机制所以D；关闭也不代表必然写回所有内容。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-4",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 406
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q047",
+   "sourceContentHash": "sha256:6a463ed951afc2153c90e0fc5d1ca617559eef1664a8b8d6ad4158313acf8232",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "主体权限与文件保护属性决定能否访问，不由调度优先级替代，选A。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-4-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-4-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：主体权限与文件保护属性决定能否访问，不由调度优先级替代，选A。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t13-4-2",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 436
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q048",
+   "sourceContentHash": "sha256:e77c8dce262269d427b5accc88d2467f5c14c44d7beaea4e5f4fa7044626371b",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "进入系统先认证属于教材系统级选A；注册是建账号而非每次登录都重新注册。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：进入系统先认证属于教材系统级选A；注册是建账号而非每次登录都重新注册。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q048",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "进入系统先认证属于教材系统级选A",
+     "detail": "进入系统先认证属于教材系统级选A；注册是建账号而非每次登录都重新注册。",
+     "suggestedCorrection": "进入系统先认证属于教材系统级选A；注册是建账号而非每次登录都重新注册。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-4",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 406
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q049",
+   "sourceContentHash": "sha256:a240b07ec3824d8822d3f2138b1b989e0c81a9e254c8a235426a7693c24c58e7",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "FCB/inode保存权限等控制元数据，选A。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-1-1",
+     "t13-4-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-1-1",
+     "t13-4-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：FCB/inode保存权限等控制元数据，选A。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t13-1-1",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 39
+    },
+    {
+     "topicId": "t13-4-2",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 436
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q050",
+   "sourceContentHash": "sha256:072963f311ee7a2c8d9789099de5216d757fe83ccaf3a47d884799d57324c6fc",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "教材固定连续区与隐式链的比较中，索引兼顾随机定位和扩展选B。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：教材固定连续区与隐式链的比较中，索引兼顾随机定位和扩展选B。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q050",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "教材固定连续区与隐式链的比较中，索引兼顾随机定位和扩展选B。",
+     "detail": "教材固定连续区与隐式链的比较中，索引兼顾随机定位和扩展选B。",
+     "suggestedCorrection": "教材固定连续区与隐式链的比较中，索引兼顾随机定位和扩展选B。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-3",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 290
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q051",
+   "sourceContentHash": "sha256:6f47bbfe56eff8a999052728e979fc29604cc5909d7430177949c623bd82c415",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "F2为独立符号链接仍计1；删F1只减共享inode计数，F3计1，选B；F2可成为悬空链接。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files",
+     "linux-unlink"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-3-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-3-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：F2为独立符号链接仍计1；删F1只减共享inode计数，F3计1，选B；F2可成为悬空链接。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q051",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "F2为独立符号链接仍计1",
+     "detail": "F2为独立符号链接仍计1；删F1只减共享inode计数，F3计1，选B；F2可成为悬空链接。",
+     "suggestedCorrection": "F2为独立符号链接仍计1；删F1只减共享inode计数，F3计1，选B；F2可成为悬空链接。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files",
+      "linux-unlink"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-3-4",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 337
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q052",
+   "sourceContentHash": "sha256:5478d0a4506e5f03b26b81fa043b1ea8567bd2ce4822a6d5ef877ba88db7148b",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "相对工作目录避免每次从根解析，教材选C；缓存会影响实际加速幅度。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-3-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-3-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：相对工作目录避免每次从根解析，教材选C；缓存会影响实际加速幅度。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q052",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "相对工作目录避免每次从根解析，教材选C",
+     "detail": "相对工作目录避免每次从根解析，教材选C；缓存会影响实际加速幅度。",
+     "suggestedCorrection": "相对工作目录避免每次从根解析，教材选C；缓存会影响实际加速幅度。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-3-3",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 298
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q053",
+   "sourceContentHash": "sha256:ad5f27db7f0fad136700d18a96a92f406eb229064f2ed78ade00ae8a435ad273",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "扇出64，(4+2×64+64²)×256=1082368B=1057KiB，选C。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "mixed-2010"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：扇出64，(4+2×64+64²)×256=1082368B=1057KiB，选C。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-3",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 290
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q054",
+   "sourceContentHash": "sha256:bebb219d4c079801a6d37209fd99d37eadeb1dc1974e6e176d94824c7bf7f7f1",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "普通阻塞文件read且数据未缓存时等待，系统调用进内核、参数用fd，选A；异步/非阻塞接口须另论。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [
+     "2",
+     "3"
+    ],
+    "topicIds": [
+     "t13-1-2",
+     "t2-3",
+     "t3-2-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-1-2",
+     "t2-3",
+     "t3-2-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：普通阻塞文件read且数据未缓存时等待，系统调用进内核、参数用fd，选A；异步/非阻塞接口须另论。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q054",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "普通阻塞文件read且数据未缓存时等待，系统调用进内核、参数用fd，选A",
+     "detail": "普通阻塞文件read且数据未缓存时等待，系统调用进内核、参数用fd，选A；异步/非阻塞接口须另论。",
+     "suggestedCorrection": "普通阻塞文件read且数据未缓存时等待，系统调用进内核、参数用fd，选A；异步/非阻塞接口须另论。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-1-2",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 60
+    },
+    {
+     "topicId": "t2-3",
+     "noteFile": "2-Operating-System Structures.md",
+     "noteLine": 90
+    },
+    {
+     "topicId": "t3-2-2",
+     "noteFile": "3-Processes.md",
+     "noteLine": 170
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q055",
+   "sourceContentHash": "sha256:9f14da9eec3018d9267fb51233bcd0d27dabf80b7ee65de5a22ecf17e413b09b",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "unlink普通文件不同时删其父目录，选A；FCB和空间释放要等最后硬链接及打开引用消失。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files",
+     "linux-unlink"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-1-2",
+     "t13-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-1-2",
+     "t13-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：unlink普通文件不同时删其父目录，选A；FCB和空间释放要等最后硬链接及打开引用消失。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q055",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "unlink普通文件不同时删其父目录，选A",
+     "detail": "unlink普通文件不同时删其父目录，选A；FCB和空间释放要等最后硬链接及打开引用消失。",
+     "suggestedCorrection": "unlink普通文件不同时删其父目录，选A；FCB和空间释放要等最后硬链接及打开引用消失。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files",
+      "linux-unlink"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-1-2",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 60
+    },
+    {
+     "topicId": "t13-3",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 222
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q056",
+   "sourceContentHash": "sha256:2761982d8fb659ebf70513e4382331209013f31e11bfa214bc0d493cb90b0235",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "固定指针模型下inode总数限制实体数、不决定单文件索引容量，选A；容量还受地址位宽和实现限制。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：固定指针模型下inode总数限制实体数、不决定单文件索引容量，选A；容量还受地址位宽和实现限制。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q056",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "固定指针模型下inode总数限制实体数、不决定单文件索引容量，选A",
+     "detail": "固定指针模型下inode总数限制实体数、不决定单文件索引容量，选A；容量还受地址位宽和实现限制。",
+     "suggestedCorrection": "固定指针模型下inode总数限制实体数、不决定单文件索引容量，选A；容量还受地址位宽和实现限制。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-3",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 290
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q057",
+   "sourceContentHash": "sha256:39111da9c401d2b620d25641dd7db780ac44fada5353f4a25d3162a5e547c773",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "按未缓存索引及只读视频教材模型，连续布局选A；不保证所有缓存/存储系统上严格最快。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：按未缓存索引及只读视频教材模型，连续布局选A；不保证所有缓存/存储系统上严格最快。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q057",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "按未缓存索引及只读视频教材模型，连续布局选A",
+     "detail": "按未缓存索引及只读视频教材模型，连续布局选A；不保证所有缓存/存储系统上严格最快。",
+     "suggestedCorrection": "按未缓存索引及只读视频教材模型，连续布局选A；不保证所有缓存/存储系统上严格最快。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 181
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q058",
+   "sourceContentHash": "sha256:be5adf7764720acda63c040876b3cc19fde4fac64ea5becfb84e60bba1708d0c",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "首次打开载入控制信息选B，不等于预读全部内容；若inode已缓存无须磁盘读。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [
+     "14"
+    ],
+    "topicIds": [
+     "t13-1-2",
+     "t14-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-1-2",
+     "t14-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：首次打开载入控制信息选B，不等于预读全部内容；若inode已缓存无须磁盘读。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q058",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "首次打开载入控制信息选B，不等于预读全部内容",
+     "detail": "首次打开载入控制信息选B，不等于预读全部内容；若inode已缓存无须磁盘读。",
+     "suggestedCorrection": "首次打开载入控制信息选B，不等于预读全部内容；若inode已缓存无须磁盘读。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-1-2",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 60
+    },
+    {
+     "topicId": "t14-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 70
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q059",
+   "sourceContentHash": "sha256:f55d4786eb12d0316e0719e52de701ad0995c3fbab9963b754c1a98453563d87",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "1234在直接区，307400超过266KiB进二级区；未缓存索引时分别1和3次选B。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "mixed-offsets"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：1234在直接区，307400超过266KiB进二级区；未缓存索引时分别1和3次选B。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-3",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 290
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q060",
+   "sourceContentHash": "sha256:2f43e4c9144c3e00b947f8c5a0731e223e8484bc267c966df455a868ed3d66b6",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "4类×5个独立布尔权限需20位选D；若完全控制是其他权限的派生组合，编码前提需另定。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "permission-bits"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-4-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-4-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：4类×5个独立布尔权限需20位选D；若完全控制是其他权限的派生组合，编码前提需另定。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q060",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "4类×5个独立布尔权限需20位选D",
+     "detail": "4类×5个独立布尔权限需20位选D；若完全控制是其他权限的派生组合，编码前提需另定。",
+     "suggestedCorrection": "4类×5个独立布尔权限需20位选D；若完全控制是其他权限的派生组合，编码前提需另定。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [
+      "permission-bits"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-4-2",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 436
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q061",
+   "sourceContentHash": "sha256:9d093f876ef02fc990be2b76d4a4ca648540e72b1f87efa43b6fea2dc42ca61e",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "两次独立open共享inode但offset独立，II/III正确选B；fork/dup共享描述另论，offset实际存于open-file description。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files",
+     "linux-open"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-3-4",
+     "t13-1-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-3-4",
+     "t13-1-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：两次独立open共享inode但offset独立，II/III正确选B；fork/dup共享描述另论，offset实际存于open-file description。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q061",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "两次独立open共享inode但offset独立，II/III正确选B",
+     "detail": "两次独立open共享inode但offset独立，II/III正确选B；fork/dup共享描述另论，offset实际存于open-file description。",
+     "suggestedCorrection": "两次独立open共享inode但offset独立，II/III正确选B；fork/dup共享描述另论，offset实际存于open-file description。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files",
+      "linux-open"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-3-4",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 337
+    },
+    {
+     "topicId": "t13-1-2",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 60
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q062",
+   "sourceContentHash": "sha256:eed553972c977d876fe3dbc27a27cfc94906b5e22ae4908720e6fc3119a2baab",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "按1KiB簇向上取整，ceil(1026/1024)×1024=2048B，选D。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "cluster-rounding"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-1-5"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-1-5"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：按1KiB簇向上取整，ceil(1026/1024)×1024=2048B，选D。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t13-1-5",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 161
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q063",
+   "sourceContentHash": "sha256:ebe57ba871875e0a7e827b62fd8a1fd965708243593bf15b02a1fb430adc7ee7",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "按每实体一个32位inode号且不计保留号的理论上界为2³²选B，不是硬链接目录项数的绝对上限。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [
+     "13"
+    ],
+    "topicIds": [
+     "t14-2",
+     "t13-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-2",
+     "t13-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：按每实体一个32位inode号且不计保留号的理论上界为2³²选B，不是硬链接目录项数的绝对上限。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q063",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "按每实体一个32位inode号且不计保留号的理论上界为2³²选B，不是硬链接目录项数的绝对上限。",
+     "detail": "按每实体一个32位inode号且不计保留号的理论上界为2³²选B，不是硬链接目录项数的绝对上限。",
+     "suggestedCorrection": "按每实体一个32位inode号且不计保留号的理论上界为2³²选B，不是硬链接目录项数的绝对上限。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 70
+    },
+    {
+     "topicId": "t13-3",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 222
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q064",
+   "sourceContentHash": "sha256:1941fbf0f51fc0026362def349431bd0625e672295b88cb84439e3ffe973a70b",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "教材以共享inode属性项称系统打开文件表时选B；Linux独立open可有多个file对象，不能把它们都合成一个offset。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files",
+     "linux-open"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [
+     "14"
+    ],
+    "topicIds": [
+     "t13-1-2",
+     "t14-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-1-2",
+     "t14-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：教材以共享inode属性项称系统打开文件表时选B；Linux独立open可有多个file对象，不能把它们都合成一个offset。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q064",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "教材以共享inode属性项称系统打开文件表时选B",
+     "detail": "教材以共享inode属性项称系统打开文件表时选B；Linux独立open可有多个file对象，不能把它们都合成一个offset。",
+     "suggestedCorrection": "教材以共享inode属性项称系统打开文件表时选B；Linux独立open可有多个file对象，不能把它们都合成一个offset。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files",
+      "linux-open"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-1-2",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 60
+    },
+    {
+     "topicId": "t14-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 70
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q065",
+   "sourceContentHash": "sha256:9ac5941072615f612bc8adab9f25d3e13d49f30d173682551f7f59e90e83064f",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "在教材三种基本分配的可扩展效率比较中选A；连续分配并非绝对不能增长。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：在教材三种基本分配的可扩展效率比较中选A；连续分配并非绝对不能增长。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q065",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "在教材三种基本分配的可扩展效率比较中选A",
+     "detail": "在教材三种基本分配的可扩展效率比较中选A；连续分配并非绝对不能增长。",
+     "suggestedCorrection": "在教材三种基本分配的可扩展效率比较中选A；连续分配并非绝对不能增长。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-3",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 290
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q066",
+   "sourceContentHash": "sha256:ca843c1b604295d108ace6b27df41777fe94ca810a55af71c8222d993b94cc09",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "删除目标无需跟踪移除符号链接选A；空间/FCB是否立即释放还取决于其他硬链接和打开引用。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files",
+     "linux-unlink"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-1-2",
+     "t13-3-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-1-2",
+     "t13-3-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：删除目标无需跟踪移除符号链接选A；空间/FCB是否立即释放还取决于其他硬链接和打开引用。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q066",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "删除目标无需跟踪移除符号链接选A",
+     "detail": "删除目标无需跟踪移除符号链接选A；空间/FCB是否立即释放还取决于其他硬链接和打开引用。",
+     "suggestedCorrection": "删除目标无需跟踪移除符号链接选A；空间/FCB是否立即释放还取决于其他硬链接和打开引用。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files",
+      "linux-unlink"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-1-2",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 60
+    },
+    {
+     "topicId": "t13-3-4",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 337
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q067",
+   "sourceContentHash": "sha256:2e1134ba29ee7dd958f50e9bed78c6646dd4547e0aa2e2cb0537ef234294f7ea",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "教材活动inode计数归零释放内存选B；真实系统可缓存inode，磁盘链接计数与打开计数分开。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files",
+     "linux-close"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [
+     "14"
+    ],
+    "topicIds": [
+     "t13-1-2",
+     "t14-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-1-2",
+     "t14-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：教材活动inode计数归零释放内存选B；真实系统可缓存inode，磁盘链接计数与打开计数分开。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s2-0-q067",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "教材活动inode计数归零释放内存选B",
+     "detail": "教材活动inode计数归零释放内存选B；真实系统可缓存inode，磁盘链接计数与打开计数分开。",
+     "suggestedCorrection": "教材活动inode计数归零释放内存选B；真实系统可缓存inode，磁盘链接计数与打开计数分开。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files",
+      "linux-close"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-1-2",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 60
+    },
+    {
+     "topicId": "t14-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 70
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q068",
+   "sourceContentHash": "sha256:bd383e96780496cfd4974fb3bb72aa6512446621fb1c40997df738f3827e4299",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "open按路径解析名称，read/write/close使用fd，选A。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-1-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-1-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：open按路径解析名称，read/write/close使用fd，选A。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t13-1-2",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 60
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q069",
+   "sourceContentHash": "sha256:d9ccbcaeb07da3c9eb535c949d083a1e50e2f28b74f37262040ecef092d45dcc",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "FAT既存链接又用特殊值标空闲，选C。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-2",
+     "t14-5"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-2",
+     "t14-5"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：FAT既存链接又用特殊值标空闲，选C。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 231
+    },
+    {
+     "topicId": "t14-5",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 334
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q070",
+   "sourceContentHash": "sha256:36a620e8901e11a6b2bbc7d946a5dc3350239303565c06560f722656dabfb2dc",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "该目录/inode模型中目录仅加名称和inode号，权限存inode不写目录项，选C。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [
+     "13"
+    ],
+    "topicIds": [
+     "t14-2",
+     "t13-1-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-2",
+     "t13-1-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：该目录/inode模型中目录仅加名称和inode号，权限存inode不写目录项，选C。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t14-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 70
+    },
+    {
+     "topicId": "t13-1-1",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 39
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q001",
+   "sourceContentHash": "sha256:b59aeaf8b90dd7181c87ab87cd81e74a401706c046723d95187bf7f7fe32dade",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "从用户抽象接口主旨选B按名存取；持久保存和保护也是文件系统目标，不应泛称无关。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-1",
+     "t13-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-1",
+     "t13-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：从用户抽象接口主旨选B按名存取；持久保存和保护也是文件系统目标，不应泛称无关。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s3-0-q001",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "从用户抽象接口主旨选B按名存取",
+     "detail": "从用户抽象接口主旨选B按名存取；持久保存和保护也是文件系统目标，不应泛称无关。",
+     "suggestedCorrection": "从用户抽象接口主旨选B按名存取；持久保存和保护也是文件系统目标，不应泛称无关。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-1",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 27
+    },
+    {
+     "topicId": "t13-3",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 222
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q002",
+   "sourceContentHash": "sha256:b143080658b8b9ca8834e81d3a2b80adbdf5188c5d6bfed200ecd1329d3386f9",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "逻辑文件系统管理命名、目录、句柄和文件保护选D；存储保护应读作文件权限而非内存MMU保护。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [
+     "13"
+    ],
+    "topicIds": [
+     "t14-1",
+     "t13-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-1",
+     "t13-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：逻辑文件系统管理命名、目录、句柄和文件保护选D；存储保护应读作文件权限而非内存MMU保护。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s3-0-q002",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "逻辑文件系统管理命名、目录、句柄和文件保护选D",
+     "detail": "逻辑文件系统管理命名、目录、句柄和文件保护选D；存储保护应读作文件权限而非内存MMU保护。",
+     "suggestedCorrection": "逻辑文件系统管理命名、目录、句柄和文件保护选D；存储保护应读作文件权限而非内存MMU保护。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 35
+    },
+    {
+     "topicId": "t13-4",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 406
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q003",
+   "sourceContentHash": "sha256:301e802b86f75a94b21a0b434f2d97511248b5afa49d9f5693bb44f8cd6b7b68",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "实体数量受FCB资源约束选A，卷可小于磁盘或跨多个磁盘。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：实体数量受FCB资源约束选A，卷可小于磁盘或跨多个磁盘。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t14-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 70
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q004",
+   "sourceContentHash": "sha256:6f25ba65869c0dc01f50d4bbb6eda51c77dd08c8348569eb4b07a2654d851940",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "UNIX inode保存数据块定位信息选B；间接索引块另存，空闲块不是已存文件数据的块。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：UNIX inode保存数据块定位信息选B；间接索引块另存，空闲块不是已存文件数据的块。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s3-0-q004",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "UNIX inode保存数据块定位信息选B",
+     "detail": "UNIX inode保存数据块定位信息选B；间接索引块另存，空闲块不是已存文件数据的块。",
+     "suggestedCorrection": "UNIX inode保存数据块定位信息选B；间接索引块另存，空闲块不是已存文件数据的块。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-3",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 290
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q005",
+   "sourceContentHash": "sha256:f076077e913c0ddfa9a55f3883dd12aa80bcf79d7f75cc4e5e3f917e66bcd56c",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "空间分配与回收依靠空闲区管理，选C。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-5"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-5"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：空间分配与回收依靠空闲区管理，选C。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t14-5",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 334
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q006",
+   "sourceContentHash": "sha256:10a78edfecbe544bcb8f254e9ed79189b136824bb3eda0b92acce85fcfcfa3b6",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "教材文件区偏向空间利用、交换区偏向速度，选D；不是现代系统不重视文件I/O吞吐。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [
+     "11"
+    ],
+    "topicIds": [
+     "t14-6-1",
+     "t11-6"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-6-1",
+     "t11-6"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：教材文件区偏向空间利用、交换区偏向速度，选D；不是现代系统不重视文件I/O吞吐。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s3-0-q006",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "教材文件区偏向空间利用、交换区偏向速度，选D",
+     "detail": "教材文件区偏向空间利用、交换区偏向速度，选D；不是现代系统不重视文件I/O吞吐。",
+     "suggestedCorrection": "教材文件区偏向空间利用、交换区偏向速度，选D；不是现代系统不重视文件I/O吞吐。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files",
+      "osc-disks"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-6-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 390
+    },
+    {
+     "topicId": "t11-6",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 378
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q007",
+   "sourceContentHash": "sha256:4e3c1d7b89cb1986aa2507bf42a7502faa82f00905bd4f51af9d3078e3d1c589",
+   "answerReview": {
+    "status": "disputed",
+    "conclusion": "位图既能管磁盘也能管主存，B/C均成立；同章第10和16题本身就用位图管理内存，题面缺“文件系统中”限定。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [
+     "9"
+    ],
+    "topicIds": [
+     "t14-5-1",
+     "t9-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-5-1",
+     "t9-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：位图既能管磁盘也能管主存，B/C均成立；同章第10和16题本身就用位图管理内存，题面缺“文件系统中”限定。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s3-0-q007",
+     "kind": "disputed_answer",
+     "originalAnswer": "B",
+     "issue": "位图既能管磁盘也能管主存，B/C均成立",
+     "detail": "位图既能管磁盘也能管主存，B/C均成立；同章第10和16题本身就用位图管理内存，题面缺“文件系统中”限定。",
+     "suggestedCorrection": "位图既能管磁盘也能管主存，B/C均成立；同章第10和16题本身就用位图管理内存，题面缺“文件系统中”限定。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "excluded",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-5-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 344
+    },
+    {
+     "topicId": "t9-2",
+     "noteFile": "9-Main Memory.md",
+     "noteLine": 111
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q008",
+   "sourceContentHash": "sha256:fc1b1487f31485744cefb1bc3a99f3900bf422005e04ebbe45aa80208ad50047",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "教材成组链接把一批空闲块号放入专用栈，选D。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-5-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-5-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：教材成组链接把一批空闲块号放入专用栈，选D。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t14-5-3",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 367
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q009",
+   "sourceContentHash": "sha256:601b6b03e43d6ac348231d35d6c7b53ff0e7ba2ebd06606b17016c80e4b6a5c4",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "限定传统BIOS/MBR磁盘布局选B；现代UEFI/GPT不宜直接套该引导描述。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-5-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-5-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：限定传统BIOS/MBR磁盘布局选B；现代UEFI/GPT不宜直接套该引导描述。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s3-0-q009",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "限定传统BIOS/MBR磁盘布局选B",
+     "detail": "限定传统BIOS/MBR磁盘布局选B；现代UEFI/GPT不宜直接套该引导描述。",
+     "suggestedCorrection": "限定传统BIOS/MBR磁盘布局选B；现代UEFI/GPT不宜直接套该引导描述。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files",
+      "osc-disks"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-5-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 336
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q010",
+   "sourceContentHash": "sha256:187d5b7f045c0546130b0a5b0279709722cd189ab608b2d6112dcc5d48090d50",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "若块号也从1起，块100对应(4,4)选B；题面只明确行列一基，块号零基会变(4,5)，需补块号口径。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "9",
+    "secondaryChapterIds": [
+     "14"
+    ],
+    "topicIds": [
+     "t9-2",
+     "t14-5-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t9-2",
+     "t14-5-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：若块号也从1起，块100对应(4,4)选B；题面只明确行列一基，块号零基会变(4,5)，需补块号口径。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s3-0-q010",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "若块号也从1起，块100对应(4,4)选B",
+     "detail": "若块号也从1起，块100对应(4,4)选B；题面只明确行列一基，块号零基会变(4,5)，需补块号口径。",
+     "suggestedCorrection": "若块号也从1起，块100对应(4,4)选B；题面只明确行列一基，块号零基会变(4,5)，需补块号口径。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t9-2",
+     "noteFile": "9-Main Memory.md",
+     "noteLine": 111
+    },
+    {
+     "topicId": "t14-5-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 344
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q011",
+   "sourceContentHash": "sha256:9eb2b02ea04a5befda258b0938ef2de57ef8f5e2f71102e247c64cb09f13b6c3",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "无序空闲块链较难找连续区选A；成组链接同样不保证连续，解析称其方便保证连续空间不成立。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-5-2",
+     "t14-5-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-5-2",
+     "t14-5-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：无序空闲块链较难找连续区选A；成组链接同样不保证连续，解析称其方便保证连续空间不成立。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s3-0-q011",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "无序空闲块链较难找连续区选A",
+     "detail": "无序空闲块链较难找连续区选A；成组链接同样不保证连续，解析称其方便保证连续空间不成立。",
+     "suggestedCorrection": "无序空闲块链较难找连续区选A；成组链接同样不保证连续，解析称其方便保证连续空间不成立。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-5-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 358
+    },
+    {
+     "topicId": "t14-5-3",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 367
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q012",
+   "sourceContentHash": "sha256:9bcf60fd46ec04358f882a32bd7555ad03d9ede0f8dd334ecd0d2d86d74d0dcf",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "Linux VFS的superblock/inode/dentry/file抽象中没有这里的data对象，选D。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files",
+     "linux-vfs"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：Linux VFS的superblock/inode/dentry/file抽象中没有这里的data对象，选D。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t14-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 35
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q013",
+   "sourceContentHash": "sha256:421e9576fa1b1fa8cb011fc2cb9475b1240e823886f367a8c041d1230733fbd4",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "10GiB/4KiB簇一位，位图327680B占80簇，选A。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "bitmap-volume"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-5-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-5-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：10GiB/4KiB簇一位，位图327680B占80簇，选A。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t14-5-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 344
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q014",
+   "sourceContentHash": "sha256:96db0ebaceeb4a1b92917a97497fbdbf012df0a104414bb8ac0e84b934fee4bd",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "409612号位在32+floor(409612/8192)=82块，字节floor(12/8)=1，选C。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "bitmap-location"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-5-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-5-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：409612号位在32+floor(409612/8192)=82块，字节floor(12/8)=1，选C。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t14-5-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 344
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q015",
+   "sourceContentHash": "sha256:ac3ad2fd461c80430bfe02b3654fe43a7a5e9c594dd56d5513f68c27dbaae438",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "位图、空闲链、FAT能跟踪空闲选B；FAT空闲常为零，解析负二仅是假设特殊编码。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-5-1",
+     "t14-5-2",
+     "t14-4-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-5-1",
+     "t14-5-2",
+     "t14-4-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：位图、空闲链、FAT能跟踪空闲选B；FAT空闲常为零，解析负二仅是假设特殊编码。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s3-0-q015",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "位图、空闲链、FAT能跟踪空闲选B",
+     "detail": "位图、空闲链、FAT能跟踪空闲选B；FAT空闲常为零，解析负二仅是假设特殊编码。",
+     "suggestedCorrection": "位图、空闲链、FAT能跟踪空闲选B；FAT空闲常为零，解析负二仅是假设特殊编码。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-5-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 344
+    },
+    {
+     "topicId": "t14-5-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 358
+    },
+    {
+     "topicId": "t14-4-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 231
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q016",
+   "sourceContentHash": "sha256:9f6b382364117fcf50fe958bde1a8c9ab46ff2a2c001ae726ecb9f7ba1552867",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "16GiB/4KiB=2²²页框，一位一框得512KiB，选C，主归内存而非文件实现。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "bitmap-frames"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "9",
+    "secondaryChapterIds": [
+     "14"
+    ],
+    "topicIds": [
+     "t9-2",
+     "t14-5-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t9-2",
+     "t14-5-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：16GiB/4KiB=2²²页框，一位一框得512KiB，选C，主归内存而非文件实现。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t9-2",
+     "noteFile": "9-Main Memory.md",
+     "noteLine": 111
+    },
+    {
+     "topicId": "t14-5-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 344
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q017",
+   "sourceContentHash": "sha256:463ada6cfefcdf9c5bbfd1c93b3ce1e85186923ef10f054a9527ca3c74a230c6",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "完整固定大小位图仅取决总块数选A；稀疏/压缩位图和预分配链表空间策略另论。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-5-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-5-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：完整固定大小位图仅取决总块数选A；稀疏/压缩位图和预分配链表空间策略另论。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s3-0-q017",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "完整固定大小位图仅取决总块数选A",
+     "detail": "完整固定大小位图仅取决总块数选A；稀疏/压缩位图和预分配链表空间策略另论。",
+     "suggestedCorrection": "完整固定大小位图仅取决总块数选A；稀疏/压缩位图和预分配链表空间策略另论。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-5-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 344
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q018",
+   "sourceContentHash": "sha256:c83c4a1adfa143173d12d3b52e3b1e3aedfba4acd0921e0aef9d3eff5f732fa3",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "VFS统一不同本地/网络文件系统接口，选C，不是虚拟内存里的磁盘。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files",
+     "linux-vfs"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：VFS统一不同本地/网络文件系统接口，选C，不是虚拟内存里的磁盘。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t14-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 35
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q001",
+   "sourceContentHash": "sha256:70731eb16fd532d9a3dff6e5d25bf191eef8d07359b893642998e15ff5f0920e",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "三种基本分配优缺点成立；链接不便随机访问专指隐式链，FAT缓存和extent不混用。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：三种基本分配优缺点成立；链接不便随机访问专指隐式链，FAT缓存和extent不混用。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s4-1-q001",
+     "kind": "assumption",
+     "originalAnswer": "连续分配支持随机访问、速度快但不利于扩充；链接分配利用空间灵活、易扩充但只能顺序访问；索引分配既支持顺序又支持随机访问，代价是索引表额外占用空间。",
+     "issue": "三种基本分配优缺点成立",
+     "detail": "三种基本分配优缺点成立；链接不便随机访问专指隐式链，FAT缓存和extent不混用。",
+     "suggestedCorrection": "三种基本分配优缺点成立；链接不便随机访问专指隐式链，FAT缓存和extent不混用。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 173
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q002",
+   "sourceContentHash": "sha256:89de9fcb855a85ae44ce85041eb8abed96e33cc5409672ae6d79f0eaba7dde91",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "逐块概率加权均值为4160/254和1014/254；等满块比较得m<n−2。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "directory-split"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-3-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-3-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：逐块概率加权均值为4160/254和1014/254；等满块比较得m<n−2。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t14-3-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 130
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q003",
+   "sourceContentHash": "sha256:be342963be2ddc97aa43190d672735204275eaddaf0ac9aa9035f85391a8db28",
+   "answerReview": {
+    "status": "disputed",
+    "conclusion": "原页声称有图但无实际图；删除名称与销毁共享inode混淆，硬链接存在不妨碍unlink一个名称，目录N条件也不全。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files",
+     "linux-unlink"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-3-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-3-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：原页声称有图但无实际图；删除名称与销毁共享inode混淆，硬链接存在不妨碍unlink一个名称，目录N条件也不全。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s4-1-q003",
+     "kind": "disputed_answer",
+     "originalAnswer": "（1）可以建立链接；（2）（3）均不一定能删除，取决于共享方式。",
+     "issue": "原页声称有图但无实际图",
+     "detail": "原页声称有图但无实际图；删除名称与销毁共享inode混淆，硬链接存在不妨碍unlink一个名称，目录N条件也不全。",
+     "suggestedCorrection": "原页声称有图但无实际图；删除名称与销毁共享inode混淆，硬链接存在不妨碍unlink一个名称，目录N条件也不全。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files",
+      "linux-unlink"
+     ],
+     "checkIds": [],
+     "scoring": "excluded",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-3-4",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 337
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q004",
+   "sourceContentHash": "sha256:ccdf4c381a71de43b695c80015c0d09baebdbf72eebadbe4280a767c99146055",
+   "answerReview": {
+    "status": "disputed",
+    "conclusion": "原页缺目录图且未交代C父目录；不能仅据根已有A断定C不可改名，符号链接也不保证跳过目标路径解析。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t13-3-3",
+     "t13-4-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-3-3",
+     "t13-4-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：原页缺目录图且未交代C父目录；不能仅据根已有A断定C不可改名，符号链接也不保证跳过目标路径解析。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s4-1-q004",
+     "kind": "disputed_answer",
+     "originalAnswer": "（1）①可以，②不可以；（2）①在 G 的目录下建立指向 S、T 的链接文件，②可以，修改文件 I 的存取控制表。",
+     "issue": "原页缺目录图且未交代C父目录",
+     "detail": "原页缺目录图且未交代C父目录；不能仅据根已有A断定C不可改名，符号链接也不保证跳过目标路径解析。",
+     "suggestedCorrection": "原页缺目录图且未交代C父目录；不能仅据根已有A断定C不可改名，符号链接也不保证跳过目标路径解析。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [],
+     "scoring": "excluded",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-3-3",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 298
+    },
+    {
+     "topicId": "t13-4-2",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 436
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q005",
+   "sourceContentHash": "sha256:15abd14c876a6554d1df4fcad2ae6790842d9c20383684053fa942519c23605e",
+   "answerReview": {
+    "status": "disputed",
+    "conclusion": "纯三级树有16843018槽位，但2B全盘块地址至多65536块，题目将索引槽容量当实际可存页上限，需区分地址位宽和图示缺失。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "address-width-vs-slots"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [
+     "13"
+    ],
+    "topicIds": [
+     "t14-4-3",
+     "t13-3-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-3",
+     "t13-3-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：纯三级树有16843018槽位，但2B全盘块地址至多65536块，题目将索引槽容量当实际可存页上限，需区分地址位宽和图示缺失。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s4-1-q005",
+     "kind": "disputed_answer",
+     "originalAnswer": "（1）16843018 页；（2）最多 7 次；（3）最少 6 次；（4）把 W 的目录项挂到根目录最前面，此时最多 5 次。",
+     "issue": "纯三级树有16843018槽位，但2B全盘块地址至多65536块，题目将索引槽容量当实际可存页上限，需区分地址位宽和图示缺失。",
+     "detail": "纯三级树有16843018槽位，但2B全盘块地址至多65536块，题目将索引槽容量当实际可存页上限，需区分地址位宽和图示缺失。",
+     "suggestedCorrection": "纯三级树有16843018槽位，但2B全盘块地址至多65536块，题目将索引槽容量当实际可存页上限，需区分地址位宽和图示缺失。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [
+      "address-width-vs-slots"
+     ],
+     "scoring": "excluded",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-3",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 290
+    },
+    {
+     "topicId": "t13-3-3",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 298
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q006",
+   "sourceContentHash": "sha256:a3072ad43bf91236b0c53820d7046fe68ee557777a00fe8b874149285cdb7745",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "按题面最少每级目录一块、FCB内嵌目录项，5目录读+299数据读=304；连续定位第487记录再读一块得6。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "file-path"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [
+     "14"
+    ],
+    "topicIds": [
+     "t13-3-3",
+     "t14-4-2",
+     "t14-4-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-3-3",
+     "t14-4-2",
+     "t14-4-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：按题面最少每级目录一块、FCB内嵌目录项，5目录读+299数据读=304；连续定位第487记录再读一块得6。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s4-1-q006",
+     "kind": "assumption",
+     "originalAnswer": "（1）至少 304 次；（2）至少 6 次。",
+     "issue": "按题面最少每级目录一块、FCB内嵌目录项，5目录读+299数据读=304",
+     "detail": "按题面最少每级目录一块、FCB内嵌目录项，5目录读+299数据读=304；连续定位第487记录再读一块得6。",
+     "suggestedCorrection": "按题面最少每级目录一块、FCB内嵌目录项，5目录读+299数据读=304；连续定位第487记录再读一块得6。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [
+      "file-path"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-3-3",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 298
+    },
+    {
+     "topicId": "t14-4-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 231
+    },
+    {
+     "topicId": "t14-4-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 181
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q007",
+   "sourceContentHash": "sha256:bba0da6ed2f3971657a9745418c87a25a637c2cdba373ee0ba2c8f6860181332",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "位紧密打包20bit项的理论最小1350KiB；若每项按整字节3B存放为1620KiB，真实FAT格式另有保留项。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "fat-packed"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：位紧密打包20bit项的理论最小1350KiB；若每项按整字节3B存放为1620KiB，真实FAT格式另有保留项。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s4-1-q007",
+     "kind": "assumption",
+     "originalAnswer": "FAT 最少占用 1350KB。",
+     "issue": "位紧密打包20bit项的理论最小1350KiB",
+     "detail": "位紧密打包20bit项的理论最小1350KiB；若每项按整字节3B存放为1620KiB，真实FAT格式另有保留项。",
+     "suggestedCorrection": "位紧密打包20bit项的理论最小1350KiB；若每项按整字节3B存放为1620KiB，真实FAT格式另有保留项。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [
+      "fat-packed"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 231
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q008",
+   "sourceContentHash": "sha256:b61e4e21c7c1fbd86e93cc3b4ef3a5d30ae0a3f0839318ccda1c6f63b742d9df",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "扇出1024得40KiB+4MiB+4GiB+4TiB；显示4100.00GiB是舍入，偏移10000读1次、10MiB读3次，索引均冷缓存。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "mixed-capacity"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：扇出1024得40KiB+4MiB+4GiB+4TiB；显示4100.00GiB是舍入，偏移10000读1次、10MiB读3次，索引均冷缓存。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s4-1-q008",
+     "kind": "assumption",
+     "originalAnswer": "（1）不超过 40KB；（2）约 4100.00GB，即 4.00TB；（3）1 次；（4）3 次。",
+     "issue": "扇出1024得40KiB+4MiB+4GiB+4TiB",
+     "detail": "扇出1024得40KiB+4MiB+4GiB+4TiB；显示4100.00GiB是舍入，偏移10000读1次、10MiB读3次，索引均冷缓存。",
+     "suggestedCorrection": "扇出1024得40KiB+4MiB+4GiB+4TiB；显示4100.00GiB是舍入，偏移10000读1次、10MiB读3次，索引均冷缓存。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [
+      "mixed-capacity"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-3",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 290
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q009",
+   "sourceContentHash": "sha256:03c3da0263c28113ea0fa95cf3c1f08812b5562c26dda4c743995f8cab93317a",
+   "answerReview": {
+    "status": "disputed",
+    "conclusion": "数据2GiB加513索引块成立，但13个地址项52B只是inode的一部分，题面未给完整inode大小，实际磁盘占用不能唯一加52B。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "two-gib-index-blocks"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：数据2GiB加513索引块成立，但13个地址项52B只是inode的一部分，题面未给完整inode大小，实际磁盘占用不能唯一加52B。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s4-1-q009",
+     "kind": "disputed_answer",
+     "originalAnswer": "（1）4TB + 4GB + 4MB + 40KB，约为 4TB；（2）2GB + 2MB + 4KB + 52B。",
+     "issue": "数据2GiB加513索引块成立，但13个地址项52B只是inode的一部分，题面未给完整inode大小，实际磁盘占用不能唯一加52B。",
+     "detail": "数据2GiB加513索引块成立，但13个地址项52B只是inode的一部分，题面未给完整inode大小，实际磁盘占用不能唯一加52B。",
+     "suggestedCorrection": "数据2GiB加513索引块成立，但13个地址项52B只是inode的一部分，题面未给完整inode大小，实际磁盘占用不能唯一加52B。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [
+      "two-gib-index-blocks"
+     ],
+     "scoring": "excluded",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-3",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 290
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q010",
+   "sourceContentHash": "sha256:4b4b77353f9eaf6114632652fadc3c7f34984bd4c66eba25448df343adbdb7ab",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "前移29记录得59次，链插29读2写得31；4080GiB是忽略保留块和结束标记的指针位宽上界。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "insertion"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-1",
+     "t14-4-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-1",
+     "t14-4-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：前移29记录得59次，链插29读2写得31；4080GiB是忽略保留块和结束标记的指针位宽上界。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s4-1-q010",
+     "kind": "assumption",
+     "originalAnswer": "（1）最少 59 次，FCB 中起始块号和文件长度改变；（2）31 次；最大文件长度 4G × 1020B = 4080GB。",
+     "issue": "前移29记录得59次，链插29读2写得31",
+     "detail": "前移29记录得59次，链插29读2写得31；4080GiB是忽略保留块和结束标记的指针位宽上界。",
+     "suggestedCorrection": "前移29记录得59次，链插29读2写得31；4080GiB是忽略保留块和结束标记的指针位宽上界。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [
+      "insertion"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 181
+    },
+    {
+     "topicId": "t14-4-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 231
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q011",
+   "sourceContentHash": "sha256:ee1d3a48e68530adc01169e6024ac4d43462e09884ab0d61ebba4e55f1ae9351",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "5000字节位于簇106，路径还读48；解析给dir多添file1项无题面依据，128KiB/256MiB是忽略保留簇的理论上界。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "fat-16bit"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [
+     "13"
+    ],
+    "topicIds": [
+     "t14-4-2",
+     "t13-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-2",
+     "t13-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：5000字节位于簇106，路径还读48；解析给dir多添file1项无题面依据，128KiB/256MiB是忽略保留簇的理论上界。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s4-1-q011",
+     "kind": "assumption",
+     "originalAnswer": "（2）FAT 最大 128KB，文件最大 256MB；（3）106 存放在 FAT 的 100 号表项中，108 存放在 106 号表项中；（4）访问 48 号簇和 106 号簇。",
+     "issue": "5000字节位于簇106，路径还读48",
+     "detail": "5000字节位于簇106，路径还读48；解析给dir多添file1项无题面依据，128KiB/256MiB是忽略保留簇的理论上界。",
+     "suggestedCorrection": "5000字节位于簇106，路径还读48；解析给dir多添file1项无题面依据，128KiB/256MiB是忽略保留簇的理论上界。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [
+      "fat-16bit"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 231
+    },
+    {
+     "topicId": "t13-3",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 222
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q012",
+   "sourceContentHash": "sha256:4e6025c5faf287351285359c14356a992d56a95bbe64539a2488832dd5984175",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "一次写入不增长适合连续，FCB记起始和长度，集中目录避免检索跳到各数据区。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-1",
+     "t14-3-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-1",
+     "t14-3-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：一次写入不增长适合连续，FCB记起始和长度，集中目录避免检索跳到各数据区。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 181
+    },
+    {
+     "topicId": "t14-3-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 130
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q013",
+   "sourceContentHash": "sha256:a2cb0e7d8ec603914c738caa78543670b1aa991463bc353bcdc9178ff3980ea6",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "4TiB/1KiB需32位块号、直接表128KiB；2B块数字段原答64MiB隐含零编码65536，普通无符号上限应减1KiB。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "extent-count-boundary"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-3",
+     "t14-4-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-3",
+     "t14-4-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：4TiB/1KiB需32位块号、直接表128KiB；2B块数字段原答64MiB隐含零编码65536，普通无符号上限应减1KiB。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s4-1-q013",
+     "kind": "assumption",
+     "originalAnswer": "（1）块号最少占 4B，最大文件 128KB；（2）最大文件 64MB + 84KB；起始块号和块数各占 4B 合理。",
+     "issue": "4TiB/1KiB需32位块号、直接表128KiB",
+     "detail": "4TiB/1KiB需32位块号、直接表128KiB；2B块数字段原答64MiB隐含零编码65536，普通无符号上限应减1KiB。",
+     "suggestedCorrection": "4TiB/1KiB需32位块号、直接表128KiB；2B块数字段原答64MiB隐含零编码65536，普通无符号上限应减1KiB。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [
+      "extent-count-boundary"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-3",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 290
+    },
+    {
+     "topicId": "t14-4-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 181
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q014",
+   "sourceContentHash": "sha256:c52bc3191e7777b8f8364ba9d588814a3f8533b8c657c5b76f474cd94d10cb72",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "索引树容量(8+1024+1024²+1024³)×4096；inode区限制64M图像；6KiB直接、40KiB间接，未缓存时多读一索引块。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "image-inode-bound"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t14-4-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-4-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：索引树容量(8+1024+1024²+1024³)×4096；inode区限制64M图像；6KiB直接、40KiB间接，未缓存时多读一索引块。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s4-1-q014",
+     "kind": "assumption",
+     "originalAnswer": "（1）(8 + 1024 + 1024² + 1024³) × 4KB = 32KB + 4MB + 4GB + 4TB；（2）64M 个；（3）不相同。",
+     "issue": "索引树容量(8+1024+1024²+1024³)×4096",
+     "detail": "索引树容量(8+1024+1024²+1024³)×4096；inode区限制64M图像；6KiB直接、40KiB间接，未缓存时多读一索引块。",
+     "suggestedCorrection": "索引树容量(8+1024+1024²+1024³)×4096；inode区限制64M图像；6KiB直接、40KiB间接，未缓存时多读一索引块。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [
+      "image-inode-bound"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-4-3",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 290
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q015",
+   "sourceContentHash": "sha256:40ebd27c0af14012cfe201dd9e41a1fdd7047345bcf01b693658666b23531b46",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "doc/course1共享inode10故x=30；无其他inode/数据缓存时读2块；6MiB超1034数据块，需一/二级间接。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files"
+    ],
+    "checkIds": [
+     "six-mib-blocks"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [
+     "14"
+    ],
+    "topicIds": [
+     "t13-3-4",
+     "t14-4-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-3-4",
+     "t14-4-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：doc/course1共享inode10故x=30；无其他inode/数据缓存时读2块；6MiB超1034数据块，需一/二级间接。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s4-1-q015",
+     "kind": "assumption",
+     "originalAnswer": "（1）〈course, 2〉和〈doc, 10〉；（2）x = 30；（3）2 个磁盘块；（4）一级和二级间接地址项。",
+     "issue": "doc/course1共享inode10故x=30",
+     "detail": "doc/course1共享inode10故x=30；无其他inode/数据缓存时读2块；6MiB超1034数据块，需一/二级间接。",
+     "suggestedCorrection": "doc/course1共享inode10故x=30；无其他inode/数据缓存时读2块；6MiB超1034数据块，需一/二级间接。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files"
+     ],
+     "checkIds": [
+      "six-mib-blocks"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-3-4",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 337
+    },
+    {
+     "topicId": "t14-4-3",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 290
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-2-q016",
+   "sourceContentHash": "sha256:2863d854b3c3de6b7ad19128995e062f39d4a4e1c23142ccc11aa702244706be",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "零基b=16i+j，整除160得柱面、余数除8得磁头；题用0空闲1占用，与笔记反向约定均可但不可混用。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files",
+     "osc-disks"
+    ],
+    "checkIds": [
+     "bitmap-geometry"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [
+     "11"
+    ],
+    "topicIds": [
+     "t14-5-1",
+     "t11-1-5"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-5-1",
+     "t11-1-5"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：零基b=16i+j，整除160得柱面、余数除8得磁头；题用0空闲1占用，与笔记反向约定均可但不可混用。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s4-2-q016",
+     "kind": "assumption",
+     "originalAnswer": "（1）b = 16i + j，C = b/(20×8)，H = (b mod (20×8))/8，S = b mod 8；（2）分配找\"0\"置\"1\"，回收换算位置后置\"0\"。",
+     "issue": "零基b=16i+j，整除160得柱面、余数除8得磁头",
+     "detail": "零基b=16i+j，整除160得柱面、余数除8得磁头；题用0空闲1占用，与笔记反向约定均可但不可混用。",
+     "suggestedCorrection": "零基b=16i+j，整除160得柱面、余数除8得磁头；题用0空闲1占用，与笔记反向约定均可但不可混用。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files",
+      "osc-disks"
+     ],
+     "checkIds": [
+      "bitmap-geometry"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-5-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 344
+    },
+    {
+     "topicId": "t11-1-5",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 104
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-2-q017",
+   "sourceContentHash": "sha256:7863b8cae867cb9b08bedbe6726ecf354dbed1e52fb2a9b9362004feacf8e86d",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "总6400块、200字；(18,16)若块号一基为560，若零基为559，需声明题面未明确的块号基准。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-files",
+     "osc-disks"
+    ],
+    "checkIds": [
+     "bitmap-geometry"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [
+     "11"
+    ],
+    "topicIds": [
+     "t14-5-1",
+     "t11-1-5"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-5-1",
+     "t11-1-5"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：总6400块、200字；(18,16)若块号一基为560，若零基为559，需声明题面未明确的块号基准。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c4-s4-2-q017",
+     "kind": "assumption",
+     "originalAnswer": "（1）6400 个；（2）200 个字；（3）块号 560。",
+     "issue": "总6400块、200字",
+     "detail": "总6400块、200字；(18,16)若块号一基为560，若零基为559，需声明题面未明确的块号基准。",
+     "suggestedCorrection": "总6400块、200字；(18,16)若块号一基为560，若零基为559，需声明题面未明确的块号基准。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-files",
+      "osc-disks"
+     ],
+     "checkIds": [
+      "bitmap-geometry"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-5-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 344
+    },
+    {
+     "topicId": "t11-1-5",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 104
+    }
+   ]
+  }
+ ]
+}

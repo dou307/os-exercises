@@ -2521,6 +2521,3956 @@
    "scoring": "normal",
    "reviewedAt": "2026-10-23",
    "evidenceLinks": []
+  },
+  {
+   "questionId": "c4-s1-0-q001",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "按UNIX字符/块设备节点分类选D",
+   "detail": "按UNIX字符/块设备节点分类选D；并非所有I/O对象都必须有路径名，网络套接字另有接口。",
+   "suggestedCorrection": "按UNIX字符/块设备节点分类选D；并非所有I/O对象都必须有路径名，网络套接字另有接口。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s1-0-q004",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "按单索引的教材记录文件模型选B",
+   "detail": "按单索引的教材记录文件模型选B；多重索引或纯顺序扫描不受“每记录仅一索引项、必须查索引”的普遍限制。",
+   "suggestedCorrection": "按单索引的教材记录文件模型选B；多重索引或纯顺序扫描不受“每记录仅一索引项、必须查索引”的普遍限制。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s1-0-q005",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "两层均顺序查找、分100组时近似50+50=100选C",
+   "detail": "两层均顺序查找、分100组时近似50+50=100选C；等概率精确含端点均值为101，不是最坏查找100次。",
+   "suggestedCorrection": "两层均顺序查找、分100组时近似50+50=100选C；等概率精确含端点均值为101，不是最坏查找100次。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [
+    "index-search"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q001",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "选A的访问/打开引用计数是运行态信息",
+   "detail": "选A的访问/打开引用计数是运行态信息；不要和磁盘inode的硬链接计数混用。",
+   "suggestedCorrection": "选A的访问/打开引用计数是运行态信息；不要和磁盘inode的硬链接计数混用。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q003",
+   "kind": "disputed_answer",
+   "originalAnswer": "C",
+   "issue": "题干明确FAT32但解析套用一般FCB",
+   "detail": "题干明确FAT32但解析套用一般FCB；FAT32目录项不具有NTFS式访问权限ACL，B也有问题，不能唯一据此选C。",
+   "suggestedCorrection": "题干明确FAT32但解析套用一般FCB；FAT32目录项不具有NTFS式访问权限ACL，B也有问题，不能唯一据此选C。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files",
+    "fat32"
+   ],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    },
+    {
+     "title": "Microsoft：文件系统功能与权限比较",
+     "url": "https://learn.microsoft.com/en-us/windows/win32/fileio/filesystem-functionality-comparison"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q005",
+   "kind": "disputed_answer",
+   "originalAnswer": "D",
+   "issue": "异步I/O可以提高文件系统吞吐和重叠性能",
+   "detail": "异步I/O可以提高文件系统吞吐和重叠性能；“不减少I/O次数”不等于“不提升性能”，D缺乏唯一错误依据。",
+   "suggestedCorrection": "异步I/O可以提高文件系统吞吐和重叠性能；“不减少I/O次数”不等于“不提升性能”，D缺乏唯一错误依据。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q006",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "按无缓存顺序目录检索模型，项数、项长及所在位置影响开销，选B",
+   "detail": "按无缓存顺序目录检索模型，项数、项长及所在位置影响开销，选B；哈希和缓存改变成本。",
+   "suggestedCorrection": "按无缓存顺序目录检索模型，项数、项长及所在位置影响开销，选B；哈希和缓存改变成本。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q009",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "3200/16=200块，教材近似平均100次选C",
+   "detail": "3200/16=200块，教材近似平均100次选C；等概率从第一块读起的精确值100.5。",
+   "suggestedCorrection": "3200/16=200块，教材近似平均100次选C；等概率从第一块读起的精确值100.5。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [
+    "directory-means"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q010",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "目录50块再读inode，教材近似25+1=26选B",
+   "detail": "目录50块再读inode，教材近似25+1=26选B；精确均值25.5+1=26.5，不应写成精确次数。",
+   "suggestedCorrection": "目录50块再读inode，教材近似25+1=26选B；精确均值25.5+1=26.5，不应写成精确次数。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [
+    "directory-means"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q011",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "无创建副作用的普通路径解析遇缺失分量应失败，选C",
+   "detail": "无创建副作用的普通路径解析遇缺失分量应失败，选C；哈希是否普及不是本题定理。",
+   "suggestedCorrection": "无创建副作用的普通路径解析遇缺失分量应失败，选C；哈希是否普及不是本题定理。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q013",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "按题目主旨选C，多级命名空间解决不同目录下同名",
+   "detail": "按题目主旨选C，多级命名空间解决不同目录下同名；不能保证总查找速度必然更快。",
+   "suggestedCorrection": "按题目主旨选C，多级命名空间解决不同目录下同名；不能保证总查找速度必然更快。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q015",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "按教材磁带顺序访问模型选A",
+   "detail": "按教材磁带顺序访问模型选A；“只能”是效率模型限制，不是不能在磁带上编码索引。",
+   "suggestedCorrection": "按教材磁带顺序访问模型选A；“只能”是效率模型限制，不是不能在磁带上编码索引。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q016",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "隐式链接须沿链定位，选B",
+   "detail": "隐式链接须沿链定位，选B；不能把该结论直接推广为内存FAT也不能逻辑随机定位。",
+   "suggestedCorrection": "隐式链接须沿链定位，选B；不能把该结论直接推广为内存FAT也不能逻辑随机定位。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q019",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "这里碎片指外部碎片，连续存放最易产生，选B",
+   "detail": "这里碎片指外部碎片，连续存放最易产生，选B；索引和链接仍可能有尾块内部碎片。",
+   "suggestedCorrection": "这里碎片指外部碎片，连续存放最易产生，选B；索引和链接仍可能有尾块内部碎片。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q020",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "按教材内核统一决定物理组织选D",
+   "detail": "按教材内核统一决定物理组织选D；现实预分配/文件系统选择接口可让应用影响布局策略。",
+   "suggestedCorrection": "按教材内核统一决定物理组织选D；现实预分配/文件系统选择接口可让应用影响布局策略。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q021",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "题面须限定索引分配才是每文件一张索引表，选C",
+   "detail": "题面须限定索引分配才是每文件一张索引表，选C；其他分配方式没有这个普遍要求。",
+   "suggestedCorrection": "题面须限定索引分配才是每文件一张索引表，选C；其他分配方式没有这个普遍要求。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q022",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "链接块可离散所以B错",
+   "detail": "链接块可离散所以B错；A的记录访问单位只针对记录式文件，散列动态回收也依赖实现。",
+   "suggestedCorrection": "链接块可离散所以B错；A的记录访问单位只针对记录式文件，散列动态回收也依赖实现。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q023",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "题目问实际落盘组织，介质特性约束最直接，选B",
+   "detail": "题目问实际落盘组织，介质特性约束最直接，选B；不应把“逻辑文件”括注成“物理结构”。",
+   "suggestedCorrection": "题目问实际落盘组织，介质特性约束最直接，选B；不应把“逻辑文件”括注成“物理结构”。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q024",
+   "kind": "disputed_answer",
+   "originalAnswer": "A",
+   "issue": "未说明插入位置和邻接空闲块",
+   "detail": "未说明插入位置和邻接空闲块；若尾部恰有空闲块，连续追加可一次写，不能断言其I/O必最多。",
+   "suggestedCorrection": "未说明插入位置和邻接空闲块；若尾部恰有空闲块，连续追加可一次写，不能断言其I/O必最多。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q025",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "指针可装入余下12B且无额外缓存时，每块5记录，第22记录在第5块，5读1写共6次选D。",
+   "detail": "指针可装入余下12B且无额外缓存时，每块5记录，第22记录在第5块，5读1写共6次选D。",
+   "suggestedCorrection": "指针可装入余下12B且无额外缓存时，每块5记录，第22记录在第5块，5读1写共6次选D。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [
+    "linked-record"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q026",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "1569字节落在第4个512B记录，物理块80选B",
+   "detail": "1569字节落在第4个512B记录，物理块80选B；一基“第几个字节”的块内偏移为32而非33，块号不变。",
+   "suggestedCorrection": "1569字节落在第4个512B记录，物理块80选B；一基“第几个字节”的块内偏移为32而非33，块号不变。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [
+    "linked-record"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q027",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "从头找L5需5次读，保存前驱及后继地址后写新块和前驱共2次写，选C",
+   "detail": "从头找L5需5次读，保存前驱及后继地址后写新块和前驱共2次写，选C；不含分配元数据写回。",
+   "suggestedCorrection": "从头找L5需5次读，保存前驱及后继地址后写新块和前驱共2次写，选C；不含分配元数据写回。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [
+    "linked-record"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q028",
+   "kind": "disputed_answer",
+   "originalAnswer": "B",
+   "issue": "最大文件512MiB只能给该文件至少需65536簇，不能推出卷的总簇数和FAT长度",
+   "detail": "最大文件512MiB只能给该文件至少需65536簇，不能推出卷的总簇数和FAT长度；128KiB须另给全卷65536簇。",
+   "suggestedCorrection": "最大文件512MiB只能给该文件至少需65536簇，不能推出卷的总簇数和FAT长度；128KiB须另给全卷65536簇。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [
+    "fat-underdetermined"
+   ],
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q029",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "这里链接为隐式且链地址无缓存，取第3记录必须先读前两块，选C。",
+   "detail": "这里链接为隐式且链地址无缓存，取第3记录必须先读前两块，选C。",
+   "suggestedCorrection": "这里链接为隐式且链地址无缓存，取第3记录必须先读前两块，选C。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q030",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "只计本次内存重排、允许延迟写回时B无需立即数据I/O",
+   "detail": "只计本次内存重排、允许延迟写回时B无需立即数据I/O；持久化索引最终仍要写盘。",
+   "suggestedCorrection": "只计本次内存重排、允许延迟写回时B无需立即数据I/O；持久化索引最终仍要写盘。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q031",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "连续分配搬移成本最大选A",
+   "detail": "连续分配搬移成本最大选A；若前方可扩，可移前45块而非必移后55块；其他方式新增数据也需写盘。",
+   "suggestedCorrection": "连续分配搬移成本最大选A；若前方可扩，可移前45块而非必移后55块；其他方式新增数据也需写盘。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q035",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "经典线性表模型选C，就绪队列可用链表",
+   "detail": "经典线性表模型选C，就绪队列可用链表；页表还有层次/散列/倒排实现，解析“只能数组”不能普遍成立。",
+   "suggestedCorrection": "经典线性表模型选C，就绪队列可用链表；页表还有层次/散列/倒排实现，解析“只能数组”不能普遍成立。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q036",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "创建新文件时加入目录项选A",
+   "detail": "创建新文件时加入目录项选A；硬链接说明目录项与文件实体并非严格一对一。",
+   "suggestedCorrection": "创建新文件时加入目录项选A；硬链接说明目录项与文件实体并非严格一对一。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q037",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "教材用载入控制信息概括open选A，实际路径解析属于open过程，命中缓存时不必重新读盘。",
+   "detail": "教材用载入控制信息概括open选A，实际路径解析属于open过程，命中缓存时不必重新读盘。",
+   "suggestedCorrection": "教材用载入控制信息概括open选A，实际路径解析属于open过程，命中缓存时不必重新读盘。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q038",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "open按路径打开选B",
+   "detail": "open按路径打开选B；真实Linux每次独立open创建open-file description，即使inode已缓存，不是首次打开才增系统表项。",
+   "suggestedCorrection": "open按路径打开选B；真实Linux每次独立open创建open-file description，即使inode已缓存，不是首次打开才增系统表项。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files",
+    "linux-open"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    },
+    {
+     "title": "Linux man-pages：open",
+     "url": "https://man7.org/linux/man-pages/man2/open.2.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q039",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "按教材控制信息收尾选B",
+   "detail": "按教材控制信息收尾选B；close不保证数据或元数据已落盘，持久化须区分fsync和后台回写。",
+   "suggestedCorrection": "按教材控制信息收尾选B；close不保证数据或元数据已落盘，持久化须区分fsync和后台回写。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files",
+    "linux-close"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    },
+    {
+     "title": "Linux man-pages：close",
+     "url": "https://man7.org/linux/man-pages/man2/close.2.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q040",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "抽象读流程为描述符定位→授权→映射→设备请求，选B",
+   "detail": "抽象读流程为描述符定位→授权→映射→设备请求，选B；缓存命中不必下发设备I/O。",
+   "suggestedCorrection": "抽象读流程为描述符定位→授权→映射→设备请求，选B；缓存命中不必下发设备I/O。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q041",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "物理结构可异、优先级非权限、跨目录可同名、备份非访问矩阵，四项按教材均错选D。",
+   "detail": "物理结构可异、优先级非权限、跨目录可同名、备份非访问矩阵，四项按教材均错选D。",
+   "suggestedCorrection": "物理结构可异、优先级非权限、跨目录可同名、备份非访问矩阵，四项按教材均错选D。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q044",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "若inode起初不在缓存且第二次仍驻留，两个硬链接打开只读一次inode选A",
+   "detail": "若inode起初不在缓存且第二次仍驻留，两个硬链接打开只读一次inode选A；已有缓存时也可能零次。",
+   "suggestedCorrection": "若inode起初不在缓存且第二次仍驻留，两个硬链接打开只读一次inode选A；已有缓存时也可能零次。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q045",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "题意是访问授权保护选A",
+   "detail": "题意是访问授权保护选A；不等于连系统管理员和离线物理读取也绝对无法访问。",
+   "suggestedCorrection": "题意是访问授权保护选A；不等于连系统管理员和离线物理读取也绝对无法访问。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q046",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "关闭描述符不是访问控制机制所以D",
+   "detail": "关闭描述符不是访问控制机制所以D；关闭也不代表必然写回所有内容。",
+   "suggestedCorrection": "关闭描述符不是访问控制机制所以D；关闭也不代表必然写回所有内容。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q048",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "进入系统先认证属于教材系统级选A",
+   "detail": "进入系统先认证属于教材系统级选A；注册是建账号而非每次登录都重新注册。",
+   "suggestedCorrection": "进入系统先认证属于教材系统级选A；注册是建账号而非每次登录都重新注册。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q050",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "教材固定连续区与隐式链的比较中，索引兼顾随机定位和扩展选B。",
+   "detail": "教材固定连续区与隐式链的比较中，索引兼顾随机定位和扩展选B。",
+   "suggestedCorrection": "教材固定连续区与隐式链的比较中，索引兼顾随机定位和扩展选B。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q051",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "F2为独立符号链接仍计1",
+   "detail": "F2为独立符号链接仍计1；删F1只减共享inode计数，F3计1，选B；F2可成为悬空链接。",
+   "suggestedCorrection": "F2为独立符号链接仍计1；删F1只减共享inode计数，F3计1，选B；F2可成为悬空链接。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files",
+    "linux-unlink"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    },
+    {
+     "title": "Linux man-pages：unlink",
+     "url": "https://man7.org/linux/man-pages/man2/unlink.2.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q052",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "相对工作目录避免每次从根解析，教材选C",
+   "detail": "相对工作目录避免每次从根解析，教材选C；缓存会影响实际加速幅度。",
+   "suggestedCorrection": "相对工作目录避免每次从根解析，教材选C；缓存会影响实际加速幅度。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q054",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "普通阻塞文件read且数据未缓存时等待，系统调用进内核、参数用fd，选A",
+   "detail": "普通阻塞文件read且数据未缓存时等待，系统调用进内核、参数用fd，选A；异步/非阻塞接口须另论。",
+   "suggestedCorrection": "普通阻塞文件read且数据未缓存时等待，系统调用进内核、参数用fd，选A；异步/非阻塞接口须另论。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q055",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "unlink普通文件不同时删其父目录，选A",
+   "detail": "unlink普通文件不同时删其父目录，选A；FCB和空间释放要等最后硬链接及打开引用消失。",
+   "suggestedCorrection": "unlink普通文件不同时删其父目录，选A；FCB和空间释放要等最后硬链接及打开引用消失。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files",
+    "linux-unlink"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    },
+    {
+     "title": "Linux man-pages：unlink",
+     "url": "https://man7.org/linux/man-pages/man2/unlink.2.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q056",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "固定指针模型下inode总数限制实体数、不决定单文件索引容量，选A",
+   "detail": "固定指针模型下inode总数限制实体数、不决定单文件索引容量，选A；容量还受地址位宽和实现限制。",
+   "suggestedCorrection": "固定指针模型下inode总数限制实体数、不决定单文件索引容量，选A；容量还受地址位宽和实现限制。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q057",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "按未缓存索引及只读视频教材模型，连续布局选A",
+   "detail": "按未缓存索引及只读视频教材模型，连续布局选A；不保证所有缓存/存储系统上严格最快。",
+   "suggestedCorrection": "按未缓存索引及只读视频教材模型，连续布局选A；不保证所有缓存/存储系统上严格最快。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q058",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "首次打开载入控制信息选B，不等于预读全部内容",
+   "detail": "首次打开载入控制信息选B，不等于预读全部内容；若inode已缓存无须磁盘读。",
+   "suggestedCorrection": "首次打开载入控制信息选B，不等于预读全部内容；若inode已缓存无须磁盘读。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q060",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "4类×5个独立布尔权限需20位选D",
+   "detail": "4类×5个独立布尔权限需20位选D；若完全控制是其他权限的派生组合，编码前提需另定。",
+   "suggestedCorrection": "4类×5个独立布尔权限需20位选D；若完全控制是其他权限的派生组合，编码前提需另定。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [
+    "permission-bits"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q061",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "两次独立open共享inode但offset独立，II/III正确选B",
+   "detail": "两次独立open共享inode但offset独立，II/III正确选B；fork/dup共享描述另论，offset实际存于open-file description。",
+   "suggestedCorrection": "两次独立open共享inode但offset独立，II/III正确选B；fork/dup共享描述另论，offset实际存于open-file description。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files",
+    "linux-open"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    },
+    {
+     "title": "Linux man-pages：open",
+     "url": "https://man7.org/linux/man-pages/man2/open.2.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q063",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "按每实体一个32位inode号且不计保留号的理论上界为2³²选B，不是硬链接目录项数的绝对上限。",
+   "detail": "按每实体一个32位inode号且不计保留号的理论上界为2³²选B，不是硬链接目录项数的绝对上限。",
+   "suggestedCorrection": "按每实体一个32位inode号且不计保留号的理论上界为2³²选B，不是硬链接目录项数的绝对上限。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q064",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "教材以共享inode属性项称系统打开文件表时选B",
+   "detail": "教材以共享inode属性项称系统打开文件表时选B；Linux独立open可有多个file对象，不能把它们都合成一个offset。",
+   "suggestedCorrection": "教材以共享inode属性项称系统打开文件表时选B；Linux独立open可有多个file对象，不能把它们都合成一个offset。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files",
+    "linux-open"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    },
+    {
+     "title": "Linux man-pages：open",
+     "url": "https://man7.org/linux/man-pages/man2/open.2.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q065",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "在教材三种基本分配的可扩展效率比较中选A",
+   "detail": "在教材三种基本分配的可扩展效率比较中选A；连续分配并非绝对不能增长。",
+   "suggestedCorrection": "在教材三种基本分配的可扩展效率比较中选A；连续分配并非绝对不能增长。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q066",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "删除目标无需跟踪移除符号链接选A",
+   "detail": "删除目标无需跟踪移除符号链接选A；空间/FCB是否立即释放还取决于其他硬链接和打开引用。",
+   "suggestedCorrection": "删除目标无需跟踪移除符号链接选A；空间/FCB是否立即释放还取决于其他硬链接和打开引用。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files",
+    "linux-unlink"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    },
+    {
+     "title": "Linux man-pages：unlink",
+     "url": "https://man7.org/linux/man-pages/man2/unlink.2.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s2-0-q067",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "教材活动inode计数归零释放内存选B",
+   "detail": "教材活动inode计数归零释放内存选B；真实系统可缓存inode，磁盘链接计数与打开计数分开。",
+   "suggestedCorrection": "教材活动inode计数归零释放内存选B；真实系统可缓存inode，磁盘链接计数与打开计数分开。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files",
+    "linux-close"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    },
+    {
+     "title": "Linux man-pages：close",
+     "url": "https://man7.org/linux/man-pages/man2/close.2.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q001",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "从用户抽象接口主旨选B按名存取",
+   "detail": "从用户抽象接口主旨选B按名存取；持久保存和保护也是文件系统目标，不应泛称无关。",
+   "suggestedCorrection": "从用户抽象接口主旨选B按名存取；持久保存和保护也是文件系统目标，不应泛称无关。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q002",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "逻辑文件系统管理命名、目录、句柄和文件保护选D",
+   "detail": "逻辑文件系统管理命名、目录、句柄和文件保护选D；存储保护应读作文件权限而非内存MMU保护。",
+   "suggestedCorrection": "逻辑文件系统管理命名、目录、句柄和文件保护选D；存储保护应读作文件权限而非内存MMU保护。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q004",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "UNIX inode保存数据块定位信息选B",
+   "detail": "UNIX inode保存数据块定位信息选B；间接索引块另存，空闲块不是已存文件数据的块。",
+   "suggestedCorrection": "UNIX inode保存数据块定位信息选B；间接索引块另存，空闲块不是已存文件数据的块。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q006",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "教材文件区偏向空间利用、交换区偏向速度，选D",
+   "detail": "教材文件区偏向空间利用、交换区偏向速度，选D；不是现代系统不重视文件I/O吞吐。",
+   "suggestedCorrection": "教材文件区偏向空间利用、交换区偏向速度，选D；不是现代系统不重视文件I/O吞吐。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files",
+    "osc-disks"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q007",
+   "kind": "disputed_answer",
+   "originalAnswer": "B",
+   "issue": "位图既能管磁盘也能管主存，B/C均成立",
+   "detail": "位图既能管磁盘也能管主存，B/C均成立；同章第10和16题本身就用位图管理内存，题面缺“文件系统中”限定。",
+   "suggestedCorrection": "位图既能管磁盘也能管主存，B/C均成立；同章第10和16题本身就用位图管理内存，题面缺“文件系统中”限定。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q009",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "限定传统BIOS/MBR磁盘布局选B",
+   "detail": "限定传统BIOS/MBR磁盘布局选B；现代UEFI/GPT不宜直接套该引导描述。",
+   "suggestedCorrection": "限定传统BIOS/MBR磁盘布局选B；现代UEFI/GPT不宜直接套该引导描述。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files",
+    "osc-disks"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q010",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "若块号也从1起，块100对应(4,4)选B",
+   "detail": "若块号也从1起，块100对应(4,4)选B；题面只明确行列一基，块号零基会变(4,5)，需补块号口径。",
+   "suggestedCorrection": "若块号也从1起，块100对应(4,4)选B；题面只明确行列一基，块号零基会变(4,5)，需补块号口径。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q011",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "无序空闲块链较难找连续区选A",
+   "detail": "无序空闲块链较难找连续区选A；成组链接同样不保证连续，解析称其方便保证连续空间不成立。",
+   "suggestedCorrection": "无序空闲块链较难找连续区选A；成组链接同样不保证连续，解析称其方便保证连续空间不成立。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q015",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "位图、空闲链、FAT能跟踪空闲选B",
+   "detail": "位图、空闲链、FAT能跟踪空闲选B；FAT空闲常为零，解析负二仅是假设特殊编码。",
+   "suggestedCorrection": "位图、空闲链、FAT能跟踪空闲选B；FAT空闲常为零，解析负二仅是假设特殊编码。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s3-0-q017",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "完整固定大小位图仅取决总块数选A",
+   "detail": "完整固定大小位图仅取决总块数选A；稀疏/压缩位图和预分配链表空间策略另论。",
+   "suggestedCorrection": "完整固定大小位图仅取决总块数选A；稀疏/压缩位图和预分配链表空间策略另论。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q001",
+   "kind": "assumption",
+   "originalAnswer": "连续分配支持随机访问、速度快但不利于扩充；链接分配利用空间灵活、易扩充但只能顺序访问；索引分配既支持顺序又支持随机访问，代价是索引表额外占用空间。",
+   "issue": "三种基本分配优缺点成立",
+   "detail": "三种基本分配优缺点成立；链接不便随机访问专指隐式链，FAT缓存和extent不混用。",
+   "suggestedCorrection": "三种基本分配优缺点成立；链接不便随机访问专指隐式链，FAT缓存和extent不混用。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q003",
+   "kind": "disputed_answer",
+   "originalAnswer": "（1）可以建立链接；（2）（3）均不一定能删除，取决于共享方式。",
+   "issue": "原页声称有图但无实际图",
+   "detail": "原页声称有图但无实际图；删除名称与销毁共享inode混淆，硬链接存在不妨碍unlink一个名称，目录N条件也不全。",
+   "suggestedCorrection": "原页声称有图但无实际图；删除名称与销毁共享inode混淆，硬链接存在不妨碍unlink一个名称，目录N条件也不全。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files",
+    "linux-unlink"
+   ],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    },
+    {
+     "title": "Linux man-pages：unlink",
+     "url": "https://man7.org/linux/man-pages/man2/unlink.2.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q004",
+   "kind": "disputed_answer",
+   "originalAnswer": "（1）①可以，②不可以；（2）①在 G 的目录下建立指向 S、T 的链接文件，②可以，修改文件 I 的存取控制表。",
+   "issue": "原页缺目录图且未交代C父目录",
+   "detail": "原页缺目录图且未交代C父目录；不能仅据根已有A断定C不可改名，符号链接也不保证跳过目标路径解析。",
+   "suggestedCorrection": "原页缺目录图且未交代C父目录；不能仅据根已有A断定C不可改名，符号链接也不保证跳过目标路径解析。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q005",
+   "kind": "disputed_answer",
+   "originalAnswer": "（1）16843018 页；（2）最多 7 次；（3）最少 6 次；（4）把 W 的目录项挂到根目录最前面，此时最多 5 次。",
+   "issue": "纯三级树有16843018槽位，但2B全盘块地址至多65536块，题目将索引槽容量当实际可存页上限，需区分地址位宽和图示缺失。",
+   "detail": "纯三级树有16843018槽位，但2B全盘块地址至多65536块，题目将索引槽容量当实际可存页上限，需区分地址位宽和图示缺失。",
+   "suggestedCorrection": "纯三级树有16843018槽位，但2B全盘块地址至多65536块，题目将索引槽容量当实际可存页上限，需区分地址位宽和图示缺失。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [
+    "address-width-vs-slots"
+   ],
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q006",
+   "kind": "assumption",
+   "originalAnswer": "（1）至少 304 次；（2）至少 6 次。",
+   "issue": "按题面最少每级目录一块、FCB内嵌目录项，5目录读+299数据读=304",
+   "detail": "按题面最少每级目录一块、FCB内嵌目录项，5目录读+299数据读=304；连续定位第487记录再读一块得6。",
+   "suggestedCorrection": "按题面最少每级目录一块、FCB内嵌目录项，5目录读+299数据读=304；连续定位第487记录再读一块得6。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [
+    "file-path"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q007",
+   "kind": "assumption",
+   "originalAnswer": "FAT 最少占用 1350KB。",
+   "issue": "位紧密打包20bit项的理论最小1350KiB",
+   "detail": "位紧密打包20bit项的理论最小1350KiB；若每项按整字节3B存放为1620KiB，真实FAT格式另有保留项。",
+   "suggestedCorrection": "位紧密打包20bit项的理论最小1350KiB；若每项按整字节3B存放为1620KiB，真实FAT格式另有保留项。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [
+    "fat-packed"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q008",
+   "kind": "assumption",
+   "originalAnswer": "（1）不超过 40KB；（2）约 4100.00GB，即 4.00TB；（3）1 次；（4）3 次。",
+   "issue": "扇出1024得40KiB+4MiB+4GiB+4TiB",
+   "detail": "扇出1024得40KiB+4MiB+4GiB+4TiB；显示4100.00GiB是舍入，偏移10000读1次、10MiB读3次，索引均冷缓存。",
+   "suggestedCorrection": "扇出1024得40KiB+4MiB+4GiB+4TiB；显示4100.00GiB是舍入，偏移10000读1次、10MiB读3次，索引均冷缓存。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [
+    "mixed-capacity"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q009",
+   "kind": "disputed_answer",
+   "originalAnswer": "（1）4TB + 4GB + 4MB + 40KB，约为 4TB；（2）2GB + 2MB + 4KB + 52B。",
+   "issue": "数据2GiB加513索引块成立，但13个地址项52B只是inode的一部分，题面未给完整inode大小，实际磁盘占用不能唯一加52B。",
+   "detail": "数据2GiB加513索引块成立，但13个地址项52B只是inode的一部分，题面未给完整inode大小，实际磁盘占用不能唯一加52B。",
+   "suggestedCorrection": "数据2GiB加513索引块成立，但13个地址项52B只是inode的一部分，题面未给完整inode大小，实际磁盘占用不能唯一加52B。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [
+    "two-gib-index-blocks"
+   ],
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q010",
+   "kind": "assumption",
+   "originalAnswer": "（1）最少 59 次，FCB 中起始块号和文件长度改变；（2）31 次；最大文件长度 4G × 1020B = 4080GB。",
+   "issue": "前移29记录得59次，链插29读2写得31",
+   "detail": "前移29记录得59次，链插29读2写得31；4080GiB是忽略保留块和结束标记的指针位宽上界。",
+   "suggestedCorrection": "前移29记录得59次，链插29读2写得31；4080GiB是忽略保留块和结束标记的指针位宽上界。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [
+    "insertion"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q011",
+   "kind": "assumption",
+   "originalAnswer": "（2）FAT 最大 128KB，文件最大 256MB；（3）106 存放在 FAT 的 100 号表项中，108 存放在 106 号表项中；（4）访问 48 号簇和 106 号簇。",
+   "issue": "5000字节位于簇106，路径还读48",
+   "detail": "5000字节位于簇106，路径还读48；解析给dir多添file1项无题面依据，128KiB/256MiB是忽略保留簇的理论上界。",
+   "suggestedCorrection": "5000字节位于簇106，路径还读48；解析给dir多添file1项无题面依据，128KiB/256MiB是忽略保留簇的理论上界。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [
+    "fat-16bit"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q013",
+   "kind": "assumption",
+   "originalAnswer": "（1）块号最少占 4B，最大文件 128KB；（2）最大文件 64MB + 84KB；起始块号和块数各占 4B 合理。",
+   "issue": "4TiB/1KiB需32位块号、直接表128KiB",
+   "detail": "4TiB/1KiB需32位块号、直接表128KiB；2B块数字段原答64MiB隐含零编码65536，普通无符号上限应减1KiB。",
+   "suggestedCorrection": "4TiB/1KiB需32位块号、直接表128KiB；2B块数字段原答64MiB隐含零编码65536，普通无符号上限应减1KiB。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [
+    "extent-count-boundary"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q014",
+   "kind": "assumption",
+   "originalAnswer": "（1）(8 + 1024 + 1024² + 1024³) × 4KB = 32KB + 4MB + 4GB + 4TB；（2）64M 个；（3）不相同。",
+   "issue": "索引树容量(8+1024+1024²+1024³)×4096",
+   "detail": "索引树容量(8+1024+1024²+1024³)×4096；inode区限制64M图像；6KiB直接、40KiB间接，未缓存时多读一索引块。",
+   "suggestedCorrection": "索引树容量(8+1024+1024²+1024³)×4096；inode区限制64M图像；6KiB直接、40KiB间接，未缓存时多读一索引块。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [
+    "image-inode-bound"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-1-q015",
+   "kind": "assumption",
+   "originalAnswer": "（1）〈course, 2〉和〈doc, 10〉；（2）x = 30；（3）2 个磁盘块；（4）一级和二级间接地址项。",
+   "issue": "doc/course1共享inode10故x=30",
+   "detail": "doc/course1共享inode10故x=30；无其他inode/数据缓存时读2块；6MiB超1034数据块，需一/二级间接。",
+   "suggestedCorrection": "doc/course1共享inode10故x=30；无其他inode/数据缓存时读2块；6MiB超1034数据块，需一/二级间接。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files"
+   ],
+   "checkIds": [
+    "six-mib-blocks"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-2-q016",
+   "kind": "assumption",
+   "originalAnswer": "（1）b = 16i + j，C = b/(20×8)，H = (b mod (20×8))/8，S = b mod 8；（2）分配找\"0\"置\"1\"，回收换算位置后置\"0\"。",
+   "issue": "零基b=16i+j，整除160得柱面、余数除8得磁头",
+   "detail": "零基b=16i+j，整除160得柱面、余数除8得磁头；题用0空闲1占用，与笔记反向约定均可但不可混用。",
+   "suggestedCorrection": "零基b=16i+j，整除160得柱面、余数除8得磁头；题用0空闲1占用，与笔记反向约定均可但不可混用。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files",
+    "osc-disks"
+   ],
+   "checkIds": [
+    "bitmap-geometry"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c4-s4-2-q017",
+   "kind": "assumption",
+   "originalAnswer": "（1）6400 个；（2）200 个字；（3）块号 560。",
+   "issue": "总6400块、200字",
+   "detail": "总6400块、200字；(18,16)若块号一基为560，若零基为559，需声明题面未明确的块号基准。",
+   "suggestedCorrection": "总6400块、200字；(18,16)若块号一基为560，若零基为559，需声明题面未明确的块号基准。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-files",
+    "osc-disks"
+   ],
+   "checkIds": [
+    "bitmap-geometry"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：文件系统实现",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q001",
+   "kind": "disputed_answer",
+   "originalAnswer": "B",
+   "issue": "共享不必随机寻址，网络等设备可多进程共享",
+   "detail": "共享不必随机寻址，网络等设备可多进程共享；B是教材磁盘例的特征而非共享设备的必要条件，题面缺模型限定。",
+   "suggestedCorrection": "共享不必随机寻址，网络等设备可多进程共享；B是教材磁盘例的特征而非共享设备的必要条件，题面缺模型限定。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q002",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "在假脱机教材语境中物理独占设备映射为多个逻辑设备选C",
+   "detail": "在假脱机教材语境中物理独占设备映射为多个逻辑设备选C；不是所有现代虚拟设备的唯一含义。",
+   "suggestedCorrection": "在假脱机教材语境中物理独占设备映射为多个逻辑设备选C；不是所有现代虚拟设备的唯一含义。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q003",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "现代块设备大批数据常用DMA选D",
+   "detail": "现代块设备大批数据常用DMA选D；位/字节/帧是粒度，题目选项分类不平行。",
+   "suggestedCorrection": "现代块设备大批数据常用DMA选D；位/字节/帧是粒度，题目选项分类不平行。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q004",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "控制/状态寄存器和命令构成常见接口选A",
+   "detail": "控制/状态寄存器和命令构成常见接口选A；解析“不存在I/O地址寄存器/设备中断寄存器”不能泛化到所有控制器。",
+   "suggestedCorrection": "控制/状态寄存器和命令构成常见接口选A；解析“不存在I/O地址寄存器/设备中断寄存器”不能泛化到所有控制器。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q006",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "设备与主存数据由DMA传输选A，CPU仍配置/回收，DMA地址可能受IOMMU映射。",
+   "detail": "设备与主存数据由DMA传输选A，CPU仍配置/回收，DMA地址可能受IOMMU映射。",
+   "suggestedCorrection": "设备与主存数据由DMA传输选A，CPU仍配置/回收，DMA地址可能受IOMMU映射。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "dma"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "Linux内核：DMA映射",
+     "url": "https://docs.kernel.org/core-api/dma-api-howto.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q007",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "教材通道是执行通道程序的专用硬件选A",
+   "detail": "教材通道是执行通道程序的专用硬件选A；内存覆盖的软件管理不改变其基础内存仍是硬件。",
+   "suggestedCorrection": "教材通道是执行通道程序的专用硬件选A；内存覆盖的软件管理不改变其基础内存仍是硬件。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q008",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "这里存储设备须指主存而非另一外设，数据不经CPU搬运的DMA选C。",
+   "detail": "这里存储设备须指主存而非另一外设，数据不经CPU搬运的DMA选C。",
+   "suggestedCorrection": "这里存储设备须指主存而非另一外设，数据不经CPU搬运的DMA选C。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q009",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "基本DMA模型CPU预处理/后处理、控制器搬数据选B",
+   "detail": "基本DMA模型CPU预处理/后处理、控制器搬数据选B；现代描述符链可由控制器解释，不能以此说DMA永不执行描述信息。",
+   "suggestedCorrection": "基本DMA模型CPU预处理/后处理、控制器搬数据选B；现代描述符链可由控制器解释，不能以此说DMA永不执行描述信息。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "dma"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "Linux内核：DMA映射",
+     "url": "https://docs.kernel.org/core-api/dma-api-howto.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q011",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "阻塞I/O模型下预处理请求线程运行、完成中断前请求线程等待，选D",
+   "detail": "阻塞I/O模型下预处理请求线程运行、完成中断前请求线程等待，选D；异步I/O不必阻塞。",
+   "suggestedCorrection": "阻塞I/O模型下预处理请求线程运行、完成中断前请求线程等待，选D；异步I/O不必阻塞。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "dma"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "Linux内核：DMA映射",
+     "url": "https://docs.kernel.org/core-api/dma-api-howto.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q012",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "按教材列举的分配因素选A",
+   "detail": "按教材列举的分配因素选A；实时系统当然要考虑时限，不能将“及时性不必考虑”推广到所有分配器。",
+   "suggestedCorrection": "按教材列举的分配因素选A；实时系统当然要考虑时限，不能将“及时性不必考虑”推广到所有分配器。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q013",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "教材全系统物理设备代号叫绝对号选A",
+   "detail": "教材全系统物理设备代号叫绝对号选A；不是设备类型号或用户逻辑名。",
+   "suggestedCorrection": "教材全系统物理设备代号叫绝对号选A；不是设备类型号或用户逻辑名。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q014",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "教材层次为通道→控制器→设备选C",
+   "detail": "教材层次为通道→控制器→设备选C；它们可在流水或不同设备操作中重叠，解析一概否定并行不严谨。",
+   "suggestedCorrection": "教材层次为通道→控制器→设备选C；它们可在流水或不同设备操作中重叠，解析一概否定并行不严谨。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q015",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "假定两类设备各具相同驱动接口则需要两种驱动选C，实例数5不等于驱动类型5。",
+   "detail": "假定两类设备各具相同驱动接口则需要两种驱动选C，实例数5不等于驱动类型5。",
+   "suggestedCorrection": "假定两类设备各具相同驱动接口则需要两种驱动选C，实例数5不等于驱动类型5。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q016",
+   "kind": "disputed_answer",
+   "originalAnswer": "B",
+   "issue": "“翻译成设备操作命令”通常属驱动程序，原选B却排除D，和同章寄存器命令及综合题层次解释不一致",
+   "detail": "“翻译成设备操作命令”通常属驱动程序，原选B却排除D，和同章寄存器命令及综合题层次解释不一致；若只做设备无关请求分派需改题面。",
+   "suggestedCorrection": "“翻译成设备操作命令”通常属驱动程序，原选B却排除D，和同章寄存器命令及综合题层次解释不一致；若只做设备无关请求分派需改题面。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q017",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "通常设备寄存器命令由驱动层写入选C",
+   "detail": "通常设备寄存器命令由驱动层写入选C；ISR本身可属于驱动并写清中断寄存器，不可说中断处理绝不写寄存器。",
+   "suggestedCorrection": "通常设备寄存器命令由驱动层写入选C；ISR本身可属于驱动并写清中断寄存器，不可说中断处理绝不写寄存器。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q019",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "限定程序控制传送的中断模型时由ISR读设备数据选C",
+   "detail": "限定程序控制传送的中断模型时由ISR读设备数据选C；DMA完成中断场景数据可能早已由硬件搬入。",
+   "suggestedCorrection": "限定程序控制传送的中断模型时由ISR读设备数据选C；DMA完成中断场景数据可能早已由硬件搬入。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q020",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "同步阻塞模型下中断与DMA可让请求进程等待、轮询忙等，选C",
+   "detail": "同步阻塞模型下中断与DMA可让请求进程等待、轮询忙等，选C；控制方式不决定API是否阻塞。",
+   "suggestedCorrection": "同步阻塞模型下中断与DMA可让请求进程等待、轮询忙等，选C；控制方式不决定API是否阻塞。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q021",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "“一定回原进程”错选C，可在退出中断时重调度",
+   "detail": "“一定回原进程”错选C，可在退出中断时重调度；不只是嵌套中断造成差异，A搬数据也应限定PIO。",
+   "suggestedCorrection": "“一定回原进程”错选C，可在退出中断时重调度；不只是嵌套中断造成差异，A搬数据也应限定PIO。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q022",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "可寻址成块传输适合块接口选A，不能把所有字符设备都断言低速、网络接口也是真实类型。",
+   "detail": "可寻址成块传输适合块接口选A，不能把所有字符设备都断言低速、网络接口也是真实类型。",
+   "suggestedCorrection": "可寻址成块传输适合块接口选A，不能把所有字符设备都断言低速、网络接口也是真实类型。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q023",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "标准中断键盘流程中内核ISR先接收选B，不是登录程序先直接读硬件。",
+   "detail": "标准中断键盘流程中内核ISR先接收选B，不是登录程序先直接读硬件。",
+   "suggestedCorrection": "标准中断键盘流程中内核ISR先接收选B，不是登录程序先直接读硬件。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q024",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "通常异步硬件完成流程为系统调用→驱动启动→完成中断选B，缓存/轮询路径不必全经过。",
+   "detail": "通常异步硬件完成流程为系统调用→驱动启动→完成中断选B，缓存/轮询路径不必全经过。",
+   "suggestedCorrection": "通常异步硬件完成流程为系统调用→驱动启动→完成中断选B，缓存/轮询路径不必全经过。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q025",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "教材四层从用户库→无关层→驱动→中断选A，实际驱动和ISR可作为同一模块，不等于严格调用栈。",
+   "detail": "教材四层从用户库→无关层→驱动→中断选A，实际驱动和ISR可作为同一模块，不等于严格调用栈。",
+   "suggestedCorrection": "教材四层从用户库→无关层→驱动→中断选A，实际驱动和ISR可作为同一模块，不等于严格调用栈。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q002",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "作为I/O缓冲是缓和生产消费速度差选C",
+   "detail": "作为I/O缓冲是缓和生产消费速度差选C；高速缓存的复用减少I/O与纯buffer概念应区分。",
+   "suggestedCorrection": "作为I/O缓冲是缓和生产消费速度差选C；高速缓存的复用减少I/O与纯buffer概念应区分。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q003",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "多个并发I/O共享池便于灵活复用选A",
+   "detail": "多个并发I/O共享池便于灵活复用选A；循环/双缓冲也可设计为共享，题目是教材优选而非排他定理。",
+   "suggestedCorrection": "多个并发I/O共享池便于灵活复用选A；循环/双缓冲也可设计为共享，题目是教材优选而非排他定理。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q005",
+   "kind": "disputed_answer",
+   "originalAnswer": "B",
+   "issue": "题面仅说双向而非双向同时且仅两缓冲，半双工单缓冲、多缓冲及缓冲池均可支持，B不是唯一必要配置。",
+   "detail": "题面仅说双向而非双向同时且仅两缓冲，半双工单缓冲、多缓冲及缓冲池均可支持，B不是唯一必要配置。",
+   "suggestedCorrection": "题面仅说双向而非双向同时且仅两缓冲，半双工单缓冲、多缓冲及缓冲池均可支持，B不是唯一必要配置。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q007",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "每方向一个独立槽的教材双工模型可同时收发选B",
+   "detail": "每方向一个独立槽的教材双工模型可同时收发选B；不把它等同于同方向流水的ping-pong双缓冲。",
+   "suggestedCorrection": "每方向一个独立槽的教材双工模型可同时收发选B；不把它等同于同方向流水的ping-pong双缓冲。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q008",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "在这些教材候选里FCFS是常用设备请求分配策略选D",
+   "detail": "在这些教材候选里FCFS是常用设备请求分配策略选D；设备调度也可带优先级和实时预算。",
+   "suggestedCorrection": "在这些教材候选里FCFS是常用设备请求分配策略选D；设备调度也可带优先级和实时预算。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q009",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "单系统槽、单用户槽且拷贝和计算共用CPU，稳态max(80,30)+40=120μs选A，不是首块完成150μs。",
+   "detail": "单系统槽、单用户槽且拷贝和计算共用CPU，稳态max(80,30)+40=120μs选A，不是首块完成150μs。",
+   "suggestedCorrection": "单系统槽、单用户槽且拷贝和计算共用CPU，稳态max(80,30)+40=120μs选A，不是首块完成150μs。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [
+    "single-steady"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q010",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "两系统槽交替且复制与计算共用CPU，长流稳态max(T1,T2+T3)选D，有限批次还须加启动收尾。",
+   "detail": "两系统槽交替且复制与计算共用CPU，长流稳态max(T1,T2+T3)选D，有限批次还须加启动收尾。",
+   "suggestedCorrection": "两系统槽交替且复制与计算共用CPU，长流稳态max(T1,T2+T3)选D，有限批次还须加启动收尾。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [
+    "double-steady"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q011",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "平滑CPU瓶颈稳态下额外缓冲吞吐收益小，教材选B",
+   "detail": "平滑CPU瓶颈稳态下额外缓冲吞吐收益小，教材选B；仍可能吸收突发和减少调度开销。",
+   "suggestedCorrection": "平滑CPU瓶颈稳态下额外缓冲吞吐收益小，教材选B；仍可能吸收突发和减少调度开销。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q012",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "共享缓冲的互斥及空满同步是关键选C，大小数量同样是管理设计事项，非完全无关。",
+   "detail": "共享缓冲的互斥及空满同步是关键选C，大小数量同样是管理设计事项，非完全无关。",
+   "suggestedCorrection": "共享缓冲的互斥及空满同步是关键选C，大小数量同样是管理设计事项，非完全无关。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q013",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "按典型输入队列、磁盘中转和显示帧缓冲用途选D",
+   "detail": "按典型输入队列、磁盘中转和显示帧缓冲用途选D；是常见适用场景而非每种实现都绝对必须。",
+   "suggestedCorrection": "按典型输入队列、磁盘中转和显示帧缓冲用途选D；是常见适用场景而非每种实现都绝对必须。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q014",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "教材设备表为DCT/COCT/CHCT而PCB主属进程选A",
+   "detail": "教材设备表为DCT/COCT/CHCT而PCB主属进程选A；PCB仍会与I/O等待关联。",
+   "suggestedCorrection": "教材设备表为DCT/COCT/CHCT而PCB主属进程选A；PCB仍会与I/O等待关联。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q015",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "教材独享/共享/虚拟分类中分区为内存术语，选D，不排除现代设备分区虚拟化。",
+   "detail": "教材独享/共享/虚拟分类中分区为内存术语，选D，不排除现代设备分区虚拟化。",
+   "suggestedCorrection": "教材独享/共享/虚拟分类中分区为内存术语，选D，不排除现代设备分区虚拟化。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q016",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "按教材SDT→DCT→COCT→CHCT指针层次选择通路，选A。",
+   "detail": "按教材SDT→DCT→COCT→CHCT指针层次选择通路，选A。",
+   "suggestedCorrection": "按教材SDT→DCT→COCT→CHCT指针层次选择通路，选A。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q017",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "按未经假脱机改造的教材磁盘共享、打印和磁带独占选C",
+   "detail": "按未经假脱机改造的教材磁盘共享、打印和磁带独占选C；可虚拟化共享不改变物理资源粒度。",
+   "suggestedCorrection": "按未经假脱机改造的教材磁盘共享、打印和磁带独占选C；可虚拟化共享不改变物理资源粒度。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q018",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "单CPU靠多道在I/O等待时切换任务提高利用率选D，虚拟技术不只是外设技术。",
+   "detail": "单CPU靠多道在I/O等待时切换任务提高利用率选D，虚拟技术不只是外设技术。",
+   "suggestedCorrection": "单CPU靠多道在I/O等待时切换任务提高利用率选D，虚拟技术不只是外设技术。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q019",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "虚拟打印机语境由SPOOLing实现选C",
+   "detail": "虚拟打印机语境由SPOOLing实现选C；现代虚拟设备还可由虚拟机等机制实现。",
+   "suggestedCorrection": "虚拟打印机语境由SPOOLing实现选C；现代虚拟设备还可由虚拟机等机制实现。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q020",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "排队暂存使独占设备更充分利用选B，不提高物理打印速率，利用率改善受负载影响。",
+   "detail": "排队暂存使独占设备更充分利用选B，不提高物理打印速率，利用率改善受负载影响。",
+   "suggestedCorrection": "排队暂存使独占设备更充分利用选B，不提高物理打印速率，利用率改善受负载影响。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q021",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "教材打印输出先入磁盘输出井选A",
+   "detail": "教材打印输出先入磁盘输出井选A；固定区域是抽象设计，现代spool可用普通目录/文件。",
+   "suggestedCorrection": "教材打印输出先入磁盘输出井选A；固定区域是抽象设计，现代spool可用普通目录/文件。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q023",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "按教材预输入、井管理、缓输出三个程序选A",
+   "detail": "按教材预输入、井管理、缓输出三个程序选A；名称约定不是所有现代spool实现的必备进程名。",
+   "suggestedCorrection": "按教材预输入、井管理、缓输出三个程序选A；名称约定不是所有现代spool实现的必备进程名。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q024",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "用户分到的是spool存储与排队服务而非物理打印机，选B。",
+   "detail": "用户分到的是spool存储与排队服务而非物理打印机，选B。",
+   "suggestedCorrection": "用户分到的是spool存储与排队服务而非物理打印机，选B。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q025",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "有可用输出井容量时用户提交后由系统后台输出，选D",
+   "detail": "有可用输出井容量时用户提交后由系统后台输出，选D；“随时”不覆盖队列满、权限或I/O错误。",
+   "suggestedCorrection": "有可用输出井容量时用户提交后由系统后台输出，选D；“随时”不覆盖队列满、权限或I/O错误。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q026",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "被虚拟的物理独占设备仍存在，A错",
+   "detail": "被虚拟的物理独占设备仍存在，A错；加速作业是减少用户等待而非总输出必然更快。",
+   "suggestedCorrection": "被虚拟的物理独占设备仍存在，A错；加速作业是减少用户等待而非总输出必然更快。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q029",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "按教材独占可静态、共享通常动态，D错",
+   "detail": "按教材独占可静态、共享通常动态，D错；现代磁盘可多队列并行不遵守“每时刻只一个作业”硬断言。",
+   "suggestedCorrection": "按教材独占可静态、共享通常动态，D错；现代磁盘可多队列并行不遵守“每时刻只一个作业”硬断言。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "blk-mq"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "Linux内核：多队列块I/O",
+     "url": "https://docs.kernel.org/block/blk-mq.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q031",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "教材公共层做权限和缓冲选C",
+   "detail": "教材公共层做权限和缓冲选C；寄存器命令是驱动、格式化为用户库。",
+   "suggestedCorrection": "教材公共层做权限和缓冲选C；寄存器命令是驱动、格式化为用户库。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q032",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "教材把设备相关中断和磁盘调度归驱动选B",
+   "detail": "教材把设备相关中断和磁盘调度归驱动选B；现代Linux调度常在块层，驱动可C等高级语言实现。",
+   "suggestedCorrection": "教材把设备相关中断和磁盘调度归驱动选B；现代Linux调度常在块层，驱动可C等高级语言实现。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks",
+    "blk-mq"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    },
+    {
+     "title": "Linux内核：多队列块I/O",
+     "url": "https://docs.kernel.org/block/blk-mq.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q033",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "教材高层数据分析不属通用驱动职责，选D",
+   "detail": "教材高层数据分析不属通用驱动职责，选D；实际驱动可持有DMA环和缓冲，不能泛称驱动不缓冲。",
+   "suggestedCorrection": "教材高层数据分析不属通用驱动职责，选D；实际驱动可持有DMA环和缓冲，不能泛称驱动不缓冲。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q034",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "教材④翻译→①校验→⑤状态→②参数→③启动选B",
+   "detail": "教材④翻译→①校验→⑤状态→②参数→③启动选B；真实安全实现可在翻译前先验证边界。",
+   "suggestedCorrection": "教材④翻译→①校验→⑤状态→②参数→③启动选B；真实安全实现可在翻译前先验证边界。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q035",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "进入内核用陷入/系统调用指令选A",
+   "detail": "进入内核用陷入/系统调用指令选A；printf可能先在用户缓冲，特权指令故障本身也可能陷入，不能把后者说成不切态。",
+   "suggestedCorrection": "进入内核用陷入/系统调用指令选A；printf可能先在用户缓冲，特权指令故障本身也可能陷入，不能把后者说成不切态。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q037",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "应用打开逻辑设备名选A",
+   "detail": "应用打开逻辑设备名选A；解析错把主/次设备号说成总线仲裁主从，实际用于设备驱动和实例标识。",
+   "suggestedCorrection": "应用打开逻辑设备名选A；解析错把主/次设备号说成总线仲裁主从，实际用于设备驱动和实例标识。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q038",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "单/双系统缓冲及CPU拷贝计算共用模型，10块总时间1550/1100μs选B，含首尾非仅稳态。",
+   "detail": "单/双系统缓冲及CPU拷贝计算共用模型，10块总时间1550/1100μs选B，含首尾非仅稳态。",
+   "suggestedCorrection": "单/双系统缓冲及CPU拷贝计算共用模型，10块总时间1550/1100μs选B，含首尾非仅稳态。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [
+    "ten-single",
+    "ten-double"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q039",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "块1完成于195，第二块设备105至205、拷贝205至210、计算210至300，选C",
+   "detail": "块1完成于195，第二块设备105至205、拷贝205至210、计算210至300，选C；拷贝不能和同一用户槽计算同时进行。",
+   "suggestedCorrection": "块1完成于195，第二块设备105至205、拷贝205至210、计算210至300，选C；拷贝不能和同一用户槽计算同时进行。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [
+    "two-single"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q040",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "传统CHS模型由驱动转换选C",
+   "detail": "传统CHS模型由驱动转换选C；现代LBA真实几何由固件隐藏，驱动不必知道物理柱面。",
+   "suggestedCorrection": "传统CHS模型由驱动转换选C；现代LBA真实几何由固件隐藏，驱动不必知道物理柱面。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q041",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "这里“磁盘缓冲”按块缓存复用解释，命中减少I/O次数选A，不是所有一次性buffer都必减少请求。",
+   "detail": "这里“磁盘缓冲”按块缓存复用解释，命中减少I/O次数选A，不是所有一次性buffer都必减少请求。",
+   "suggestedCorrection": "这里“磁盘缓冲”按块缓存复用解释，命中减少I/O次数选A，不是所有一次性buffer都必减少请求。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q042",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "输出井和物理设备间传送由系统spool程序负责，D错误",
+   "detail": "输出井和物理设备间传送由系统spool程序负责，D错误；逻辑并发不要求多个CPU。",
+   "suggestedCorrection": "输出井和物理设备间传送由系统spool程序负责，D错误；逻辑并发不要求多个CPU。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q044",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "驱动依赖设备控制方式，A错",
+   "detail": "驱动依赖设备控制方式，A错；驱动可开源不必由厂家编写，用户阻塞与具体调用方式有关。",
+   "suggestedCorrection": "驱动依赖设备控制方式，A错；驱动可开源不必由厂家编写，用户阻塞与具体调用方式有关。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q046",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "教材先读设备到内核缓冲再唤醒读者选C，用户拷贝在后续进程上下文",
+   "detail": "教材先读设备到内核缓冲再唤醒读者选C，用户拷贝在后续进程上下文；不覆盖所有零拷贝模型。",
+   "suggestedCorrection": "教材先读设备到内核缓冲再唤醒读者选C，用户拷贝在后续进程上下文；不覆盖所有零拷贝模型。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q001",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "针对磁盘文件系统，持久布局与管理代码构成文件系统选B",
+   "detail": "针对磁盘文件系统，持久布局与管理代码构成文件系统选B；内存/伪文件系统不要求磁盘。",
+   "suggestedCorrection": "针对磁盘文件系统，持久布局与管理代码构成文件系统选B；内存/伪文件系统不要求磁盘。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q002",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "单磁头服务串行请求的教材磁盘模型选D",
+   "detail": "单磁头服务串行请求的教材磁盘模型选D；NCQ/多执行单元可接收多个未完成命令。",
+   "suggestedCorrection": "单磁头服务串行请求的教材磁盘模型选D；NCQ/多执行单元可接收多个未完成命令。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks",
+    "blk-mq"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    },
+    {
+     "title": "Linux内核：多队列块I/O",
+     "url": "https://docs.kernel.org/block/blk-mq.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q003",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "可改写光盘、U盘和磁盘支持直接访问选B",
+   "detail": "可改写光盘、U盘和磁盘支持直接访问选B；CD-ROM只读，不应把所有光盘说成都可写。",
+   "suggestedCorrection": "可改写光盘、U盘和磁盘支持直接访问选B；CD-ROM只读，不应把所有光盘说成都可写。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q004",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "经典按磁道调序主要缩短寻道选A，旋转感知调度也可优化旋转等待，不是绝无可能。",
+   "detail": "经典按磁道调序主要缩短寻道选A，旋转感知调度也可优化旋转等待，不是绝无可能。",
+   "suggestedCorrection": "经典按磁道调序主要缩短寻道选A，旋转感知调度也可优化旋转等待，不是绝无可能。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q006",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "题意是底层块设备读写粒度选A",
+   "detail": "题意是底层块设备读写粒度选A；用户read接口可以按字节或记录，不等于只能整块请求。",
+   "suggestedCorrection": "题意是底层块设备读写粒度选A；用户read接口可以按字节或记录，不等于只能整块请求。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q007",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "传统随机小块HDD访问寻道通常最大，选D",
+   "detail": "传统随机小块HDD访问寻道通常最大，选D；连续读、长传输和SSD不是同一前提。",
+   "suggestedCorrection": "传统随机小块HDD访问寻道通常最大，选D；连续读、长传输和SSD不是同一前提。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q008",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "教材逻辑格式化创建分区文件系统引导结构选D",
+   "detail": "教材逻辑格式化创建分区文件系统引导结构选D；安装引导器是另一步，不保证格式化必装可启动OS代码。",
+   "suggestedCorrection": "教材逻辑格式化创建分区文件系统引导结构选D；安装引导器是另一步，不保证格式化必装可启动OS代码。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q010",
+   "kind": "disputed_answer",
+   "originalAnswer": "D",
+   "issue": "“调度与旋转延迟无关”过强，旋转感知调度可改变等待，处理时间也会影响错过下扇区",
+   "detail": "“调度与旋转延迟无关”过强，旋转感知调度可改变等待，处理时间也会影响错过下扇区；无指定模型不能唯一认定D。",
+   "suggestedCorrection": "“调度与旋转延迟无关”过强，旋转感知调度可改变等待，处理时间也会影响错过下扇区；无指定模型不能唯一认定D。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q011",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "经典机械盘按寻道距离优化主旨选A，不声称所有请求/硬盘寻道都绝对最大。",
+   "detail": "经典机械盘按寻道距离优化主旨选A，不声称所有请求/硬盘寻道都绝对最大。",
+   "suggestedCorrection": "经典机械盘按寻道距离优化主旨选A，不声称所有请求/硬盘寻道都绝对最大。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q013",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "连续到来近请求可使SSTF远请求饥饿选B",
+   "detail": "连续到来近请求可使SSTF远请求饥饿选B；SCAN是否黏着还与本轮接纳策略有关。",
+   "suggestedCorrection": "连续到来近请求可使SSTF远请求饥饿选B；SCAN是否黏着还与本轮接纳策略有关。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q017",
+   "kind": "disputed_answer",
+   "originalAnswer": "A",
+   "issue": "r为每转秒，原式每轨只计T+r，未说明首扇区随机旋转等待和b/N取整，整轨任意起点模型才可沿用A。",
+   "detail": "r为每转秒，原式每轨只计T+r，未说明首扇区随机旋转等待和b/N取整，整轨任意起点模型才可沿用A。",
+   "suggestedCorrection": "r为每转秒，原式每轨只计T+r，未说明首扇区随机旋转等待和b/N取整，整轨任意起点模型才可沿用A。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [],
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q018",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "3000rpm周期20ms，每轨10扇区纯传输2ms选C",
+   "detail": "3000rpm周期20ms，每轨10扇区纯传输2ms选C；未包含寻道和旋转等待。",
+   "suggestedCorrection": "3000rpm周期20ms，每轨10扇区纯传输2ms选C；未包含寻道和旋转等待。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [
+    "sector-ms"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q023",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "每记录计一个0.4英寸间隙得1800英寸、有效比1/3选C",
+   "detail": "每记录计一个0.4英寸间隙得1800英寸、有效比1/3选C；若仅2999个内部间隙总1799.6。",
+   "suggestedCorrection": "每记录计一个0.4英寸间隙得1800英寸、有效比1/3选C；若仅2999个内部间隙总1799.6。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [
+    "tape"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q024",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "闪存擦写寿命有限故D“不易磨损”在此语境错",
+   "detail": "闪存擦写寿命有限故D“不易磨损”在此语境错；有无机械抗冲击磨损须分开，写放大受FTL/缓存影响。",
+   "suggestedCorrection": "闪存擦写寿命有限故D“不易磨损”在此语境错；有无机械抗冲击磨损须分开，写放大受FTL/缓存影响。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q025",
+   "kind": "assumption",
+   "originalAnswer": "C",
+   "issue": "C按静态均衡扩大冷块参与成立但有搬移开销",
+   "detail": "C按静态均衡扩大冷块参与成立但有搬移开销；解析冷数据迁移方向写反，通常迁出低擦写冷块以释放它承接热写。",
+   "suggestedCorrection": "C按静态均衡扩大冷块参与成立但有搬移开销；解析冷数据迁移方向写反，通常迁出低擦写冷块以释放它承接热写。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q026",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "磨损均衡主旨寿命不是速度，D错",
+   "detail": "磨损均衡主旨寿命不是速度，D错；A只可理解为无需机械寻道排序，SSD仍有I/O队列调度。",
+   "suggestedCorrection": "磨损均衡主旨寿命不是速度，D错；A只可理解为无需机械寻道排序，SSD仍有I/O队列调度。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks",
+    "blk-mq"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    },
+    {
+     "title": "Linux内核：多队列块I/O",
+     "url": "https://docs.kernel.org/block/blk-mq.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q028",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "分区本身没有保证I/O加速选B",
+   "detail": "分区本身没有保证I/O加速选B；预读/延迟写/布局优化也需合适工作负载，不是每次都更快。",
+   "suggestedCorrection": "分区本身没有保证I/O加速选B；预读/延迟写/布局优化也需合适工作负载，不是每次都更快。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q031",
+   "kind": "assumption",
+   "originalAnswer": "D",
+   "issue": "四种技术都可以改善合适负载下文件访问选D",
+   "detail": "四种技术都可以改善合适负载下文件访问选D；延迟写并非承诺数据已持久化。",
+   "suggestedCorrection": "四种技术都可以改善合适负载下文件访问选D；延迟写并非承诺数据已持久化。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q032",
+   "kind": "assumption",
+   "originalAnswer": "A",
+   "issue": "按服务本磁道新请求直到为空的黏着模型，FCFS不偏置本磁道选A",
+   "detail": "按服务本磁道新请求直到为空的黏着模型，FCFS不偏置本磁道选A；冻结批次SCAN不会因此无限黏着。",
+   "suggestedCorrection": "按服务本磁道新请求直到为空的黏着模型，FCFS不偏置本磁道选A；冻结批次SCAN不会因此无限黏着。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q035",
+   "kind": "assumption",
+   "originalAnswer": "B",
+   "issue": "两种块存储都需确定文件系统逻辑块大小选B",
+   "detail": "两种块存储都需确定文件系统逻辑块大小选B；SSD无机械扇区但可暴露逻辑扇区，不能混淆。",
+   "suggestedCorrection": "两种块存储都需确定文件系统逻辑块大小选B；SSD无机械扇区但可暴露逻辑扇区，不能混淆。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-1-q002",
+   "kind": "assumption",
+   "originalAnswer": "56%",
+   "issue": "56kb/s按十进制、每字符10bit、CPU开销0.1ms，5600中断每秒占56%",
+   "detail": "56kb/s按十进制、每字符10bit、CPU开销0.1ms，5600中断每秒占56%；阻塞等待本身不计CPU忙时间。",
+   "suggestedCorrection": "56kb/s按十进制、每字符10bit、CPU开销0.1ms，5600中断每秒占56%；阻塞等待本身不计CPU忙时间。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [
+    "modem-interrupt"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-2-q001",
+   "kind": "assumption",
+   "originalAnswer": "（1）设备驱动程序；（2）设备驱动程序；（3）设备独立性软件；（4）用户层软件。",
+   "issue": "教材四层分工：驱动做CHS和寄存器，无关层做授权、用户库做格式转换",
+   "detail": "教材四层分工：驱动做CHS和寄存器，无关层做授权、用户库做格式转换；驱动不限厂家实现。",
+   "suggestedCorrection": "教材四层分工：驱动做CHS和寄存器，无关层做授权、用户库做格式转换；驱动不限厂家实现。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-2-q002",
+   "kind": "assumption",
+   "originalAnswer": "总耗时 390μs，每块平均处理时间 390μs ÷ 4 = 97.5μs。",
+   "issue": "双系统槽、复制计算共用CPU，4块时间线总390μs均97.5",
+   "detail": "双系统槽、复制计算共用CPU，4块时间线总390μs均97.5；稳态80而非有限批次均值。",
+   "suggestedCorrection": "双系统槽、复制计算共用CPU，4块时间线总390μs均97.5；稳态80而非有限批次均值。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [
+    "four-double"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-2-q003",
+   "kind": "assumption",
+   "originalAnswer": "（1）正确顺序为②→⑥→④→③→①→⑤：①的前一个操作是③、后一个操作是⑤，⑥的后一个操作是④；（2）操作②之后 CPU 一定切换到其他进程，操作①之后调度程序才能选中 P；（3）操作③；（4）P 处于阻塞态，CPU 处于内核态。",
+   "issue": "阻塞键盘顺序②⑥④③①⑤",
+   "detail": "阻塞键盘顺序②⑥④③①⑤；ISR早段P阻塞，唤醒①后已就绪，不能说整个ISR期间一直阻塞。",
+   "suggestedCorrection": "阻塞键盘顺序②⑥④③①⑤；ISR早段P阻塞，唤醒①后已就绪，不能说整个ISR期间一直阻塞。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-3-q003",
+   "kind": "assumption",
+   "originalAnswer": "FCFS 2013 道；SSTF 1298 道；SCAN 1219 道；LOOK 1009 道；C-SCAN 1967 道；C-LOOK 1507 道。",
+   "issue": "六算法独立模拟得2013/1298/1219/1009/1967/1507",
+   "detail": "六算法独立模拟得2013/1298/1219/1009/1967/1507；原C-SCAN文字说返回后向增大服务有误，轨迹实际继续减小。",
+   "suggestedCorrection": "六算法独立模拟得2013/1298/1219/1009/1967/1507；原C-SCAN文字说返回后向增大服务有误，轨迹实际继续减小。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [
+    "six-fcfs",
+    "six-sstf",
+    "six-scan",
+    "six-look",
+    "six-cscan",
+    "six-clook"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-3-q004",
+   "kind": "assumption",
+   "originalAnswer": "整理前 20300ms，整理后 13700ms。",
+   "issue": "若首块也取同样平均寻道，100×(78+100+25)=20300ms，整理后13700",
+   "detail": "若首块也取同样平均寻道，100×(78+100+25)=20300ms，整理后13700；只给99次块间距离时首寻道另缺条件。",
+   "suggestedCorrection": "若首块也取同样平均寻道，100×(78+100+25)=20300ms，整理后13700；只给99次块间距离时首寻道另缺条件。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [
+    "defrag"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-3-q005",
+   "kind": "assumption",
+   "originalAnswer": "（1）70ms（0.07s）；（2）约 58.5KB/s。",
+   "issue": "按显式交错位置、串行读2.5ms+传内存5ms，含初始半转共70ms",
+   "detail": "按显式交错位置、串行读2.5ms+传内存5ms，含初始半转共70ms；吞吐4096/0.07=58514B/s=57.14KiB/s，58.5是十进制kB/s。",
+   "suggestedCorrection": "按显式交错位置、串行读2.5ms+传内存5ms，含初始半转共70ms；吞吐4096/0.07=58514B/s=57.14KiB/s，58.5是十进制kB/s。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [
+    "serial-controller",
+    "throughput-unit"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-3-q006",
+   "kind": "disputed_answer",
+   "originalAnswer": "（1）位示图，恰好占 2KB；（2）190.4ms；（3）有，先来先服务（FCFS）。",
+   "issue": "190.4ms来自C-LOOK在最大请求120直接跳30",
+   "detail": "190.4ms来自C-LOOK在最大请求120直接跳30；严格C-SCAN需物理端点且题面未给，和同库SCAN定义不一致，不应唯一沿用。",
+   "suggestedCorrection": "190.4ms来自C-LOOK在最大请求120直接跳30；严格C-SCAN需物理端点且题面未给，和同库SCAN定义不一致，不应唯一沿用。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [
+    "clook-2010",
+    "cscan-needs-endpoint"
+   ],
+   "scoring": "excluded",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-3-q007",
+   "kind": "assumption",
+   "originalAnswer": "（1）\\(3\\times10^5\\) KB；（2）100260 → 101660 → 110560 → 60005；（3）柱面号 100、磁头号 5、扇区号 60，由磁盘驱动程序完成。",
+   "issue": "容量307200000B=300000KiB",
+   "detail": "容量307200000B=300000KiB；SSTF柱面100,101,110,60；100530簇首扇区CHS(100,5,60)，驱动CHS限定传统模型。",
+   "suggestedCorrection": "容量307200000B=300000KiB；SSTF柱面100,101,110,60；100530簇首扇区CHS(100,5,60)，驱动CHS限定传统模型。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [
+    "geometry-2019",
+    "geometry-sstf"
+   ],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-3-q008",
+   "kind": "assumption",
+   "originalAnswer": "（1）ROM 中的引导程序 → 磁盘引导程序 → 分区引导程序 → 操作系统的初始化程序；（2）物理格式化 → 分区 → 逻辑格式化 → 操作系统的安装；（3）扇区划分在物理格式化中完成，根目录建立在逻辑格式化中完成。",
+   "issue": "题面明确MBR启动，顺序ROM→MBR→分区引导→OS",
+   "detail": "题面明确MBR启动，顺序ROM→MBR→分区引导→OS；准备为低级格式化→分区→高级格式化→安装，不推广为UEFI唯一流程。",
+   "suggestedCorrection": "题面明确MBR启动，顺序ROM→MBR→分区引导→OS；准备为低级格式化→分区→高级格式化→安装，不推广为UEFI唯一流程。",
+   "evidenceRefs": [
+    "snapshot",
+    "notes",
+    "osc-io",
+    "osc-disks"
+   ],
+   "checkIds": [],
+   "scoring": "keep_original",
+   "reviewedAt": "2026-11-17",
+   "evidenceLinks": [
+    {
+     "title": "UIC课程：I/O系统",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+    },
+    {
+     "title": "UIC课程：大容量存储",
+     "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+    }
+   ]
   }
  ]
 }

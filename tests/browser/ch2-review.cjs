@@ -20,7 +20,7 @@ const check=(name,value)=>{checks.push({name,ok:Boolean(value)});console.log(`${
   page.on('response',r=>{if(r.status()>=400)failures.push(`${r.status()} ${r.url()}`);});
   const go=async(hash)=>{await page.goto(BASE+hash,{waitUntil:'networkidle'});await page.waitForSelector('main h1');};
   await go('');
-  check('首页交代530已复核与230系统映射',/530/.test(await page.locator('main').innerText()) && /230/.test(await page.locator('main').innerText()));
+  check('首页交代760题全部逐题复核',/760/.test(await page.locator('main').innerText()) && /逐题/.test(await page.locator('main').innerText()));
   const index=await page.evaluate(async()=> (await (await fetch('data/index.json')).json()).questions);
   const chapter2=index.filter(q=>q.id.startsWith('c2-'));
   check('276题覆盖且全部退出systematic',chapter2.length===276 && chapter2.every(q=>q.status==='reviewed' && q.review!=='systematic'));
@@ -44,9 +44,7 @@ const check=(name,value)=>{checks.push({name,ok:Boolean(value)});console.log(`${
   check('互斥锁自死锁给出可追溯原始手册链接',await page.locator('.errata a[href="https://man7.org/linux/man-pages/man3/pthread_mutex_lock.3p.html"]').count()===1);
   await go('#/q/c2-s6-0-q006');
   check('Sy双等待反例和删除P1等待建议可见',(await page.locator('.errata').innerText()).includes('删除 P1') && (await page.locator('.errata').innerText()).includes('一份许可'));
-  const unreviewed=index.find(q=>q.review==='systematic');
-  await go(`#/q/${unreviewed.id}`);
-  check('来源第四章以后仍显示未逐题复核',(await page.locator('.qhead').innerText()).includes('系统映射') && (await page.locator('.qcard').innerText()).includes('未逐题人工复核'));
+  check('全库已退出系统映射且新增争议隔离',index.every(q=>q.review!=='systematic') && index.filter(q=>/^c[45]-/.test(q.id)&&q.review==='disputed').length===15 && index.filter(q=>q.review==='disputed').every(q=>q.scoring==='excluded'));
   // 旧导出真有自动分数，允许保留原始记录；当前投影撤出计分。不是把correct重写为null。
   const migrated=await page.evaluate(async()=>{
    const s=window.__osExercises.storage;

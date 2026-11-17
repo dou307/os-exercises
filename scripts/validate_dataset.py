@@ -25,6 +25,7 @@ from verify_source_content import verify as verify_full_content
 from chapter_review import load_review, overlay
 from review_ch2_checks import run_checks
 from review_ch3_checks import run_checks as run_memory_checks
+from review_ch45_checks import run_checks as run_remaining_checks
 
 ROOT = Path(__file__).resolve().parents[1]
 VENDOR = ROOT / "vendor" / "kaoyan-408-os"
@@ -348,7 +349,7 @@ def check_chapter_review(chapter) -> None:
     try:
         questions=load_json(DATA/'questions.json')['questions']
         doc=load_review(questions,load_json(DATA/'topics.json')['topics'],chapter)
-        calculations=run_checks() if chapter=='ch2' else run_memory_checks()
+        calculations=run_checks() if chapter=='ch2' else run_memory_checks() if chapter=='ch3' else run_remaining_checks(chapter)
         replay={'byQuestion':{}}
         errata=overlay(replay,doc)
         actual=load_json(DATA/'mappings.json')['byQuestion']
@@ -361,7 +362,7 @@ def check_chapter_review(chapter) -> None:
             checks=r['answerReview']['checkIds']+[c for e in r['errata'] for c in e['checkIds']]
             if not set(checks)<=set(calculations):fail(f"{r['questionId']} 引用不存在的计算证据")
         pending=sum(m['reviewStatus']=='systematic' for m in actual.values())
-        if pending!=230:fail(f'剩余系统映射应为230，实际{pending}')
+        if pending!=0:fail(f'全部来源章已完成逐题审核，剩余系统映射应为0，实际{pending}')
         notes.append(f"{chapter}逐题复核{len(doc['questions'])}题，输入哈希/笔记定位/生成映射/勘误一致；{len(calculations)}组复算通过")
     except (ValueError,KeyError,AssertionError) as exc:
         fail(f'{chapter}审核校验失败：{exc}')
@@ -412,6 +413,8 @@ def main() -> int:
     check_mapping_coverage()
     check_chapter_review('ch2')
     check_chapter_review('ch3')
+    check_chapter_review('ch4')
+    check_chapter_review('ch5')
     check_answer_consistency()
     check_duplicates(data)
 

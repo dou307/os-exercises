@@ -17,6 +17,7 @@ import { getMeta, getTopics, getChapterQuestions, topicTitle } from "./questions
 import { completedChapters, filterByScope, SCOPE_TEXT } from "./tiers.js";
 import { renderMath } from "./math.js";
 import { questionNumber } from "./numbering.js";
+import { noteLink } from "./settings.js";
 
 const TIER_TEXT = { core: "核心", bridge: "桥接", supplement: "补充", later: "稍后", disputed: "待核对" };
 const REVIEW_TEXT = {
@@ -64,6 +65,10 @@ function explainDetails(q) {
   if (q.answerReview && q.mappingReason) wrap.appendChild(el("p", { class: "qmeta", text: `完整归属依据：${q.mappingReason}` }));
   const errata = errataBlock(q);
   if (errata) wrap.appendChild(errata);
+  if (q.disputeFollowup) {
+    wrap.appendChild(el("p", { class: "dispute-followup qmeta", text:
+      `争议复审（${q.disputeFollowup.reviewedAt}）：${q.disputeFollowup.resolution}。${q.disputeFollowup.conclusion}` }));
+  }
   // 多空题：题干用（ ）占位，答案用 ①②③ 或“依次对应”编号；这里把两者对应关系写清楚，
   // 否则读者要在长题干里自己数第几个空。
   if (q.type === "multi_blank" && q.optionBlocks && q.optionBlocks.length) {
@@ -107,6 +112,7 @@ function errataBlock(q) {
 export function buildCard(q, ctx) {
   const topics = ctx.topics || new Map();
   const card = el("article", { class: "card qcard", "data-qid": q.id });
+  if (q.yearAuditNotice) card.appendChild(el("p", { class: "notice warn year-audit", text: q.yearAuditNotice }));
 
   const head = el("div", { class: "qhead" });
   // readinessTier 是“当前进度下实际生效的分层”，与题单徽标一致；原始审核分层另做一个浅色徽标，
@@ -225,10 +231,9 @@ export function buildCard(q, ctx) {
     card.appendChild(topicsBox);
   }
 
-  const notes = ctx.meta && ctx.meta.notes;
   const firstTopic = q.topicIds && q.topicIds.length ? topics.get(q.topicIds[0]) : null;
-  if (notes && notes.configured && firstTopic && firstTopic.noteFile) {
-    const uri = `obsidian://open?vault=${encodeURIComponent(notes.vault)}&file=${encodeURIComponent(firstTopic.noteFile)}`;
+  const uri = firstTopic && noteLink(firstTopic.noteFile, ctx.meta || {});
+  if (uri) {
     const row = el("div", { class: "actions" });
     row.appendChild(el("a", {
       class: "btn ghost small",

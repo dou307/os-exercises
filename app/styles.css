@@ -219,6 +219,9 @@ h3 { font-size: 16px; margin: 0 0 8px; }
 .qhead .favorite-toggle { margin-left: auto; }
 .favorite-toggle.is-favorite, .badge.favorite { color: var(--accent); }
 .qmeta { font-size: 13px; color: var(--text-dim); margin: 0 0 14px; }
+.setting-field { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 16px 0; }
+.setting-field > span { flex: 1 1 180px; }
+.setting-input { width: 100%; min-width: 0; padding: 10px; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
 
 .stem { font-size: 16.5px; line-height: 1.8; }
 .stem p { margin: 0 0 10px; }

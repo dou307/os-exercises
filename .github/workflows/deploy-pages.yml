@@ -39,6 +39,9 @@ jobs:
       - name: 稳定 ID 回归
         run: python -X utf8 -m unittest discover -s tests -p 'test_*.py' -v
 
+      - name: 图片与年份证据覆盖
+        run: python -X utf8 scripts/audit_assets.py
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

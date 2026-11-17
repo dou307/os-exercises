@@ -12,6 +12,8 @@ import { parseHash, navigate, buildHash } from "./router.js";
 import { matchesListFilters, questionNumber, questionNumbers } from "./numbering.js";
 import { renderSearch } from "./search.js";
 import { completedChapters, toggleChapterCompleted, withEffectiveTier, SCOPE_TEXT } from "./tiers.js";
+import { loadSettings, getSettings, saveSettings, setToken, getToken, noteLink } from "./settings.js";
+import { initSync, syncNow, syncStatus, resumeSync } from "./sync.js";
 
 const state = {
   meta: null,
@@ -140,6 +142,7 @@ function renderNav(activeChapterId) {
   const tools = el("div", { class: "nav-group" });
   tools.appendChild(el("div", { class: "nav-label", text: "工具" }));
   tools.appendChild(navLink("#/source", "原题库（完整阅读）", null, false));
+  tools.appendChild(navLink("#/settings", "设置与同步", null, activeChapterId === "settings"));
   nav.appendChild(tools);
 }
 
@@ -210,7 +213,7 @@ async function renderHome() {
   }));
   current.appendChild(el("div", {
     class: "notice",
-    text: "来源题库第一至三章共 530 道已逐题复核答案、映射和前置知识；第四至五章 230 道仍为系统映射。来源第三章主要对应课程第 9 章主存与第 10 章虚拟内存。学完相应课程章后可在本机标记进度；争议题单列不计分。",
+    text: "760道题已逐题复核答案、知识点与前置，并保留原题及独立勘误；存在争议或条件不足的题不自动计分。已复核不等于用户已学完，学习后可在本机标记进度。",
   }));
   current.appendChild(el("div", {
     class: "notice",
@@ -770,6 +773,84 @@ function renderFavorites(params = {}) {
   container.appendChild(card);
 }
 
+function renderSettings() {
+  const container = main();
+  container.innerHTML = "";
+  const config = getSettings();
+  const head = el("div", { class: "card" });
+  head.appendChild(el("h1", { text: "设置与同步" }));
+  head.appendChild(el("p", { class: "sub", text: "仅你自己使用：用GitHub私有仓库在电脑、安卓等浏览器间同步作答、收藏、草稿与已学标记。" }));
+  container.appendChild(head);
+  const field = (parent, title, value, attrs = {}) => {
+    const label = el("label", { class: "setting-field" });
+    label.appendChild(el("span", { text: title }));
+    const input = el("input", { class: "setting-input", value: value || "", ...attrs });
+    label.appendChild(input); parent.appendChild(label); return input;
+  };
+  const notes = el("form", { class: "card" });
+  notes.appendChild(el("h2", { text: "Obsidian笔记" }));
+  const vault = field(notes, "库名称", config.notesVault, { placeholder: "例如 Obsidian" });
+  const prefix = field(notes, "课程笔记在库内的相对目录", config.notesPrefix, { placeholder: "例如 1大三秋冬/OS" });
+  notes.appendChild(el("p", { class: "sub", text: "设置只保存在当前浏览器。需要本机安装Obsidian并注册该库；安卓可填写自己手机上的库名和目录。" }));
+  notes.appendChild(el("button", { type: "submit", class: "btn", text: "保存笔记设置" }));
+  const notesPreview = el("span");
+  const updateNotesPreview = () => {
+    notesPreview.replaceChildren();
+    const uri = noteLink("1-Introduction.md", state.meta);
+    if (uri) notesPreview.appendChild(el("a", { class: "btn ghost", href: uri, text: "测试打开第一章笔记" }));
+  };
+  notes.addEventListener("submit", event => {
+    event.preventDefault();
+    if (prefix.value.split(/[\\/]/).includes("..") || /^[A-Za-z]:/.test(prefix.value) || prefix.value.startsWith("/")) {
+      showToast("请输入库内相对目录，不能使用绝对路径或上级目录"); return;
+    }
+    showToast(saveSettings({ notesVault: vault.value.trim(), notesPrefix: prefix.value.trim() }) ? "笔记设置已保存" : "当前页生效，浏览器无法持久保存设置");
+    updateNotesPreview();
+  });
+  updateNotesPreview();
+  notes.appendChild(notesPreview);
+  container.appendChild(notes);
+  const form = el("form", { class: "card" });
+  form.appendChild(el("h2", { text: "GitHub私有进度同步" }));
+  const repository = field(form, "私有数据仓库", config.syncRepository || "dou307/os-exercises-progress");
+  const credential = field(form, "此设备的GitHub令牌", "", { type: "password", autocomplete: "off",
+    placeholder: getToken() ? "当前会话已连接，留空保留" : "仅此私有仓库的Contents读写权限" });
+  form.appendChild(el("a", { href: "https://github.com/settings/personal-access-tokens/new", target: "_blank", rel: "noopener noreferrer",
+    text: "在GitHub创建仅授权该私有仓库的令牌" }));
+  form.appendChild(el("p", { class: "sub", text: "令牌仅保存在当前标签页会话，不进入公开源码、导出备份或进度仓库。关闭会话后需重新连接；请勿在聊天中发送令牌。" }));
+  const autoLabel = el("label", { class: "setting-field" });
+  const auto = el("input", { type: "checkbox" }); auto.checked = Boolean(config.syncAuto);
+  autoLabel.appendChild(auto); autoLabel.appendChild(el("span", { text: "连接后自动同步（作答后及重新进入页面时）" })); form.appendChild(autoLabel);
+  const result = el("p", { id: "syncStatus", role: "status", class: "notice", text: syncStatus() });
+  form.appendChild(result);
+  const actions = el("div", { class: "actions" });
+  const connect = el("button", { type: "submit", class: "btn primary", text: "保存并立即同步" });
+  actions.appendChild(connect);
+  const disconnect = el("button", { type: "button", class: "btn ghost", text: "断开本次连接" });
+  disconnect.addEventListener("click", () => {
+    setToken(""); saveSettings({ syncAuto: false }); auto.checked = false;
+    result.textContent = "已断开，本机学习记录保留";
+  });
+  actions.appendChild(disconnect); form.appendChild(actions);
+  form.addEventListener("submit", async event => {
+    event.preventDefault();
+    if (!/^[\w.-]+\/[\w.-]+$/.test(repository.value.trim())) { result.textContent = "仓库格式应为 账号/仓库名"; return; }
+    if (credential.value.trim()) setToken(credential.value);
+    credential.value = "";
+    saveSettings({ syncRepository: repository.value.trim(), syncAuto: auto.checked });
+    connect.disabled = true;
+    try { await syncNow(); } catch { /* 具体失败由同步状态区显示 */ }
+    finally { connect.disabled = false; }
+  });
+  container.appendChild(form);
+  const device = el("div", { class: "card" });
+  device.appendChild(el("h2", { text: "本设备检查" }));
+  device.appendChild(el("p", { text: "本地存储：" + (storage.isPersistent() ? "可用" : "仅本页内存")
+    + "；屏幕宽度：" + innerWidth + "px；安全连接：" + (isSecureContext ? "是" : "否") }));
+  device.appendChild(el("p", { class: "sub", text: "安卓、iPhone和电脑均可使用。自动化窄屏或WebKit检查不等同真实手机/Safari验收；实际点击、Obsidian打开和系统文件选择须在对应设备确认。" }));
+  container.appendChild(device);
+}
+
 function filterChip(href, text, active, count) {
   const a = el("a", { class: "btn small ghost", href, text: count === undefined ? text : `${text}（${count}）` });
   if (active) a.classList.add("is-active");
@@ -785,6 +866,7 @@ function renderSource() {
   const card = el("div", { class: "card" });
   card.appendChild(el("div", { class: "crumbs", html: '<a href="#/">首页</a> / 原题库' }));
   card.appendChild(el("h1", { text: "原题库（完整阅读）" }));
+  card.appendChild(el("p", { class: "notice warn", text: "上游135张讲义截图已逐张检查，其中部分原图边缘有裁切。原题库仍保留原图；涉及缺图、截断或原答案争议时，请以练习室审核备注为准，不依据残图猜数据。真题年份仍为来源标注，不代表官方认证。" }));
   card.appendChild(el("p", {
     class: "sub",
     text: "这是上游快照的原页面，保留原有导航、搜索与作答脚本。练习记录与本项目互不影响。",
@@ -842,6 +924,7 @@ async function route() {
     else if (name === "question") { renderNav(null); await renderQuestion(params.id, isCurrent, params); }
     else if (name === "review") { renderNav("review"); await renderReview(params); }
     else if (name === "favorites") { renderNav("favorites"); renderFavorites(params); }
+    else if (name === "settings") { renderNav("settings"); renderSettings(); }
     else if (name === "search") { renderNav(null); await renderSearch(container, params, isCurrent); }
     else if (name === "source") { renderNav(null); renderSource(); }
     else {
@@ -893,7 +976,12 @@ async function boot() {
     return;
   }
 
+  loadSettings();
   storage.init(state.meta.datasetVersion, showStorageWarning, state.index.questions);
+  initSync(state.index.questions, text => {
+    const target = document.getElementById("syncStatus");
+    if (target) target.textContent = text;
+  });
   // 调试钩子：浏览器验收与排障时可以直接看内存里的真实状态（不影响功能）
   window.__osExercises = { storage, meta: state.meta };
   if (!storage.isPersistent()) {
@@ -943,7 +1031,12 @@ async function boot() {
   });
 
   window.addEventListener("hashchange", route);
+  window.addEventListener("os-exercises:synced", () => {
+    const current = parseHash().name;
+    if (["home","chapter","favorites","review"].includes(current)) route();
+  });
   await route();
+  resumeSync();
 }
 
 boot();

@@ -11,7 +11,7 @@
   ``data/study-defaults.json``、``data/overrides/errata.json``
 
 第一章逐题审核是本脚本的核心资产：每条记录写明分层、知识点、前置知识与理由。
-来源第四至五章只做小节级系统映射，状态 ``systematic``，不冒充已审核。
+来源第二至五章使用独立审核JSON，全库已有逐题结论；来源和学习进度保持独立。
 """
 
 from __future__ import annotations
@@ -24,6 +24,7 @@ from pathlib import Path
 from chapter_review import load_review, overlay, render_report
 from review_ch2_checks import run_checks
 from review_ch3_checks import run_checks as run_memory_checks
+from review_ch45_checks import run_checks as run_remaining_checks
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
@@ -662,7 +663,7 @@ def write_review_doc(questions: list[dict], mappings: dict) -> None:
     doc = f"""# 第一章映射审核记录
 
 日期：{REVIEW_DATE}。审核对象：第一章 88 道题（86 道选择 + 2 道综合）。
-2026-10-23 更新：来源第二章276题、第三章166题已另行复核，见 [第二章逐题复核](第二章逐题复核.md)、[第三章逐题复核](第三章逐题复核.md)；第四至五章230题仍为系统映射。
+2026-11-17 更新：全库760题已逐题复核，来源第二至五章分别见对应逐题复核报告。学习进度仍只确认课程第一章。
 审核依据：本地笔记 `1-Introduction.md` 的真实二级/三级标题（`docs/audit/notes-outline.json`）。
 
 ## 1. 审核口径
@@ -728,15 +729,15 @@ Resource Management、Three Conceptual Pieces、Design Goals。
 - `verified`：已逐题核对题干、选项、答案与解析，结论可用。
 - `reviewed`：已逐题核对归属与分层，答案本身未发现需要改判的问题。
 - `disputed`：存在实质疑点，原答案保留但隔离计分。
-- `systematic`：仅按上游分区系统映射，**不是**已逐题审核（来源第4～5章共230道）。
+- `systematic`：仅按上游分区系统映射，**不是**已逐题审核（当前全库已完成逐题审核，此状态仅为后续新来源预留）。
 
-来源第二章已在独立审核表中复核，不能据此对外声称全库答案均已审核。
+来源第二至五章已在独立审核表中逐题复核；这不代表所有原答案都正确或获得官方认证。
 
-## 7. 其余章节的系统映射
+## 7. 其余章节的分区分布（初始系统映射来源）
 
-来源第4～5章共230道题仍按上游小节做系统映射，同一小节共用一组知识点。
-状态一律 `systematic`，界面标"系统映射"，
-**不代表答案已逐题人工复核**。
+来源第4～5章230道已于2026-11-17逐题审核，当前结论见第四、五章报告；下表仅保留分区分布。
+初始规则现已被逐题审核输入覆盖，
+全库当前逐题审核状态以 `data/reviews/` 和最新验收报告为准。
 
 | 上游分区 | 主归属章 | 知识点 | 题数 | 说明 |
 |---|---|---|---:|---|
@@ -772,6 +773,12 @@ def main() -> int:
     ch3_review = load_review(questions, topics['topics'], 'ch3')
     ch3_errata = overlay(mappings, ch3_review)
     memory_calculations = run_memory_checks()
+    remaining_reviews=[]
+    remaining_errata=[]
+    for source_chapter in ('ch4','ch5'):
+        review=load_review(questions,topics['topics'],source_chapter)
+        remaining_errata.extend(overlay(mappings,review))
+        remaining_reviews.append((review,run_remaining_checks(source_chapter)))
 
     # 学习范围守卫：第一章 core 题的前置知识点必须都落在已确认学完的第一章内
     leaked = []
@@ -806,7 +813,7 @@ def main() -> int:
     errata = {
         "schemaVersion": 1,
         "policy": "原答案保留不动；勘误单独记录，争议题不计分。",
-        "entries": ERRATA + ch2_errata + ch3_errata,
+        "entries": ERRATA + ch2_errata + ch3_errata + remaining_errata,
     }
     (DATA / "overrides" / "errata.json").write_text(
         json.dumps(errata, ensure_ascii=False, indent=1) + "\n", encoding="utf-8"
@@ -816,7 +823,8 @@ def main() -> int:
         write_review_doc(questions, mappings)
         render_report(ch2_review, questions, calculations)
         render_report(ch3_review, questions, memory_calculations)
-        print("已写出第一、二、三章审核报告")
+        for review,checks in remaining_reviews:render_report(review,questions,checks)
+        print("已写出第一至五章审核报告")
 
     tiers = Counter(v["readinessTier"] for k, v in mappings["byQuestion"].items() if k in ch1_ids)
     statuses = Counter(v["mappingStatus"] for k, v in mappings["byQuestion"].items() if k in ch1_ids)

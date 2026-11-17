@@ -21,12 +21,12 @@ const check=(name,value)=>{checks.push({name,ok:Boolean(value)});console.log(`${
   const go=async h=>{await page.goto(BASE+h,{waitUntil:'networkidle'});await page.waitForSelector('main h1');};
   await go('');
   const text=await page.locator('main').innerText();
-  check('首页530已审230待审口径',text.includes('530')&&text.includes('230'));
+  check('首页760题全部逐题复核口径',text.includes('760')&&text.includes('逐题'));
   const index=await page.evaluate(async()=>(await(await fetch('data/index.json')).json()).questions);
   const reviewed=index.filter(q=>q.id.startsWith('c3-'));
   check('第三章166题都有逐题状态',reviewed.length===166&&reviewed.every(q=>q.status==='reviewed'&&q.review!=='systematic'));
   check('11道第三章争议全部排除计分',reviewed.filter(q=>q.review==='disputed').length===11&&reviewed.filter(q=>q.review==='disputed').every(q=>q.scoring==='excluded'));
-  check('230系统映射只来自第四第五章',index.filter(q=>q.review==='systematic').length===230&&index.filter(q=>q.review==='systematic').every(q=>/^c[45]-/.test(q.id)));
+  check('全库已退出systematic且争议52题隔离',index.every(q=>q.review!=='systematic')&&index.filter(q=>q.review==='disputed'&&q.scoring==='excluded').length===52);
   check('第二章审核结果维持276题23争议',index.filter(q=>q.id.startsWith('c2-')).length===276&&index.filter(q=>q.id.startsWith('c2-')&&q.review==='disputed').length===23);
   check('本轮不修改默认已学章',JSON.stringify(await page.evaluate(()=>window.__osExercises.meta.studyDefaults.confirmedCompletedChapters))==='["1"]');
   check('链接问题映射课程2且伙伴映射课程10',index.find(q=>q.id==='c3-s2-0-q010').ch==='2'&&index.find(q=>q.id==='c3-s1-0-q072').ch==='10');

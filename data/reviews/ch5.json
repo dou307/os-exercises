@@ -1,0 +1,6433 @@
+{
+ "schemaVersion": 1,
+ "sourceChapter": "ch5",
+ "reviewedAt": "2026-11-17",
+ "policy": "逐题读取锁定题干、选项、原答案与完整解析，按真实笔记及一手技术资料复核。verified=本轮未发现实质问题；qualified=原答案限定模型沿用并记录前提/解析问题；disputed=题面条件不全、非唯一或原答案不成立，排除自动计分。原题/原答案不修改，学习进度不自动扩展；不是官方勘误。",
+ "sources": [
+  {
+   "id": "snapshot",
+   "title": "锁定原题快照",
+   "path": "vendor/kaoyan-408-os/",
+   "commit": "e360b96fbd6522656d633ad9e26b7dd91f7bd1b4"
+  },
+  {
+   "id": "notes",
+   "title": "真实课程笔记目录与正文（只读）",
+   "path": "docs/audit/notes-outline.json"
+  },
+  {
+   "id": "osc-files",
+   "title": "UIC课程：文件系统实现",
+   "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/12_FileSystemImplementation.html"
+  },
+  {
+   "id": "osc-io",
+   "title": "UIC课程：I/O系统",
+   "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/13_IOSystems.html"
+  },
+  {
+   "id": "osc-disks",
+   "title": "UIC课程：大容量存储",
+   "url": "https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/10_MassStorage.html"
+  },
+  {
+   "id": "linux-vfs",
+   "title": "Linux内核文档：VFS",
+   "url": "https://docs.kernel.org/filesystems/vfs.html"
+  },
+  {
+   "id": "linux-open",
+   "title": "Linux man-pages：open",
+   "url": "https://man7.org/linux/man-pages/man2/open.2.html"
+  },
+  {
+   "id": "linux-close",
+   "title": "Linux man-pages：close",
+   "url": "https://man7.org/linux/man-pages/man2/close.2.html"
+  },
+  {
+   "id": "linux-unlink",
+   "title": "Linux man-pages：unlink",
+   "url": "https://man7.org/linux/man-pages/man2/unlink.2.html"
+  },
+  {
+   "id": "fat32",
+   "title": "Microsoft：文件系统功能与权限比较",
+   "url": "https://learn.microsoft.com/en-us/windows/win32/fileio/filesystem-functionality-comparison"
+  },
+  {
+   "id": "blk-mq",
+   "title": "Linux内核：多队列块I/O",
+   "url": "https://docs.kernel.org/block/blk-mq.html"
+  },
+  {
+   "id": "dma",
+   "title": "Linux内核：DMA映射",
+   "url": "https://docs.kernel.org/core-api/dma-api-howto.html"
+  }
+ ],
+ "questions": [
+  {
+   "questionId": "c5-s1-0-q001",
+   "sourceContentHash": "sha256:145ff9d2aad198c0fae75b76777b5db0dae1d9e002ee7c3123f9736160306fd3",
+   "answerReview": {
+    "status": "disputed",
+    "conclusion": "共享不必随机寻址，网络等设备可多进程共享；B是教材磁盘例的特征而非共享设备的必要条件，题面缺模型限定。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-1",
+     "t12-2-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-1",
+     "t12-2-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：共享不必随机寻址，网络等设备可多进程共享；B是教材磁盘例的特征而非共享设备的必要条件，题面缺模型限定。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s1-0-q001",
+     "kind": "disputed_answer",
+     "originalAnswer": "B",
+     "issue": "共享不必随机寻址，网络等设备可多进程共享",
+     "detail": "共享不必随机寻址，网络等设备可多进程共享；B是教材磁盘例的特征而非共享设备的必要条件，题面缺模型限定。",
+     "suggestedCorrection": "共享不必随机寻址，网络等设备可多进程共享；B是教材磁盘例的特征而非共享设备的必要条件，题面缺模型限定。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "excluded",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-1",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 220
+    },
+    {
+     "topicId": "t12-2-2",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 244
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q002",
+   "sourceContentHash": "sha256:160ede91c7c70b6c4451c02b0a2f0a7279f19f6d123d6c598e3d48e1a7535653",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "在假脱机教材语境中物理独占设备映射为多个逻辑设备选C；不是所有现代虚拟设备的唯一含义。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-9"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-9"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：在假脱机教材语境中物理独占设备映射为多个逻辑设备选C；不是所有现代虚拟设备的唯一含义。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Spooling and Device Reservation。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s1-0-q002",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "在假脱机教材语境中物理独占设备映射为多个逻辑设备选C",
+     "detail": "在假脱机教材语境中物理独占设备映射为多个逻辑设备选C；不是所有现代虚拟设备的唯一含义。",
+     "suggestedCorrection": "在假脱机教材语境中物理独占设备映射为多个逻辑设备选C；不是所有现代虚拟设备的唯一含义。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-9",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 328
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q003",
+   "sourceContentHash": "sha256:fc599feaa7f2ab4b0fd48004cd841dc7cc2e954efd2d4fff4fef845d8649b32f",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "现代块设备大批数据常用DMA选D；位/字节/帧是粒度，题目选项分类不平行。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-1-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：现代块设备大批数据常用DMA选D；位/字节/帧是粒度，题目选项分类不平行。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s1-0-q003",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "现代块设备大批数据常用DMA选D",
+     "detail": "现代块设备大批数据常用DMA选D；位/字节/帧是粒度，题目选项分类不平行。",
+     "suggestedCorrection": "现代块设备大批数据常用DMA选D；位/字节/帧是粒度，题目选项分类不平行。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1-4",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 157
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q004",
+   "sourceContentHash": "sha256:046f69081fce1e01ea0b471c6f9937653594f6b4bc211d1bb265276274145ef3",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "控制/状态寄存器和命令构成常见接口选A；解析“不存在I/O地址寄存器/设备中断寄存器”不能泛化到所有控制器。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：控制/状态寄存器和命令构成常见接口选A；解析“不存在I/O地址寄存器/设备中断寄存器”不能泛化到所有控制器。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s1-0-q004",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "控制/状态寄存器和命令构成常见接口选A",
+     "detail": "控制/状态寄存器和命令构成常见接口选A；解析“不存在I/O地址寄存器/设备中断寄存器”不能泛化到所有控制器。",
+     "suggestedCorrection": "控制/状态寄存器和命令构成常见接口选A；解析“不存在I/O地址寄存器/设备中断寄存器”不能泛化到所有控制器。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 28
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q005",
+   "sourceContentHash": "sha256:2cf2d9e87440857ac338480c055953868bad1b3d20188a1d7887f9b6a72249ae",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "教材控制器框图中I/O逻辑实现命令控制，两个接口传递信号，选C。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：教材控制器框图中I/O逻辑实现命令控制，两个接口传递信号，选C。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 28
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q006",
+   "sourceContentHash": "sha256:c2f295de971cd9ed7a460340b2c1197497027add9963400e562340c2ef403262",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "设备与主存数据由DMA传输选A，CPU仍配置/回收，DMA地址可能受IOMMU映射。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "dma"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-1-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：设备与主存数据由DMA传输选A，CPU仍配置/回收，DMA地址可能受IOMMU映射。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s1-0-q006",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "设备与主存数据由DMA传输选A，CPU仍配置/回收，DMA地址可能受IOMMU映射。",
+     "detail": "设备与主存数据由DMA传输选A，CPU仍配置/回收，DMA地址可能受IOMMU映射。",
+     "suggestedCorrection": "设备与主存数据由DMA传输选A，CPU仍配置/回收，DMA地址可能受IOMMU映射。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "dma"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1-4",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 157
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q007",
+   "sourceContentHash": "sha256:92a9e87121e39d8ee9a834d76c501a4a7660cd4d3762b9448d55bbc9cc3b56bc",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "教材通道是执行通道程序的专用硬件选A；内存覆盖的软件管理不改变其基础内存仍是硬件。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：教材通道是执行通道程序的专用硬件选A；内存覆盖的软件管理不改变其基础内存仍是硬件。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s1-0-q007",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "教材通道是执行通道程序的专用硬件选A",
+     "detail": "教材通道是执行通道程序的专用硬件选A；内存覆盖的软件管理不改变其基础内存仍是硬件。",
+     "suggestedCorrection": "教材通道是执行通道程序的专用硬件选A；内存覆盖的软件管理不改变其基础内存仍是硬件。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 28
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q008",
+   "sourceContentHash": "sha256:77dd088fd44e78697a65249a9904bf32a9ce553e417b694858bf1674ae81c1d3",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "这里存储设备须指主存而非另一外设，数据不经CPU搬运的DMA选C。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-1-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：这里存储设备须指主存而非另一外设，数据不经CPU搬运的DMA选C。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s1-0-q008",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "这里存储设备须指主存而非另一外设，数据不经CPU搬运的DMA选C。",
+     "detail": "这里存储设备须指主存而非另一外设，数据不经CPU搬运的DMA选C。",
+     "suggestedCorrection": "这里存储设备须指主存而非另一外设，数据不经CPU搬运的DMA选C。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1-4",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 157
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q009",
+   "sourceContentHash": "sha256:6d3df450ef4370f6fd2a35ada58aa22059697a1c5b139928cc281fcbf640d707",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "基本DMA模型CPU预处理/后处理、控制器搬数据选B；现代描述符链可由控制器解释，不能以此说DMA永不执行描述信息。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "dma"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-1-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：基本DMA模型CPU预处理/后处理、控制器搬数据选B；现代描述符链可由控制器解释，不能以此说DMA永不执行描述信息。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s1-0-q009",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "基本DMA模型CPU预处理/后处理、控制器搬数据选B",
+     "detail": "基本DMA模型CPU预处理/后处理、控制器搬数据选B；现代描述符链可由控制器解释，不能以此说DMA永不执行描述信息。",
+     "suggestedCorrection": "基本DMA模型CPU预处理/后处理、控制器搬数据选B；现代描述符链可由控制器解释，不能以此说DMA永不执行描述信息。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "dma"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1-4",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 157
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q010",
+   "sourceContentHash": "sha256:c677975df08793e764a4b979144e3213905518969879ed38c1a025e5c2d06563",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "栈指针为CPU调用上下文寄存器，不是教材DMA控制器的数据/地址/计数寄存器，选D。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-1-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：栈指针为CPU调用上下文寄存器，不是教材DMA控制器的数据/地址/计数寄存器，选D。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1-4",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 157
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q011",
+   "sourceContentHash": "sha256:f05a7c9d2dfab9218304319c8bd00919ddab6544e2ce80aab29a069e2cad5759",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "阻塞I/O模型下预处理请求线程运行、完成中断前请求线程等待，选D；异步I/O不必阻塞。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "dma"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [
+     "3"
+    ],
+    "topicIds": [
+     "t12-1-4",
+     "t3-2-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1-4",
+     "t3-2-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：阻塞I/O模型下预处理请求线程运行、完成中断前请求线程等待，选D；异步I/O不必阻塞。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s1-0-q011",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "阻塞I/O模型下预处理请求线程运行、完成中断前请求线程等待，选D",
+     "detail": "阻塞I/O模型下预处理请求线程运行、完成中断前请求线程等待，选D；异步I/O不必阻塞。",
+     "suggestedCorrection": "阻塞I/O模型下预处理请求线程运行、完成中断前请求线程等待，选D；异步I/O不必阻塞。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "dma"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1-4",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 157
+    },
+    {
+     "topicId": "t3-2-2",
+     "noteFile": "3-Processes.md",
+     "noteLine": 170
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q012",
+   "sourceContentHash": "sha256:3e5ebdcbda99292f9b82bc1f78a21cf516e54c0a3e59af64e151d7d448365437",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "按教材列举的分配因素选A；实时系统当然要考虑时限，不能将“及时性不必考虑”推广到所有分配器。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-6",
+     "t12-2-11"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-6",
+     "t12-2-11"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：按教材列举的分配因素选A；实时系统当然要考虑时限，不能将“及时性不必考虑”推广到所有分配器。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：I/O Scheduling、I/O Protection。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s1-0-q012",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "按教材列举的分配因素选A",
+     "detail": "按教材列举的分配因素选A；实时系统当然要考虑时限，不能将“及时性不必考虑”推广到所有分配器。",
+     "suggestedCorrection": "按教材列举的分配因素选A；实时系统当然要考虑时限，不能将“及时性不必考虑”推广到所有分配器。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-6",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 322
+    },
+    {
+     "topicId": "t12-2-11",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 332
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q013",
+   "sourceContentHash": "sha256:de3b1bac1f67105edaf9ac4205c3eea8d459807ce08bbae81984323ef2f07d96",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "教材全系统物理设备代号叫绝对号选A；不是设备类型号或用户逻辑名。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：教材全系统物理设备代号叫绝对号选A；不是设备类型号或用户逻辑名。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s1-0-q013",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "教材全系统物理设备代号叫绝对号选A",
+     "detail": "教材全系统物理设备代号叫绝对号选A；不是设备类型号或用户逻辑名。",
+     "suggestedCorrection": "教材全系统物理设备代号叫绝对号选A；不是设备类型号或用户逻辑名。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 179
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q014",
+   "sourceContentHash": "sha256:2bb4efdf2b37f15bd2a864691bcf22b19806d041d6ab8bd3209f0c9d6eaeae37",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "教材层次为通道→控制器→设备选C；它们可在流水或不同设备操作中重叠，解析一概否定并行不严谨。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：教材层次为通道→控制器→设备选C；它们可在流水或不同设备操作中重叠，解析一概否定并行不严谨。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s1-0-q014",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "教材层次为通道→控制器→设备选C",
+     "detail": "教材层次为通道→控制器→设备选C；它们可在流水或不同设备操作中重叠，解析一概否定并行不严谨。",
+     "suggestedCorrection": "教材层次为通道→控制器→设备选C；它们可在流水或不同设备操作中重叠，解析一概否定并行不严谨。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 28
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q015",
+   "sourceContentHash": "sha256:4e6b705e3492c56b03e02efcf60f16ff328096c42fe290ae6ec4b5e30ef72c20",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "假定两类设备各具相同驱动接口则需要两种驱动选C，实例数5不等于驱动类型5。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：假定两类设备各具相同驱动接口则需要两种驱动选C，实例数5不等于驱动类型5。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s1-0-q015",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "假定两类设备各具相同驱动接口则需要两种驱动选C，实例数5不等于驱动类型5。",
+     "detail": "假定两类设备各具相同驱动接口则需要两种驱动选C，实例数5不等于驱动类型5。",
+     "suggestedCorrection": "假定两类设备各具相同驱动接口则需要两种驱动选C，实例数5不等于驱动类型5。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 179
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q016",
+   "sourceContentHash": "sha256:73a1de0a059f763f81e168f8663f60730b7aa940c7960e73c7bdbefdb31e8227",
+   "answerReview": {
+    "status": "disputed",
+    "conclusion": "“翻译成设备操作命令”通常属驱动程序，原选B却排除D，和同章寄存器命令及综合题层次解释不一致；若只做设备无关请求分派需改题面。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-3",
+     "t12-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-3",
+     "t12-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：“翻译成设备操作命令”通常属驱动程序，原选B却排除D，和同章寄存器命令及综合题层次解释不一致；若只做设备无关请求分派需改题面。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Transforming I/O Requests to Hardware Operations。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s1-0-q016",
+     "kind": "disputed_answer",
+     "originalAnswer": "B",
+     "issue": "“翻译成设备操作命令”通常属驱动程序，原选B却排除D，和同章寄存器命令及综合题层次解释不一致",
+     "detail": "“翻译成设备操作命令”通常属驱动程序，原选B却排除D，和同章寄存器命令及综合题层次解释不一致；若只做设备无关请求分派需改题面。",
+     "suggestedCorrection": "“翻译成设备操作命令”通常属驱动程序，原选B却排除D，和同章寄存器命令及综合题层次解释不一致；若只做设备无关请求分派需改题面。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "excluded",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-3",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 339
+    },
+    {
+     "topicId": "t12-1",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 28
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q017",
+   "sourceContentHash": "sha256:30296b0f074f56af0509e5419da87a7367779d5ed6926ca4d3103a9f43957271",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "通常设备寄存器命令由驱动层写入选C；ISR本身可属于驱动并写清中断寄存器，不可说中断处理绝不写寄存器。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：通常设备寄存器命令由驱动层写入选C；ISR本身可属于驱动并写清中断寄存器，不可说中断处理绝不写寄存器。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s1-0-q017",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "通常设备寄存器命令由驱动层写入选C",
+     "detail": "通常设备寄存器命令由驱动层写入选C；ISR本身可属于驱动并写清中断寄存器，不可说中断处理绝不写寄存器。",
+     "suggestedCorrection": "通常设备寄存器命令由驱动层写入选C；ISR本身可属于驱动并写清中断寄存器，不可说中断处理绝不写寄存器。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 28
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q018",
+   "sourceContentHash": "sha256:a5958c10327cd297c8e4bf9204f258a9233abd2ae165519e6b4ade849cafa932",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "50×80×6/60=400字符每秒，400×50μs=20ms，占CPU2%，选A。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": [
+     "printer-interrupt"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-1-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：50×80×6/60=400字符每秒，400×50μs=20ms，占CPU2%，选A。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1-3",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 109
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q019",
+   "sourceContentHash": "sha256:82182f68a821fb199cee67296140b29a3c3b0aef0b085ceb4ee1e59560fd7f49",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "限定程序控制传送的中断模型时由ISR读设备数据选C；DMA完成中断场景数据可能早已由硬件搬入。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-1-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：限定程序控制传送的中断模型时由ISR读设备数据选C；DMA完成中断场景数据可能早已由硬件搬入。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s1-0-q019",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "限定程序控制传送的中断模型时由ISR读设备数据选C",
+     "detail": "限定程序控制传送的中断模型时由ISR读设备数据选C；DMA完成中断场景数据可能早已由硬件搬入。",
+     "suggestedCorrection": "限定程序控制传送的中断模型时由ISR读设备数据选C；DMA完成中断场景数据可能早已由硬件搬入。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1-3",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 109
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q020",
+   "sourceContentHash": "sha256:a900bc52d79f10ad174f920e809486b79f6b220393daba91a026f72d3e3d24d9",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "同步阻塞模型下中断与DMA可让请求进程等待、轮询忙等，选C；控制方式不决定API是否阻塞。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [
+     "3"
+    ],
+    "topicIds": [
+     "t12-1-2",
+     "t12-1-3",
+     "t12-1-4",
+     "t3-2-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1-2",
+     "t12-1-3",
+     "t12-1-4",
+     "t3-2-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：同步阻塞模型下中断与DMA可让请求进程等待、轮询忙等，选C；控制方式不决定API是否阻塞。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s1-0-q020",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "同步阻塞模型下中断与DMA可让请求进程等待、轮询忙等，选C",
+     "detail": "同步阻塞模型下中断与DMA可让请求进程等待、轮询忙等，选C；控制方式不决定API是否阻塞。",
+     "suggestedCorrection": "同步阻塞模型下中断与DMA可让请求进程等待、轮询忙等，选C；控制方式不决定API是否阻塞。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1-2",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 76
+    },
+    {
+     "topicId": "t12-1-3",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 109
+    },
+    {
+     "topicId": "t12-1-4",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 157
+    },
+    {
+     "topicId": "t3-2-2",
+     "noteFile": "3-Processes.md",
+     "noteLine": 170
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q021",
+   "sourceContentHash": "sha256:89a48a0f4d1460c25a42ccc86e96d3355f84ded140d91647f87a205b0f589098",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "“一定回原进程”错选C，可在退出中断时重调度；不只是嵌套中断造成差异，A搬数据也应限定PIO。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [
+     "3"
+    ],
+    "topicIds": [
+     "t12-1-3",
+     "t3-2-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1-3",
+     "t3-2-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：“一定回原进程”错选C，可在退出中断时重调度；不只是嵌套中断造成差异，A搬数据也应限定PIO。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s1-0-q021",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "“一定回原进程”错选C，可在退出中断时重调度",
+     "detail": "“一定回原进程”错选C，可在退出中断时重调度；不只是嵌套中断造成差异，A搬数据也应限定PIO。",
+     "suggestedCorrection": "“一定回原进程”错选C，可在退出中断时重调度；不只是嵌套中断造成差异，A搬数据也应限定PIO。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1-3",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 109
+    },
+    {
+     "topicId": "t3-2-3",
+     "noteFile": "3-Processes.md",
+     "noteLine": 186
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q022",
+   "sourceContentHash": "sha256:d97b38ac981135e213944df595810a73d11c19b33a77734e3498408da48c35ba",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "可寻址成块传输适合块接口选A，不能把所有字符设备都断言低速、网络接口也是真实类型。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：可寻址成块传输适合块接口选A，不能把所有字符设备都断言低速、网络接口也是真实类型。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s1-0-q022",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "可寻址成块传输适合块接口选A，不能把所有字符设备都断言低速、网络接口也是真实类型。",
+     "detail": "可寻址成块传输适合块接口选A，不能把所有字符设备都断言低速、网络接口也是真实类型。",
+     "suggestedCorrection": "可寻址成块传输适合块接口选A，不能把所有字符设备都断言低速、网络接口也是真实类型。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-1",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 220
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q023",
+   "sourceContentHash": "sha256:a907b6899200fe6dc80d590244cbb1093bd5673b76ccfc26ae6435cf1af5e7e0",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "标准中断键盘流程中内核ISR先接收选B，不是登录程序先直接读硬件。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-1-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：标准中断键盘流程中内核ISR先接收选B，不是登录程序先直接读硬件。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s1-0-q023",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "标准中断键盘流程中内核ISR先接收选B，不是登录程序先直接读硬件。",
+     "detail": "标准中断键盘流程中内核ISR先接收选B，不是登录程序先直接读硬件。",
+     "suggestedCorrection": "标准中断键盘流程中内核ISR先接收选B，不是登录程序先直接读硬件。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1-3",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 109
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q024",
+   "sourceContentHash": "sha256:55d1188d0a66a57e2eb7d80c831d09d3ec3a57aa174f7024a5d0f7494b5227c5",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "通常异步硬件完成流程为系统调用→驱动启动→完成中断选B，缓存/轮询路径不必全经过。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-3",
+     "t12-1-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-3",
+     "t12-1-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：通常异步硬件完成流程为系统调用→驱动启动→完成中断选B，缓存/轮询路径不必全经过。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Transforming I/O Requests to Hardware Operations。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s1-0-q024",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "通常异步硬件完成流程为系统调用→驱动启动→完成中断选B，缓存/轮询路径不必全经过。",
+     "detail": "通常异步硬件完成流程为系统调用→驱动启动→完成中断选B，缓存/轮询路径不必全经过。",
+     "suggestedCorrection": "通常异步硬件完成流程为系统调用→驱动启动→完成中断选B，缓存/轮询路径不必全经过。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-3",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 339
+    },
+    {
+     "topicId": "t12-1-3",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 109
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q025",
+   "sourceContentHash": "sha256:5c499acc26088ed0ef0ff404d446261c76829884868c8b37da759daf85e8c55d",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "教材四层从用户库→无关层→驱动→中断选A，实际驱动和ISR可作为同一模块，不等于严格调用栈。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：教材四层从用户库→无关层→驱动→中断选A，实际驱动和ISR可作为同一模块，不等于严格调用栈。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Transforming I/O Requests to Hardware Operations。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s1-0-q025",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "教材四层从用户库→无关层→驱动→中断选A，实际驱动和ISR可作为同一模块，不等于严格调用栈。",
+     "detail": "教材四层从用户库→无关层→驱动→中断选A，实际驱动和ISR可作为同一模块，不等于严格调用栈。",
+     "suggestedCorrection": "教材四层从用户库→无关层→驱动→中断选A，实际驱动和ISR可作为同一模块，不等于严格调用栈。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-3",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 339
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s1-0-q026",
+   "sourceContentHash": "sha256:6643798e7db14e90036dd267503cbdbbafc1c6898149818445135c9667a2a05d",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "初始化②后DMA传块③，完成发中断①，CPU执行ISR④，选B。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-1-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：初始化②后DMA传块③，完成发中断①，CPU执行ISR④，选B。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1-4",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 157
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q001",
+   "sourceContentHash": "sha256:dce0b14b747df347625c3947a567ed4fce933866ef2aed3ecbc9b9b17c9781c8",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "应用用逻辑名而设备可更换，系统维护映射，选C。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：应用用逻辑名而设备可更换，系统维护映射，选C。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 179
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q002",
+   "sourceContentHash": "sha256:a20cd686ee2df0fd318c0fce73bdd6ed46fdbac14f668cfaea2cc7e0f7d1572d",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "作为I/O缓冲是缓和生产消费速度差选C；高速缓存的复用减少I/O与纯buffer概念应区分。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-7",
+     "t12-2-8"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-7",
+     "t12-2-8"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：作为I/O缓冲是缓和生产消费速度差选C；高速缓存的复用减少I/O与纯buffer概念应区分。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Buffering、Caching。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q002",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "作为I/O缓冲是缓和生产消费速度差选C",
+     "detail": "作为I/O缓冲是缓和生产消费速度差选C；高速缓存的复用减少I/O与纯buffer概念应区分。",
+     "suggestedCorrection": "作为I/O缓冲是缓和生产消费速度差选C；高速缓存的复用减少I/O与纯buffer概念应区分。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-7",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 324
+    },
+    {
+     "topicId": "t12-2-8",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 326
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q003",
+   "sourceContentHash": "sha256:bb0f3a1073a12860254ad5abb1fe71f660f2810a0776df1c3a19d9a4e1c25eab",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "多个并发I/O共享池便于灵活复用选A；循环/双缓冲也可设计为共享，题目是教材优选而非排他定理。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [
+     "6"
+    ],
+    "topicIds": [
+     "t12-2-7",
+     "t6-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-7",
+     "t6-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：多个并发I/O共享池便于灵活复用选A；循环/双缓冲也可设计为共享，题目是教材优选而非排他定理。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Buffering。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q003",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "多个并发I/O共享池便于灵活复用选A",
+     "detail": "多个并发I/O共享池便于灵活复用选A；循环/双缓冲也可设计为共享，题目是教材优选而非排他定理。",
+     "suggestedCorrection": "多个并发I/O共享池便于灵活复用选A；循环/双缓冲也可设计为共享，题目是教材优选而非排他定理。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-7",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 324
+    },
+    {
+     "topicId": "t6-1",
+     "noteFile": "6-Synchronization Tools.md",
+     "noteLine": 74
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q004",
+   "sourceContentHash": "sha256:1327619f6a1e00a24730707374a5810e822190acee727c31a073cb21abb3c2a7",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "软件缓冲池通常位于可读写主存选A，磁盘输出井是spool而非该缓冲池。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-7"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-7"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：软件缓冲池通常位于可读写主存选A，磁盘输出井是spool而非该缓冲池。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Buffering。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-7",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 324
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q005",
+   "sourceContentHash": "sha256:2fbc4e987df3fb0b7686c43eb53d1cb0f04bc0615614d142472b75b343e94251",
+   "answerReview": {
+    "status": "disputed",
+    "conclusion": "题面仅说双向而非双向同时且仅两缓冲，半双工单缓冲、多缓冲及缓冲池均可支持，B不是唯一必要配置。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-7"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-7"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：题面仅说双向而非双向同时且仅两缓冲，半双工单缓冲、多缓冲及缓冲池均可支持，B不是唯一必要配置。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Buffering。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q005",
+     "kind": "disputed_answer",
+     "originalAnswer": "B",
+     "issue": "题面仅说双向而非双向同时且仅两缓冲，半双工单缓冲、多缓冲及缓冲池均可支持，B不是唯一必要配置。",
+     "detail": "题面仅说双向而非双向同时且仅两缓冲，半双工单缓冲、多缓冲及缓冲池均可支持，B不是唯一必要配置。",
+     "suggestedCorrection": "题面仅说双向而非双向同时且仅两缓冲，半双工单缓冲、多缓冲及缓冲池均可支持，B不是唯一必要配置。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "excluded",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-7",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 324
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q006",
+   "sourceContentHash": "sha256:7cba6e7951979446f7e2cb542e6705c15b7071f8262a947907730874f5f3358c",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "缓冲可用内存/硬件并用于输入输出和字符/块设备，缓和速度差，选B。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-7"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-7"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：缓冲可用内存/硬件并用于输入输出和字符/块设备，缓和速度差，选B。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Buffering。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-7",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 324
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q007",
+   "sourceContentHash": "sha256:f6506bbbbbafda6f69f5ce22554aeb8a8465228c6eb17bdda37b494d131e002b",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "每方向一个独立槽的教材双工模型可同时收发选B；不把它等同于同方向流水的ping-pong双缓冲。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-7"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-7"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：每方向一个独立槽的教材双工模型可同时收发选B；不把它等同于同方向流水的ping-pong双缓冲。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Buffering。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q007",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "每方向一个独立槽的教材双工模型可同时收发选B",
+     "detail": "每方向一个独立槽的教材双工模型可同时收发选B；不把它等同于同方向流水的ping-pong双缓冲。",
+     "suggestedCorrection": "每方向一个独立槽的教材双工模型可同时收发选B；不把它等同于同方向流水的ping-pong双缓冲。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-7",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 324
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q008",
+   "sourceContentHash": "sha256:164fd8d18ba273d5b7215eb88cb286917739d38ede5aef4a9526e57858de006f",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "在这些教材候选里FCFS是常用设备请求分配策略选D；设备调度也可带优先级和实时预算。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-6"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-6"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：在这些教材候选里FCFS是常用设备请求分配策略选D；设备调度也可带优先级和实时预算。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：I/O Scheduling。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q008",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "在这些教材候选里FCFS是常用设备请求分配策略选D",
+     "detail": "在这些教材候选里FCFS是常用设备请求分配策略选D；设备调度也可带优先级和实时预算。",
+     "suggestedCorrection": "在这些教材候选里FCFS是常用设备请求分配策略选D；设备调度也可带优先级和实时预算。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-6",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 322
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q009",
+   "sourceContentHash": "sha256:9bb4555f6b1a3aadadd29e7dc92937151146e45fb0aa96b0db1d2062ad3c42fa",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "单系统槽、单用户槽且拷贝和计算共用CPU，稳态max(80,30)+40=120μs选A，不是首块完成150μs。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": [
+     "single-steady"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-7"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-7"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：单系统槽、单用户槽且拷贝和计算共用CPU，稳态max(80,30)+40=120μs选A，不是首块完成150μs。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Buffering。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q009",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "单系统槽、单用户槽且拷贝和计算共用CPU，稳态max(80,30)+40=120μs选A，不是首块完成150μs。",
+     "detail": "单系统槽、单用户槽且拷贝和计算共用CPU，稳态max(80,30)+40=120μs选A，不是首块完成150μs。",
+     "suggestedCorrection": "单系统槽、单用户槽且拷贝和计算共用CPU，稳态max(80,30)+40=120μs选A，不是首块完成150μs。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [
+      "single-steady"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-7",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 324
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q010",
+   "sourceContentHash": "sha256:d5178c28e7fff567d2d9711942aba431a9a8ad62efb2e01765ce1a8e69dd9145",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "两系统槽交替且复制与计算共用CPU，长流稳态max(T1,T2+T3)选D，有限批次还须加启动收尾。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": [
+     "double-steady"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-7"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-7"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：两系统槽交替且复制与计算共用CPU，长流稳态max(T1,T2+T3)选D，有限批次还须加启动收尾。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Buffering。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q010",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "两系统槽交替且复制与计算共用CPU，长流稳态max(T1,T2+T3)选D，有限批次还须加启动收尾。",
+     "detail": "两系统槽交替且复制与计算共用CPU，长流稳态max(T1,T2+T3)选D，有限批次还须加启动收尾。",
+     "suggestedCorrection": "两系统槽交替且复制与计算共用CPU，长流稳态max(T1,T2+T3)选D，有限批次还须加启动收尾。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [
+      "double-steady"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-7",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 324
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q011",
+   "sourceContentHash": "sha256:1e347df8a7912c22409c701f1d9ec8908f1624bcdcf0691ede7ef10f21228c49",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "平滑CPU瓶颈稳态下额外缓冲吞吐收益小，教材选B；仍可能吸收突发和减少调度开销。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-7"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-7"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：平滑CPU瓶颈稳态下额外缓冲吞吐收益小，教材选B；仍可能吸收突发和减少调度开销。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Buffering。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q011",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "平滑CPU瓶颈稳态下额外缓冲吞吐收益小，教材选B",
+     "detail": "平滑CPU瓶颈稳态下额外缓冲吞吐收益小，教材选B；仍可能吸收突发和减少调度开销。",
+     "suggestedCorrection": "平滑CPU瓶颈稳态下额外缓冲吞吐收益小，教材选B；仍可能吸收突发和减少调度开销。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-7",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 324
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q012",
+   "sourceContentHash": "sha256:0f47fdbfe7a61b5a9ed256f7186146d51365eb71c301fcb94eae5fe3cb00a26a",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "共享缓冲的互斥及空满同步是关键选C，大小数量同样是管理设计事项，非完全无关。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [
+     "6"
+    ],
+    "topicIds": [
+     "t12-2-7",
+     "t6-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-7",
+     "t6-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：共享缓冲的互斥及空满同步是关键选C，大小数量同样是管理设计事项，非完全无关。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Buffering。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q012",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "共享缓冲的互斥及空满同步是关键选C，大小数量同样是管理设计事项，非完全无关。",
+     "detail": "共享缓冲的互斥及空满同步是关键选C，大小数量同样是管理设计事项，非完全无关。",
+     "suggestedCorrection": "共享缓冲的互斥及空满同步是关键选C，大小数量同样是管理设计事项，非完全无关。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-7",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 324
+    },
+    {
+     "topicId": "t6-1",
+     "noteFile": "6-Synchronization Tools.md",
+     "noteLine": 74
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q013",
+   "sourceContentHash": "sha256:1eb825757abdfa5173f8ab97a330f44f897f4c1949e5de9d43dc8c7bdd3aa4af",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "按典型输入队列、磁盘中转和显示帧缓冲用途选D；是常见适用场景而非每种实现都绝对必须。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-7",
+     "t12-1-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-7",
+     "t12-1-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：按典型输入队列、磁盘中转和显示帧缓冲用途选D；是常见适用场景而非每种实现都绝对必须。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Buffering。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q013",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "按典型输入队列、磁盘中转和显示帧缓冲用途选D",
+     "detail": "按典型输入队列、磁盘中转和显示帧缓冲用途选D；是常见适用场景而非每种实现都绝对必须。",
+     "suggestedCorrection": "按典型输入队列、磁盘中转和显示帧缓冲用途选D；是常见适用场景而非每种实现都绝对必须。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-7",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 324
+    },
+    {
+     "topicId": "t12-1-1",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 51
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q014",
+   "sourceContentHash": "sha256:c94b8e11203531045581ec2267ab4a27b07bc6028deccbc72f5ee209fa7df278",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "教材设备表为DCT/COCT/CHCT而PCB主属进程选A；PCB仍会与I/O等待关联。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [
+     "3"
+    ],
+    "topicIds": [
+     "t12-2-12",
+     "t3-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-12",
+     "t3-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：教材设备表为DCT/COCT/CHCT而PCB主属进程选A；PCB仍会与I/O等待关联。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Kernel Data Sturctures。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q014",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "教材设备表为DCT/COCT/CHCT而PCB主属进程选A",
+     "detail": "教材设备表为DCT/COCT/CHCT而PCB主属进程选A；PCB仍会与I/O等待关联。",
+     "suggestedCorrection": "教材设备表为DCT/COCT/CHCT而PCB主属进程选A；PCB仍会与I/O等待关联。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-12",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 334
+    },
+    {
+     "topicId": "t3-1",
+     "noteFile": "3-Processes.md",
+     "noteLine": 15
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q015",
+   "sourceContentHash": "sha256:45b86f47127b3775279c803c0d922d18afbe86d08b59e206e289f4c485c1e41d",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "教材独享/共享/虚拟分类中分区为内存术语，选D，不排除现代设备分区虚拟化。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-9",
+     "t12-2-6"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-9",
+     "t12-2-6"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：教材独享/共享/虚拟分类中分区为内存术语，选D，不排除现代设备分区虚拟化。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Spooling and Device Reservation、I/O Scheduling。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q015",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "教材独享/共享/虚拟分类中分区为内存术语，选D，不排除现代设备分区虚拟化。",
+     "detail": "教材独享/共享/虚拟分类中分区为内存术语，选D，不排除现代设备分区虚拟化。",
+     "suggestedCorrection": "教材独享/共享/虚拟分类中分区为内存术语，选D，不排除现代设备分区虚拟化。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-9",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 328
+    },
+    {
+     "topicId": "t12-2-6",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 322
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q016",
+   "sourceContentHash": "sha256:10cd238a1f7d6bcc26c7ba902f67603df0dd32f5dbf1b83e97df51b128839ae0",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "按教材SDT→DCT→COCT→CHCT指针层次选择通路，选A。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-12"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-12"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：按教材SDT→DCT→COCT→CHCT指针层次选择通路，选A。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Kernel Data Sturctures。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q016",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "按教材SDT→DCT→COCT→CHCT指针层次选择通路，选A。",
+     "detail": "按教材SDT→DCT→COCT→CHCT指针层次选择通路，选A。",
+     "suggestedCorrection": "按教材SDT→DCT→COCT→CHCT指针层次选择通路，选A。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-12",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 334
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q017",
+   "sourceContentHash": "sha256:3aae0b4680ed236a479b351495bd2c79df104da43c4aa6eb4f882683233ada76",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "按未经假脱机改造的教材磁盘共享、打印和磁带独占选C；可虚拟化共享不改变物理资源粒度。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-1",
+     "t12-2-9"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-1",
+     "t12-2-9"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：按未经假脱机改造的教材磁盘共享、打印和磁带独占选C；可虚拟化共享不改变物理资源粒度。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Spooling and Device Reservation。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q017",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "按未经假脱机改造的教材磁盘共享、打印和磁带独占选C",
+     "detail": "按未经假脱机改造的教材磁盘共享、打印和磁带独占选C；可虚拟化共享不改变物理资源粒度。",
+     "suggestedCorrection": "按未经假脱机改造的教材磁盘共享、打印和磁带独占选C；可虚拟化共享不改变物理资源粒度。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-1",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 220
+    },
+    {
+     "topicId": "t12-2-9",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 328
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q018",
+   "sourceContentHash": "sha256:d379a2647a0772ab515f211f6b10eaff33d3e8fe5deac7be96f94a1e582dfa61",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "单CPU靠多道在I/O等待时切换任务提高利用率选D，虚拟技术不只是外设技术。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [
+     "1"
+    ],
+    "topicIds": [
+     "t12-2-9",
+     "t1-4-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-9",
+     "t1-4-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：单CPU靠多道在I/O等待时切换任务提高利用率选D，虚拟技术不只是外设技术。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Spooling and Device Reservation。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q018",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "单CPU靠多道在I/O等待时切换任务提高利用率选D，虚拟技术不只是外设技术。",
+     "detail": "单CPU靠多道在I/O等待时切换任务提高利用率选D，虚拟技术不只是外设技术。",
+     "suggestedCorrection": "单CPU靠多道在I/O等待时切换任务提高利用率选D，虚拟技术不只是外设技术。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t1-4-1",
+     "noteFile": "1-Introduction.md",
+     "noteLine": 198
+    },
+    {
+     "topicId": "t12-2-9",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 328
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q019",
+   "sourceContentHash": "sha256:ebb964e4b1aa6822446f1ead8f6ef45e514f8cfbd644e870e5725445bcbb8f10",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "虚拟打印机语境由SPOOLing实现选C；现代虚拟设备还可由虚拟机等机制实现。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-9"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-9"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：虚拟打印机语境由SPOOLing实现选C；现代虚拟设备还可由虚拟机等机制实现。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Spooling and Device Reservation。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q019",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "虚拟打印机语境由SPOOLing实现选C",
+     "detail": "虚拟打印机语境由SPOOLing实现选C；现代虚拟设备还可由虚拟机等机制实现。",
+     "suggestedCorrection": "虚拟打印机语境由SPOOLing实现选C；现代虚拟设备还可由虚拟机等机制实现。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-9",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 328
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q020",
+   "sourceContentHash": "sha256:b3c5d49345162fe57a1959d2413818dfae6988f643bc6df5ff566bc6a6e7851a",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "排队暂存使独占设备更充分利用选B，不提高物理打印速率，利用率改善受负载影响。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-9"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-9"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：排队暂存使独占设备更充分利用选B，不提高物理打印速率，利用率改善受负载影响。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Spooling and Device Reservation。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q020",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "排队暂存使独占设备更充分利用选B，不提高物理打印速率，利用率改善受负载影响。",
+     "detail": "排队暂存使独占设备更充分利用选B，不提高物理打印速率，利用率改善受负载影响。",
+     "suggestedCorrection": "排队暂存使独占设备更充分利用选B，不提高物理打印速率，利用率改善受负载影响。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-9",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 328
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q021",
+   "sourceContentHash": "sha256:f4be65f4ff26e635b4122aeb7af2769ac7fc66448473ba055cc5140c2762769a",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "教材打印输出先入磁盘输出井选A；固定区域是抽象设计，现代spool可用普通目录/文件。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-9"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-9"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：教材打印输出先入磁盘输出井选A；固定区域是抽象设计，现代spool可用普通目录/文件。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Spooling and Device Reservation。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q021",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "教材打印输出先入磁盘输出井选A",
+     "detail": "教材打印输出先入磁盘输出井选A；固定区域是抽象设计，现代spool可用普通目录/文件。",
+     "suggestedCorrection": "教材打印输出先入磁盘输出井选A；固定区域是抽象设计，现代spool可用普通目录/文件。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-9",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 328
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q022",
+   "sourceContentHash": "sha256:a41c5db3efb3745ca341e3c70b7638f2fa976223be25818b5f3b41deeb10a132",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "假脱机由主机软件和存储模拟外围机工作，不要求额外外围计算机，选D。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-9"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-9"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：假脱机由主机软件和存储模拟外围机工作，不要求额外外围计算机，选D。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Spooling and Device Reservation。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-9",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 328
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q023",
+   "sourceContentHash": "sha256:c7627858ae8521765591f10e9e154823c22d49639b6a9aa4cc76f5163dfb2438",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "按教材预输入、井管理、缓输出三个程序选A；名称约定不是所有现代spool实现的必备进程名。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-9"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-9"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：按教材预输入、井管理、缓输出三个程序选A；名称约定不是所有现代spool实现的必备进程名。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Spooling and Device Reservation。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q023",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "按教材预输入、井管理、缓输出三个程序选A",
+     "detail": "按教材预输入、井管理、缓输出三个程序选A；名称约定不是所有现代spool实现的必备进程名。",
+     "suggestedCorrection": "按教材预输入、井管理、缓输出三个程序选A；名称约定不是所有现代spool实现的必备进程名。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-9",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 328
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q024",
+   "sourceContentHash": "sha256:a91ae865185edc71a07832137cf09190a1eb71a5db680fbc096ad306491c9ce1",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "用户分到的是spool存储与排队服务而非物理打印机，选B。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-9"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-9"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：用户分到的是spool存储与排队服务而非物理打印机，选B。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Spooling and Device Reservation。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q024",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "用户分到的是spool存储与排队服务而非物理打印机，选B。",
+     "detail": "用户分到的是spool存储与排队服务而非物理打印机，选B。",
+     "suggestedCorrection": "用户分到的是spool存储与排队服务而非物理打印机，选B。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-9",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 328
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q025",
+   "sourceContentHash": "sha256:b19a634943cb05ff6b6c56087af9862a931606554cce3c191b5c450d4fecab6e",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "有可用输出井容量时用户提交后由系统后台输出，选D；“随时”不覆盖队列满、权限或I/O错误。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-9"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-9"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：有可用输出井容量时用户提交后由系统后台输出，选D；“随时”不覆盖队列满、权限或I/O错误。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Spooling and Device Reservation。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q025",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "有可用输出井容量时用户提交后由系统后台输出，选D",
+     "detail": "有可用输出井容量时用户提交后由系统后台输出，选D；“随时”不覆盖队列满、权限或I/O错误。",
+     "suggestedCorrection": "有可用输出井容量时用户提交后由系统后台输出，选D；“随时”不覆盖队列满、权限或I/O错误。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-9",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 328
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q026",
+   "sourceContentHash": "sha256:e708151b225af3711c410b443a721c7d6f4a594bcfb56d0f870c4b7ee6992115",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "被虚拟的物理独占设备仍存在，A错；加速作业是减少用户等待而非总输出必然更快。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-9"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-9"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：被虚拟的物理独占设备仍存在，A错；加速作业是减少用户等待而非总输出必然更快。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Spooling and Device Reservation。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q026",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "被虚拟的物理独占设备仍存在，A错",
+     "detail": "被虚拟的物理独占设备仍存在，A错；加速作业是减少用户等待而非总输出必然更快。",
+     "suggestedCorrection": "被虚拟的物理独占设备仍存在，A错；加速作业是减少用户等待而非总输出必然更快。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-9",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 328
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q027",
+   "sourceContentHash": "sha256:9f9c71792cd3f257c240d3284ff8475923fc2c4296203cebd660c7ba8c5c3321",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "用磁盘队列空间换作业与慢设备的重叠等待时间，教材选A。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-9"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-9"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：用磁盘队列空间换作业与慢设备的重叠等待时间，教材选A。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Spooling and Device Reservation。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-9",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 328
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q028",
+   "sourceContentHash": "sha256:054db3cc55d9314ae115be46986550c00101f0b3f4775dc1ed755735444a106d",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "以磁盘spool替代用户直接占用打印机的逻辑服务叫虚拟设备，选C。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-9"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-9"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：以磁盘spool替代用户直接占用打印机的逻辑服务叫虚拟设备，选C。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Spooling and Device Reservation。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-9",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 328
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q029",
+   "sourceContentHash": "sha256:f56324d2043a3b0b45c94cba24a3d46fe7e9f35ff89e1cbe5ff4524410d93026",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "按教材独占可静态、共享通常动态，D错；现代磁盘可多队列并行不遵守“每时刻只一个作业”硬断言。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "blk-mq"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-6"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-6"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：按教材独占可静态、共享通常动态，D错；现代磁盘可多队列并行不遵守“每时刻只一个作业”硬断言。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：I/O Scheduling。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q029",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "按教材独占可静态、共享通常动态，D错",
+     "detail": "按教材独占可静态、共享通常动态，D错；现代磁盘可多队列并行不遵守“每时刻只一个作业”硬断言。",
+     "suggestedCorrection": "按教材独占可静态、共享通常动态，D错；现代磁盘可多队列并行不遵守“每时刻只一个作业”硬断言。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "blk-mq"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-6",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 322
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q030",
+   "sourceContentHash": "sha256:40dd4b911a25c0bfa258f4f01afe1fc675bb0999e29772232da5ad5e975b848e",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "打印已存文件既需文件系统取数据也需设备层输出，选C。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [
+     "12"
+    ],
+    "topicIds": [
+     "t13-1-2",
+     "t12-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-1-2",
+     "t12-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：打印已存文件既需文件系统取数据也需设备层输出，选C。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Transforming I/O Requests to Hardware Operations。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t13-1-2",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 60
+    },
+    {
+     "topicId": "t12-3",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 339
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q031",
+   "sourceContentHash": "sha256:73b3feef6e8df234937c0c3013aabee5d40e9732a0e88ad3baada74e74a7ef9a",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "教材公共层做权限和缓冲选C；寄存器命令是驱动、格式化为用户库。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-11",
+     "t12-2-7"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-11",
+     "t12-2-7"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：教材公共层做权限和缓冲选C；寄存器命令是驱动、格式化为用户库。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：I/O Protection、Buffering。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q031",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "教材公共层做权限和缓冲选C",
+     "detail": "教材公共层做权限和缓冲选C；寄存器命令是驱动、格式化为用户库。",
+     "suggestedCorrection": "教材公共层做权限和缓冲选C；寄存器命令是驱动、格式化为用户库。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-11",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 332
+    },
+    {
+     "topicId": "t12-2-7",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 324
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q032",
+   "sourceContentHash": "sha256:e406662d74bf4f34542fdb1420f5a6caf03aec766e0fd9df2fc72527f814bc08",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "教材把设备相关中断和磁盘调度归驱动选B；现代Linux调度常在块层，驱动可C等高级语言实现。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks",
+     "blk-mq"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [
+     "11"
+    ],
+    "topicIds": [
+     "t12-1",
+     "t11-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1",
+     "t11-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：教材把设备相关中断和磁盘调度归驱动选B；现代Linux调度常在块层，驱动可C等高级语言实现。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q032",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "教材把设备相关中断和磁盘调度归驱动选B",
+     "detail": "教材把设备相关中断和磁盘调度归驱动选B；现代Linux调度常在块层，驱动可C等高级语言实现。",
+     "suggestedCorrection": "教材把设备相关中断和磁盘调度归驱动选B；现代Linux调度常在块层，驱动可C等高级语言实现。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks",
+      "blk-mq"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 28
+    },
+    {
+     "topicId": "t11-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 122
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q033",
+   "sourceContentHash": "sha256:465330b18c7374184d09181a93f91ecc5312d9b1c4bfb09e24417fd56e8c8ede",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "教材高层数据分析不属通用驱动职责，选D；实际驱动可持有DMA环和缓冲，不能泛称驱动不缓冲。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-1",
+     "t12-2-7"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1",
+     "t12-2-7"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：教材高层数据分析不属通用驱动职责，选D；实际驱动可持有DMA环和缓冲，不能泛称驱动不缓冲。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Buffering。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q033",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "教材高层数据分析不属通用驱动职责，选D",
+     "detail": "教材高层数据分析不属通用驱动职责，选D；实际驱动可持有DMA环和缓冲，不能泛称驱动不缓冲。",
+     "suggestedCorrection": "教材高层数据分析不属通用驱动职责，选D；实际驱动可持有DMA环和缓冲，不能泛称驱动不缓冲。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 28
+    },
+    {
+     "topicId": "t12-2-7",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 324
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q034",
+   "sourceContentHash": "sha256:3ef2df6cb0fbf5bb4f7e28a789fc3a88a146ed0acaeb6f143180ae65e8945b01",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "教材④翻译→①校验→⑤状态→②参数→③启动选B；真实安全实现可在翻译前先验证边界。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：教材④翻译→①校验→⑤状态→②参数→③启动选B；真实安全实现可在翻译前先验证边界。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Transforming I/O Requests to Hardware Operations。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q034",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "教材④翻译→①校验→⑤状态→②参数→③启动选B",
+     "detail": "教材④翻译→①校验→⑤状态→②参数→③启动选B；真实安全实现可在翻译前先验证边界。",
+     "suggestedCorrection": "教材④翻译→①校验→⑤状态→②参数→③启动选B；真实安全实现可在翻译前先验证边界。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-3",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 339
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q035",
+   "sourceContentHash": "sha256:190ef3db4c104f1c2627d97a1347e381f35b00aa80d70ae95f6ba8b588d177e5",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "进入内核用陷入/系统调用指令选A；printf可能先在用户缓冲，特权指令故障本身也可能陷入，不能把后者说成不切态。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "2",
+    "secondaryChapterIds": [
+     "12"
+    ],
+    "topicIds": [
+     "t2-3",
+     "t12-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t2-3",
+     "t12-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：进入内核用陷入/系统调用指令选A；printf可能先在用户缓冲，特权指令故障本身也可能陷入，不能把后者说成不切态。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q035",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "进入内核用陷入/系统调用指令选A",
+     "detail": "进入内核用陷入/系统调用指令选A；printf可能先在用户缓冲，特权指令故障本身也可能陷入，不能把后者说成不切态。",
+     "suggestedCorrection": "进入内核用陷入/系统调用指令选A；printf可能先在用户缓冲，特权指令故障本身也可能陷入，不能把后者说成不切态。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t2-3",
+     "noteFile": "2-Operating-System Structures.md",
+     "noteLine": 90
+    },
+    {
+     "topicId": "t12-2",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 179
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q036",
+   "sourceContentHash": "sha256:504e8f899b3e95bb078bad593354e8ef75bf74a253a6451f4d11f8278b90c3eb",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "单CPU两进程不同时执行CPU指令，CPU/设备/通道及不同设备可并行，选D。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [
+     "1"
+    ],
+    "topicIds": [
+     "t12-1",
+     "t1-4-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1",
+     "t1-4-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：单CPU两进程不同时执行CPU指令，CPU/设备/通道及不同设备可并行，选D。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t1-4-1",
+     "noteFile": "1-Introduction.md",
+     "noteLine": 198
+    },
+    {
+     "topicId": "t12-1",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 28
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q037",
+   "sourceContentHash": "sha256:ce2c093650ace4ff3ce1002faf09d06eea7f13f65e7c206fcefe6ec2dbf90937",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "应用打开逻辑设备名选A；解析错把主/次设备号说成总线仲裁主从，实际用于设备驱动和实例标识。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：应用打开逻辑设备名选A；解析错把主/次设备号说成总线仲裁主从，实际用于设备驱动和实例标识。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q037",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "应用打开逻辑设备名选A",
+     "detail": "应用打开逻辑设备名选A；解析错把主/次设备号说成总线仲裁主从，实际用于设备驱动和实例标识。",
+     "suggestedCorrection": "应用打开逻辑设备名选A；解析错把主/次设备号说成总线仲裁主从，实际用于设备驱动和实例标识。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 179
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q038",
+   "sourceContentHash": "sha256:43e846991869fc3d6b702d5fcd3cccb3c6bb78762c50d656d7cf5728526c73a6",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "单/双系统缓冲及CPU拷贝计算共用模型，10块总时间1550/1100μs选B，含首尾非仅稳态。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": [
+     "ten-single",
+     "ten-double"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-7"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-7"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：单/双系统缓冲及CPU拷贝计算共用模型，10块总时间1550/1100μs选B，含首尾非仅稳态。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Buffering。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q038",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "单/双系统缓冲及CPU拷贝计算共用模型，10块总时间1550/1100μs选B，含首尾非仅稳态。",
+     "detail": "单/双系统缓冲及CPU拷贝计算共用模型，10块总时间1550/1100μs选B，含首尾非仅稳态。",
+     "suggestedCorrection": "单/双系统缓冲及CPU拷贝计算共用模型，10块总时间1550/1100μs选B，含首尾非仅稳态。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [
+      "ten-single",
+      "ten-double"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-7",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 324
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q039",
+   "sourceContentHash": "sha256:0b0cfc76b85ea223e6188406f7d4166d6c5a551efde7603346d98e1b1776c52b",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "块1完成于195，第二块设备105至205、拷贝205至210、计算210至300，选C；拷贝不能和同一用户槽计算同时进行。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": [
+     "two-single"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-7"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-7"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：块1完成于195，第二块设备105至205、拷贝205至210、计算210至300，选C；拷贝不能和同一用户槽计算同时进行。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Buffering。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q039",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "块1完成于195，第二块设备105至205、拷贝205至210、计算210至300，选C",
+     "detail": "块1完成于195，第二块设备105至205、拷贝205至210、计算210至300，选C；拷贝不能和同一用户槽计算同时进行。",
+     "suggestedCorrection": "块1完成于195，第二块设备105至205、拷贝205至210、计算210至300，选C；拷贝不能和同一用户槽计算同时进行。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [
+      "two-single"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-7",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 324
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q040",
+   "sourceContentHash": "sha256:249c067f146d240de3c7bf742b3c9103256c0b15d4c2d149544d1f84042fe07a",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "传统CHS模型由驱动转换选C；现代LBA真实几何由固件隐藏，驱动不必知道物理柱面。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [
+     "11"
+    ],
+    "topicIds": [
+     "t12-3",
+     "t11-1-5"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-3",
+     "t11-1-5"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：传统CHS模型由驱动转换选C；现代LBA真实几何由固件隐藏，驱动不必知道物理柱面。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Transforming I/O Requests to Hardware Operations。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q040",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "传统CHS模型由驱动转换选C",
+     "detail": "传统CHS模型由驱动转换选C；现代LBA真实几何由固件隐藏，驱动不必知道物理柱面。",
+     "suggestedCorrection": "传统CHS模型由驱动转换选C；现代LBA真实几何由固件隐藏，驱动不必知道物理柱面。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-3",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 339
+    },
+    {
+     "topicId": "t11-1-5",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 104
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q041",
+   "sourceContentHash": "sha256:e404bbb5e3631dad1900db332c5a4f68e6cbc0ad024a28dcaa788125ad6d9240",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "这里“磁盘缓冲”按块缓存复用解释，命中减少I/O次数选A，不是所有一次性buffer都必减少请求。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [
+     "14"
+    ],
+    "topicIds": [
+     "t12-2-8",
+     "t14-6-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-8",
+     "t14-6-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：这里“磁盘缓冲”按块缓存复用解释，命中减少I/O次数选A，不是所有一次性buffer都必减少请求。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Caching。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q041",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "这里“磁盘缓冲”按块缓存复用解释，命中减少I/O次数选A，不是所有一次性buffer都必减少请求。",
+     "detail": "这里“磁盘缓冲”按块缓存复用解释，命中减少I/O次数选A，不是所有一次性buffer都必减少请求。",
+     "suggestedCorrection": "这里“磁盘缓冲”按块缓存复用解释，命中减少I/O次数选A，不是所有一次性buffer都必减少请求。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-8",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 326
+    },
+    {
+     "topicId": "t14-6-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 408
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q042",
+   "sourceContentHash": "sha256:8fb465678bc4c72bbaf64c4d0ef94a87516f27312d2f2fb89962910613cfb544",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "输出井和物理设备间传送由系统spool程序负责，D错误；逻辑并发不要求多个CPU。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-9"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-9"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：输出井和物理设备间传送由系统spool程序负责，D错误；逻辑并发不要求多个CPU。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Spooling and Device Reservation。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q042",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "输出井和物理设备间传送由系统spool程序负责，D错误",
+     "detail": "输出井和物理设备间传送由系统spool程序负责，D错误；逻辑并发不要求多个CPU。",
+     "suggestedCorrection": "输出井和物理设备间传送由系统spool程序负责，D错误；逻辑并发不要求多个CPU。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-9",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 328
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q043",
+   "sourceContentHash": "sha256:3d2484be0287ab4912b8bb8ef44b1d4172961850e54d25104faaf181f1d3012b",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "逻辑名及映射屏蔽物理更换，D“必须改应用”错误。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：逻辑名及映射屏蔽物理更换，D“必须改应用”错误。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 179
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q044",
+   "sourceContentHash": "sha256:cc4df6083a3180316aa7a544d2dd17d1b321dd1532f0ec0263636749d0210d3f",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "驱动依赖设备控制方式，A错；驱动可开源不必由厂家编写，用户阻塞与具体调用方式有关。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：驱动依赖设备控制方式，A错；驱动可开源不必由厂家编写，用户阻塞与具体调用方式有关。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q044",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "驱动依赖设备控制方式，A错",
+     "detail": "驱动依赖设备控制方式，A错；驱动可开源不必由厂家编写，用户阻塞与具体调用方式有关。",
+     "suggestedCorrection": "驱动依赖设备控制方式，A错；驱动可开源不必由厂家编写，用户阻塞与具体调用方式有关。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 28
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q045",
+   "sourceContentHash": "sha256:2db9c4ea98d05d1535766d3e58c2a81da6a6d82ee72579abcd4a28dc8c73c4c5",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "类型、权限、忙闲与逻辑映射均影响设备分配，四项全选D。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-6",
+     "t12-2-11"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-6",
+     "t12-2-11"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：类型、权限、忙闲与逻辑映射均影响设备分配，四项全选D。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：I/O Scheduling、I/O Protection。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-6",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 322
+    },
+    {
+     "topicId": "t12-2-11",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 332
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s2-0-q046",
+   "sourceContentHash": "sha256:1789844f7ce9a029c7113f137233e891b0494cfce1a00e0996251ec666f5a056",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "教材先读设备到内核缓冲再唤醒读者选C，用户拷贝在后续进程上下文；不覆盖所有零拷贝模型。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-1-3",
+     "t12-2-7"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1-3",
+     "t12-2-7"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：教材先读设备到内核缓冲再唤醒读者选C，用户拷贝在后续进程上下文；不覆盖所有零拷贝模型。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Buffering。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s2-0-q046",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "教材先读设备到内核缓冲再唤醒读者选C，用户拷贝在后续进程上下文",
+     "detail": "教材先读设备到内核缓冲再唤醒读者选C，用户拷贝在后续进程上下文；不覆盖所有零拷贝模型。",
+     "suggestedCorrection": "教材先读设备到内核缓冲再唤醒读者选C，用户拷贝在后续进程上下文；不覆盖所有零拷贝模型。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1-3",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 109
+    },
+    {
+     "topicId": "t12-2-7",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 324
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q001",
+   "sourceContentHash": "sha256:4c8dc52f2b4f1e297c82a6f461d5b4b9eb661a6db3360c6d8f95c4a95bdc17e7",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "针对磁盘文件系统，持久布局与管理代码构成文件系统选B；内存/伪文件系统不要求磁盘。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [
+     "11"
+    ],
+    "topicIds": [
+     "t14-1",
+     "t11-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-1",
+     "t11-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：针对磁盘文件系统，持久布局与管理代码构成文件系统选B；内存/伪文件系统不要求磁盘。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s3-0-q001",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "针对磁盘文件系统，持久布局与管理代码构成文件系统选B",
+     "detail": "针对磁盘文件系统，持久布局与管理代码构成文件系统选B；内存/伪文件系统不要求磁盘。",
+     "suggestedCorrection": "针对磁盘文件系统，持久布局与管理代码构成文件系统选B；内存/伪文件系统不要求磁盘。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 35
+    },
+    {
+     "topicId": "t11-1",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 18
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q002",
+   "sourceContentHash": "sha256:71798f1585f14a39bb05e4979ddb1af9ef36bd5ba21772caa82fd0f3866fd4ca",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "单磁头服务串行请求的教材磁盘模型选D；NCQ/多执行单元可接收多个未完成命令。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks",
+     "blk-mq"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-1-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-1-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：单磁头服务串行请求的教材磁盘模型选D；NCQ/多执行单元可接收多个未完成命令。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s3-0-q002",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "单磁头服务串行请求的教材磁盘模型选D",
+     "detail": "单磁头服务串行请求的教材磁盘模型选D；NCQ/多执行单元可接收多个未完成命令。",
+     "suggestedCorrection": "单磁头服务串行请求的教材磁盘模型选D；NCQ/多执行单元可接收多个未完成命令。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks",
+      "blk-mq"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-1-1",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 23
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q003",
+   "sourceContentHash": "sha256:0ca9fc8836c7ca9359e3eb3f7d723aa120bfa0a6e8e167cfd5dcbb386455100e",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "可改写光盘、U盘和磁盘支持直接访问选B；CD-ROM只读，不应把所有光盘说成都可写。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：可改写光盘、U盘和磁盘支持直接访问选B；CD-ROM只读，不应把所有光盘说成都可写。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s3-0-q003",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "可改写光盘、U盘和磁盘支持直接访问选B",
+     "detail": "可改写光盘、U盘和磁盘支持直接访问选B；CD-ROM只读，不应把所有光盘说成都可写。",
+     "suggestedCorrection": "可改写光盘、U盘和磁盘支持直接访问选B；CD-ROM只读，不应把所有光盘说成都可写。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-1",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 18
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q004",
+   "sourceContentHash": "sha256:7c71785eed18af0a3b401d2d27fa83c1b699f1751e98fe4690210c930293b366",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "经典按磁道调序主要缩短寻道选A，旋转感知调度也可优化旋转等待，不是绝无可能。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：经典按磁道调序主要缩短寻道选A，旋转感知调度也可优化旋转等待，不是绝无可能。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s3-0-q004",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "经典按磁道调序主要缩短寻道选A，旋转感知调度也可优化旋转等待，不是绝无可能。",
+     "detail": "经典按磁道调序主要缩短寻道选A，旋转感知调度也可优化旋转等待，不是绝无可能。",
+     "suggestedCorrection": "经典按磁道调序主要缩短寻道选A，旋转感知调度也可优化旋转等待，不是绝无可能。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 122
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q005",
+   "sourceContentHash": "sha256:81bd7b19c6c1705a97d47df05f31ec9d4c50344f3995749410e4391f0fad30d3",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "SCAN/FCFS/C-LOOK按磁道调度，CLOCK按页置换，选D。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [
+     "10"
+    ],
+    "topicIds": [
+     "t11-2",
+     "t10-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-2",
+     "t10-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：SCAN/FCFS/C-LOOK按磁道调度，CLOCK按页置换，选D。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t11-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 122
+    },
+    {
+     "topicId": "t10-4",
+     "noteFile": "10-Virtual Memory.md",
+     "noteLine": 177
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q006",
+   "sourceContentHash": "sha256:919a5abe73197ee3b65c341826d4564ca2ee7d59a1e1ddd446191961072e24e6",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "题意是底层块设备读写粒度选A；用户read接口可以按字节或记录，不等于只能整块请求。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "13",
+    "secondaryChapterIds": [
+     "11"
+    ],
+    "topicIds": [
+     "t13-1-5",
+     "t11-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t13-1-5",
+     "t11-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：题意是底层块设备读写粒度选A；用户read接口可以按字节或记录，不等于只能整块请求。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s3-0-q006",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "题意是底层块设备读写粒度选A",
+     "detail": "题意是底层块设备读写粒度选A；用户read接口可以按字节或记录，不等于只能整块请求。",
+     "suggestedCorrection": "题意是底层块设备读写粒度选A；用户read接口可以按字节或记录，不等于只能整块请求。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t13-1-5",
+     "noteFile": "13-File-System Interface.md",
+     "noteLine": 161
+    },
+    {
+     "topicId": "t11-1",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 18
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q007",
+   "sourceContentHash": "sha256:9902b19037fc9010a5ecee07d610c77603fde76de0849095ee36a453a89d5240",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "传统随机小块HDD访问寻道通常最大，选D；连续读、长传输和SSD不是同一前提。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-1-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-1-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：传统随机小块HDD访问寻道通常最大，选D；连续读、长传输和SSD不是同一前提。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s3-0-q007",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "传统随机小块HDD访问寻道通常最大，选D",
+     "detail": "传统随机小块HDD访问寻道通常最大，选D；连续读、长传输和SSD不是同一前提。",
+     "suggestedCorrection": "传统随机小块HDD访问寻道通常最大，选D；连续读、长传输和SSD不是同一前提。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-1-1",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 23
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q008",
+   "sourceContentHash": "sha256:d6a96d0bbae891c0037890dc7602d1cc3652bca1ee27cc4c479366f4592f8d2c",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "教材逻辑格式化创建分区文件系统引导结构选D；安装引导器是另一步，不保证格式化必装可启动OS代码。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-5-1",
+     "t11-5-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-5-1",
+     "t11-5-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：教材逻辑格式化创建分区文件系统引导结构选D；安装引导器是另一步，不保证格式化必装可启动OS代码。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s3-0-q008",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "教材逻辑格式化创建分区文件系统引导结构选D",
+     "detail": "教材逻辑格式化创建分区文件系统引导结构选D；安装引导器是另一步，不保证格式化必装可启动OS代码。",
+     "suggestedCorrection": "教材逻辑格式化创建分区文件系统引导结构选D；安装引导器是另一步，不保证格式化必装可启动OS代码。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-5-1",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 297
+    },
+    {
+     "topicId": "t11-5-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 336
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q009",
+   "sourceContentHash": "sha256:57c50e071d2cf8cd5143ab119a83c8062c850cbfc0bbf6ba3eb91660f8d0d2b8",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "物理低级格式化建立扇区控制格式选A，现代盘通常厂内完成。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-5-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-5-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：物理低级格式化建立扇区控制格式选A，现代盘通常厂内完成。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t11-5-1",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 297
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q010",
+   "sourceContentHash": "sha256:d1ec1b1a1cd38e738f0ec2d2f2132f5a65d6741bcd9db8cc3345153c18fb5a50",
+   "answerReview": {
+    "status": "disputed",
+    "conclusion": "“调度与旋转延迟无关”过强，旋转感知调度可改变等待，处理时间也会影响错过下扇区；无指定模型不能唯一认定D。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-1-1",
+     "t11-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-1-1",
+     "t11-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：“调度与旋转延迟无关”过强，旋转感知调度可改变等待，处理时间也会影响错过下扇区；无指定模型不能唯一认定D。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s3-0-q010",
+     "kind": "disputed_answer",
+     "originalAnswer": "D",
+     "issue": "“调度与旋转延迟无关”过强，旋转感知调度可改变等待，处理时间也会影响错过下扇区",
+     "detail": "“调度与旋转延迟无关”过强，旋转感知调度可改变等待，处理时间也会影响错过下扇区；无指定模型不能唯一认定D。",
+     "suggestedCorrection": "“调度与旋转延迟无关”过强，旋转感知调度可改变等待，处理时间也会影响错过下扇区；无指定模型不能唯一认定D。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [],
+     "scoring": "excluded",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-1-1",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 23
+    },
+    {
+     "topicId": "t11-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 122
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q011",
+   "sourceContentHash": "sha256:7cb584c6cc71e29bc952294a3394a864123268990dc66985e03942625d690cf8",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "经典机械盘按寻道距离优化主旨选A，不声称所有请求/硬盘寻道都绝对最大。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：经典机械盘按寻道距离优化主旨选A，不声称所有请求/硬盘寻道都绝对最大。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s3-0-q011",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "经典机械盘按寻道距离优化主旨选A，不声称所有请求/硬盘寻道都绝对最大。",
+     "detail": "经典机械盘按寻道距离优化主旨选A，不声称所有请求/硬盘寻道都绝对最大。",
+     "suggestedCorrection": "经典机械盘按寻道距离优化主旨选A，不声称所有请求/硬盘寻道都绝对最大。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 122
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q012",
+   "sourceContentHash": "sha256:0dea292aef92ce5b1942b73907578c8c2939af764978fb3c6145c62dfacaef70",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "SSTF明确用于磁盘寻道请求调度选C，LRU为页/缓存替换。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-2-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-2-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：SSTF明确用于磁盘寻道请求调度选C，LRU为页/缓存替换。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t11-2-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 159
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q013",
+   "sourceContentHash": "sha256:66b19ede13d4d58dd6912084a8d539da1c708a5ec19a4a2860a5ffb86bafb918",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "连续到来近请求可使SSTF远请求饥饿选B；SCAN是否黏着还与本轮接纳策略有关。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-2-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-2-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：连续到来近请求可使SSTF远请求饥饿选B；SCAN是否黏着还与本轮接纳策略有关。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s3-0-q013",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "连续到来近请求可使SSTF远请求饥饿选B",
+     "detail": "连续到来近请求可使SSTF远请求饥饿选B；SCAN是否黏着还与本轮接纳策略有关。",
+     "suggestedCorrection": "连续到来近请求可使SSTF远请求饥饿选B；SCAN是否黏着还与本轮接纳策略有关。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-2-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 159
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q014",
+   "sourceContentHash": "sha256:d42f47c936e3f95252a8ba316293c291217c78bbf80a41fa9d6cfec13a541267",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "FCFS下一请求位置任意，可随请求改变运动方向选B。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-2-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-2-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：FCFS下一请求位置任意，可随请求改变运动方向选B。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t11-2-1",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 143
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q015",
+   "sourceContentHash": "sha256:29ec02fcaf7932143c315b14cd22cb246431d2cbade19d6ad60d1f95046ba0be",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "CHS按扇区递增后换同柱面下一磁头，(5,1,7)下一块(5,2,0)选B。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": [
+     "chs-linear"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-1-5"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-1-5"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：CHS按扇区递增后换同柱面下一磁头，(5,1,7)下一块(5,2,0)选B。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t11-1-5",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 104
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q016",
+   "sourceContentHash": "sha256:f9a089dafadbd35bb8aff25da51a00b7882c1e1c66ab43b67572f62c31a2d736",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "零基78×64+6×8+6=5046，选B。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": [
+     "chs-linear"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-1-5"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-1-5"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：零基78×64+6×8+6=5046，选B。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t11-1-5",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 104
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q017",
+   "sourceContentHash": "sha256:777baab20b907dc9dd991a76c51c63a29af76d2b9a3fbae24470cf08dee6ea63",
+   "answerReview": {
+    "status": "disputed",
+    "conclusion": "r为每转秒，原式每轨只计T+r，未说明首扇区随机旋转等待和b/N取整，整轨任意起点模型才可沿用A。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-1-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-1-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：r为每转秒，原式每轨只计T+r，未说明首扇区随机旋转等待和b/N取整，整轨任意起点模型才可沿用A。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s3-0-q017",
+     "kind": "disputed_answer",
+     "originalAnswer": "A",
+     "issue": "r为每转秒，原式每轨只计T+r，未说明首扇区随机旋转等待和b/N取整，整轨任意起点模型才可沿用A。",
+     "detail": "r为每转秒，原式每轨只计T+r，未说明首扇区随机旋转等待和b/N取整，整轨任意起点模型才可沿用A。",
+     "suggestedCorrection": "r为每转秒，原式每轨只计T+r，未说明首扇区随机旋转等待和b/N取整，整轨任意起点模型才可沿用A。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [],
+     "scoring": "excluded",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-1-1",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 23
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q018",
+   "sourceContentHash": "sha256:26bfd5337a6cd90a3052be2a232d16362b0b0f8cc86a6c796e5ab36d71b6de18",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "3000rpm周期20ms，每轨10扇区纯传输2ms选C；未包含寻道和旋转等待。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": [
+     "sector-ms"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-1-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-1-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：3000rpm周期20ms，每轨10扇区纯传输2ms选C；未包含寻道和旋转等待。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s3-0-q018",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "3000rpm周期20ms，每轨10扇区纯传输2ms选C",
+     "detail": "3000rpm周期20ms，每轨10扇区纯传输2ms选C；未包含寻道和旋转等待。",
+     "suggestedCorrection": "3000rpm周期20ms，每轨10扇区纯传输2ms选C；未包含寻道和旋转等待。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [
+      "sector-ms"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-1-1",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 23
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q019",
+   "sourceContentHash": "sha256:6210dbe71dbd82eb957a5b087b6b2461162572dde8452fa8219979300955a770",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "7200/60×160×512=9830400B/s=9600KiB/s，选C。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": [
+     "rate-kib"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-1-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-1-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：7200/60×160×512=9830400B/s=9600KiB/s，选C。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t11-1-1",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 23
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q020",
+   "sourceContentHash": "sha256:cc5bc6771d39d7c3eea283c9535b5bbacd59e6a9d7a790f9187cd1ff2543579a",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "SSTF逐次最近选择得90,58,55,39,38,18,150,160,184，总248选D。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": [
+     "sstf-248"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-2-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-2-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：SSTF逐次最近选择得90,58,55,39,38,18,150,160,184，总248选D。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t11-2-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 159
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q021",
+   "sourceContentHash": "sha256:9c318b1073fcc2c402bd2fc782d6a82bcaa79c3155f57804d7971aca111309ad",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "67先向小号扫描首服务55，SSTF首77、FCFS首35，选C。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-2-2",
+     "t11-2-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-2-2",
+     "t11-2-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：67先向小号扫描首服务55，SSTF首77、FCFS首35，选C。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t11-2-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 159
+    },
+    {
+     "topicId": "t11-2-3",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 167
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q022",
+   "sourceContentHash": "sha256:6d7a57cee8a3f9759a6ae4df91737f0b5d2dbd13565c84a9cbe28cba40c3a9f9",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "严格SCAN到999折返共1239；SSTF先700再788等共1131，选C。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": [
+     "scan-1239",
+     "sstf-1131"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-2-3",
+     "t11-2-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-2-3",
+     "t11-2-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：严格SCAN到999折返共1239；SSTF先700再788等共1131，选C。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t11-2-3",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 167
+    },
+    {
+     "topicId": "t11-2-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 159
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q023",
+   "sourceContentHash": "sha256:7e7a08b2c89cbbe006d80fe6ba847a5d8fc1fbb3ce38c0dcb05f1a3b28f6f3de",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "每记录计一个0.4英寸间隙得1800英寸、有效比1/3选C；若仅2999个内部间隙总1799.6。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": [
+     "tape"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：每记录计一个0.4英寸间隙得1800英寸、有效比1/3选C；若仅2999个内部间隙总1799.6。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s3-0-q023",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "每记录计一个0.4英寸间隙得1800英寸、有效比1/3选C",
+     "detail": "每记录计一个0.4英寸间隙得1800英寸、有效比1/3选C；若仅2999个内部间隙总1799.6。",
+     "suggestedCorrection": "每记录计一个0.4英寸间隙得1800英寸、有效比1/3选C；若仅2999个内部间隙总1799.6。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [
+      "tape"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-1",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 18
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q024",
+   "sourceContentHash": "sha256:01aa6891347a1a93dd0b0a466e74f1aecf2ad3ef0467d4739753cbe6ce527bd1",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "闪存擦写寿命有限故D“不易磨损”在此语境错；有无机械抗冲击磨损须分开，写放大受FTL/缓存影响。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-1-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-1-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：闪存擦写寿命有限故D“不易磨损”在此语境错；有无机械抗冲击磨损须分开，写放大受FTL/缓存影响。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s3-0-q024",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "闪存擦写寿命有限故D“不易磨损”在此语境错",
+     "detail": "闪存擦写寿命有限故D“不易磨损”在此语境错；有无机械抗冲击磨损须分开，写放大受FTL/缓存影响。",
+     "suggestedCorrection": "闪存擦写寿命有限故D“不易磨损”在此语境错；有无机械抗冲击磨损须分开，写放大受FTL/缓存影响。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-1-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 48
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q025",
+   "sourceContentHash": "sha256:ac8569c7b6297700fa7efe67000eec89c4c082cfdb755b9f3721c4db667f166c",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "C按静态均衡扩大冷块参与成立但有搬移开销；解析冷数据迁移方向写反，通常迁出低擦写冷块以释放它承接热写。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-1-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-1-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：C按静态均衡扩大冷块参与成立但有搬移开销；解析冷数据迁移方向写反，通常迁出低擦写冷块以释放它承接热写。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s3-0-q025",
+     "kind": "assumption",
+     "originalAnswer": "C",
+     "issue": "C按静态均衡扩大冷块参与成立但有搬移开销",
+     "detail": "C按静态均衡扩大冷块参与成立但有搬移开销；解析冷数据迁移方向写反，通常迁出低擦写冷块以释放它承接热写。",
+     "suggestedCorrection": "C按静态均衡扩大冷块参与成立但有搬移开销；解析冷数据迁移方向写反，通常迁出低擦写冷块以释放它承接热写。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-1-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 48
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q026",
+   "sourceContentHash": "sha256:3be806800a1cca51554195af4b82b30c69e37ff3d46d4aa7a27b4120b8c2d7a4",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "磨损均衡主旨寿命不是速度，D错；A只可理解为无需机械寻道排序，SSD仍有I/O队列调度。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks",
+     "blk-mq"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-1-2",
+     "t11-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-1-2",
+     "t11-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：磨损均衡主旨寿命不是速度，D错；A只可理解为无需机械寻道排序，SSD仍有I/O队列调度。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s3-0-q026",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "磨损均衡主旨寿命不是速度，D错",
+     "detail": "磨损均衡主旨寿命不是速度，D错；A只可理解为无需机械寻道排序，SSD仍有I/O队列调度。",
+     "suggestedCorrection": "磨损均衡主旨寿命不是速度，D错；A只可理解为无需机械寻道排序，SSD仍有I/O队列调度。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks",
+      "blk-mq"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-1-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 48
+    },
+    {
+     "topicId": "t11-3",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 264
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q027",
+   "sourceContentHash": "sha256:56a341868cfb23228d29334a9cc68d850fd2b63dc7896ea02af2bbe523a5325c",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "从105向大号先110,170,180,195，再68,45,35,12，服务序列A，不给端点也可确定服务顺序。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-2-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-2-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：从105向大号先110,170,180,195，再68,45,35,12，服务序列A，不给端点也可确定服务顺序。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t11-2-3",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 167
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q028",
+   "sourceContentHash": "sha256:0076f17b13a6567355e9620a118548c69692bcc709a99f75ab56d6599d2db49e",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "分区本身没有保证I/O加速选B；预读/延迟写/布局优化也需合适工作负载，不是每次都更快。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [
+     "14"
+    ],
+    "topicIds": [
+     "t11-2",
+     "t14-6-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-2",
+     "t14-6-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：分区本身没有保证I/O加速选B；预读/延迟写/布局优化也需合适工作负载，不是每次都更快。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s3-0-q028",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "分区本身没有保证I/O加速选B",
+     "detail": "分区本身没有保证I/O加速选B；预读/延迟写/布局优化也需合适工作负载，不是每次都更快。",
+     "suggestedCorrection": "分区本身没有保证I/O加速选B；预读/延迟写/布局优化也需合适工作负载，不是每次都更快。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 122
+    },
+    {
+     "topicId": "t14-6-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 408
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q029",
+   "sourceContentHash": "sha256:dd4fb914f08f40510ee231bd3b38505c3627097a074c5c165e9f2ae9324abf30",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "SCAN58向内到199再到15，141+184=325选C。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": [
+     "scan-325"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-2-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-2-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：SCAN58向内到199再到15，141+184=325选C。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t11-2-3",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 167
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q030",
+   "sourceContentHash": "sha256:1f7ba55e10dad780b6e61e667edc621c0cbe1fbf9d572fe64a60fe1159eceedf",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "逻辑格式化建根目录并初始化空闲结构，II/IV选B，分区和扇区ECC各属其他阶段。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [
+     "14"
+    ],
+    "topicIds": [
+     "t11-5-1",
+     "t14-5"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-5-1",
+     "t14-5"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：逻辑格式化建根目录并初始化空闲结构，II/IV选B，分区和扇区ECC各属其他阶段。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t11-5-1",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 297
+    },
+    {
+     "topicId": "t14-5",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 334
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q031",
+   "sourceContentHash": "sha256:859ba6ec6aaff48702993ae64c774d549267d4b454c2c713b4277a3ff6ed266c",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "四种技术都可以改善合适负载下文件访问选D；延迟写并非承诺数据已持久化。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [
+     "11"
+    ],
+    "topicIds": [
+     "t14-6-2",
+     "t11-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-6-2",
+     "t11-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：四种技术都可以改善合适负载下文件访问选D；延迟写并非承诺数据已持久化。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s3-0-q031",
+     "kind": "assumption",
+     "originalAnswer": "D",
+     "issue": "四种技术都可以改善合适负载下文件访问选D",
+     "detail": "四种技术都可以改善合适负载下文件访问选D；延迟写并非承诺数据已持久化。",
+     "suggestedCorrection": "四种技术都可以改善合适负载下文件访问选D；延迟写并非承诺数据已持久化。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-6-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 408
+    },
+    {
+     "topicId": "t11-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 122
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q032",
+   "sourceContentHash": "sha256:ef2f455513d8e32f58b252f46a5183c872e1539d097319aafefebad8dbae53ad",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "按服务本磁道新请求直到为空的黏着模型，FCFS不偏置本磁道选A；冻结批次SCAN不会因此无限黏着。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-2-1",
+     "t11-2-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-2-1",
+     "t11-2-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：按服务本磁道新请求直到为空的黏着模型，FCFS不偏置本磁道选A；冻结批次SCAN不会因此无限黏着。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s3-0-q032",
+     "kind": "assumption",
+     "originalAnswer": "A",
+     "issue": "按服务本磁道新请求直到为空的黏着模型，FCFS不偏置本磁道选A",
+     "detail": "按服务本磁道新请求直到为空的黏着模型，FCFS不偏置本磁道选A；冻结批次SCAN不会因此无限黏着。",
+     "suggestedCorrection": "按服务本磁道新请求直到为空的黏着模型，FCFS不偏置本磁道选A；冻结批次SCAN不会因此无限黏着。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-2-1",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 143
+    },
+    {
+     "topicId": "t11-2-3",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 167
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q033",
+   "sourceContentHash": "sha256:5567b9d01702f76b4eb6822ef902d6aa9902e072463b53c2fdb53cd9d3e511ef",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "SSTF184原地服务后182,187,176,199，0+2+5+11+23=41选C。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": [
+     "sstf-41"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-2-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-2-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：SSTF184原地服务后182,187,176,199，0+2+5+11+23=41选C。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t11-2-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 159
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q034",
+   "sourceContentHash": "sha256:59feb8a0639459b7198845f1d5701e3e526b54696bbe61f1e1bd7d79ce9d6491",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "向小号200到0，回跳399，再到210，总200+399+189=788选C，回跳计距离。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": [
+     "cscan-788"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-2-4"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-2-4"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：向小号200到0，回跳399，再到210，总200+399+189=788选C，回跳计距离。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t11-2-4",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 190
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s3-0-q035",
+   "sourceContentHash": "sha256:4b9c71d19de58cdc0907398fe0303c6c74cc21fc0accc6308d5ebe99de5a870c",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "两种块存储都需确定文件系统逻辑块大小选B；SSD无机械扇区但可暴露逻辑扇区，不能混淆。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "14",
+    "secondaryChapterIds": [
+     "11"
+    ],
+    "topicIds": [
+     "t14-1",
+     "t11-1-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t14-1",
+     "t11-1-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：两种块存储都需确定文件系统逻辑块大小选B；SSD无机械扇区但可暴露逻辑扇区，不能混淆。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s3-0-q035",
+     "kind": "assumption",
+     "originalAnswer": "B",
+     "issue": "两种块存储都需确定文件系统逻辑块大小选B",
+     "detail": "两种块存储都需确定文件系统逻辑块大小选B；SSD无机械扇区但可暴露逻辑扇区，不能混淆。",
+     "suggestedCorrection": "两种块存储都需确定文件系统逻辑块大小选B；SSD无机械扇区但可暴露逻辑扇区，不能混淆。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t14-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 35
+    },
+    {
+     "topicId": "t11-1-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 48
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-1-q001",
+   "sourceContentHash": "sha256:990f5c1e751bee269ae0330d6dc25c57c864461a6f06c880dc9c57a32f5d107c",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "60Hz×2ms=120ms每秒，占12%。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": [
+     "clock-interrupt"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-1-3",
+     "t12-2-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1-3",
+     "t12-2-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：60Hz×2ms=120ms每秒，占12%。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1-3",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 109
+    },
+    {
+     "topicId": "t12-2-3",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 249
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-1-q002",
+   "sourceContentHash": "sha256:cb006ee322cb21ac0014d823f149f8ccd45b37ab08455b8bc24031fcdfb41e68",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "56kb/s按十进制、每字符10bit、CPU开销0.1ms，5600中断每秒占56%；阻塞等待本身不计CPU忙时间。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": [
+     "modem-interrupt"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-1-3"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1-3"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：56kb/s按十进制、每字符10bit、CPU开销0.1ms，5600中断每秒占56%；阻塞等待本身不计CPU忙时间。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s4-1-q002",
+     "kind": "assumption",
+     "originalAnswer": "56%",
+     "issue": "56kb/s按十进制、每字符10bit、CPU开销0.1ms，5600中断每秒占56%",
+     "detail": "56kb/s按十进制、每字符10bit、CPU开销0.1ms，5600中断每秒占56%；阻塞等待本身不计CPU忙时间。",
+     "suggestedCorrection": "56kb/s按十进制、每字符10bit、CPU开销0.1ms，5600中断每秒占56%；阻塞等待本身不计CPU忙时间。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [
+      "modem-interrupt"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1-3",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 109
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-2-q001",
+   "sourceContentHash": "sha256:fee294836b6bd3a22f5924609260ddfd0287cd214ce153bf10328828276cec63",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "教材四层分工：驱动做CHS和寄存器，无关层做授权、用户库做格式转换；驱动不限厂家实现。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-3",
+     "t12-2-11"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-3",
+     "t12-2-11"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：教材四层分工：驱动做CHS和寄存器，无关层做授权、用户库做格式转换；驱动不限厂家实现。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Transforming I/O Requests to Hardware Operations、I/O Protection。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s4-2-q001",
+     "kind": "assumption",
+     "originalAnswer": "（1）设备驱动程序；（2）设备驱动程序；（3）设备独立性软件；（4）用户层软件。",
+     "issue": "教材四层分工：驱动做CHS和寄存器，无关层做授权、用户库做格式转换",
+     "detail": "教材四层分工：驱动做CHS和寄存器，无关层做授权、用户库做格式转换；驱动不限厂家实现。",
+     "suggestedCorrection": "教材四层分工：驱动做CHS和寄存器，无关层做授权、用户库做格式转换；驱动不限厂家实现。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-3",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 339
+    },
+    {
+     "topicId": "t12-2-11",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 332
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-2-q002",
+   "sourceContentHash": "sha256:81fbd363864c4f913347ae1f8c8405a77859b696bea96a8e7660d6c21482afba",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "双系统槽、复制计算共用CPU，4块时间线总390μs均97.5；稳态80而非有限批次均值。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": [
+     "four-double"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t12-2-7"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-2-7"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：双系统槽、复制计算共用CPU，4块时间线总390μs均97.5；稳态80而非有限批次均值。",
+    "prerequisiteGaps": [
+     "笔记该部分只有HTML注释中的标题、没有正文：Buffering。请先补读I/O系统课程资料，不据标题推断已学。"
+    ]
+   },
+   "errata": [
+    {
+     "questionId": "c5-s4-2-q002",
+     "kind": "assumption",
+     "originalAnswer": "总耗时 390μs，每块平均处理时间 390μs ÷ 4 = 97.5μs。",
+     "issue": "双系统槽、复制计算共用CPU，4块时间线总390μs均97.5",
+     "detail": "双系统槽、复制计算共用CPU，4块时间线总390μs均97.5；稳态80而非有限批次均值。",
+     "suggestedCorrection": "双系统槽、复制计算共用CPU，4块时间线总390μs均97.5；稳态80而非有限批次均值。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [
+      "four-double"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-2-7",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 324
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-2-q003",
+   "sourceContentHash": "sha256:73a40a805392e9a28ba7beaf4ab5b771d2bcb6005a4de13c89e04c1a440fdd93",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "阻塞键盘顺序②⑥④③①⑤；ISR早段P阻塞，唤醒①后已就绪，不能说整个ISR期间一直阻塞。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "12",
+    "secondaryChapterIds": [
+     "3"
+    ],
+    "topicIds": [
+     "t12-1-3",
+     "t3-2-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t12-1-3",
+     "t3-2-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：阻塞键盘顺序②⑥④③①⑤；ISR早段P阻塞，唤醒①后已就绪，不能说整个ISR期间一直阻塞。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s4-2-q003",
+     "kind": "assumption",
+     "originalAnswer": "（1）正确顺序为②→⑥→④→③→①→⑤：①的前一个操作是③、后一个操作是⑤，⑥的后一个操作是④；（2）操作②之后 CPU 一定切换到其他进程，操作①之后调度程序才能选中 P；（3）操作③；（4）P 处于阻塞态，CPU 处于内核态。",
+     "issue": "阻塞键盘顺序②⑥④③①⑤",
+     "detail": "阻塞键盘顺序②⑥④③①⑤；ISR早段P阻塞，唤醒①后已就绪，不能说整个ISR期间一直阻塞。",
+     "suggestedCorrection": "阻塞键盘顺序②⑥④③①⑤；ISR早段P阻塞，唤醒①后已就绪，不能说整个ISR期间一直阻塞。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t12-1-3",
+     "noteFile": "12-I／O Systems.md",
+     "noteLine": 109
+    },
+    {
+     "topicId": "t3-2-2",
+     "noteFile": "3-Processes.md",
+     "noteLine": 170
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-3-q001",
+   "sourceContentHash": "sha256:f7df104a1f6bb727a31cc5c51f1e6e5073922239cb6f706d531500f47ca5bfa3",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "3468除64得柱面54、余12，余除8得磁道1扇区4。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": [
+     "logical-chs"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-1-5"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-1-5"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：3468除64得柱面54、余12，余除8得磁道1扇区4。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t11-1-5",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 104
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-3-q002",
+   "sourceContentHash": "sha256:683106fc3b7d22d3fd0d41659eae5edfb9f3d8a95068dab64117106492178d20",
+   "answerReview": {
+    "status": "verified",
+    "conclusion": "逐扇区时序模拟：顺放错过起点共245ms，交错A,F,B,G,C,H,D,I,E共53ms。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": [
+     "sequential-rotation",
+     "interleaved-rotation"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-1-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-1-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：逐扇区时序模拟：顺放错过起点共245ms，交错A,F,B,G,C,H,D,I,E共53ms。",
+    "prerequisiteGaps": []
+   },
+   "errata": [],
+   "noteEvidence": [
+    {
+     "topicId": "t11-1-1",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 23
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-3-q003",
+   "sourceContentHash": "sha256:329a4b810dd89755a2feb16c79f16daed9874d6a0ed67089ca936f04d63da1b6",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "六算法独立模拟得2013/1298/1219/1009/1967/1507；原C-SCAN文字说返回后向增大服务有误，轨迹实际继续减小。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": [
+     "six-fcfs",
+     "six-sstf",
+     "six-scan",
+     "six-look",
+     "six-cscan",
+     "six-clook"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：六算法独立模拟得2013/1298/1219/1009/1967/1507；原C-SCAN文字说返回后向增大服务有误，轨迹实际继续减小。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s4-3-q003",
+     "kind": "assumption",
+     "originalAnswer": "FCFS 2013 道；SSTF 1298 道；SCAN 1219 道；LOOK 1009 道；C-SCAN 1967 道；C-LOOK 1507 道。",
+     "issue": "六算法独立模拟得2013/1298/1219/1009/1967/1507",
+     "detail": "六算法独立模拟得2013/1298/1219/1009/1967/1507；原C-SCAN文字说返回后向增大服务有误，轨迹实际继续减小。",
+     "suggestedCorrection": "六算法独立模拟得2013/1298/1219/1009/1967/1507；原C-SCAN文字说返回后向增大服务有误，轨迹实际继续减小。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [
+      "six-fcfs",
+      "six-sstf",
+      "six-scan",
+      "six-look",
+      "six-cscan",
+      "six-clook"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 122
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-3-q004",
+   "sourceContentHash": "sha256:81a568b6821350e4d3a17997897b340f1110683a92595ff83d06a2932c2142bf",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "若首块也取同样平均寻道，100×(78+100+25)=20300ms，整理后13700；只给99次块间距离时首寻道另缺条件。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": [
+     "defrag"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [
+     "14"
+    ],
+    "topicIds": [
+     "t11-1-1",
+     "t14-6-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-1-1",
+     "t14-6-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：若首块也取同样平均寻道，100×(78+100+25)=20300ms，整理后13700；只给99次块间距离时首寻道另缺条件。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s4-3-q004",
+     "kind": "assumption",
+     "originalAnswer": "整理前 20300ms，整理后 13700ms。",
+     "issue": "若首块也取同样平均寻道，100×(78+100+25)=20300ms，整理后13700",
+     "detail": "若首块也取同样平均寻道，100×(78+100+25)=20300ms，整理后13700；只给99次块间距离时首寻道另缺条件。",
+     "suggestedCorrection": "若首块也取同样平均寻道，100×(78+100+25)=20300ms，整理后13700；只给99次块间距离时首寻道另缺条件。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [
+      "defrag"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-1-1",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 23
+    },
+    {
+     "topicId": "t14-6-2",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 408
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-3-q005",
+   "sourceContentHash": "sha256:fc259e69482a8750a63535749763f2fcac548c7326973046fb50b65972677ff0",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "按显式交错位置、串行读2.5ms+传内存5ms，含初始半转共70ms；吞吐4096/0.07=58514B/s=57.14KiB/s，58.5是十进制kB/s。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": [
+     "serial-controller",
+     "throughput-unit"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-1-1"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-1-1"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：按显式交错位置、串行读2.5ms+传内存5ms，含初始半转共70ms；吞吐4096/0.07=58514B/s=57.14KiB/s，58.5是十进制kB/s。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s4-3-q005",
+     "kind": "assumption",
+     "originalAnswer": "（1）70ms（0.07s）；（2）约 58.5KB/s。",
+     "issue": "按显式交错位置、串行读2.5ms+传内存5ms，含初始半转共70ms",
+     "detail": "按显式交错位置、串行读2.5ms+传内存5ms，含初始半转共70ms；吞吐4096/0.07=58514B/s=57.14KiB/s，58.5是十进制kB/s。",
+     "suggestedCorrection": "按显式交错位置、串行读2.5ms+传内存5ms，含初始半转共70ms；吞吐4096/0.07=58514B/s=57.14KiB/s，58.5是十进制kB/s。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [
+      "serial-controller",
+      "throughput-unit"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-1-1",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 23
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-3-q006",
+   "sourceContentHash": "sha256:adad60b78161cae5c7054bdf9935d5b40eb21177776f354844d0743dacd23d2c",
+   "answerReview": {
+    "status": "disputed",
+    "conclusion": "190.4ms来自C-LOOK在最大请求120直接跳30；严格C-SCAN需物理端点且题面未给，和同库SCAN定义不一致，不应唯一沿用。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": [
+     "clook-2010",
+     "cscan-needs-endpoint"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [
+     "14"
+    ],
+    "topicIds": [
+     "t11-2-4",
+     "t14-5-1",
+     "t11-1-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-2-4",
+     "t14-5-1",
+     "t11-1-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：190.4ms来自C-LOOK在最大请求120直接跳30；严格C-SCAN需物理端点且题面未给，和同库SCAN定义不一致，不应唯一沿用。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s4-3-q006",
+     "kind": "disputed_answer",
+     "originalAnswer": "（1）位示图，恰好占 2KB；（2）190.4ms；（3）有，先来先服务（FCFS）。",
+     "issue": "190.4ms来自C-LOOK在最大请求120直接跳30",
+     "detail": "190.4ms来自C-LOOK在最大请求120直接跳30；严格C-SCAN需物理端点且题面未给，和同库SCAN定义不一致，不应唯一沿用。",
+     "suggestedCorrection": "190.4ms来自C-LOOK在最大请求120直接跳30；严格C-SCAN需物理端点且题面未给，和同库SCAN定义不一致，不应唯一沿用。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [
+      "clook-2010",
+      "cscan-needs-endpoint"
+     ],
+     "scoring": "excluded",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-2-4",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 190
+    },
+    {
+     "topicId": "t14-5-1",
+     "noteFile": "14-File-System Implementation.md",
+     "noteLine": 344
+    },
+    {
+     "topicId": "t11-1-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 48
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-3-q007",
+   "sourceContentHash": "sha256:f8e7e5d47f6f94dd90b50edd90afda071f67afb61a88dbb7f266d3cf3283a748",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "容量307200000B=300000KiB；SSTF柱面100,101,110,60；100530簇首扇区CHS(100,5,60)，驱动CHS限定传统模型。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": [
+     "geometry-2019",
+     "geometry-sstf"
+    ]
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [],
+    "topicIds": [
+     "t11-1-5",
+     "t11-2-2"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-1-5",
+     "t11-2-2"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：容量307200000B=300000KiB；SSTF柱面100,101,110,60；100530簇首扇区CHS(100,5,60)，驱动CHS限定传统模型。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s4-3-q007",
+     "kind": "assumption",
+     "originalAnswer": "（1）\\(3\\times10^5\\) KB；（2）100260 → 101660 → 110560 → 60005；（3）柱面号 100、磁头号 5、扇区号 60，由磁盘驱动程序完成。",
+     "issue": "容量307200000B=300000KiB",
+     "detail": "容量307200000B=300000KiB；SSTF柱面100,101,110,60；100530簇首扇区CHS(100,5,60)，驱动CHS限定传统模型。",
+     "suggestedCorrection": "容量307200000B=300000KiB；SSTF柱面100,101,110,60；100530簇首扇区CHS(100,5,60)，驱动CHS限定传统模型。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [
+      "geometry-2019",
+      "geometry-sstf"
+     ],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-1-5",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 104
+    },
+    {
+     "topicId": "t11-2-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 159
+    }
+   ]
+  },
+  {
+   "questionId": "c5-s4-3-q008",
+   "sourceContentHash": "sha256:80184f9f967f523c1c4589cf379f72265e2581bde57e4b47d7789c99ebaa9f52",
+   "answerReview": {
+    "status": "qualified",
+    "conclusion": "题面明确MBR启动，顺序ROM→MBR→分区引导→OS；准备为低级格式化→分区→高级格式化→安装，不推广为UEFI唯一流程。",
+    "evidenceRefs": [
+     "snapshot",
+     "notes",
+     "osc-io",
+     "osc-disks"
+    ],
+    "checkIds": []
+   },
+   "mapping": {
+    "primaryChapterId": "11",
+    "secondaryChapterIds": [
+     "2"
+    ],
+    "topicIds": [
+     "t11-5-1",
+     "t11-5-2",
+     "t2-8"
+    ],
+    "prerequisiteTopicIds": [
+     "t11-5-1",
+     "t11-5-2",
+     "t2-8"
+    ],
+    "readinessTier": "later",
+    "mappingReason": "逐题复核：题面明确MBR启动，顺序ROM→MBR→分区引导→OS；准备为低级格式化→分区→高级格式化→安装，不推广为UEFI唯一流程。",
+    "prerequisiteGaps": []
+   },
+   "errata": [
+    {
+     "questionId": "c5-s4-3-q008",
+     "kind": "assumption",
+     "originalAnswer": "（1）ROM 中的引导程序 → 磁盘引导程序 → 分区引导程序 → 操作系统的初始化程序；（2）物理格式化 → 分区 → 逻辑格式化 → 操作系统的安装；（3）扇区划分在物理格式化中完成，根目录建立在逻辑格式化中完成。",
+     "issue": "题面明确MBR启动，顺序ROM→MBR→分区引导→OS",
+     "detail": "题面明确MBR启动，顺序ROM→MBR→分区引导→OS；准备为低级格式化→分区→高级格式化→安装，不推广为UEFI唯一流程。",
+     "suggestedCorrection": "题面明确MBR启动，顺序ROM→MBR→分区引导→OS；准备为低级格式化→分区→高级格式化→安装，不推广为UEFI唯一流程。",
+     "evidenceRefs": [
+      "snapshot",
+      "notes",
+      "osc-io",
+      "osc-disks"
+     ],
+     "checkIds": [],
+     "scoring": "keep_original",
+     "reviewedAt": "2026-11-17"
+    }
+   ],
+   "noteEvidence": [
+    {
+     "topicId": "t11-5-1",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 297
+    },
+    {
+     "topicId": "t11-5-2",
+     "noteFile": "11-Mass-Storage Structure.md",
+     "noteLine": 336
+    },
+    {
+     "topicId": "t2-8",
+     "noteFile": "2-Operating-System Structures.md",
+     "noteLine": 285
+    }
+   ]
+  }
+ ]
+}

@@ -2,7 +2,7 @@
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
-const { chromium, firefox } = require("playwright-core");
+const { chromium, firefox, webkit } = require("playwright-core");
 const BASE = process.env.BASE_URL || "http://127.0.0.1:8765/";
 const ENGINE = process.env.BROWSER || "chrome";
 const OUT = path.resolve(__dirname, "../../_work/favorites-numbering");
@@ -15,8 +15,8 @@ const check = (name, ok) => {
 
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
-  const browser = await (ENGINE === "firefox" ? firefox : chromium).launch(
-    ENGINE === "firefox" ? { headless: true } : { channel: ENGINE, headless: true });
+  const browser = await (ENGINE === "webkit" ? webkit : ENGINE === "firefox" ? firefox : chromium).launch(
+    ["firefox", "webkit"].includes(ENGINE) ? { headless: true } : { channel: ENGINE, headless: true });
   const context = await browser.newContext({ viewport: { width: 1360, height: 960 } });
   context.on("page", page => {
     page.on("pageerror", e => errors.push(e.message));
