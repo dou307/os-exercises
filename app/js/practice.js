@@ -115,17 +115,11 @@ export function buildCard(q, ctx) {
   if (q.yearAuditNotice) card.appendChild(el("p", { class: "notice warn year-audit", text: q.yearAuditNotice }));
 
   const head = el("div", { class: "qhead" });
-  // readinessTier 是“当前进度下实际生效的分层”，与题单徽标一致；原始审核分层另做一个浅色徽标，
-  // 这样“标记已学后被提到核心”的题不会看起来像已通过人工审核的核心题。
+  // 题头显示当前学习分层，原始分层和审核状态放在题末。
   const tier = q.effectiveTier || q.readinessTier;
   head.appendChild(badge(TIER_TEXT[tier] || tier, tier));
-  if (q.originalReadinessTier && q.originalReadinessTier !== tier) {
-    head.appendChild(badge(`原分层：${TIER_TEXT[q.originalReadinessTier] || q.originalReadinessTier}`, "later"));
-  }
   if (ctx.questionNumber > 0) head.appendChild(badge("第" + ctx.questionNumber + "题", "question-number"));
   head.appendChild(badge(TYPE_TEXT[q.type] || q.type));
-  const reviewCls = q.reviewStatus === "disputed" ? "disputed" : (q.reviewStatus === "verified" ? "ok" : "");
-  head.appendChild(badge(q.answerReview?.status === "qualified" ? "已复核（有备注）" : (REVIEW_TEXT[q.reviewStatus] || q.reviewStatus), reviewCls));
   const favoriteButton = el("button", { type: "button", class: "btn ghost small favorite-toggle" });
   const paintFavorite = () => {
     const saved = storage.isFavorite(q.id);
@@ -148,9 +142,6 @@ export function buildCard(q, ctx) {
     text: `${q.source.sectionTitle}${q.source.subsectionTitle ? ` / ${q.source.subsectionTitle}` : ""}`,
   }));
   if (q.source.title) card.appendChild(el("p", { class: "qmeta", text: `原题标题：${q.source.title}（年份为原站标注）` }));
-  if (q.mappingReason) card.appendChild(el("p", { class: "qmeta", text: q.answerReview
-    ? `章节归属：围绕 ${(q.topicIds || []).map((id) => topicTitle(topics, id)).join("、")}`
-    : `章节归属依据：${q.mappingReason}` }));
   if (q.errata?.length) card.appendChild(el("p", { class: "notice warn", text: "本题有本地审核备注；请先自答，提交或查看解析后对照原答案与勘误。" }));
   const needed = (q.prerequisiteTopicIds || []).filter((id) => {
     const topic = topics.get(id);
@@ -243,6 +234,21 @@ export function buildCard(q, ctx) {
     card.appendChild(row);
   }
 
+  const details = el("footer", { class: "qdetails" });
+  const labels = el("div", { class: "qdetails-labels" });
+  if (q.originalReadinessTier && q.originalReadinessTier !== tier) {
+    labels.appendChild(badge(`原分层：${TIER_TEXT[q.originalReadinessTier] || q.originalReadinessTier}`, "later"));
+  }
+  const reviewText = q.answerReview?.status === "qualified" ? "已复核（有备注）" : REVIEW_TEXT[q.reviewStatus] || q.reviewStatus;
+  if (reviewText && reviewText !== TIER_TEXT[tier]) {
+    labels.appendChild(badge(reviewText, q.reviewStatus === "verified" ? "ok" : ""));
+  }
+  if (labels.childElementCount) details.appendChild(labels);
+  if (q.mappingReason && !q.answerReview) {
+    details.appendChild(el("p", { class: "qmeta", text: `章节归属依据：${q.mappingReason}` }));
+  }
+  if (details.childElementCount) card.appendChild(details);
+
   function paintSubmitted(record) {
     submitted = true;
     optionNodes.forEach((node, key) => {
@@ -275,7 +281,7 @@ export function buildCard(q, ctx) {
     revealBtn.textContent = "解析已展开";
   }
 
-  const selfAssess = buildSelfAssess(q, card, showResult, ctx);
+  const selfAssess = buildSelfAssess(q, card, explainBox, showResult, ctx);
 
   if (submitted) {
     paintSubmitted(recorded);
@@ -350,7 +356,7 @@ export function buildCard(q, ctx) {
 /**
  * 自评区：判断题与综合题用。做成“懒创建”，重复点击不会往卡里追加多份按钮。
  */
-function buildSelfAssess(q, card, showResult, ctx) {
+function buildSelfAssess(q, card, explainBox, showResult, ctx) {
   let box = null;
   const show = () => {
     if (box) return;
@@ -369,7 +375,7 @@ function buildSelfAssess(q, card, showResult, ctx) {
     no.addEventListener("click", () => mark("review", "已记为“还需复习”，会出现在错题回顾里。", "neutral"));
     box.appendChild(ok);
     box.appendChild(no);
-    card.appendChild(box);
+    explainBox.after(box);
     renderMath(card);
   };
   return { show };
