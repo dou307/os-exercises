@@ -66,8 +66,8 @@ const check = (name, ok) => {
     check("手动收藏刷新保留", await page.locator(".favorite-toggle").getAttribute("aria-pressed") === "true");
     await goto("#/favorites");
     check("侧栏收藏入口与列表可用", await page.locator('#chapterNav a[href="#/favorites"]').count() === 1
-      && await page.locator('a.txt[href="#/q/c1-s1-0-q009"]').count() === 1);
-    await page.locator('a.txt[href="#/q/c1-s1-0-q009"]').click();
+      && await page.locator('a.txt[href="#/q/c1-s1-0-q009?from=favorites"]').count() === 1);
+    await page.locator('a.txt[href="#/q/c1-s1-0-q009?from=favorites"]').click();
     check("收藏题沿用题单新编号", await label() === "第6题");
 
     await goto("#/q/c1-s1-0-q001");

@@ -64,7 +64,7 @@ const check = (name, value, detail = "") => {
     await page.waitForSelector(".qcard");
     check("正确题刷新后解析仍展开", await page.locator(".explain").isVisible());
     await goto("#/review");
-    check("重做正确后退出错题列表", await page.locator(`a.txt[href="#/q/${qid}"]`).count() === 0);
+    check("重做正确后退出错题列表", await page.locator(`a.txt[href="#/q/${qid}?from=review"]`).count() === 0);
 
     await goto("#/q/c1-s5-0-q001");
     await page.locator("textarea").fill("保留这段自答草稿");
@@ -103,7 +103,7 @@ const check = (name, value, detail = "") => {
     const long = questions.find((q) => q.stemText.length > 400 && q.type === "constructed_response");
     const tail = long.stemText.slice(-28).trim();
     await goto(`#/search?q=${encodeURIComponent(tail)}`);
-    check("可搜索长题干末尾，不受旧 180 字截断限制", await page.locator(`a.qitem[href="#/q/${long.id}"]`).count() === 1);
+    check("可搜索长题干末尾，不受旧 180 字截断限制", await page.locator(`a.qitem[href^="#/q/${long.id}?from=search&"]`).count() === 1);
     await goto("#/search?type=single_choice");
     check("搜索准确显示总命中量与前 100 条限制", (await page.locator("main .sub").first().innerText()).includes("命中 645 道")
       && await page.locator(".qlist li").count() === 100);

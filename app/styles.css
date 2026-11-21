@@ -313,6 +313,7 @@ h3 { font-size: 16px; margin: 0 0 8px; }
   flex-wrap: wrap;
 }
 .pager-bar .pos { color: var(--text-dim); font-size: 14px; font-variant-numeric: tabular-nums; }
+.pager-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
 .pager-bottom { justify-content: flex-end; }
 .pager-bottom .pos { margin-right: auto; }
 

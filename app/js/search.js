@@ -2,7 +2,7 @@
 
 import { getIndex, getTopics, getMeta, topicTitle } from "./questions.js";
 import { completedChapters, effectiveTier } from "./tiers.js";
-import { navigate, buildHash } from "./router.js";
+import { navigate, buildHash, questionHash } from "./router.js";
 import { questionNumbers } from "./numbering.js";
 
 export const TYPE_FILTERS = [
@@ -91,6 +91,14 @@ export function searchQuestions(index, topics, rawQuery, filters) {
   };
 }
 
+export function searchVisibleQuestions(index, topics, query, filters, completed) {
+  const questions = index.questions.map((entry) => ({
+    ...entry,
+    tier: effectiveTier({ primaryChapterId: entry.ch, readinessTier: entry.tier, reviewStatus: entry.review }, completed),
+  }));
+  return searchQuestions({ questions }, topics, query, filters);
+}
+
 function escapeRegExp(text) {
   return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
@@ -140,9 +148,6 @@ export async function renderSearch(main, params, isCurrent = () => true) {
   const [rawIndex, topics, meta] = await Promise.all([getIndex(), getTopics(), getMeta()]);
   if (!isCurrent()) return;
   const completed = completedChapters(meta);
-  const index = { ...rawIndex, questions: rawIndex.questions.map((entry) => ({ ...entry,
-    tier: effectiveTier({ primaryChapterId: entry.ch, readinessTier: entry.tier, reviewStatus: entry.review }, completed),
-  })) };
   const query = params.q || "";
   const filters = { ch: params.ch || "", type: params.type || "", tier: params.tier || "" };
   main.innerHTML = "";
@@ -169,7 +174,7 @@ export async function renderSearch(main, params, isCurrent = () => true) {
   allOpt.textContent = "全部章节";
   chapterSelect.appendChild(allOpt);
   // 章节列表从索引里现算：不在前端硬编码章节号，数据变了这里跟着变
-  const chapters = Array.from(new Set(index.questions.map((q) => String(q.ch))))
+  const chapters = Array.from(new Set(rawIndex.questions.map((q) => String(q.ch))))
     .sort((a, b) => Number(a) - Number(b));
   chapters.forEach((ch) => {
     const opt = document.createElement("option");
@@ -193,7 +198,7 @@ export async function renderSearch(main, params, isCurrent = () => true) {
     return;
   }
 
-  const { items, total, truncated } = searchQuestions(index, topics, query, filters);
+  const { items, total, truncated } = searchVisibleQuestions(rawIndex, topics, query, filters, completed);
   const terms = searchTerms(query);
   const sub = document.createElement("p");
   sub.className = "sub";
@@ -221,7 +226,7 @@ export async function renderSearch(main, params, isCurrent = () => true) {
     const li = document.createElement("li");
     const link = document.createElement("a");
     link.className = "qitem";
-    link.href = `#/q/${encodeURIComponent(entry.id)}`;
+    link.href = questionHash(entry.id, { from: "search", q: query, ...filters });
     const no = document.createElement("span");
     no.className = "no";
     no.textContent = "第" + numbers.get(entry.id) + "题";

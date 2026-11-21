@@ -22,6 +22,7 @@ export function parseHash(hash) {
   }
   if (head === "q" && rest[0]) return { name: "question", params: {
     id: decodeURIComponent(rest[0]), type: query.get("type") || "", status: query.get("status") || "",
+    from: query.get("from") || "", ch: query.get("ch") || "", q: query.get("q") || "", tier: query.get("tier") || "",
   } };
   if (head === "review") return { name: "review", params: { ch: query.get("ch") || "" } };
   if (head === "favorites") return { name: "favorites", params: { ch: query.get("ch") || "" } };
@@ -57,4 +58,9 @@ export function buildHash(path, params) {
   });
   const suffix = query.toString();
   return suffix ? `${path}?${suffix}` : path;
+}
+
+export function questionHash(id, params = {}) {
+  const { from, ch, q, type, status, tier } = params;
+  return buildHash("#/q/" + encodeURIComponent(id), { from, ch, q, type, status, tier });
 }
