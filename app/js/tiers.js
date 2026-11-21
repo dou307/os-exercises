@@ -4,9 +4,7 @@
  * `data/mappings.json` 里的 `readinessTier` 是审核结论：core/bridge 表示“现在可做”，
  * later 表示“归到别的章节/还没学”，supplement 表示课程外补充。
  *
- * 用户可以在界面上把某一章标记为已学完（只存本机）。标记后，该章尚未逐题审核的题目
- * 会从 later 提升为 core（原始分层是 bridge 的仍算 bridge），并且**保留“系统映射/未审核”
- * 徽标**，不会被当成已审核内容。
+ * 用户可把一章标记为已学完。符合条件的 later 题进入该章练习，审核与判分规则保持独立。
  */
 
 import * as storage from "./storage.js";
@@ -42,16 +40,13 @@ export function effectiveTier(question, completed) {
 }
 
 /**
- * 合并出“当前进度下实际生效的分层”。题单与练习卡的徽标读的是 `readinessTier`，
- * 所以这里必须把它一起覆盖成实际生效值，只加 `effectiveTier` 会出现“已进核心练习、
- * 徽标却还写着稍后”的错位。
+ * 把当前进度下的分层交给题单、编号和练习范围使用。
  */
 export function withEffectiveTier(question, completed) {
   const tier = effectiveTier(question, completed);
   return Object.assign({}, question, {
     effectiveTier: tier,
     readinessTier: tier,
-    originalReadinessTier: question.readinessTier,
   });
 }
 
@@ -74,10 +69,10 @@ export function filterByScope(list, scope, completed) {
 
 /** 练习范围的中文说明，练习页与章节页共用，避免两处措辞不一致。 */
 export const SCOPE_TEXT = {
-  core: "核心 + 桥接",
-  supplement: "补充内容（课程外）",
+  core: "当前练习",
+  supplement: "补充题",
   disputed: "待核对（不计分）",
-  later: "稍后再学",
+  later: "本章其他题",
   wrong: "本章错题重做",
   all: "全部题目",
 };

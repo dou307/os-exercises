@@ -191,9 +191,6 @@ h3 { font-size: 16px; margin: 0 0 8px; }
   white-space: nowrap;
 }
 .badge.core { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
-.badge.bridge { background: var(--warn-soft); color: var(--warn); border-color: transparent; }
-.badge.later { background: var(--surface-2); color: var(--text-dim); }
-.badge.supplement { background: var(--surface-2); color: var(--text-dim); }
 .badge.disputed { background: var(--bad-soft); color: var(--bad); border-color: transparent; }
 .badge.ok { background: var(--ok-soft); color: var(--ok); border-color: transparent; }
 .badge.bad { background: var(--bad-soft); color: var(--bad); border-color: transparent; }
@@ -220,7 +217,6 @@ h3 { font-size: 16px; margin: 0 0 8px; }
 .favorite-toggle.is-favorite, .badge.favorite { color: var(--accent); }
 .qmeta { font-size: 13px; color: var(--text-dim); margin: 0 0 14px; }
 .qdetails { margin-top: 14px; }
-.qdetails-labels { display: flex; flex-wrap: wrap; gap: 6px; }
 .qdetails .qmeta { margin: 8px 0 0; }
 .setting-field { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 16px 0; }
 .setting-field > span { flex: 1 1 180px; }

@@ -53,11 +53,11 @@ function check(name, ok, detail) {
   await page.waitForSelector("h1");
   check("首页加载", (await page.locator("h1").first().textContent()) === "OS 练习室");
   const homeText = await page.locator("main").innerText();
-  check("首页显示第一章核心可判分数量", /第一章核心可判分/.test(homeText));
+  check("首页显示第一章可判分题量", /第一章可判分题/.test(homeText));
   await page.screenshot({ path: path.join(SHOTS, "01-home.png"), fullPage: true });
 
   // ---- 进入第一章核心练习 ----
-  await page.getByRole("link", { name: "开始第一章核心练习" }).click();
+  await page.getByRole("link", { name: "开始第一章练习", exact: true }).click();
   await page.waitForSelector(".qcard");
   const firstQid = await page.locator(".qcard").getAttribute("data-qid");
   check("进入练习并加载题卡", Boolean(firstQid), firstQid);
@@ -212,54 +212,36 @@ function check(name, ok, detail) {
   await markBtn.click();
   await page.waitForTimeout(300);
   const afterMark = await page.locator("main").innerText();
-  check("标记后本章题目进入核心练习", /核心练习/.test(afterMark) && /开始核心练习/.test(afterMark));
+  check("标记后本章题目进入当前练习", /当前练习/.test(afterMark) && /开始练习/.test(afterMark));
 
-  // ---- 2026-10-22 回归：提升为“核心”之后仍必须保留“系统映射”徽标（不能冒充已审核） ----
-  // 用浏览器里的真实计数，不依赖 Playwright 选择器对“哪个子集”的语义。
-  // 判定“标记已学生效”只认存储 + DOM：localStorage 里的 completedChapters 必须包含本章，
-  // 且本机标记状态在当前页面上真的把题目提到核心练习。
+  // 核对本机标记和实际题单，练习范围不依赖每道题是否渲染标签。
+  const practiceRows = page.locator(".chapter-lists .card")
+    .filter({ has: page.getByRole("heading", { name: /^当前练习（/ }) }).locator(".qitem");
+  const practiceIds = await practiceRows.evaluateAll(rows => rows.map(row => row.hash.replace("#/q/", "")));
   const markState = await page.evaluate(() => {
     const raw = JSON.parse(localStorage.getItem("os-exercises:v1") || "{}");
-    const badges = Array.from(document.querySelectorAll("main .qlist .badge"));
-    return {
-      stored: (raw.ui && raw.ui.completedChapters) || [],
-      core: badges.filter((n) => n.classList.contains("core")).length,
-      bridge: badges.filter((n) => n.classList.contains("bridge")).length,
-    };
+    return (raw.ui && raw.ui.completedChapters) || [];
   });
   await page.goto(BASE + "#/practice/3?scope=core&i=1", { waitUntil: "networkidle" });
   await page.waitForSelector(".qcard");
-  const practiceBadges = await page.evaluate(() => {
-    const badges = Array.from(document.querySelectorAll(".qcard .badge"));
-    const text = (label) => badges.filter((n) => n.textContent.trim() === label).length;
-    return { systematic: text("系统映射"), core: text("核心"), bridge: text("桥接"), originalTier: text("原分层：稍后") };
-  });
-  // 标记状态必须落盘：本地存储里要有本章，且页面上题目真的进了核心练习
-  const markConverged = markState.stored.map(String).includes("3") && markState.bridge > 0;
-  check("“标记已学”写进本机存储并即时生效", markConverged,
-    `stored=${JSON.stringify(markState.stored)} 核心 ${markState.core} / 桥接 ${markState.bridge}`);
-  check("提升后的题目分层保持桥接，不虚构系统映射徽标",
-    practiceBadges.systematic === 0 && practiceBadges.bridge === 1 && practiceBadges.originalTier === 1,
-    `练习卡徽标：系统映射 ${practiceBadges.systematic}、桥接 ${practiceBadges.bridge}、原分层 ${practiceBadges.originalTier}`);
+  check("“标记已学”写进本机存储并即时生效", markState.map(String).includes("3") && practiceIds.length > 0);
+  const shownId = await page.locator(".qcard").getAttribute("data-qid");
+  check("当前练习按题单顺序且不显示内部标签", shownId === practiceIds[1]
+    && !/桥接|稍后|原分层|系统映射|已核对归属/.test((await page.locator(".qcard .badge").allTextContents()).join(" ")));
 
-  // ---- 2026-10-22 回归：跨章挂靠的“稍后”题不随“标记已学”一起冒进核心，避免重复出现 ----
-  // 第 3 章 56 道里 1 道是从第 1 章挂靠过来的 later；标记已学后它应算桥接，核心只含原 55 道 systematic。
-  // systematic 用数据侧统计（meta 里的 later 统计的是原始分层，标记已学后仍是 56）。
-  const chMeta = await page.evaluate(async () => {
+  const available = await page.evaluate(async () => {
     const doc = await (await fetch("data/questions/3.json")).json();
-    return { available: doc.questions.filter((q) => q.readinessTier !== "supplement" && q.reviewStatus !== "disputed").length };
+    return doc.questions.filter((q) => q.readinessTier !== "supplement" && q.reviewStatus !== "disputed").map(q => q.id);
   });
-  check("跨章挂靠题标记已学后归入桥接而非核心",
-    markState.core === 0 && markState.bridge === chMeta.available,
-    `核心 ${markState.core}、桥接 ${markState.bridge}、可用 ${chMeta.available}`);
+  check("标记后可练题完整进入当前练习", JSON.stringify(practiceIds) === JSON.stringify(available));
 
   // ---- 2026-10-22 回归：“稍后”范围可直接练习，范围标题不再出现 undefined ----
   await page.goto(BASE + "#/practice/2?scope=later&i=1", { waitUntil: "networkidle" });
   await page.waitForSelector(".qcard");
   const laterH1 = await page.locator("main h1").innerText();
   const laterPos = await page.locator(".pager-bar .pos").first().innerText();
-  check("“稍后”范围可直接练习且标题无 undefined",
-    /稍后再学/.test(laterH1) && !/undefined/.test(laterH1) && /第 2 \//.test(laterPos),
+  check("本章其他题可通过旧链接直接练习",
+    /本章其他题/.test(laterH1) && !/undefined/.test(laterH1) && /第 2 \//.test(laterPos),
     `${laterH1.trim()} · ${laterPos.trim()}`);
 
   // ---- 2026-10-22 回归：连续跳题后按键只作用在当前题卡上（旧实现监听会叠加） ----

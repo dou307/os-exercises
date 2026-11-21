@@ -19,18 +19,7 @@ import { renderMath } from "./math.js";
 import { questionNumber } from "./numbering.js";
 import { noteLink } from "./settings.js";
 
-const TIER_TEXT = { core: "核心", bridge: "桥接", supplement: "补充", later: "稍后", disputed: "待核对" };
-const REVIEW_TEXT = {
-  verified: "已核对",
-  reviewed: "已核对归属",
-  systematic: "系统映射",
-  disputed: "待核对",
-  candidate: "未审核",
-  unreviewed: "未审核",
-  unresolved: "归属未定",
-};
 const TYPE_TEXT = {
-  single_choice: "单选",
   multi_blank: "多空/复合",
   constructed_response: "综合题",
 };
@@ -115,11 +104,9 @@ export function buildCard(q, ctx) {
   if (q.yearAuditNotice) card.appendChild(el("p", { class: "notice warn year-audit", text: q.yearAuditNotice }));
 
   const head = el("div", { class: "qhead" });
-  // 题头显示当前学习分层，原始分层和审核状态放在题末。
-  const tier = q.effectiveTier || q.readinessTier;
-  head.appendChild(badge(TIER_TEXT[tier] || tier, tier));
   if (ctx.questionNumber > 0) head.appendChild(badge("第" + ctx.questionNumber + "题", "question-number"));
-  head.appendChild(badge(TYPE_TEXT[q.type] || q.type));
+  if (TYPE_TEXT[q.type]) head.appendChild(badge(TYPE_TEXT[q.type]));
+  if (q.reviewStatus === "disputed") head.appendChild(badge("待核对 · 不计分", "disputed"));
   const favoriteButton = el("button", { type: "button", class: "btn ghost small favorite-toggle" });
   const paintFavorite = () => {
     const saved = storage.isFavorite(q.id);
@@ -148,7 +135,7 @@ export function buildCard(q, ctx) {
     return topic && !(ctx.meta ? completedChapters(ctx.meta) : new Set()).has(String(topic.chapterId));
   });
   if (needed.length) card.appendChild(el("div", { class: "notice", text: `涉及尚未标记学完的知识点：${needed.map((id) => topicTitle(topics, id)).join("、")}。可先阅读相关笔记，再练习本题。` }));
-  if (q.reviewStatus === "systematic") card.appendChild(el("p", { class: "notice", text: "本题为系统映射，答案未逐题人工复核；判分依据为原站答案。" }));
+  if (q.reviewStatus === "systematic") card.appendChild(el("p", { class: "notice", text: "本题答案待复核，暂按原题库答案判分。" }));
   (q.prerequisiteGaps || []).forEach((gap) => card.appendChild(el("div", { class: "notice warn", text: `前置缺口：${gap}` })));
 
   const stem = el("div", { class: "stem", html: q.stemHtml });
@@ -216,10 +203,11 @@ export function buildCard(q, ctx) {
   explainBox.hidden = true;
   card.appendChild(explainBox);
 
-  if (q.topicIds && q.topicIds.length) {
-    const topicsBox = el("div", { class: "topic-list" });
-    q.topicIds.forEach((tid) => topicsBox.appendChild(badge(topicTitle(topics, tid))));
-    card.appendChild(topicsBox);
+  if (q.topicIds?.length) {
+    card.appendChild(el("p", {
+      class: "qmeta qdetails",
+      text: "知识点：" + q.topicIds.map((tid) => topicTitle(topics, tid)).join("、"),
+    }));
   }
 
   const firstTopic = q.topicIds && q.topicIds.length ? topics.get(q.topicIds[0]) : null;
@@ -234,20 +222,11 @@ export function buildCard(q, ctx) {
     card.appendChild(row);
   }
 
-  const details = el("footer", { class: "qdetails" });
-  const labels = el("div", { class: "qdetails-labels" });
-  if (q.originalReadinessTier && q.originalReadinessTier !== tier) {
-    labels.appendChild(badge(`原分层：${TIER_TEXT[q.originalReadinessTier] || q.originalReadinessTier}`, "later"));
-  }
-  const reviewText = q.answerReview?.status === "qualified" ? "已复核（有备注）" : REVIEW_TEXT[q.reviewStatus] || q.reviewStatus;
-  if (reviewText && reviewText !== TIER_TEXT[tier]) {
-    labels.appendChild(badge(reviewText, q.reviewStatus === "verified" ? "ok" : ""));
-  }
-  if (labels.childElementCount) details.appendChild(labels);
   if (q.mappingReason && !q.answerReview) {
+    const details = el("footer", { class: "qdetails" });
     details.appendChild(el("p", { class: "qmeta", text: `章节归属依据：${q.mappingReason}` }));
+    card.appendChild(details);
   }
-  if (details.childElementCount) card.appendChild(details);
 
   function paintSubmitted(record) {
     submitted = true;

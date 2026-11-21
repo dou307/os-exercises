@@ -27,7 +27,7 @@ const check=(name,value)=>{checks.push({name,ok:Boolean(value)});console.log(`${
   check('第二章23争议全部不计分',chapter2.filter(q=>q.review==='disputed').length===23 && chapter2.filter(q=>q.review==='disputed').every(q=>q.scoring==='excluded'));
   check('初始学习事实仍只有课程第一章',JSON.stringify(await page.evaluate(()=>window.__osExercises.meta.studyDefaults.confirmedCompletedChapters))==='["1"]');
   await go('#/q/c2-s2-0-q021');
-  check('HRRN显示课程外补充和真实前置缺口',(await page.locator('.qhead').innerText()).includes('补充') && (await page.locator('.qcard').innerText()).includes('前置缺口：') && (await page.locator('.qcard').innerText()).includes('HRRN'));
+  check('HRRN保留真实前置缺口', (await page.locator('.qcard').innerText()).includes('前置缺口：') && (await page.locator('.qcard').innerText()).includes('HRRN'));
   await go('#/q/c2-s5-0-q001');
   check('原综合首题归进程而非调度',chapter2.find(q=>q.id==='c2-s5-0-q001').ch==='3' && (await page.locator('.qcard').innerText()).includes('PCB'));
   await go('#/q/c2-s2-0-q027');

@@ -1,4 +1,4 @@
-/** 全库搜索：题干、章节、原题号、知识点，支持按章节、题型、分层过滤。结果直达对应题目。 */
+/** 全库搜索：题干、章节、原题号和知识点。 */
 
 import { getIndex, getTopics, getMeta, topicTitle } from "./questions.js";
 import { completedChapters, effectiveTier } from "./tiers.js";
@@ -12,25 +12,10 @@ export const TYPE_FILTERS = [
   { key: "constructed_response", label: "综合" },
 ];
 
-export const TIER_FILTERS = [
-  { key: "", label: "全部分层" },
-  { key: "core", label: "核心" },
-  { key: "bridge", label: "桥接" },
-  { key: "supplement", label: "补充" },
-  { key: "later", label: "稍后" },
+const STATUS_FILTERS = [
+  { key: "", label: "全部题目" },
   { key: "disputed", label: "待核对" },
 ];
-
-const TIER_TEXT = { core: "核心", bridge: "桥接", supplement: "补充", later: "稍后", disputed: "待核对" };
-const REVIEW_TEXT = {
-  verified: "已核对",
-  reviewed: "已核对归属",
-  systematic: "系统映射",
-  disputed: "待核对",
-  candidate: "未审核",
-  unreviewed: "未审核",
-  unresolved: "归属未定",
-};
 
 const MAX_RESULTS = 100;
 
@@ -186,13 +171,13 @@ export async function renderSearch(main, params, isCurrent = () => true) {
   chapterSelect.addEventListener("change", () => goto({ ch: chapterSelect.value }));
   filterBar.appendChild(chapterSelect);
   filterBar.appendChild(segGroup(TYPE_FILTERS, filters.type, (key) => goto({ type: key })));
-  filterBar.appendChild(segGroup(TIER_FILTERS, filters.tier, (key) => goto({ tier: key })));
+  filterBar.appendChild(segGroup(STATUS_FILTERS, filters.tier, (key) => goto({ tier: key })));
   card.appendChild(filterBar);
 
   if (!query && !filters.ch && !filters.type && !filters.tier) {
     const hint = document.createElement("p");
     hint.className = "sub";
-    hint.textContent = "输入题干关键词、知识点、章节名或题目 ID，例如「中断」「t1-4-2」「c1-s3-0-q019」；也可以只用下面的章节/题型/分层筛选。";
+    hint.textContent = "输入题干关键词、知识点或章节名，也可以直接使用筛选。";
     card.appendChild(hint);
     main.appendChild(card);
     return;
@@ -204,7 +189,8 @@ export async function renderSearch(main, params, isCurrent = () => true) {
   sub.className = "sub";
   sub.setAttribute("role", "status");
   sub.setAttribute("aria-live", "polite");
-  const filterText = [filters.ch ? `第 ${filters.ch} 章` : "", typeLabel(filters.type), tierLabel(filters.tier)]
+  const status = filters.tier === "disputed" ? "待核对" : (filters.tier ? "限定练习范围" : "");
+  const filterText = [filters.ch ? `第 ${filters.ch} 章` : "", typeLabel(filters.type), status]
     .filter(Boolean).join(" · ");
   const shownText = truncated ? `命中 ${total} 道，按相关度显示前 ${items.length} 道` : `命中 ${total} 道`;
   sub.textContent = `${shownText}${filterText ? `（筛选：${filterText}）` : ""}。点击任意结果直达题目。`;
@@ -239,13 +225,7 @@ export async function renderSearch(main, params, isCurrent = () => true) {
     if (entry.type !== "single_choice") {
       meta.appendChild(badge(entry.type === "multi_blank" ? "多空" : "综合", ""));
     }
-    // 分层与审核状态直接标在结果上：搜到“稍后”或“系统映射”的题时，
-    // 不用点进去才知道它还没学过 / 没人工复核。
-    if (entry.tier && entry.tier !== "core") {
-      meta.appendChild(badge(TIER_TEXT[entry.tier] || entry.tier, entry.tier));
-    }
     if (entry.review === "disputed") meta.appendChild(badge("待核对", "disputed"));
-    else if (entry.review === "systematic") meta.appendChild(badge("系统映射", ""));
     link.appendChild(no);
     link.appendChild(txt);
     link.appendChild(meta);
@@ -272,8 +252,4 @@ function badge(text, cls) {
 
 function typeLabel(key) {
   return key ? (TYPE_FILTERS.find((t) => t.key === key) || {}).label || "" : "";
-}
-
-function tierLabel(key) {
-  return key ? (TIER_FILTERS.find((t) => t.key === key) || {}).label || "" : "";
 }

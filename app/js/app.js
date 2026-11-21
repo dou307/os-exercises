@@ -89,7 +89,6 @@ function indexAsQuestion(entry) {
     primaryChapterId: entry.ch,
     readinessTier: entry.tier,
     reviewStatus: entry.review,
-    mappingStatus: entry.status,
     scoring: entry.scoring,
     type: entry.type,
     stemText: entry.stem,
@@ -164,8 +163,9 @@ async function renderHome() {
   const meta = state.meta;
   const stats = storage.stats();
   const ch1 = chapterMeta("1");
+  const completed = completedChapters(meta);
   const firstChapter = state.index.questions.filter((q) => q.ch === "1");
-  const coreCount = firstChapter.filter((q) => q.tier === "core" && q.review !== "disputed").length;
+  const practiceCount = firstChapter.filter((q) => questionGroup(q, completed) === "core").length;
   const supplementCount = firstChapter.filter((q) => q.tier === "supplement" && q.review !== "disputed").length;
   const container = main();
   container.innerHTML = "";
@@ -174,22 +174,22 @@ async function renderHome() {
   hero.appendChild(el("h1", { text: "OS 练习室" }));
   hero.appendChild(el("p", {
     class: "sub",
-    text: `按本地笔记章节组织练习。数据集 ${meta.datasetVersion}，上游 ${meta.upstream.repository}@${meta.upstream.revision.slice(0, 7)}，全库 ${meta.counts.total} 道题。`,
+    text: `按本地笔记章节组织练习，共 ${meta.counts.total} 道题。`,
   }));
   const statRow = el("div", { class: "stat-row" });
   statRow.appendChild(statBox(stats.answered, "已作答（本机）"));
   statRow.appendChild(statBox(stats.correct, "答对"));
   statRow.appendChild(statBox(stats.wrong, "答错"));
-  statRow.appendChild(statBox(ch1.counts.coreScored, "第一章核心可判分"));
+  statRow.appendChild(statBox(ch1.counts.coreScored, "第一章可判分题"));
   hero.appendChild(statRow);
 
   const actions = el("div", { class: "actions" });
-  actions.appendChild(el("a", { class: "btn primary", href: "#/practice/1?scope=core&i=0", text: "开始第一章核心练习" }));
+  actions.appendChild(el("a", { class: "btn primary", href: "#/practice/1?scope=core&i=0", text: "开始第一章练习" }));
   const ui = storage.getUI();
   const last = ui.lastQuestionId;
   if (last) {
     const entry = indexEntry(last);
-    const number = entry ? questionNumbers(state.index.questions, completedChapters(meta)).get(entry.id) : null;
+    const number = entry ? questionNumbers(state.index.questions, completed).get(entry.id) : null;
     const where = entry ? `（${chapterTitleOf(entry.ch)} · 第${number}题）` : "";
     actions.appendChild(el("a", { class: "btn", href: `#/q/${encodeURIComponent(last)}`, text: `继续上次的题${where}` }));
   }
@@ -197,27 +197,17 @@ async function renderHome() {
   actions.appendChild(el("a", { class: "btn ghost", href: "#/review", text: "错题回顾" }));
   hero.appendChild(actions);
 
-  // 第一章的手动核对结果可以直接看到：核心 42 = 39 道自动判分 + 1 道综合题自评 + 2 道争议题只读
-  hero.appendChild(el("p", {
-    class: "sub foot-note",
-    text: `第一章核心 ${coreCount} 道：${ch1.counts.coreScored} 道单选按原站答案判分、${ch1.counts.coreSelfAssess} 道综合题自评；`
-      + `另有 ${ch1.counts.bridge} 道桥接题。${ch1.counts.disputed} 道待核对题单独列出，不进入计分练习。`,
-  }));
   container.appendChild(hero);
 
   const current = el("div", { class: "card" });
   current.appendChild(el("h2", { text: "当前学习范围" }));
   current.appendChild(el("p", {
     class: "sub",
-    text: `第 1 章 ${ch1.title}：已确认学完。共 ${ch1.counts.total} 道：核心 ${coreCount}、桥接 ${ch1.counts.bridge}、补充 ${supplementCount}、待核对 ${ch1.counts.disputed}。`,
+    text: `第一章共 ${ch1.counts.total} 道，含 ${practiceCount} 道当前练习、${supplementCount} 道补充题和 ${ch1.counts.disputed} 道待核对题。`,
   }));
   current.appendChild(el("div", {
     class: "notice",
-    text: "760道题已逐题复核答案、知识点与前置，并保留原题及独立勘误；存在争议或条件不足的题不自动计分。已复核不等于用户已学完，学习后可在本机标记进度。",
-  }));
-  current.appendChild(el("div", {
-    class: "notice",
-    text: "初始仅第一章确认学完。其他章的本机学习标记会显示在下方目录中。",
+    text: "全库 760 道题已逐题复核。待核对题可自评，自动判分跳过这些题。",
   }));
   container.appendChild(current);
 
@@ -237,8 +227,7 @@ async function renderHome() {
       class: `badge${chapter.id === "1" ? " core" : ""}`,
       text: total ? `${total} 道` : "暂无对应题",
     }));
-    if (chapter.counts.unreviewed) metaBox.appendChild(el("span", { class: "badge", text: "系统映射" }));
-    metaBox.appendChild(el("span", { class: "badge", text: statusText(chapter) }));
+    if (completed.has(String(chapter.id))) metaBox.appendChild(el("span", { class: "badge", text: "已学完" }));
     a.appendChild(metaBox);
     li.appendChild(a);
     table.appendChild(li);
@@ -364,20 +353,14 @@ async function renderChapter(chapterId) {
     return Boolean(record && record.correct === false);
   }).length;
 
-  const statRow = el("div", { class: "stat-row" });
-  statRow.appendChild(statBox(counts.core, "核心"));
-  statRow.appendChild(statBox(counts.bridge, "桥接"));
-  statRow.appendChild(statBox(counts.supplement, "补充"));
-  statRow.appendChild(statBox(counts.disputed, "待核对"));
-  statRow.appendChild(statBox(`${progress.answered}/${progress.total}`, "已作答"));
-  head.appendChild(statRow);
+  head.appendChild(el("p", { class: "sub", text: `已作答 ${progress.answered} / ${progress.total} 道` }));
 
   const actions = el("div", { class: "actions" });
   if (counts.core || counts.bridge) {
-    actions.appendChild(el("a", { class: "btn primary", href: `#/practice/${encodeURIComponent(chapterId)}?scope=core&i=0`, text: "开始核心练习" }));
+    actions.appendChild(el("a", { class: "btn primary", href: `#/practice/${encodeURIComponent(chapterId)}?scope=core&i=0`, text: "开始练习" }));
   }
   if (counts.later) {
-    actions.appendChild(el("a", { class: "btn", href: `#/practice/${encodeURIComponent(chapterId)}?scope=later&i=0`, text: `先练“稍后”题（${counts.later}）` }));
+    actions.appendChild(el("a", { class: "btn", href: `#/practice/${encodeURIComponent(chapterId)}?scope=later&i=0`, text: SCOPE_TEXT.later }));
   }
   if (counts.supplement) {
     actions.appendChild(el("a", { class: "btn", href: `#/practice/${encodeURIComponent(chapterId)}?scope=supplement&i=0`, text: "补充题" }));
@@ -409,16 +392,16 @@ async function renderChapter(chapterId) {
   if (chapter.counts.systematic) {
     head.appendChild(el("div", {
       class: "notice warn",
-      text: `本章 ${chapter.counts.systematic} 道题按小节系统映射到知识点，答案与前置知识未逐题人工复核。可以练习，但不要把判分结果当作已审核结论；答错的题同样会进“错题回顾”，便于回头复核。`,
+      text: `本章有 ${chapter.counts.systematic} 道题的答案待复核，暂按原题库答案判分。`,
     }));
   }
   container.appendChild(head);
 
   const groups = [
-    { key: "core", title: "核心练习", filter: (q) => q.effectiveTier === "core" || q.effectiveTier === "bridge" },
-    { key: "later", title: "稍后再学", filter: (q) => q.effectiveTier === "later" },
-    { key: "supplement", title: "补充内容（课程外）", filter: (q) => q.effectiveTier === "supplement" },
-    { key: "disputed", title: "待核对（不计分）", filter: (q) => q.effectiveTier === "disputed" },
+    { title: SCOPE_TEXT.core, filter: (q) => q.effectiveTier === "core" || q.effectiveTier === "bridge" },
+    { title: SCOPE_TEXT.later, filter: (q) => q.effectiveTier === "later" },
+    { title: SCOPE_TEXT.supplement, filter: (q) => q.effectiveTier === "supplement" },
+    { title: "待核对", filter: (q) => q.effectiveTier === "disputed" },
   ];
 
   // ---- 题单本地筛选：只在已加载的索引上过滤，不重新请求、不改地址栏 ----
@@ -480,10 +463,6 @@ async function renderChapter(chapterId) {
       if (!items.length) return;
       const card = el("div", { class: "card" });
       card.appendChild(el("h2", { text: `${group.title}（${items.length === all.length ? all.length : `${items.length} / ${all.length}`}）` }));
-      if (group.key === "disputed") card.appendChild(el("p", { class: "sub", text: "原答案存在疑点，保留原文与审核备注；这些题不计入核心或补充题数量。" }));
-      if (group.key === "later") {
-        card.appendChild(el("p", { class: "sub", text: "这些题归到本章，但当前学习进度未覆盖；标记本章已学后会进入核心练习。" }));
-      }
       const ul = el("ul", { class: "qlist" });
       items.forEach((q, index) => {
         const record = storage.getAnswer(q.id);
@@ -494,12 +473,6 @@ async function renderChapter(chapterId) {
         a.appendChild(el("span", { class: "txt", text: q.stemText.slice(0, 90) }));
         const metaBox = el("span", { class: "meta" });
         if (storage.isFavorite(q.id)) metaBox.appendChild(el("span", { class: "badge favorite", text: "★ 已收藏" }));
-        metaBox.appendChild(el("span", { class: `badge ${q.effectiveTier}`, text: tierText(q.effectiveTier) }));
-        if (q.reviewStatus === "disputed") metaBox.appendChild(el("span", { class: "badge disputed", text: "待核对" }));
-        else if (q.reviewStatus === "systematic") metaBox.appendChild(el("span", { class: "badge", text: "系统映射" }));
-        else if (q.reviewStatus === "unreviewed" || q.mappingStatus === "candidate") {
-          metaBox.appendChild(el("span", { class: "badge", text: "未审核" }));
-        }
         if (q.type !== "single_choice") metaBox.appendChild(el("span", { class: "badge", text: q.type === "multi_blank" ? "多空" : "综合" }));
         if (record && record.correct === true) metaBox.appendChild(el("span", { class: "badge ok", text: "做对" }));
         if (record && record.correct === false) metaBox.appendChild(el("span", { class: "badge bad", text: "做错" }));
@@ -570,10 +543,6 @@ function uncoveredTopics(meta, index, topics, chapterId) {
   const gaps = buildUncoveredTopics({ chapters: meta.chapters, topics, entries: index.questions });
   const hit = gaps.find((gap) => gap.id === String(chapterId));
   return hit ? hit.topics : [];
-}
-
-function tierText(tier) {
-  return { core: "核心", bridge: "桥接", supplement: "补充", later: "稍后", disputed: "待核对" }[tier] || tier;
 }
 
 /* ------------------------------------------------------------------ */
@@ -749,7 +718,7 @@ async function renderReview(params) {
 
   if (!entries.length) {
     const empty = el("div", { class: "card" });
-    empty.appendChild(el("p", { class: "empty", text: activeChapter ? "这一章暂时没有错题。" : "还没有错题。做完第一章核心练习后，答错的题会自动出现在这里。" }));
+    empty.appendChild(el("p", { class: "empty", text: activeChapter ? "这一章暂时没有错题。" : "答错或自评为需复习的题会出现在这里。" }));
     empty.appendChild(el("a", { class: "btn primary", href: activeChapter ? `#/ch/${encodeURIComponent(activeChapter)}` : "#/practice/1?scope=core&i=0", text: activeChapter ? "回到章节" : "去练习" }));
     container.appendChild(empty);
     return;

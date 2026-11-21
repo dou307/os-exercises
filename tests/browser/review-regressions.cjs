@@ -31,7 +31,7 @@ const check = (name, value, detail = "") => {
       await page.waitForSelector("main h1");
     };
     await goto("");
-    check("首页数量采用互斥口径", (await page.locator("main").innerText()).includes("核心 40、桥接 1、补充 12、待核对 3"));
+    check("首页数量采用互斥口径", (await page.locator("main").innerText()).includes("41 道当前练习、12 道补充题和 3 道待核对题"));
     await goto("#/ch/1");
     const listed = await page.locator('.chapter-lists a.qitem').evaluateAll((nodes) => nodes.map((n) => n.getAttribute("href")));
     check("第一章 56 道全部且仅出现一次，包含 3 道待核对", listed.length === 56 && new Set(listed).size === 56
@@ -90,11 +90,11 @@ const check = (name, value, detail = "") => {
     await goto("#/search?ch=3&tier=bridge");
     const reviewIndex = await page.evaluate(async () => (await (await fetch("data/index.json")).json()).questions);
     const chapter3Available = reviewIndex.filter((q) => q.ch === "3" && q.review !== "disputed" && q.tier !== "supplement").length;
-    check("已学标记在搜索桥接筛选中生效", await page.locator(".qlist li").count() === chapter3Available);
+    check("旧搜索链接仍可按练习范围筛选", await page.locator(".qlist li").count() === chapter3Available);
     await page.locator(".qlist a.qitem").nth(1).click();
     await page.waitForSelector(".qcard");
-    check("单题徽标与搜索分层一致，已审题不再标系统映射", await page.locator(".qhead .badge.bridge").count() === 1
-      && !(await page.locator(".qhead").innerText()).includes("系统映射"));
+    check("单题卡删除内部标签并保留题号", await page.locator(".qhead .question-number").count() === 1
+      && !/桥接|稍后|原分层|系统映射|已核对归属/.test((await page.locator(".qcard .badge").allTextContents()).join(" ")));
     await goto("#/search?ch=1&tier=disputed");
     check("待核对搜索仅显示三题", await page.locator(".qlist li").count() === 3);
     await goto("#/search?q=Threads%20and%20Concurrency");
