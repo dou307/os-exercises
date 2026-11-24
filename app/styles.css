@@ -17,6 +17,7 @@
   --warn-soft: #fdf1d8;
   --shadow: 0 1px 2px rgba(20, 30, 45, .08), 0 6px 20px rgba(20, 30, 45, .06);
   --radius: 10px;
+  --page-gutter: clamp(12px, 1.25vw, 28px);
   --mono: "Cascadia Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   color-scheme: light;
 }
@@ -44,7 +45,7 @@
 
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-.storage-warning { margin: 12px 16px; }
+.storage-warning { margin: 12px var(--page-gutter); }
 
 html, body { margin: 0; padding: 0; }
 
@@ -79,7 +80,7 @@ a:hover { text-decoration: underline; }
 .topbar {
   position: sticky; top: 0; z-index: 20;
   display: flex; align-items: center; gap: 12px;
-  padding: 10px 16px;
+  padding: 10px var(--page-gutter);
   background: var(--surface);
   border-bottom: 1px solid var(--border);
 }
@@ -114,11 +115,9 @@ a:hover { text-decoration: underline; }
 /* ---------- 布局 ---------- */
 .layout {
   display: grid;
-  grid-template-columns: 272px minmax(0, 1fr);
-  gap: 24px;
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 20px 16px 64px;
+  grid-template-columns: clamp(218px, 16vw, 272px) minmax(0, 1fr);
+  gap: clamp(14px, 1.25vw, 24px);
+  padding: 20px var(--page-gutter) 64px;
 }
 
 .sidebar {
@@ -220,7 +219,6 @@ h3 { font-size: 16px; margin: 0 0 8px; }
 .qitem .meta { display: flex; gap: 6px; align-items: center; }
 
 /* ---------- 题卡 ---------- */
-.qcard { max-width: 820px; }
 .qhead { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
 .qhead .qid { font-family: var(--mono); font-size: 12px; color: var(--text-dim); }
 .qhead .favorite-toggle { margin-left: auto; }
@@ -402,7 +400,7 @@ mark { background: var(--warn-soft); color: var(--warn); border-radius: 3px; pad
 
 /* ---------- 响应式 ---------- */
 @media (max-width: 860px) {
-  .layout { grid-template-columns: 1fr; padding: 14px 12px 48px; gap: 14px; }
+  .layout { grid-template-columns: minmax(0, 1fr); padding-block: 14px 48px; }
   .icon-btn { display: inline-block; }
   .sidebar {
     position: fixed; inset: 56px auto 0 0; width: min(84vw, 300px);
@@ -424,9 +422,10 @@ mark { background: var(--warn-soft); color: var(--warn); border-radius: 3px; pad
 }
 
 @media (max-width: 400px) {
-  .topbar { padding: 8px 10px; gap: 8px; }
+  :root { --page-gutter: 10px; }
+  .topbar { padding-block: 8px; gap: 8px; }
   .brand { font-size: 15px; }
-  .layout { padding: 12px 10px 40px; }
+  .layout { padding-block: 12px 40px; }
   .stat { flex: 1 1 46%; min-width: 0; }
   .btn { padding: 9px 13px; font-size: 14.5px; }
 }
