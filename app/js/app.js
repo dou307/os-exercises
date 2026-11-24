@@ -7,7 +7,7 @@
 
 import * as storage from "./storage.js";
 import { getMeta, getIndex, getTopics, getChapterQuestions } from "./questions.js";
-import { bindQuestionKeys, buildCard, buildPager, renderPlayer, showToast } from "./practice.js";
+import { bindQuestionKeys, buildCard, buildPager, renderPlayer, setQuestionProgress, showToast } from "./practice.js";
 import { parseHash, navigate, buildHash, questionHash } from "./router.js";
 import { matchesListFilters, questionGroup, questionNumber, questionNumbers } from "./numbering.js";
 import { renderSearch, searchVisibleQuestions } from "./search.js";
@@ -672,6 +672,7 @@ async function renderQuestion(id, isCurrent = () => true, filters = {}) {
   const redo = el("button", { type: "button", class: "btn ghost", text: "重做本题" });
   redo.addEventListener("click", () => { storage.resetQuestion(question.id); route(); });
   container.appendChild(el("div", { class: "actions" }, [redo]));
+  setQuestionProgress(index, sequence.entries.length);
   return bindQuestionKeys(container, () => go(index - 1), () => go(index + 1));
 }
 
@@ -931,6 +932,7 @@ function renderSource() {
 async function route() {
   const version = ++state.routeVersion;
   const isCurrent = () => state.routeVersion === version;
+  setQuestionProgress();
   if (state.dispose) {
     try { state.dispose(); } catch (error) { /* 清理失败不应阻断页面切换 */ }
     state.dispose = null;
@@ -971,6 +973,7 @@ async function route() {
     }
   } catch (error) {
     if (!isCurrent()) return;
+    setQuestionProgress();
     container.innerHTML = "";
     container.appendChild(el("div", { class: "card" }, [
       el("h1", { text: "加载失败" }),

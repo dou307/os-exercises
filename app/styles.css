@@ -83,6 +83,16 @@ a:hover { text-decoration: underline; }
   background: var(--surface);
   border-bottom: 1px solid var(--border);
 }
+.question-progress {
+  position: absolute; inset: auto 0 -1px; height: 3px;
+  background: var(--surface-2);
+  pointer-events: none;
+}
+.question-progress-fill {
+  display: block; height: 100%; width: 0;
+  background: var(--accent);
+  border-radius: 0 2px 2px 0;
+}
 .brand { font-weight: 700; font-size: 17px; color: var(--text); white-space: nowrap; }
 .brand:hover { text-decoration: none; color: var(--accent); }
 
@@ -315,16 +325,6 @@ h3 { font-size: 16px; margin: 0 0 8px; }
 .pager-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
 .pager-bottom { justify-content: flex-end; }
 .pager-bottom .pos { margin-right: auto; }
-
-/* 练习进度条：位置靠“第 x / y 题”的文字仍然保留，进度条只做视觉提示 */
-.progress {
-  height: 8px; margin-top: 12px; border-radius: 999px;
-  background: var(--surface-2); overflow: hidden;
-}
-.progress .bar {
-  display: block; height: 100%; background: var(--accent);
-  border-radius: 999px; transition: width .18s ease;
-}
 
 /* 题号直达 */
 .jump { display: inline-flex; align-items: center; gap: 6px; }

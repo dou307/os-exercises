@@ -360,6 +360,19 @@ function buildSelfAssess(q, card, explainBox, showResult, ctx) {
   return { show };
 }
 
+export function setQuestionProgress(index = 0, count = 0) {
+  const progress = document.getElementById("questionProgress");
+  if (!progress) return;
+  progress.hidden = count === 0;
+  if (progress.hidden) return;
+
+  const position = index + 1;
+  progress.setAttribute("aria-valuemax", String(count));
+  progress.setAttribute("aria-valuenow", String(position));
+  progress.setAttribute("aria-valuetext", `第 ${position} / ${count} 题`);
+  progress.firstElementChild.style.width = `${position / count * 100}%`;
+}
+
 export function buildPager(placement, index, count, go) {
   const bar = el("div", { class: `pager-bar pager-${placement}`, role: "group", "aria-label": placement === "bottom" ? "底部题目导航" : "顶部题目导航" });
   const prev = el("button", { type: "button", class: "btn small", text: "← 上一题" });
@@ -464,18 +477,6 @@ export async function renderPlayer(main, params, isCurrent = () => true) {
     });
     head.appendChild(summary);
 
-    const percent = Math.round(((index + 1) / list.length) * 100);
-    const progress = el("div", {
-      class: "progress",
-      role: "progressbar",
-      "aria-valuemin": "1",
-      "aria-valuemax": String(list.length),
-      "aria-valuenow": String(index + 1),
-      "aria-label": `练习进度：第 ${index + 1} 题，共 ${list.length} 题`,
-    });
-    progress.appendChild(el("span", { class: "bar", style: `width:${percent}%` }));
-    head.appendChild(progress);
-
     head.appendChild(buildPager("top", index, list.length, go));
     head.appendChild(el("p", { class: "kbd-hint", text: "键盘：A–E 选选项 · Enter 提交 · ← → 切题" }));
     main.appendChild(head);
@@ -503,6 +504,7 @@ export async function renderPlayer(main, params, isCurrent = () => true) {
     foot.appendChild(reset);
     foot.appendChild(el("a", { class: "btn ghost small", href: `#/ch/${encodeURIComponent(chapterId)}`, text: "回到章节题单" }));
     main.appendChild(foot);
+    setQuestionProgress(index, list.length);
     main.focus({ preventScroll: true });
   };
 
