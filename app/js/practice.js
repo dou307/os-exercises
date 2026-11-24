@@ -18,6 +18,7 @@ import { completedChapters, filterByScope, SCOPE_TEXT } from "./tiers.js";
 import { renderMath } from "./math.js";
 import { questionNumber } from "./numbering.js";
 import { noteLink } from "./settings.js";
+import { showChapterQuestionToc } from "./question-toc.js";
 
 const TYPE_TEXT = {
   multi_blank: "多空/复合",
@@ -452,6 +453,13 @@ export async function renderPlayer(main, params, isCurrent = () => true) {
   const chapter = meta.chapters.find((c) => String(c.id) === String(chapterId));
   const chapterTitle = chapter ? (chapter.kind === "supplement" ? `补充 · ${chapter.titleZh}` : `第 ${chapterId} 章`) : `第 ${chapterId} 章`;
   const scopeText = SCOPE_TEXT[scope] || scope;
+  showChapterQuestionToc({
+    chapterId,
+    chapterTitle: chapter ? `第 ${chapterId} 章 · ${chapter.titleZh}` : chapterTitle,
+    questions: chapterQuestions,
+    completed,
+    currentId: list[index].id,
+  });
 
   const render = () => {
     const q = list[index];

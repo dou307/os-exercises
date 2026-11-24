@@ -14,6 +14,7 @@ import { renderSearch, searchVisibleQuestions } from "./search.js";
 import { completedChapters, toggleChapterCompleted, withEffectiveTier, SCOPE_TEXT } from "./tiers.js";
 import { loadSettings, getSettings, saveSettings, setToken, getToken, noteLink } from "./settings.js";
 import { initSync, syncNow, syncStatus, resumeSync } from "./sync.js";
+import { hideChapterQuestionToc, showChapterQuestionToc } from "./question-toc.js";
 
 const state = {
   meta: null,
@@ -661,6 +662,13 @@ async function renderQuestion(id, isCurrent = () => true, filters = {}) {
   container.appendChild(head);
 
   storage.setUI({ lastChapter: question.primaryChapterId, lastQuestionId: question.id });
+  showChapterQuestionToc({
+    chapterId: String(question.primaryChapterId),
+    chapterTitle: chapterLabel(chapter),
+    questions: chapterQuestions,
+    completed,
+    currentId: question.id,
+  });
   const questionCard = buildCard(withEffectiveTier(question, completed), {
     topics: state.topics,
     meta: state.meta,
@@ -937,6 +945,7 @@ async function route() {
     try { state.dispose(); } catch (error) { /* 清理失败不应阻断页面切换 */ }
     state.dispose = null;
   }
+  hideChapterQuestionToc();
   let name, params;
   const container = main();
   try {
@@ -1033,7 +1042,14 @@ async function boot() {
     document.getElementById("navToggle").setAttribute("aria-expanded", String(open));
   });
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && document.body.classList.contains("nav-open")) {
+    if (event.key !== "Escape") return;
+    if (document.body.classList.contains("toc-open")) {
+      document.body.classList.remove("toc-open");
+      document.getElementById("tocToggle").setAttribute("aria-expanded", "false");
+      document.getElementById("tocToggle").focus();
+      return;
+    }
+    if (document.body.classList.contains("nav-open")) {
       document.body.classList.remove("nav-open");
       const toggle = document.getElementById("navToggle");
       toggle.setAttribute("aria-expanded", "false");
@@ -1041,8 +1057,24 @@ async function boot() {
     }
   });
 
+  const tocToggle = document.getElementById("tocToggle");
+  tocToggle.addEventListener("click", () => {
+    document.body.classList.remove("nav-open");
+    document.getElementById("navToggle").setAttribute("aria-expanded", "false");
+    const open = document.body.classList.toggle("toc-open");
+    tocToggle.setAttribute("aria-expanded", String(open));
+  });
+
   // 移动端点遮罩关闭目录
   document.addEventListener("click", (event) => {
+    if (document.body.classList.contains("toc-open")) {
+      const toc = document.getElementById("questionToc");
+      const toggle = document.getElementById("tocToggle");
+      if (!toc.contains(event.target) && !toggle.contains(event.target)) {
+        document.body.classList.remove("toc-open");
+        toggle.setAttribute("aria-expanded", "false");
+      }
+    }
     if (!document.body.classList.contains("nav-open")) return;
     const sidebar = document.getElementById("sidebar");
     const toggle = document.getElementById("navToggle");
@@ -1057,6 +1089,12 @@ async function boot() {
       document.body.classList.remove("nav-open");
       document.getElementById("navToggle").setAttribute("aria-expanded", "false");
     }
+  });
+
+  document.getElementById("questionToc").addEventListener("click", (event) => {
+    if (!event.target.closest("a")) return;
+    document.body.classList.remove("toc-open");
+    tocToggle.setAttribute("aria-expanded", "false");
   });
 
   const form = document.getElementById("searchForm");

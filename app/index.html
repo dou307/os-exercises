@@ -6,7 +6,7 @@
 <title>OS 练习室 · 按笔记章节练习</title>
 <link rel="icon" href="data:,">
 <link rel="stylesheet" href="vendor/katex/katex.min.css">
-<link rel="stylesheet" href="styles.css?v=20261124-2">
+<link rel="stylesheet" href="styles.css?v=20261124-3">
 <script defer src="vendor/katex/katex.min.js"></script>
 </head>
 <body>
@@ -20,6 +20,9 @@
     <label class="sr-only" for="searchInput">搜索题目</label>
     <input id="searchInput" type="search" placeholder="搜索题干 / 知识点 / 题号" autocomplete="off">
   </form>
+  <button class="icon-btn toc-toggle" id="tocToggle" type="button" aria-expanded="false" aria-controls="questionToc">
+    <span aria-hidden="true">☷</span><span class="sr-only">打开本章题目目录</span>
+  </button>
   <div id="questionProgress" class="question-progress" role="progressbar" aria-label="练习进度" hidden>
     <span class="question-progress-fill"></span>
   </div>
@@ -33,6 +36,7 @@
   <main id="main" tabindex="-1">
     <p class="loading">正在加载题目数据…</p>
   </main>
+  <aside class="question-toc" id="questionToc" aria-label="本章题目目录" hidden></aside>
 </div>
 
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
