@@ -47,9 +47,10 @@
 [hidden] { display: none !important; }
 .storage-warning { margin: 12px var(--page-gutter); }
 
-html, body { margin: 0; padding: 0; }
+html, body { width: 100%; margin: 0; padding: 0; }
 
 body {
+  min-width: 0;
   background: var(--bg);
   color: var(--text);
   font: 16px/1.65 "Segoe UI", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
@@ -114,6 +115,8 @@ a:hover { text-decoration: underline; }
 
 /* ---------- 布局 ---------- */
 .layout {
+  width: 100%;
+  max-width: none;
   display: grid;
   grid-template-columns: clamp(218px, 16vw, 272px) minmax(0, 1fr);
   gap: clamp(14px, 1.25vw, 24px);
@@ -148,11 +151,13 @@ a:hover { text-decoration: underline; }
 .nav-item.is-empty { opacity: .55; }
 
 /* ---------- 主区 ---------- */
-main { min-width: 0; }
+main { width: 100%; max-width: none; min-width: 0; }
 main:focus, main:focus-visible { outline: none; }
 .loading { color: var(--text-dim); }
 
 .card {
+  width: 100%;
+  max-width: none;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
